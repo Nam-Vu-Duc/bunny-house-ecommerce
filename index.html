@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="pics/4.jpg" />
+  <link rel="stylesheet" href="index.css">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <title>Cửa hàng bán lẻ mỹ phẩm chính hãng</title>
+</head>
+<body>
+  <header>
+    <div class="store-logo">
+      <image src="pics/logo.jpg" class="image-front"/>
+      <image src="pics/full_logo.jpg" class="image-back"/>
+    </div>
+
+    <div class="search-bar" style="position: relative;">
+      <input
+      id="search-bar"
+      type="text" 
+      placeholder="nhập mã hàng, tên sản phẩm để tìm kiếm">
+      <i class="fi fi-br-search" ></i>
+    </div>
+
+    <div class="header-button">
+      <i class="fi fi-rr-shopping-cart-add"></i>
+
+      <div class="dropdown-avatar">
+        <div class="avatar-image">
+          <img src="pics/4.jpg" alt="loading"/>
+        </div>
+        <div class="avatar">
+          <div class="avatar-animation">
+            <div class="avatar-content">
+              <a href="">Thông tin cá nhân</a>
+            </div>
+          </div>
+          <div class="avatar-animation">
+            <div class="avatar-content">
+              <a href="">Đổi mật khẩu</a>
+            </div>
+          </div>
+          <div class="avatar-animation">
+            <div class="avatar-content">
+              <a href="">Đăng xuất</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <i class="fi fi-rs-toggle-on" onclick="myFunction()"></i>
+    </div>
+  </header>
+
+  <script>
+    function myFunction() {
+      var element = document.body;
+      element.classList.toggle("dark-mode");
+    }
+  </script>
+
+  <nav>
+    <div class="navigation-bar">
+      <div style="display: flex; align-items: center">  
+        <div class="dropdown">
+          <div>
+            <div style="display: flex; gap: 10px; align-items: center; padding: 0 15px 0;" class="dropdown-title">
+              <i class="fi fi-br-menu-burger"></i>
+              <h5>DANH MỤC SẢN PHẨM</h5>
+            </div>
+          </div>
+
+          <div class="dropdown-content">
+            <div class="dropdown-content-dropright">
+              <div class="content-animation">
+                <div class="content">
+                  <a href="">Trang Điểm</a>
+                  <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+                </div>               
+              </div>
+              <div class="dropdown-content-dropright-content">
+                <div class="content-animation">
+                  <div class="content">
+                    <a href="">Kem Lót</a>
+                  </div>               
+                </div>
+                <div class="content-animation">
+                  <div class="content">
+                    <a href="">Che Khuyết Điểm</a>
+                  </div>               
+                </div>
+              </div>  
+            </div>
+
+            <div class="dropdown-content-dropright">
+              <div class="content-animation">
+                <div class="content">
+                  <a href="">Son Môi</a>
+                  <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+                </div>               
+              </div>
+              <div class="dropdown-content-dropright-content">
+                <div class="content-animation">
+                  <div class="content">
+                    <a href="">Kem Lót</a>
+                  </div>               
+                </div>
+                <div class="content-animation">
+                  <div class="content">
+                    <a href="">Che Khuyết Điểm</a>
+                  </div>               
+                </div>
+              </div>
+            </div>
+
+            <div class="dropdown-content-dropright">
+              <div class="content-animation">
+                <div class="content">
+                  <a href="">Chăm sóc da</a>
+                  <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+                </div>               
+              </div>
+              <div class="dropdown-content-dropright-content">
+                <div class="content-animation">
+                  <div class="content">
+                    <a href="">Kem Lót</a>
+                  </div>               
+                </div>
+                <div class="content-animation">
+                  <div class="content">
+                    <a href="">Che Khuyết Điểm</a>
+                  </div>               
+                </div>
+              </div>  
+            </div>
+
+            <div class="dropdown-content-dropright">
+              <div class="content-animation">
+                <div class="content">
+                  <a href="">Nước Hoa</a>
+                  <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+                </div>               
+              </div>
+              <div class="dropdown-content-dropright-content">
+                <div class="content-animation">
+                  <div class="content">
+                    <a href="">Kem Lót</a>
+                  </div>               
+                </div>
+                <div class="content-animation">
+                  <div class="content">
+                    <a href="">Che Khuyết Điểm</a>
+                  </div>               
+                </div>
+              </div>  
+            </div>
+            
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; padding: 0 15px 0;" class="dropdown-title">
+          <h5>VỀ CHÚNG TÔI</h5>
+        </div>
+        <div style="display: flex; align-items: center; padding: 0 15px 0;" class="dropdown-title">
+          <h5>SẢN PHẨM KHUYẾN MÃI</h5>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="advertisement">
+    <div class="slideshow-container">
+      <div class="mySlides fade">
+        <img src="https://cdn.mykiot.vn/2020/12/1609318855e1254ebb9274cc71451b02645764ea62.jpg">
+      </div>
+      
+      <div class="mySlides fade">
+        <img src="https://cdn.mykiot.vn/2021/01/1611024895f38363ff341b767a423b38c15b036ed0.jpg">
+      </div>
+      
+      <div class="mySlides fade">
+        <img src="https://cdn.mykiot.vn/2021/04/161724737338b95a8a2346880ad73e88fb6ff03e98.jpg">
+      </div>
+      
+      <a class="prev" onclick="plusSlides(-1)">❮</a>
+      <a class="next" onclick="plusSlides(1)">❯</a>
+    </div>
+    <br>
+    <div style="text-align:center">
+      <span class="dot" onclick="currentSlide(1)"></span> 
+      <span class="dot" onclick="currentSlide(2)"></span> 
+      <span class="dot" onclick="currentSlide(3)"></span> 
+    </div>
+
+    <script>
+      let slideIndex = 1;
+      showSlides(slideIndex);
+      
+      function plusSlides(n) {
+        showSlides(slideIndex += n);
+      }
+      
+      function currentSlide(n) {
+        showSlides(slideIndex = n);
+      }
+      
+      function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}    
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";  
+        }
+        for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " active";
+      }
+      </script>
+  </div>
+
+  <main>
+    <div class="flash-deal-board" style="padding-top: 50px;">
+      <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
+        <div class="title">
+          <i class="fi fi-sr-flame"></i>
+          <p class="main-title"><b>FLASH DEAL</b></p>
+        </div>
+        <div class="see-more-icon">
+          <p class="see-more-icon-title">Xem Tất Cả</p>
+          <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+        </div>
+      </div>
+      
+      <div class="flash-deal-products">
+        <div class="product">
+          <img src="pics/1.jpg" alt="" id="product-1">
+          <p id="product-price">100.000</p>
+          <p id="product-details">Sữa Rửa Mặt CeraVe Cho Da Thường Đến Khô 473ml</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span> 
+        </div>
+
+        <div class="product">
+          <img src="pics/2.jpg" alt="" id="product-2">
+          <p id="product-price">100.000</p>
+          <p id="product-details">Gel Rửa Mặt Cosrx Tràm Trà, 0.5% Độ pH Thấp 150ml</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+
+        <div class="product">
+          <img src="pics/3.jpg" alt="" id="product-3">
+          <p id="product-price">100.000</p>
+          <p id="product-details">Kem nền che khuyết điểm Dermacol</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+
+        <div class="product">
+          <img src="pics/5.jpg" alt="" id="product-4">
+          <p id="product-price">100.000</p>
+          <p id="product-details">Nước Tẩy Trang Bioderma Dành Cho Da Nhạy Cảm 500ml</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+        
+        <div class="product">
+          <img src="pics/6.jpg" alt="" id="product-5">
+          <p id="product-price">100.000</p>
+          <p id="product-details">Mặt Nạ Tẩy Tế Bào Chết Huxley 30g</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+
+        <a class="prev-product">❮</a>
+        <a class="next-product">❯</a>
+      </div>
+    </div>
+
+    <div class="hot-products-board" style="padding-top: 50px;">
+      <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
+        <div class="title">
+          <i class="fi fi-sr-flame"></i>
+          <p class="main-title"><b>SẢN PHẨM HOT</b></p>
+        </div>
+        <div class="see-more-icon">
+          <p class="see-more-icon-title">Xem Tất Cả</p>
+          <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+        </div>
+      </div>
+      
+      <div class="hot-products">
+        <div class="product">
+          <img src="pics/7.jpg" alt="" id="product-1" >
+          <p id="product-price">100.000</p>
+          <p id="product-details">Sữa Rửa Mặt innisfree Dịu Nhẹ Chiết Xuất Trà Xanh 150g (Mới)</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+
+        <div class="product">
+          <img src="pics/8.jpg" alt="" id="product-2" >
+          <p id="product-price">100.000</p>
+          <p id="product-details">Kem Chống Nắng La Roche-Posay Kiểm Soát Dầu SPF50+ 50ml</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+
+        <div class="product">
+          <img src="pics/9.jpg" alt="" id="product-3" >
+          <p id="product-price">100.000</p>
+          <p id="product-details">Kem Dưỡng La Roche-Posay Làm Dịu, Hỗ Trợ Phục Hồi Da 40ml</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+
+        <div class="product">
+          <img src="pics/10.jpg" alt="" id="product-4" >
+          <p id="product-price">100.000</p>
+          <p id="product-details">Nước Tẩy Trang innisfree Dưỡng Ẩm Da 300ml</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+
+        <div class="product">
+          <img src="pics/11.jpg" alt="" id="product-5" >
+          <p id="product-price">100.000</p>
+          <p id="product-details">Phấn Nước Che Phủ Hoàn Hảo LIME Real Cover Pink Cushion & V Collagen Ample SPF 50+/PA+++ 20g</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+        <a class="prev-product">❮</a>
+        <a class="next-product">❯</a>
+      </div>
+    </div>
+
+    <div class="content-board" style="padding-top: 50px;">
+      <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
+        <div class="title">
+          <i class="fi fi-sr-flame"></i>
+          <p class="main-title"><b>SẢN PHẨM CHÍNH</b></p>
+        </div>
+        <div class="see-more-icon">
+          <p class="see-more-icon-title">Xem Tất Cả</p>
+          <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+        </div>
+      </div>
+
+      <div class="products">
+        <div class="product">
+          <img src="pics/12.jpg" alt="" id="product-1">
+          <p id="product-price">100.000</p>
+          <p id="product-details">Phấn Phủ TFS Oil Clear Smooth & Bright Pact SPF30 PA++</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+
+        <div class="product">
+          <img src="pics/13.jpg" alt="" id="product-2">
+          <p id="product-price">100.000</p>
+          <p id="product-details">Nước Hoa Hồng Kiềm Dầu Green Tea Balancing Skin EX Innisfree( Mẫu mới )</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+
+        <div class="product">
+          <img src="pics/14.jpg" alt="" id="product-3">
+          <p id="product-price">100.000</p>
+          <p id="product-details">Kem nền BB Power V201 The Face Shop 40ml</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+
+        <div class="product">
+          <img src="pics/15.jpg" alt="" id="product-4">
+          <p id="product-price">100.000</p>
+          <p id="product-details">Kem Dưỡng SVR Giảm Mụn & Loại Bỏ Dầu Cho Da 40ml</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+
+        <div class="product">
+          <img src="pics/16.jpg" alt="" id="product-5">
+          <p id="product-price">100.000</p>
+          <p id="product-details">Kem Kiểm Soát Dầu Nhờn Floslek Anti Acne Mattifying Cream 50ml Cho Da Sạch Mụn</p>
+          <span class="product-button">
+            <div>
+              <i class="fi fi-rr-shopping-cart-add"></i> 
+            </div>
+            <div>
+              <i class="fi fi-rr-heart"></i>
+            </div> 
+          </span>
+        </div>
+        <a class="prev-product">❮</a>
+        <a class="next-product">❯</a>
+      </div>
+    </div>
+
+    <span class="see-more-button">
+      <button>Xem thêm</button>
+    </span>
+
+    <div class="dropup">
+      <span>
+        <i class="fi fi-sr-circle-phone-flip"></i>
+      </span>
+      <div class="dropup-content">
+        <div class="content">
+          <a href="https://www.facebook.com/bunnylylyyy"><img src="https://static.vecteezy.com/system/resources/previews/022/488/748/non_2x/3d-render-meta-chat-messenger-facebook-messenger-icon-bubble-isolated-on-transparent-background-free-png.png" /></a>
+        </div>
+        <div class="content">
+          <a href="https://www.facebook.com/bunnylylyyy"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png" /></a>
+        </div>               
+        <div class="content">
+          <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-Zalo-Arc.png" alt="loading" style="width: 30px;"/>
+        </div> 
+      </div>              
+    </div>    
+  </main>
+  
+  <footer>
+    <div class="information">
+      <div class="commitment-information">
+        <img src="pics/full_logo.jpg" />
+        <p>Bunny Store là cửa hàng mỹ phẩm chính hãng uy tín và dịch vụ chăm sóc khách hàng tận tâm. Đến với Bunny Store, bạn có thể hoàn toàn yên tâm chọn cho mình bộ sản phẩm phù hợp và ưng ý từ các nhãn hàng nổi tiếng trên toàn thế giới.</p>
+      </div>
+      <div class="policy-information">
+        <p>Chính sách</p>
+        <ul>
+          <li>Chính sách và giao nhận thanh toán</li>
+          <li>Chính sách bảo mật thông tin cá nhân</li>
+          <li>Chính sách đổi trả sản phẩm</li>
+          <li>Điều khoản sử dụng</li>
+          <li>Chính sách và quy định chung</li>
+          <li>Khách hàng thân thiết</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
