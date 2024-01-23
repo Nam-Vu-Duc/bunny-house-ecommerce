@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="img/4.jpg" />
   <link rel="stylesheet" href="/css/index.css">
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,18 +12,24 @@
   <title>Cửa hàng bán lẻ mỹ phẩm chính hãng</title>
 </head>
 <body>
-  <div>
+  <header>
     {{> header}}
-
+  </header>
+  
+  <nav>
     {{> navigate}}
-
+  </nav>
+  
+  <div class="advertisement">
     {{> advertise}}
-
-    <div>
-      {{{body}}}
-    </div>
-
-    {{> footer}}
   </div>
+  
+  <main>
+    {{{body}}}
+  </main>
+
+  <footer>
+    {{> footer}}
+  </footer>
 </body>
 </html>
