@@ -50,16 +50,15 @@ header {
   z-index: 2;
 
   .store-logo {
-    width: 75px;
-    height: 75px;
+    max-width: 75px;
+    aspect-ratio: 1 / 1;
     position: relative;
     display: inline-block;
-    margin-left: 50px;
-    margin-right: 50px;
+    padding: 0 10px 0 10px;
 
     .image-front {
-      width: 75px;
-      height: 75px;
+      max-width: 75px;
+      aspect-ratio: 1 / 1;
     }
 
     .image-back {
@@ -81,10 +80,11 @@ header {
   }
 
   #search-bar {
-    border-radius: 24px; 
+    border-radius: 10px; 
     height: 50px;
-    width: 500px;
+    width: 100%;
     border-style: none;
+    resize: vertical;
   }
   
   .search-bar i {
@@ -102,6 +102,8 @@ header {
   }
   
   .header-button {
+    padding: 0 10px 0 10px; 
+
     i {
       font-size: 40px;
       cursor: pointer;
@@ -121,7 +123,7 @@ header {
     display: inline-block;
   
     .avatar {
-      display: none;
+      display: none; 
       position: absolute;
       align-items: center;
       justify-content: center;
@@ -159,6 +161,15 @@ header {
   }
 }
 
+@media screen and (max-width: 700px) {
+  .header-button {
+    i {
+      display: none;
+    };
+  };
+}
+
+
 /* CSS navigation bar */
 nav {
   background-color: #D1A6A6;
@@ -192,13 +203,14 @@ nav {
       display: none;
       position: absolute;
       background-color: white;
-      min-width: 217px;
+      width: 100%;
       z-index: 1;
+      top: 70px;
   
       .dropdown-content-dropright {
         position: relative;
         display: inline-block;
-        width: 217px;
+        width: 100%;
   
         .content {
           padding: 10px;
@@ -226,7 +238,7 @@ nav {
         
         .content-animation:hover {
           background-color: #FFDFDF;
-          width: 217px;
+          width: 100%;
         }
       }
     };
@@ -235,10 +247,10 @@ nav {
       display: none;
       position: absolute;
       background-color: white;
-      width: 217px;
+      width: 100%;
       z-index: 1;
       top: 0px;
-      left: 217px;
+      left: 100%;
     }
     
     .dropdown-content-dropright:hover .dropdown-content-dropright-content {
@@ -268,11 +280,14 @@ nav {
   .slideshow-container {
     position: relative;
     margin: auto;
+    display: flex;
+    justify-content: center;
   
     img {
       vertical-align: middle;
-      width: 100%;
-      max-height: 350px;
+      max-width: 100%;
+      height: auto;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     };
   
     .prev, .next {
@@ -294,6 +309,11 @@ nav {
       right: 0;
       border-radius: 3px 0 0 3px;
     };
+
+    .prev {
+      left: 0;
+      border-radius: 3px 0 0 3px;
+    }
   };
 
   .dot {
@@ -383,9 +403,13 @@ nav {
   align-items: center;
   cursor: pointer;
   gap: 5px;
-  height: 450px;
+  height: auto;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(11.25rem, 100%), 1fr));
+  
 
-  img { width: 220px; height: 250px };
+  img { max-width: 100%; aspect-ratio: 1 / 1 };
 
   .prev-product {
     position: absolute;
@@ -425,18 +449,18 @@ nav {
     color: white;
   }
 
+  .product {
+    background-color: white; 
+    aspect-ratio: 9 / 16;
+    padding: 5px 12px 5px 12px;
+  };
+
   .product:hover {
     border: 1.5px solid red;
     border-radius: 5px;
     box-shadow: 1rem black;
     scale: 1.05;
-  };
-
-  .product {
-    background-color: white; 
-    max-width: 20%; 
-    padding: 0 12px 10px 12px;
-    height: 400px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 }
 
@@ -448,16 +472,12 @@ nav {
   align-items: center;
   cursor: pointer;
   gap: 5px;
-  height: 450px;
+  height: auto;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(11.25rem, 100%), 1fr));
 
-  img { width: 220px; height: 250px };
-
-  .product:hover {
-    border: 1.5px solid red;
-    border-radius: 5px;
-    box-shadow: 1rem black;
-    scale: 1.05;
-  };
+  img { max-width: 100%; aspect-ratio: 1 / 1 };
 
   .prev-product {
     position: absolute;
@@ -497,13 +517,19 @@ nav {
     color: white;
   }
 
-
   .product {
-    background-color: white; 
-    max-width: 20%; 
-    padding: 0 12px 10px 12px;
-    height: 400px;
-  }
+    background-color: white;  
+    aspect-ratio: 9 / 16;
+    padding: 5px 12px 5px 12px;
+  };
+
+  .product:hover {
+    border: 1.5px solid red;
+    border-radius: 5px;
+    box-shadow: 1rem black;
+    scale: 1.05;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  };
 }
 
 .products {
@@ -514,69 +540,32 @@ nav {
   align-items: center;
   cursor: pointer;
   gap: 5px;
-  height: 450px;
+  height: auto;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(11.25rem, 100%), 1fr));
 
-  img { width: 220px; height: 250px };
+  img { max-width: 100%; aspect-ratio: 1 / 1 };
 
-  .prev-product {
-    position: absolute;
-    padding: 10px;
-    left: 0;
-    background-color: white;
-    color: #D1A6A6;
-    border-radius: 50%;
-    width: 10px;
-    height: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .product {
+    background-color: white;  
+    aspect-ratio: 9 / 16;
+    padding: 5px 12px 5px 12px;
   };
-
-  .prev-product:hover {
-    background-color: #D1A6A6;
-    color: white;
-  }
-
-  .next-product {
-    position: absolute;
-    padding: 10px;
-    right: 0;
-    background-color: white;
-    color: #D1A6A6;
-    border-radius: 50%;
-    width: 10px;
-    height: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  };
-
-  .next-product:hover {
-    background-color: #D1A6A6;
-    color: white;
-  }
-
 
   .product:hover {
     border: 1.5px solid red;
     border-radius: 5px;
     box-shadow: 1rem black;
     scale: 1.05;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   };
-
-  .product {
-    background-color: white; 
-    max-width: 20%; 
-    padding: 0 12px 10px 12px;
-    height: 400px;
-  }
 } 
 
 #product-details {
   display: flex; 
   height: 50px; 
   text-overflow: ellipsis; 
-  width: 220px; 
   overflow: hidden;
   word-wrap: break-word;
   font-size: 14px;

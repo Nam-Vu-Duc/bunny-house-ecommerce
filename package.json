@@ -1,0 +1,26 @@
+{
+  "name": "cosmetic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nam-Vu-Duc/bunnyStore.git"
+  },
+  "author": "NAM-VU",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nam-Vu-Duc/bunnyStore/issues"
+  },
+  "homepage": "https://github.com/Nam-Vu-Duc/bunnyStore#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
