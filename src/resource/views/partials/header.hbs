@@ -4,12 +4,21 @@
 </div>
 
 <div class="search-bar" style="width: 50%; position: relative;">
-  <input
-  id="search-bar"
-  type="text" 
-  placeholder="nhập mã hàng, tên sản phẩm để tìm kiếm">
-  <i class="fi fi-br-search" ></i>
+  <form method="get" action="">
+    <input
+      id="search-input"
+      type="text" 
+      class="form-control"
+      placeholder="nhập mã hàng, tên sản phẩm để tìm kiếm"
+      name="q"
+    >
+
+    <button type="submit" class="btn btn-primary">
+      <i class="fi fi-br-search" ></i>
+    </button>
+  </form>
 </div>
+  
 
 <div class="header-button">
   <i class="fi fi-rr-shopping-cart-add"></i>

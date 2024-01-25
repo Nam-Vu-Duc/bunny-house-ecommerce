@@ -1,0 +1,133 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #FFDFDF;
+  z-index: 2;
+
+  .store-logo {
+    max-width: 75px;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    display: inline-block;
+    padding: 0 10px 0 10px;
+
+    .image-front {
+      max-width: 75px;
+      aspect-ratio: 1 / 1;
+    }
+
+    .image-back {
+      height: 75px;
+      display: none;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+    }
+  };
+
+  .store-logo:hover {
+    .image-back {
+      display: inline;
+    }
+    .image-front {
+      display: none;
+    }
+  }
+
+  #search-input {
+    border-radius: 10px; 
+    height: 50px;
+    width: 100%;
+    border-style: none;
+    resize: vertical;
+  }
+  
+  .search-bar button {
+    font-size: 15px; 
+    padding: 0; 
+    background-color: transparent;
+    border-style: none;
+    align-items: center; 
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  input {
+    text-indent: 20px;
+  }
+  
+  .header-button {
+    padding: 0 10px 0 10px; 
+
+    i {
+      font-size: 40px;
+      cursor: pointer;
+      padding: 10px;
+    }
+  
+    img {
+      border-radius: 50%;
+      width: 40px;
+      border: 2px solid black;
+      cursor: pointer;
+    }
+  }
+    
+  .dropdown-avatar {
+    position: relative;
+    display: inline-block;
+  
+    .avatar {
+      display: none; 
+      position: absolute;
+      align-items: center;
+      justify-content: center;
+      width: 150px;
+      background-color: white;
+      left: -55px;
+      cursor: pointer;
+      border-radius: 5px;
+      a { text-decoration: none; color: black }
+    };
+  
+    .avatar-content {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      width: 150px;
+    };
+  
+    .avatar-animation {
+      width: 0;
+      background: #FFDFDF;
+      transition: width 0.5s;
+    };
+  
+    .avatar-animation:hover {
+      background-color: #FFDFDF;
+      width: 150px;
+    }
+  
+    div:hover > a { color: red }
+  }
+  
+  .dropdown-avatar:hover .avatar {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .header-button {
+    i {
+      display: none;
+    };
+  };
+}

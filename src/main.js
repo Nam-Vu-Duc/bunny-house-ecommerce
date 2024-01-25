@@ -1,8 +1,3 @@
-// dark-mode toggle
-// function myFunction() {
-//   var element = document.body;
-//   element.classList.toggle("dark-mode");
-// }
 const express = require('express')
 const morgan = require('morgan')
 const handlebars = require('express-handlebars')
@@ -10,7 +5,14 @@ const path = require('path')
 const app = express()
 const port = 3000
 
+const route = require('./routes')
+
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.use(express.urlencoded({
+  extended: true
+}))
+app.use(express.json())
 
 app.use(morgan('combined'))
 
@@ -20,14 +22,9 @@ app.engine('hbs', handlebars.engine({
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'resource', 'views'))
 
-app.get('/home', (req, res) => {
-  res.render('home')
-})
-
-app.get('/products', (req, res) => {
-  res.render('products')
-})
+//route 
+route(app)
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Example app listening at http://localhost:${port}/home`)
 })

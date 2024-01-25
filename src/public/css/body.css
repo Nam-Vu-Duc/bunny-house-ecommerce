@@ -1,0 +1,74 @@
+@import url('https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-straight/css/uicons-regular-straight.css');
+@import url('https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.1.0/uicons-brands/css/uicons-brands.css');
+@import url('https://cdn-uicons.flaticon.com/2.1.0/uicons-brands/css/uicons-brands.css');
+
+body {
+  background-color: #FFDFDF;
+  font-family: 'Roboto', sans-serif;
+}
+
+.dark-mode {
+  background-color: #2d3436;
+  color: #D1A6A6;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFDFDF; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #D1A6A6;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D1A6A6;
+}
+
+/* CSS contact-information */
+.dropup {
+  position: relative;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: 0;
+  bottom: 5px;
+  right: 5px;
+  position: fixed;
+
+  i { font-size: 50px; background-color: transparent };
+
+  .dropup-content {
+    display: none;
+    position: absolute;
+    width: 50px;
+    z-index: 1;
+    bottom: 60px;
+
+    .content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding-bottom: 10px;
+      img { width: 30px }
+    };
+  }
+}
+
+.dropup:hover .dropup-content {
+  display: block;
+}
+
+
