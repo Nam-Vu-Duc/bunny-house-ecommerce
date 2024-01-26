@@ -1,4 +1,8 @@
-<div class="flash-deal-board" style="padding-top: 50px;">
+  <div class="advertisement">
+    {{> advertise}}
+  </div>
+
+<div class="flash-deal-board">
   <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
     <div class="title">
       <i class="fi fi-sr-flame"></i>
@@ -11,10 +15,11 @@
   </div>
   
   <div class="flash-deal-products">
+    {{#each data}}
     <div class="product">
       <img src="img/1.jpg" alt="" id="product-1">
-      <p id="product-price">100.000</p>
-      <p id="product-details">Sữa Rửa Mặt CeraVe Cho Da Thường Đến Khô 473ml</p>
+      <p id="product-price">{{this.price}}</p>
+      <p id="product-details">{{this.name}}</p>
       <span class="product-button">
         <div>
           <i class="fi fi-rr-shopping-cart-add"></i> 
@@ -24,69 +29,11 @@
         </div> 
       </span> 
     </div>
-
-    <div class="product">
-      <img src="img/2.jpg" alt="" id="product-2">
-      <p id="product-price">100.000</p>
-      <p id="product-details">Gel Rửa Mặt Cosrx Tràm Trà, 0.5% Độ pH Thấp 150ml</p>
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span>
-    </div>
-
-    <div class="product">
-      <img src="img/3.jpg" alt="" id="product-3">
-      <p id="product-price">100.000</p>
-      <p id="product-details">Kem nền che khuyết điểm Dermacol</p>
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span>
-    </div>
-
-    <div class="product">
-      <img src="img/5.jpg" alt="" id="product-4">
-      <p id="product-price">100.000</p>
-      <p id="product-details">Nước Tẩy Trang Bioderma Dành Cho Da Nhạy Cảm 500ml</p>
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span>
-    </div>
-    
-    <div class="product">
-      <img src="img/6.jpg" alt="" id="product-5">
-      <p id="product-price">100.000</p>
-      <p id="product-details">Mặt Nạ Tẩy Tế Bào Chết Huxley 30g</p>
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span>
-    </div>
-
-    <a class="prev-product">❮</a>
-    <a class="next-product">❯</a>
+    {{/each}}
   </div>
 </div>
 
-<div class="hot-products-board" style="padding-top: 50px;">
+<div class="hot-products-board">
   <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
     <div class="title">
       <i class="fi fi-sr-flame"></i>
@@ -112,68 +59,10 @@
         </div> 
       </span>
     </div>
-
-    <div class="product">
-      <img src="img/8.jpg" alt="" id="product-2" >
-      <p id="product-price">100.000</p>
-      <p id="product-details">Kem Chống Nắng La Roche-Posay Kiểm Soát Dầu SPF50+ 50ml</p>
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span>
-    </div>
-
-    <div class="product">
-      <img src="img/9.jpg" alt="" id="product-3" >
-      <p id="product-price">100.000</p>
-      <p id="product-details">Kem Dưỡng La Roche-Posay Làm Dịu, Hỗ Trợ Phục Hồi Da 40ml</p>
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span>
-    </div>
-
-    <div class="product">
-      <img src="img/10.jpg" alt="" id="product-4" >
-      <p id="product-price">100.000</p>
-      <p id="product-details">Nước Tẩy Trang innisfree Dưỡng Ẩm Da 300ml</p>
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span>
-    </div>
-
-    <div class="product">
-      <img src="img/11.jpg" alt="" id="product-5" >
-      <p id="product-price">100.000</p>
-      <p id="product-details">Phấn Nước Che Phủ Hoàn Hảo LIME Real Cover Pink Cushion & V Collagen Ample SPF 50+/PA+++ 20g</p>
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span>
-    </div>
-    <a class="prev-product">❮</a>
-    <a class="next-product">❯</a>
   </div>
 </div>
 
-<div class="content-board" style="padding-top: 50px;">
+<div class="content-board">
   <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
     <div class="title">
       <i class="fi fi-sr-flame"></i>
@@ -190,62 +79,6 @@
       <img src="img/12.jpg" alt="" id="product-1">
       <p id="product-price">100.000</p>
       <p id="product-details">Phấn Phủ TFS Oil Clear Smooth & Bright Pact SPF30 PA++</p>
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span>
-    </div>
-
-    <div class="product">
-      <img src="img/13.jpg" alt="" id="product-2">
-      <p id="product-price">100.000</p>
-      <p id="product-details">Nước Hoa Hồng Kiềm Dầu Green Tea Balancing Skin EX Innisfree( Mẫu mới )</p>
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span>
-    </div>
-
-    <div class="product">
-      <img src="img/14.jpg" alt="" id="product-3">
-      <p id="product-price">100.000</p>
-      <p id="product-details">Kem nền BB Power V201 The Face Shop 40ml</p>
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span>
-    </div>
-
-    <div class="product">
-      <img src="img/15.jpg" alt="" id="product-4">
-      <p id="product-price">100.000</p>
-      <p id="product-details">Kem Dưỡng SVR Giảm Mụn & Loại Bỏ Dầu Cho Da 40ml</p>
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span>
-    </div>
-
-    <div class="product">
-      <img src="img/16.jpg" alt="" id="product-5">
-      <p id="product-price">100.000</p>
-      <p id="product-details">Kem Kiểm Soát Dầu Nhờn Floslek Anti Acne Mattifying Cream 50ml Cho Da Sạch Mụn</p>
       <span class="product-button">
         <div>
           <i class="fi fi-rr-shopping-cart-add"></i> 

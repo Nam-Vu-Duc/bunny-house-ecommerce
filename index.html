@@ -4,7 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="pics/4.jpg" />
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="src/public/css/advertise.css">
+  <link rel="stylesheet" href="src/public/css/footer.css">
+  <link rel="stylesheet" href="src/public/css/header.css">
+  <link rel="stylesheet" href="src/public/css/home.css">
+  <link rel="stylesheet" href="src/public/css/navigate.css">
+  <link rel="stylesheet" href="src/public/css/products.css">
+  <link rel="stylesheet" href="src/public/css/body.css">
   <script src="main.js"></script>
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -166,342 +172,81 @@
     </div>
   </nav>
 
-  <div class="advertisement">
-    <div class="slideshow-container">
-      <div class="mySlides fade">
-        <img src="https://cdn.mykiot.vn/2020/12/1609318855e1254ebb9274cc71451b02645764ea62.jpg">
-      </div>
-      
-      <div class="mySlides fade">
-        <img src="https://cdn.mykiot.vn/2021/01/1611024895f38363ff341b767a423b38c15b036ed0.jpg">
-      </div>
-      
-      <div class="mySlides fade">
-        <img src="https://cdn.mykiot.vn/2021/04/161724737338b95a8a2346880ad73e88fb6ff03e98.jpg">
-      </div>
-      
-      <a class="prev" onclick="plusSlides(-1)">❮</a>
-      <a class="next" onclick="plusSlides(1)">❯</a>
-    </div>
-    <br>
-    <div style="text-align:center">
-      <span class="dot" onclick="currentSlide(1)"></span> 
-      <span class="dot" onclick="currentSlide(2)"></span> 
-      <span class="dot" onclick="currentSlide(3)"></span> 
-    </div>
-
-    <script>
-      let slideIndex = 1;
-      showSlides(slideIndex);
-      
-      function plusSlides(n) {
-        showSlides(slideIndex += n);
-      }
-      
-      function currentSlide(n) {
-        showSlides(slideIndex = n);
-      }
-      
-      function showSlides(n) {
-        let i;
-        let slides = document.getElementsByClassName("mySlides");
-        let dots = document.getElementsByClassName("dot");
-        if (n > slides.length) {slideIndex = 1}    
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";  
-        }
-        for (i = 0; i < dots.length; i++) {
-          dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex-1].style.display = "block";  
-        dots[slideIndex-1].className += " active";
-      }
-      </script>
-  </div>
-
-  <main>
-    <div class="flash-deal-board" style="padding-top: 50px;">
-      <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
-        <div class="title">
-          <i class="fi fi-sr-flame"></i>
-          <p class="main-title"><b>FLASH DEAL</b></p>
+  <div class="product-details">
+    <div class="table">
+      <div class="image-box">
+        <div class="thumbnails">
+          <img src="src/public/img/1.jpg" />
+          <img src="src/public/img/1.jpg" />
+          <img src="src/public/img/1.jpg" />
+          <img src="src/public/img/1.jpg" />
+          <img src="src/public/img/1.jpg" />
         </div>
-        <div class="see-more-icon">
-          <p class="see-more-icon-title">Xem Tất Cả</p>
-          <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+
+        <div class="image">
+          <img src="src/public/img/1.jpg" />
         </div>
       </div>
       
-      <div class="flash-deal-products">
-        <div class="product">
-          <img src="pics/1.jpg" alt="" id="product-1">
-          <p id="product-price">100.000</p>
-          <p id="product-details">Sữa Rửa Mặt CeraVe Cho Da Thường Đến Khô 473ml</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span> 
+      <div class="details-box">
+        <div class="brand">
+          <p>CeraVe</p>
         </div>
 
-        <div class="product">
-          <img src="pics/2.jpg" alt="" id="product-2">
-          <p id="product-price">100.000</p>
-          <p id="product-details">Gel Rửa Mặt Cosrx Tràm Trà, 0.5% Độ pH Thấp 150ml</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
+        <div class="name">
+          <p>Sữa Rửa Mặt CeraVe Cho Da Thường Đến Khô 473ml</p>
         </div>
-
-        <div class="product">
-          <img src="pics/3.jpg" alt="" id="product-3">
-          <p id="product-price">100.000</p>
-          <p id="product-details">Kem nền che khuyết điểm Dermacol</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
-        </div>
-
-        <div class="product">
-          <img src="pics/5.jpg" alt="" id="product-4">
-          <p id="product-price">100.000</p>
-          <p id="product-details">Nước Tẩy Trang Bioderma Dành Cho Da Nhạy Cảm 500ml</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
+  
+        <div class="price">
+          <p>300.000</p>
         </div>
         
-        <div class="product">
-          <img src="pics/6.jpg" alt="" id="product-5">
-          <p id="product-price">100.000</p>
-          <p id="product-details">Mặt Nạ Tẩy Tế Bào Chết Huxley 30g</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
+        <div class="details">
+          <p>Sữa Rửa Mặt Cerave Hydrating Cleanser giúp loại bỏ bụi bẩn, dầu thừa, nhẹ nhàng lấy đi lớp kem chống nắng, trang điểm nhưng vẫn giữ hàng rào bảo vệ da và không làm mất đi độ ẩm tự nhiên. Sữa rửa mặt dịu nhẹ với các thành phần như Ceramides và Axit Hyaluronic có tác dụng khôi phục hàng rào tự nhiên của da và dưỡng da ẩm mịn.</p>
         </div>
 
-        <a class="prev-product">❮</a>
-        <a class="next-product">❯</a>
-      </div>
-    </div>
-
-    <div class="hot-products-board" style="padding-top: 50px;">
-      <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
-        <div class="title">
-          <i class="fi fi-sr-flame"></i>
-          <p class="main-title"><b>SẢN PHẨM HOT</b></p>
-        </div>
-        <div class="see-more-icon">
-          <p class="see-more-icon-title">Xem Tất Cả</p>
-          <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
-        </div>
-      </div>
-      
-      <div class="hot-products">
-        <div class="product">
-          <img src="pics/7.jpg" alt="" id="product-1" >
-          <p id="product-price">100.000</p>
-          <p id="product-details">Sữa Rửa Mặt innisfree Dịu Nhẹ Chiết Xuất Trà Xanh 150g (Mới)</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
-        </div>
-
-        <div class="product">
-          <img src="pics/8.jpg" alt="" id="product-2" >
-          <p id="product-price">100.000</p>
-          <p id="product-details">Kem Chống Nắng La Roche-Posay Kiểm Soát Dầu SPF50+ 50ml</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
-        </div>
-
-        <div class="product">
-          <img src="pics/9.jpg" alt="" id="product-3" >
-          <p id="product-price">100.000</p>
-          <p id="product-details">Kem Dưỡng La Roche-Posay Làm Dịu, Hỗ Trợ Phục Hồi Da 40ml</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
-        </div>
-
-        <div class="product">
-          <img src="pics/10.jpg" alt="" id="product-4" >
-          <p id="product-price">100.000</p>
-          <p id="product-details">Nước Tẩy Trang innisfree Dưỡng Ẩm Da 300ml</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
-        </div>
-
-        <div class="product">
-          <img src="pics/11.jpg" alt="" id="product-5" >
-          <p id="product-price">100.000</p>
-          <p id="product-details">Phấn Nước Che Phủ Hoàn Hảo LIME Real Cover Pink Cushion & V Collagen Ample SPF 50+/PA+++ 20g</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
-        </div>
-        <a class="prev-product">❮</a>
-        <a class="next-product">❯</a>
-      </div>
-    </div>
-
-    <div class="content-board" style="padding-top: 50px;">
-      <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
-        <div class="title">
-          <i class="fi fi-sr-flame"></i>
-          <p class="main-title"><b>SẢN PHẨM CHÍNH</b></p>
-        </div>
-        <div class="see-more-icon">
-          <p class="see-more-icon-title">Xem Tất Cả</p>
-          <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
-        </div>
-      </div>
-
-      <div class="products">
-        <div class="product">
-          <img src="pics/12.jpg" alt="" id="product-1">
-          <p id="product-price">100.000</p>
-          <p id="product-details">Phấn Phủ TFS Oil Clear Smooth & Bright Pact SPF30 PA++</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
-        </div>
-
-        <div class="product">
-          <img src="pics/13.jpg" alt="" id="product-2">
-          <p id="product-price">100.000</p>
-          <p id="product-details">Nước Hoa Hồng Kiềm Dầu Green Tea Balancing Skin EX Innisfree( Mẫu mới )</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
-        </div>
-
-        <div class="product">
-          <img src="pics/14.jpg" alt="" id="product-3">
-          <p id="product-price">100.000</p>
-          <p id="product-details">Kem nền BB Power V201 The Face Shop 40ml</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
-        </div>
-
-        <div class="product">
-          <img src="pics/15.jpg" alt="" id="product-4">
-          <p id="product-price">100.000</p>
-          <p id="product-details">Kem Dưỡng SVR Giảm Mụn & Loại Bỏ Dầu Cho Da 40ml</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
-        </div>
-
-        <div class="product">
-          <img src="pics/16.jpg" alt="" id="product-5">
-          <p id="product-price">100.000</p>
-          <p id="product-details">Kem Kiểm Soát Dầu Nhờn Floslek Anti Acne Mattifying Cream 50ml Cho Da Sạch Mụn</p>
-          <span class="product-button">
-            <div>
-              <i class="fi fi-rr-shopping-cart-add"></i> 
-            </div>
-            <div>
-              <i class="fi fi-rr-heart"></i>
-            </div> 
-          </span>
+        <div class="button">
+          <div>
+            <i class="fi fi-rr-shopping-cart-add"></i> 
+          </div>
+          <div>
+            <i class="fi fi-rr-heart"></i>
+          </div>
         </div>
       </div>
     </div>
 
-    <span class="see-more-button">
-      <button>Xem thêm</button>
-    </span>
+  </div>
 
-    <div class="dropup">
-      <span>
-        <i class="fi fi-sr-circle-phone-flip"></i>
-      </span>
-      <div class="dropup-content">
-        <div class="content">
-          <a href="https://www.facebook.com/bunnylylyyy"><img src="https://static.vecteezy.com/system/resources/previews/022/488/748/non_2x/3d-render-meta-chat-messenger-facebook-messenger-icon-bubble-isolated-on-transparent-background-free-png.png" /></a>
-        </div>
-        <div class="content">
-          <a href="https://www.facebook.com/bunnylylyyy"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png" /></a>
-        </div>               
-        <div class="content">
-          <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-Zalo-Arc.png" alt="loading" style="width: 30px;"/>
-        </div> 
-      </div>              
-    </div>    
-  </main>
+  <div class="product-details-more">
+    <div class="table">
+      <div class="title">
+        <p>Thông tin sản phẩm</p>
+      </div>
+      <div class="details">
+        <p>
+          🤍Loại da phù hợp:
+          •Sản phẩm thích hợp cho da thường đến khô.
+          •Có thể sử dụng cho mặt và toàn thân.
+          •Sản phẩm thích hợp cho cả người lớn và trẻ em.
+          🤍Giải pháp cho tình trạng da:
+          •Da thiếu nước, thiếu ẩm.
+          •Da khô ráp, sần sùi, bong tróc.
+          🤍Ưu thế nổi bật:
+          •Sản phẩm giúp làm sạch bụi bẩn, dầu thừa, lấy đi cặn bã lớp trang điểm còn sót trên da và làm thông thoáng lỗ chân lông nhưng vẫn duy trì độ ẩm cho da.
+          •3 loại Ceramides (1, 3, 6-II) thiết yếu giúp khôi phục hàng rào độ ẩm da.
+          •Công nghệ MVE độc quyền khoá ẩm cho da suốt 24 giờ.
+          •Hyaluronic Acid giúp duy trì độ ẩm tự nhiên của da.
+          🤍 Độ an toàn:
+          •Không xà phòng
+          •Không hương liệu
+          •Không chứa paraben
+          •Không bít tắc lỗ chân lông
+          •Đã được kiểm nghiệm không gây kích ứng.
+        </p>
+      </div>
+    </div>
+  </div>
   
   <footer>
     <div class="information">

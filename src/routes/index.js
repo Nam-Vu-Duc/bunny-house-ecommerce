@@ -1,11 +1,10 @@
 const homeRoute = require('./homeRoute')
+const productRoute = require('./productRoute')
 
 function route(app) {
   app.use('/home', homeRoute)
-  
-  app.get('/products', (req, res) => {
-    res.render('products')
-  })
+
+  app.use('/products', productRoute)
 }
 
 module.exports = route
