@@ -1,0 +1,65 @@
+.handle-products {
+  padding-top: 170px;
+  padding-bottom: 50px;
+  display: flex;
+  justify-content: center;
+
+  form {
+    border: 1px solid black;
+    padding: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .form-title {
+    width: 504px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      font-size: larger;
+      font-weight: bolder;
+      text-transform: uppercase
+    };
+  }
+  
+  .form-group {
+    display: grid;
+    gap: 5px;
+    padding: 5px 10px 5px 10px;
+
+    label {
+    };
+
+    input {
+      max-width: 500px;
+      height: 30px;
+      border-radius: 5px;
+      border-style: none;
+    };
+  }
+
+  .submit-button {
+    width: 504px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0 10px 0;
+  }
+  
+  button {
+    width: 150px; 
+    height: 30px;
+    background-color: white;
+    color: #D1A6A6;
+    border: 1px solid #D1A6A6;
+    border-radius: 5px;
+    cursor: pointer;
+  };
+
+  button:hover {
+    background-color: #D1A6A6;
+    color: white;
+    border: 1px solid white ;
+  }
+}

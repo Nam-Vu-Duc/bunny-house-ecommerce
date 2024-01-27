@@ -1,7 +1,10 @@
+const product = require('../models/productModel')
+
 class productController {
-  // get /product
-  index(req, res) {
-    res.render('products')
+  show(req, res, next) {
+    product.findOne({ slug: req.params.slug }).lean()
+      .then(product => { res.render('users/product', { product }) })
+      .catch(next)
   }
 }
 

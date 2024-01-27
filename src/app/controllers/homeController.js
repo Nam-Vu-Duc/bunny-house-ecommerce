@@ -1,14 +1,10 @@
 const product = require('../models/productModel')
 
 class homeController {
-  // get /home
-  async index(req, res, next) {
-    try {
-      const data = await product.find({}).lean();
-        res.render('home', { data })
-    } catch (err) {
-        res.status(400).json({error: err});
-    }
+  show(req, res, next) {
+    product.find({}).lean()
+      .then(product => { res.render('users/home', { product }) })
+      .catch(next)
   }
 }
 

@@ -1,6 +1,6 @@
-  <div class="advertisement">
-    {{> advertise}}
-  </div>
+<div class="advertisement">
+  {{> advertise}}
+</div>
 
 <div class="flash-deal-board">
   <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
@@ -9,17 +9,55 @@
       <p class="main-title"><b>FLASH DEAL</b></p>
     </div>
     <div class="see-more-icon">
-      <p class="see-more-icon-title">Xem Tất Cả</p>
+      <a href="/all-products" class="see-more-icon-title" style="text-decoration: none;">Xem Tất Cả</a>
       <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
     </div>
   </div>
   
   <div class="flash-deal-products">
-    {{#each data}}
+    {{#each product}}
     <div class="product">
-      <img src="img/1.jpg" alt="" id="product-1">
-      <p id="product-price">{{this.price}}</p>
-      <p id="product-details">{{this.name}}</p>
+      <a href="/product/{{this.slug}}">
+        <img src="img/1.jpg" alt="" id="product-1">
+        <p id="product-price">{{this.price}}</p>
+        <p id="product-details">{{this.name}}</p>
+      </a>
+      
+      <span class="product-button">
+        <div>
+          <i class="fi fi-rr-shopping-cart-add"></i> 
+        </div>
+        <div>
+          <i class="fi fi-rr-heart"></i>
+        </div> 
+      </span> 
+    </div>
+    {{/each}}
+    
+  </div>
+</div>
+
+<div class="hot-products-board">
+  <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
+    <div class="title">
+      <i class="fi fi-sr-flame"></i>
+      <p class="main-title"><b>SẢN PHẨM HOT</b></p>
+    </div>
+    <div class="see-more-icon">
+      <a href="/all-products" class="see-more-icon-title" style="text-decoration: none;">Xem Tất Cả</a>
+      <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+    </div>
+  </div>
+  
+  <div class="hot-products">
+    {{#each product}}
+    <div class="product">
+      <a href="/product/{{this.slug}}">
+        <img src="img/1.jpg" alt="" id="product-1">
+        <p id="product-price">{{this.price}}</p>
+        <p id="product-details">{{this.name}}</p>
+      </a>
+      
       <span class="product-button">
         <div>
           <i class="fi fi-rr-shopping-cart-add"></i> 
@@ -33,35 +71,6 @@
   </div>
 </div>
 
-<div class="hot-products-board">
-  <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
-    <div class="title">
-      <i class="fi fi-sr-flame"></i>
-      <p class="main-title"><b>SẢN PHẨM HOT</b></p>
-    </div>
-    <div class="see-more-icon">
-      <p class="see-more-icon-title">Xem Tất Cả</p>
-      <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
-    </div>
-  </div>
-  
-  <div class="hot-products">
-    <div class="product">
-      <img src="img/7.jpg" alt="" id="product-1" >
-      <p id="product-price">100.000</p>
-      <p id="product-details">Sữa Rửa Mặt innisfree Dịu Nhẹ Chiết Xuất Trà Xanh 150g (Mới)</p>
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span>
-    </div>
-  </div>
-</div>
-
 <div class="content-board">
   <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
     <div class="title">
@@ -69,16 +78,20 @@
       <p class="main-title"><b>SẢN PHẨM CHÍNH</b></p>
     </div>
     <div class="see-more-icon">
-      <p class="see-more-icon-title">Xem Tất Cả</p>
+      <a href="/all-products" class="see-more-icon-title" style="text-decoration: none;">Xem Tất Cả</a>
       <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
     </div>
   </div>
 
   <div class="products">
+    {{#each product}}
     <div class="product">
-      <img src="img/12.jpg" alt="" id="product-1">
-      <p id="product-price">100.000</p>
-      <p id="product-details">Phấn Phủ TFS Oil Clear Smooth & Bright Pact SPF30 PA++</p>
+      <a href="/product/{{this.slug}}">
+        <img src="img/1.jpg" alt="" id="product-1">
+        <p id="product-price">{{this.price}}</p>
+        <p id="product-details">{{this.name}}</p>
+      </a>
+      
       <span class="product-button">
         <div>
           <i class="fi fi-rr-shopping-cart-add"></i> 
@@ -86,8 +99,9 @@
         <div>
           <i class="fi fi-rr-heart"></i>
         </div> 
-      </span>
+      </span> 
     </div>
+    {{/each}}
   </div>
 </div>
 

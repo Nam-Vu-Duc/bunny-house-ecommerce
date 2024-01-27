@@ -1,18 +1,21 @@
-.flash-deal-board, .hot-products-board, .content-board {
+.all-products-board {
+  padding-top: 170px;
   width: 100%;
   overflow: hidden;
+  padding-bottom: 50px;
 }
 
 .title {
   display: flex; 
   align-items: center; 
+  justify-content: center;
   gap: 5px; 
   font-size: 32px;
+  color: red;
 
   .main-title {
     display: inline-block;
     position: relative;
-    color: red;
   }
   
   .main-title::after {
@@ -34,43 +37,8 @@
   }
 }
 
-.see-more-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-
-  .see-more-icon-title {
-    display: inline-block;
-    position: relative;
-    color: red;
-  }
-  
-  .see-more-icon-title::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: red;
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
-  }
-  
-  .see-more-icon-title:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-}
-
-.flash-deal-products, .hot-products, .products {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  overflow-x: scroll;
+.all-products {
   padding-right: 17px;
-  box-sizing: content-box;
   scroll-behavior: smooth;
   align-items: center;
   cursor: pointer;
@@ -78,8 +46,7 @@
   height: auto;
   padding: 15px;
   display: grid;
-  grid-template-columns: repeat(5, minmax(min(11.25rem, 100%), 1fr));
-  scroll-snap-type: x mandatory;
+  grid-template-columns: repeat(auto-fit, minmax(min(11.25rem, 100%), 1fr));
   
   img { max-width: 100%; aspect-ratio: 1 / 1 };
 
@@ -88,7 +55,6 @@
     max-width: 220px;
     aspect-ratio: 9 / 16;
     padding: 5px 12px 5px 12px;
-    scroll-snap-align: none start
   };
   
   .product:hover {
@@ -130,31 +96,4 @@
     background-color: #D1A6A6;
     i { color: white }
   }
-}
-
-.see-more-button {
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  padding: 10px 0 10px 0;
-
-  button {
-    width: 150px; 
-    height: 30px;
-    background-color: white;
-    color: #D1A6A6;
-    border: 1px solid #D1A6A6;
-    border-radius: 5px;
-    cursor: pointer;
-  };
-
-  button:hover {
-    background-color: #D1A6A6;
-    color: white;
-    border: 1px solid white ;
-  }
-}
-
-.flash-deal-products::-webkit-scrollbar, .hot-products::-webkit-scrollbar, .products::-webkit-scrollbar {
-  display: none;
 }
