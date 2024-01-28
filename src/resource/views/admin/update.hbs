@@ -1,0 +1,23 @@
+<div class="update-board">
+  <table style="width:100%">
+    <tr>
+      <th>Id</th>
+      <th>Brand</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th></th>
+    </tr>
+    {{#each product}}
+    <tr>
+      <td>{{addIndex @index 1}}</td>
+      <td>{{this.brand}}</td>
+      <td>{{this.name}}</td>
+      <td>{{this.description}}</td>
+      <td>
+        <a href="/admin/update/{{this._id}}" class="update-button">Sửa</a>
+        <a href="" class="update-button">Xoá</a>
+      </td>
+    </tr>
+    {{/each}}
+  </table>
+</div>

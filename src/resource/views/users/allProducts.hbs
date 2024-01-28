@@ -6,22 +6,22 @@
   
   <div class="all-products">
     {{#each product}}
-    <div class="product">
-      <a href="/product/{{this.slug}}">
-        <img src="img/1.jpg" alt="">
-        <p id="product-price">{{this.price}}</p>
-        <p id="product-details">{{this.name}}</p>
-      </a>
-      
-      <span class="product-button">
-        <div>
-          <i class="fi fi-rr-shopping-cart-add"></i> 
-        </div>
-        <div>
-          <i class="fi fi-rr-heart"></i>
-        </div> 
-      </span> 
-    </div>
+      <div class="product">
+        <a href="/product/{{this.slug}}">
+          <img src="../img/1.jpg" alt="">
+          <p id="product-price">{{this.price}}</p>
+          <p id="product-details">{{this.name}}</p>
+        </a>
+        
+        <span class="product-button">
+          <div>
+            <i class="fi fi-rr-shopping-cart-add"></i> 
+          </div>
+          <div>
+            <i class="fi fi-rr-heart"></i>
+          </div> 
+        </span> 
+      </div>
     {{/each}}
     
   </div>

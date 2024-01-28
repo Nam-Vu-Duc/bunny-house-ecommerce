@@ -1,0 +1,8 @@
+.update-board {
+  padding-top: 170px;
+  padding-bottom: 50px;
+
+  table, th, td {
+    border:1px solid black;
+  }
+}

@@ -1,0 +1,30 @@
+<div class="handle-products">
+  <form method="POST" action="/admin/updated/{{product._id}}?_method=PUT">
+    <div class="form-title">
+      <p>Sửa sản phẩm</p>
+    </div>
+    <div class="form-group">
+      <label for="brand">Sửa hãng sản phẩm</label>
+      <input type="text" class="form-control" value="{{product.brand}}" id="brand" name="brand">
+    </div>
+    <div class="form-group">
+      <label for="name">Sửa tên sản phẩm</label>
+      <input type="text" class="form-control" value="{{product.name}}" id="name" name="name">
+    </div>
+    <div class="form-group">
+      <label for="price">Sửa giá sản phẩm</label>
+      <input type="text" class="form-control" value="{{product.price}}" id="price" name="price">
+    </div>
+    <div class="form-group">
+      <label for="description">Sửa mô tả sản phẩm</label>
+      <textarea type="text" class="form-control" id="description" name="description">{{product.description}}</textarea>
+    </div>
+    <div class="form-group">
+      <label for="details">Sửa chi tiết sản phẩm</label>
+      <textarea type="text" class="form-control" id="details" name="details">{{product.details}}</textarea>
+    </div>
+    <div class="submit-button">
+      <button title="submit" type="submit">Hoàn thành</button>
+    </div>
+  </form>
+</div>
