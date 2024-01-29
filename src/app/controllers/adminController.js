@@ -13,8 +13,10 @@ class adminController {
   }
 
   update(req, res, next) {
-    product.find({}).lean()
-      .then(product => { res.render('admin/update', { product }) })
+    product.find({ deletedAt: null }).lean()
+      .then(product => { 
+        const total = product.length
+        res.render('admin/update', { product, total })})
       .catch(next)
   }
 
@@ -26,8 +28,35 @@ class adminController {
 
   updated(req, res, next) {
     product.updateOne({ _id: req.params.id}, req.body)
-      .then(() => res.redirect('/admin/update'))
+      .then(() => { 
+        res.redirect('/admin/update')})
       .catch(next)
+  }
+
+  delete(req, res, next) {
+    product.updateOne({ _id: req.params.id}, { deletedAt: Date.now() })
+      .then(() => res.redirect('back'))
+      .catch(next)
+  }
+
+  trash(req, res, next) {
+    product.find({ deletedAt: { $ne: null } }).lean()
+      .then(product => { 
+        const total = product.length
+        res.render('admin/trash', { product, total })})
+      .catch(next)
+  }
+
+  formActions(req, res, next) {
+    switch(req.body.action) {
+      case 'delete' : 
+        product.updateMany({ _id: { $in: req.body.courseIds }}, { deletedAt: Date.now() })
+          .then(() => res.redirect('back'))
+          .catch(next)
+        break;
+      default: 
+        res.json({ message: 'action is invalid' })
+    }
   }
 }
 
