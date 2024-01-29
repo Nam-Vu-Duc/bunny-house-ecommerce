@@ -7,7 +7,8 @@ const methodOverride = require('method-override')
 const app = express()
 const route = require('./routes')
 const db = require('./config/db')
-
+const sortMiddleware = require('./app/middleware/sortMiddleware')
+const Handlebars = require('handlebars')
 db.connect()
 
 app.use(express.static(path.join(__dirname, 'public')))
@@ -21,10 +22,34 @@ app.use(morgan('combined'))
 
 app.use(methodOverride('_method'))
 
+app.use(sortMiddleware)
+
 app.engine('hbs', handlebars.engine({
   extname: '.hbs',
   helpers: {
-    addIndex: (a, b) => a + b
+    addIndex: (a, b) => a + b,
+    sortable: (field, _sort) => {
+      const sortType = field === _sort.column ? _sort.type : 'default'
+
+      const icons = {
+        default: 'fi fi-sr-sort',
+        asc: 'fi fi-sr-sort-amount-down',
+        desc: 'fi fi-sr-sort-amount-down-alt'
+      }
+      const types = {
+        default: 'desc',
+        asc: 'desc',
+        desc: 'asc'
+      }
+
+      const icon = icons[sortType]
+      const type = types[sortType]
+
+      const address = Handlebars.escapeExpression(`?_sort&column=${field}&type=${type}`)
+      const output = `<a href="${address}"><i class="${icon}"></i></a>`
+
+      return new Handlebars.SafeString(output)
+    }
   }
 }))
 app.set('view engine', 'hbs')

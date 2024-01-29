@@ -13,7 +13,7 @@ class adminController {
   }
 
   update(req, res, next) {
-    product.find({ deletedAt: null }).lean()
+    product.find({ deletedAt: null }).lean().sortable(req)
       .then(product => { 
         const total = product.length
         res.render('admin/update', { product, total })})

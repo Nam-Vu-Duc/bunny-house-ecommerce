@@ -21,10 +21,21 @@
   <table style="width:100%">
     <tr>
       <th></th>
-      <th>Id</th>
-      <th>Brand</th>
-      <th>Name</th>
-      <th>Description</th>
+      <th>
+        Id
+      </th>
+      <th>
+        Brand
+        {{{sortable 'brand' _sort}}}
+      </th>
+      <th>
+        Name
+        {{{sortable 'name' _sort}}}
+      </th>
+      <th>
+        Description
+        {{{sortable 'description' _sort}}}
+      </th>
       <th></th>
     </tr>
     {{#each product}}
