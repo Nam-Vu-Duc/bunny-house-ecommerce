@@ -1,7 +1,9 @@
 const homeRoute = require('./homeRoute')
 const productRoute = require('./productRoute')
 const adminRoute = require('./adminRoute')
-const allProducts = require('./allProductsRoute')
+const allProductsRoute = require('./allProductsRoute')
+const introduceRoute = require('./introduceRoute')
+const newArrival = require('./newArrivalRoute')
 
 function route(app) {
   app.use('/home', homeRoute)
@@ -10,7 +12,11 @@ function route(app) {
 
   app.use('/admin', adminRoute)
 
-  app.use('/all-products', allProducts)
+  app.use('/all-products', allProductsRoute)
+
+  app.use('/introduce', introduceRoute)
+
+  app.use('/new-arrival', newArrival)
 
 }
 

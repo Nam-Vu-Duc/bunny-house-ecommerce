@@ -1,26 +1,6 @@
-<form class="update-board" name="container" method="post" action="/admin/form-actions">
-  <div class="form-action">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="checkbox-all" onClick="checkAll(this)">
-      <label class="form-check-label" for="checkbox-all">
-        Chọn tất cả
-      </label>
-    </div>
-
-    <select class="form-select" id="formControlSelect" name="action" required>
-      <option value="">--Chọn hành động--</option>
-      <option value="delete">Xoá</option>
-      <option value=""></option>
-      <option value=""></option>
-      <option value=""></option>
-    </select>
-
-    <button class="form-button">Áp dụng</button>
-  </div>
-  
+<div class="update-board" name="container">  
   <table style="width:100%">
     <tr>
-      <th></th>
       <th>
         Id
       </th>
@@ -40,11 +20,6 @@
     </tr>
     {{#each product}}
     <tr>
-      <td>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="{{this._id}}" name="courseIds[]" onclick="check(this)">
-        </div>
-      </td>
       <td>{{addIndex @index 1}}</td>
       <td>{{this.brand}}</td>
       <td>{{this.name}}</td>
@@ -71,7 +46,7 @@
   <p>Tổng sản phẩm</p>
   <p>{{total}}</p>
   <a href="/admin/trash">Thùng rác</a>
-</form>
+</div>
 
 <form name="delete-form" method="post"></form>
 
@@ -89,40 +64,8 @@
 
   // delete action
   deleteButton.onclick = function () {
-    deleteForm.action = '/admin/delete/' + courseId + '?_method=DELETE'
+    deleteForm.action = '/admin/soft-delete/' + courseId + '?_method=DELETE'
     deleteForm.submit()
-  }
-
-  // checkbox all
-  var itemCheckBoxes = document.getElementsByName('courseIds[]')
-  function checkAll(source) {
-    for (let i=0; i < itemCheckBoxes.length; i++) {
-      itemCheckBoxes[i].checked = source.checked
-    }
-  }
-
-  var checkedItem = 0
-  function check(source) {
-    var checkBoxAll = document.getElementById('checkbox-all')
-    if (checkBoxAll.checked) {
-      checkedItem = itemCheckBoxes.length
-    }
-
-    if(source.checked) {
-      checkedItem++
-    } else {
-      checkedItem--
-    }
-    var ifCheckAll = itemCheckBoxes.length === checkedItem
-    checkBoxAll.checked = ifCheckAll
-    reRenderSubmitButton()
-  }
-  
-  // change submit button behavior
-  function reRenderSubmitButton() {
-    if (checkedItem > 0) {
-      formButton.style.color = 'red';
-    }
   }
 
 </script>

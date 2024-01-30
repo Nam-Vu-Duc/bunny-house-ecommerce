@@ -13,7 +13,11 @@ router.get('/updating/:id', adminController.updating)
 
 router.put('/updated/:id', adminController.updated)
 
+router.delete('/soft-delete/:id', adminController.softDelete)
+
 router.delete('/delete/:id', adminController.delete)
+
+router.get('/restore/:id', adminController.restore)
 
 router.get('/trash', adminController.trash)
 

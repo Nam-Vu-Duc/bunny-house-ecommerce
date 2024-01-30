@@ -33,9 +33,21 @@ class adminController {
       .catch(next)
   }
 
-  delete(req, res, next) {
+  softDelete(req, res, next) {
     product.updateOne({ _id: req.params.id}, { deletedAt: Date.now() })
+      .then(() => res.redirect('/admin/trash'))
+      .catch(next)
+  }
+
+  delete(req, res, next) {
+    product.deleteOne({ _id: req.params.id})
       .then(() => res.redirect('back'))
+      .catch(next)
+  }
+
+  restore(req, res, next) {
+    product.updateOne({ _id: req.params.id}, { deletedAt: null })
+      .then(() => res.redirect('/admin/update'))
       .catch(next)
   }
 

@@ -46,7 +46,7 @@
   height: auto;
   padding: 15px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(11.25rem, 100%), 1fr));
+  grid-template-columns: repeat(5, minmax(min(11.25rem, 100%), 1fr));
   
   img { max-width: 100%; aspect-ratio: 1 / 1 };
 

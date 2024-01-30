@@ -14,15 +14,27 @@
       <td>{{this.name}}</td>
       <td>{{this.description}}</td>
       <td>
-        <a href="/admin/updating/{{this._id}}" class="update-button"><button>Sửa</button></a>
-        <button id="{{this._id}}" onclick="reply_click(this.id)">Xoá</button>
+        <button id="{{this._id}}" onclick="clickToRestore(this.id)">Khôi phục</button>
+        <div id="id00" class="modal">
+          <form class="modal-content">
+            <div class="container">
+              <p>Bạn có muốn khôi phục sản phẩm {{this.name}} không</p>
+              <div class="clearfix">
+                <button type="button" onclick="document.getElementById('id00').style.display='none'" class="cancelbtn">Huỷ</button>
+                <button id="restore-button" type="button" class="deletebtn">Khôi phục</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <button id="{{this._id}}" onclick="clickToDelete(this.id)">Xoá vĩnh viễn</button>
         <div id="id01" class="modal">
           <form class="modal-content">
             <div class="container">
-              <p>Bạn có muốn xoá sản phẩm {{this.name}} không</p>
+              <p>Bạn có muốn xoá sản phẩm {{this.name}} vĩnh viễn không</p>
               <div class="clearfix">
                 <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
-                <button id="delete-button" type="button" class="deletebtn">Xoá</button>
+                <button id="delete-button" type="button" class="deletebtn">Xoá vĩnh viễn</button>
               </div>
             </div>
           </form>
@@ -37,19 +49,37 @@
 </div>
 
 <form name="delete-form" method="post"></form>
+<form name="restore-form" method="get"></form>
 
 <script>
-  var courseId;
+  // delete button
+  var productId;
   var deleteForm = document.forms['delete-form']
+  var restoreForm = document.forms['restore-form']
   var deleteButton = document.getElementById('delete-button')
+  var restoreButton = document.getElementById('restore-button')
 
-  function reply_click(clicked_id) {
+  function clickToDelete(clicked_id) {
     document.getElementById('id01').style.display='block'
-    courseId = clicked_id
+    productId = clicked_id
   }
 
   deleteButton.onclick = function () {
-    deleteForm.action = '/admin/delete/' + courseId + '?_method=DELETE'
+    deleteForm.action = '/admin/delete/' + productId + '?_method=DELETE'
     deleteForm.submit()
   }
+
+  //restore button
+  function clickToRestore(clicked_id) {
+    document.getElementById('id00').style.display='block'
+    productId = clicked_id
+  }
+
+  restoreButton.onclick = function () {
+    restoreForm.action = '/admin/restore/' + productId 
+    restoreForm.submit()
+  }
+
+  
+
 </script>
