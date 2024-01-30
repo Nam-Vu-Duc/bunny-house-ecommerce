@@ -1,8 +1,12 @@
 const product = require('../models/productModel')
 
 class adminController {
+  show(req, res, next) {
+    res.render('admin/home', { layout: 'admin' })
+  }
+
   create(req, res, next) {
-    res.render('admin/create')
+    res.render('admin/create', { layout: 'admin' })
   }
 
   created(req, res, next) {
@@ -16,13 +20,13 @@ class adminController {
     product.find({ deletedAt: null }).lean().sortable(req)
       .then(product => { 
         const total = product.length
-        res.render('admin/update', { product, total })})
+        res.render('admin/update', { layout: 'admin', total, product })})
       .catch(next)
   }
 
   updating(req, res, next) {
     product.findById(req.params.id).lean()
-      .then(product => { res.render('admin/updating', { product }) })
+      .then(product => { res.render('admin/updating', { layout: 'admin', product } )})
       .catch(next)
   }
 
@@ -55,20 +59,8 @@ class adminController {
     product.find({ deletedAt: { $ne: null } }).lean()
       .then(product => { 
         const total = product.length
-        res.render('admin/trash', { product, total })})
+        res.render('admin/trash', { layout: 'admin', total, product } )})
       .catch(next)
-  }
-
-  formActions(req, res, next) {
-    switch(req.body.action) {
-      case 'delete' : 
-        product.updateMany({ _id: { $in: req.body.courseIds }}, { deletedAt: Date.now() })
-          .then(() => res.redirect('back'))
-          .catch(next)
-        break;
-      default: 
-        res.json({ message: 'action is invalid' })
-    }
   }
 }
 

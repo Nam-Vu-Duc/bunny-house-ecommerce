@@ -26,6 +26,7 @@ app.use(sortMiddleware)
 
 app.engine('hbs', handlebars.engine({
   extname: '.hbs',
+  defaultLayout: 'users',
   helpers: {
     addIndex: (a, b) => a + b,
     sortable: (field, _sort) => {
@@ -54,6 +55,8 @@ app.engine('hbs', handlebars.engine({
 }))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'resource', 'views'))
+app.set('view options', { layout: 'other' });
+
 
 //route 
 route(app)

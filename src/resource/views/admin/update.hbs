@@ -1,51 +1,59 @@
 <div class="update-board" name="container">  
-  <table style="width:100%">
-    <tr>
-      <th>
-        Id
-      </th>
-      <th>
-        Brand
-        {{{sortable 'brand' _sort}}}
-      </th>
-      <th>
-        Name
-        {{{sortable 'name' _sort}}}
-      </th>
-      <th>
-        Description
-        {{{sortable 'description' _sort}}}
-      </th>
-      <th></th>
-    </tr>
-    {{#each product}}
-    <tr>
-      <td>{{addIndex @index 1}}</td>
-      <td>{{this.brand}}</td>
-      <td>{{this.name}}</td>
-      <td>{{this.description}}</td>
-      <td>
-        <a href="/admin/updating/{{this._id}}" class="update-button"><button>Sửa</button></a>
-        <button id="{{this._id}}" onclick="reply_click(this.id)">Xoá</button>
-        <div id="id01" class="modal">
-          <form class="modal-content">
-            <div class="container">
-              <p>Bạn có muốn xoá sản phẩm {{this.name}} không</p>
-              <div class="clearfix">
-                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
-                <button id="delete-button" type="button" class="deletebtn">Xoá</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </td>
-    </tr>
-    {{/each}}
-  </table>
+  <div class="board-header">
+    <p>Tổng sản phẩm</p>
+  </div>
 
-  <p>Tổng sản phẩm</p>
-  <p>{{total}}</p>
-  <a href="/admin/trash">Thùng rác</a>
+    <table style="width:100%">
+      <tr>
+        <th>
+          Id
+        </th>
+        <th>
+          Hãng
+          {{{sortable 'brand' _sort}}}
+        </th>
+        <th>
+          Tên
+          {{{sortable 'name' _sort}}}
+        </th>
+        <th>
+          Mô tả
+          {{{sortable 'description' _sort}}}
+        </th>
+        <th>
+          Lựa chọn
+        </th>
+      </tr>
+      {{#each product}}
+      <tr>
+        <td>{{addIndex @index 1}}</td>
+        <td>{{this.brand}}</td>
+        <td>{{this.name}}</td>
+        <td>{{this.description}}</td>
+        <td>
+          <a href="/admin/updating/{{this._id}}" class="update-button"><button>Sửa</button></a>
+          <button id="{{this._id}}" onclick="reply_click(this.id)">Xoá</button>
+          <div id="id01" class="modal">
+            <form class="modal-content">
+              <div class="container">
+                <p>Bạn có muốn xoá sản phẩm {{this.name}} không</p>
+                <div class="clearfix">
+                  <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
+                  <button id="delete-button" type="button" class="deletebtn">Xoá</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {{/each}}
+    </table>
+
+  <div class="total">
+    <p class="total-title">Tổng sản phẩm</p>
+    <p class="total-number">{{total}}</p>
+  </div>
+  
 </div>
 
 <form name="delete-form" method="post"></form>

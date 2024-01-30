@@ -3,6 +3,8 @@ const router = express.Router()
 
 const adminController = require('../app/controllers/adminController')
 
+router.get('/', adminController.show)
+
 router.get('/create', adminController.create)
 
 router.post('/created', adminController.created)
@@ -20,9 +22,6 @@ router.delete('/delete/:id', adminController.delete)
 router.get('/restore/:id', adminController.restore)
 
 router.get('/trash', adminController.trash)
-
-router.post('/form-actions', adminController.formActions)
-
 
 
 

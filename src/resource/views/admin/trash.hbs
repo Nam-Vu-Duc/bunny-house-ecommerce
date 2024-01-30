@@ -1,11 +1,28 @@
 <div class="update-board">
+  <div class="board-header">
+      <p>Sản phẩm đã xoá</p>
+  </div>
+
   <table style="width:100%">
     <tr>
-      <th>Id</th>
-      <th>Brand</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th></th>
+      <th>
+        Id
+      </th>
+      <th>
+        Hãng
+        {{{sortable 'brand' _sort}}}
+      </th>
+      <th>
+        Tên
+        {{{sortable 'name' _sort}}}
+      </th>
+      <th>
+        Mô tả
+        {{{sortable 'description' _sort}}}
+      </th>
+      <th>
+        Lựa chọn
+      </th>
     </tr>
     {{#each product}}
     <tr>
@@ -44,8 +61,10 @@
     {{/each}}
   </table>
 
-  <p>total items:</p>
-  <p>{{total}}</p>
+  <div class="total">
+    <p class="total-title">Tổng sản phẩm đã xoá</p>
+    <p class="total-number">{{total}}</p>
+  </div>
 </div>
 
 <form name="delete-form" method="post"></form>

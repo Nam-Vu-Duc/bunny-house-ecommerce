@@ -1,0 +1,48 @@
+<div class="admin-sidebar-container">
+  <div class="admin-account">
+    <img src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-1/405336191_817069390220900_4487704995758823798_n.jpg?stp=dst-jpg_p320x320&_nc_cat=110&ccb=1-7&_nc_sid=5740b7&_nc_eui2=AeEW2M-6gViqulS9fWIco5WDJSytYAIOTzglLK1gAg5POMOZ244gW29SzKfNhNbnYHWa0R8TYbZNROsM_V-ZLSd0&_nc_ohc=jW92fGDnnlcAX9Mf_GQ&_nc_ht=scontent.fhan2-4.fna&oh=00_AfAJTp-OwcneSq4zkMCIoQN_6qem3NDdSwhtgbCB5yPhbg&oe=65BD3E05" />
+    <div>
+      <p>Xin chào Quỳnh Ly,</p>
+      <p id="welcome-text"></p>
+    </div>
+  </div>
+  
+  <div class="admin-button">
+    <a href="/admin" class="sidebar-button">
+      <i class="fi fi-br-home"></i>
+      Trang chủ
+    </a>
+    <a href="/admin/create" class="sidebar-button">
+      <i class="fi fi-br-layer-plus"></i>
+      Thêm sản phẩm
+    </a>
+    <a href="/admin/update" class="sidebar-button">
+      <i class="fi fi-rr-box-open"></i>
+      Tổng sản phẩm
+    </a>
+    <a href="/admin/trash" class="sidebar-button">
+      <i class="fi fi-br-trash"></i>
+      Sản phẩm đã xoá
+    </a>
+    <a href="/home" class="sidebar-button">
+      <i class="fi fi-br-browser"></i>
+      Giao diện chính
+    </a>
+  </div>
+</div>
+
+<script>
+  let currentTime = new Date().getHours()
+  let checkDay = ''
+
+  if (currentTime <= 9) {
+    checkDay = 'buổi sáng'
+  } else if (currentTime <= 18) {
+    checkDay = 'buổi chiều'
+  } else {
+    checkDay = 'buổi tối'
+  }
+
+  let helloText = `Chúc bạn một ${checkDay} vui vẻ !!!`
+  document.getElementById('welcome-text').innerHTML = helloText
+</script>
