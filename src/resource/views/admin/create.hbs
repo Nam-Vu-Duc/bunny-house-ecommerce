@@ -1,5 +1,5 @@
 <div class="handle-products">
-  <form method="post" action="/admin/created" enctype="multipart/form-data">
+  <form id="form-1" method="post" action="/admin/created" enctype="multipart/form-data">
     <div class="form-title">
       <p>Thêm sản phẩm mới</p>
     </div>
@@ -13,26 +13,37 @@
         <option value=""></option>
       </select>
     </div> --}}
+
     <div class="form-group">
       <label for="brand">Hãng gì nhể</label>
       <input type="text" class="form-control" id="brand" name="brand">
+      <span class="form-message"></span>
     </div>
+
     <div class="form-group">
       <label for="name">Tên gì nhể</label>
       <input type="text" class="form-control" id="name" name="name">
+      <span class="form-message"></span>
     </div>
+
     <div class="form-group">
       <label for="price">Giá bao nhiêu nhể</label>
       <input type="text" class="form-control" id="price" name="price">
+      <span class="form-message"></span>
     </div>
+
     <div class="form-group">
       <label for="description">Mô tả như nào nhể</label>
       <input type="text" class="form-control" id="description" name="description">
+      <span class="form-message"></span>
     </div>
+
     <div class="form-group">
       <label for="details">Chi tiết ra sao nhể</label>
       <input type="text" class="form-control" id="details" name="details">
+      <span class="form-message"></span>
     </div>
+
     <div class="form-group">
       <label for="hotsale">Có hot không nhể</label>
       <select name="hotsale">
@@ -41,6 +52,7 @@
         <option value="hot">Đang hot</option>
       </select>
     </div>
+
     <div class="form-group">
       <label for="newArrival">Mới ra à</label>
       <select name="newArrival">
@@ -48,6 +60,7 @@
         <option value="yes">Chuẩn luôn</option>
       </select>
     </div>
+
     <div class="form-group">
       <label for="details">Cuối cùng thì cho xin nốt cái ảnh</label>
       <input type="file" name="avatar" id="avatar"/>
@@ -55,5 +68,92 @@
     <div class="submit-button">
       <button title="submit" type="submit">Hoàn thành</button>
     </div>
+
   </form>
 </div>
+
+<script>  
+
+// executing validate
+function validating(inputElement, rule) {
+    var errorMessage = rule.test(inputElement.value)
+    var errorElement = inputElement.parentElement.querySelector('.form-message')
+
+    if (errorMessage) {
+      errorElement.innerText = errorMessage
+      inputElement.parentElement.style.color = "red"
+    } else {
+      errorElement.innerText = ''
+      inputElement.parentElement.style.color = "black"
+    }
+  }  
+
+// isRequired requires input must have value
+// if error => return message error
+// unless => return undefined
+function isRequiredString(selector) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return value.trim() ? undefined : 'Quên chưa nhập kìa =((('
+    }
+  }
+}
+
+function isRequiredNumber(selector) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return value > 0 ? undefined : 'Nhập tiền vô =((('
+    }
+  }
+}
+
+function isEmail(selector) {
+  return {
+    selector: selector,
+    test: function (value) {
+      var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+      return regex.test(value) ? undefined : 'Nhập cho đúng vào =((('
+    }
+  }
+}
+
+// validator function to validate input form from user
+function validator(options) {
+  var formElement = document.querySelector(options.form)
+
+  if (formElement) {
+    options.rules.forEach(function (rule) {
+      var inputElement = formElement.querySelector(rule.selector)
+
+      if (inputElement) {
+        // input blur
+        inputElement.onblur = function () {
+          validating(inputElement, rule)
+        }
+
+        // input not blur 
+        inputElement.oninput = function () {
+          var errorElement = inputElement.parentElement.querySelector(options.errorSelector)
+          errorElement.innerText = ''
+          inputElement.parentElement.style.color = "black"
+        }
+      }
+    });
+  }
+}
+
+validator({
+  form: '#form-1',
+  errorSelector: '.form-message',
+  rules: [
+    isRequiredString('#brand'),
+    isRequiredString('#name'),
+    isRequiredNumber('#price'),
+    isRequiredString('#description'),
+    isRequiredString('#details'),
+  ]
+})
+
+</script>

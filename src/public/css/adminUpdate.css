@@ -1,6 +1,5 @@
 .update-board {
   margin-left: 200px;
-  height: 100vh;
   overflow-x: auto;
 
   .board-sidebar {
