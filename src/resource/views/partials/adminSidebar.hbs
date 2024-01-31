@@ -24,9 +24,21 @@
       <i class="fi fi-br-trash"></i>
       Sản phẩm đã xoá
     </a>
+    <a href="/admin/introduce-update" class="sidebar-button">
+      <i class="fi fi-bs-link-alt"></i>
+      Sửa giới thiệu
+    </a>
+    <a href="/admin/footer-update" class="sidebar-button">
+      <i class="fi fi-bs-link-alt"></i>
+      Sửa chân trang
+    </a>
     <a href="/home" class="sidebar-button">
       <i class="fi fi-br-browser"></i>
       Giao diện chính
+    </a>
+    <a href="/admin/personal-update" class="sidebar-button">
+      <i class="fi fi-br-circle-user"></i>
+      Cập nhật thông tin cá nhân
     </a>
   </div>
 </div>
@@ -37,6 +49,8 @@
 
   if (currentTime <= 9) {
     checkDay = 'buổi sáng'
+  } else if (currentTime <= 14) {
+    checkDay = 'buổi trưa'
   } else if (currentTime <= 18) {
     checkDay = 'buổi chiều'
   } else {

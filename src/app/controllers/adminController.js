@@ -2,17 +2,20 @@ const product = require('../models/productModel')
 
 class adminController {
   show(req, res, next) {
-    res.render('admin/home', { layout: 'admin' })
+    res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin' })
   }
 
   create(req, res, next) {
-    res.render('admin/create', { layout: 'admin' })
+    res.render('admin/create', { title: 'Thêm sản phẩm mới', layout: 'admin' })
   }
 
   created(req, res, next) {
-    const newProduct = new product(req.body)
+    let newProduct = new product(req.body)
+    if (req.file) {
+      newProduct.avatar = req.file.filename
+    }
     newProduct.save()
-      .then(() => res.redirect('/home'))
+      .then(() => res.redirect('/admin/update'))
       .catch(next)
   }
 
@@ -20,13 +23,13 @@ class adminController {
     product.find({ deletedAt: null }).lean().sortable(req)
       .then(product => { 
         const total = product.length
-        res.render('admin/update', { layout: 'admin', total, product })})
+        res.render('admin/update', { title: 'Toàn bộ sản phẩm', layout: 'admin', total, product })})
       .catch(next)
   }
 
   updating(req, res, next) {
     product.findById(req.params.id).lean()
-      .then(product => { res.render('admin/updating', { layout: 'admin', product } )})
+      .then(product => { res.render('admin/updating', { title: 'Sửa sản phẩm', layout: 'admin', product } )})
       .catch(next)
   }
 
@@ -59,7 +62,7 @@ class adminController {
     product.find({ deletedAt: { $ne: null } }).lean()
       .then(product => { 
         const total = product.length
-        res.render('admin/trash', { layout: 'admin', total, product } )})
+        res.render('admin/trash', { title: 'Thùng rác', layout: 'admin', total, product } )})
       .catch(next)
   }
 }

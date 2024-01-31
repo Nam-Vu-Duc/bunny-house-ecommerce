@@ -8,10 +8,10 @@
 .title {
   display: flex; 
   align-items: center; 
-  justify-content: center;
   gap: 5px; 
   font-size: 32px;
   color: red;
+  margin-top: 10px;
 
   .main-title {
     display: inline-block;
@@ -36,6 +36,26 @@
     transform-origin: bottom left;
   }
 }
+
+.sort-button {
+  width: fit-content;
+  margin-right: 0;
+  margin-left: auto;
+  border-radius: 5px;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px;
+  border-color: #D1A6A6;
+  color: #D1A6A6;
+  background-color: white;
+
+  a { text-decoration: none }
+  i { color: #D1A6A6 }
+}
+
 
 .all-products {
   padding-right: 17px;

@@ -32,7 +32,7 @@ nav {
       background-color: white;
       width: 100%;
       z-index: 1;
-      top: 70px;
+      top: 60px;
   
       .dropdown-content-dropright {
         position: relative;
@@ -56,17 +56,6 @@ nav {
           a:hover { color: red };
           i:hover { color: red }
         };
-  
-        .content-animation {
-          width: 0;
-          background: #FFDFDF;
-          transition: width 0.5s;
-        }
-        
-        .content-animation:hover {
-          background-color: #FFDFDF;
-          width: 100%;
-        }
       }
     };
   

@@ -11,10 +11,10 @@ const product = new Schema({
   price: { type: Number, },
   description: { type: String, },
   details: { type: String, },
-  flashsale: { type: Boolean, },
-  hotsale: { type: Boolean },
+  hotsale: { type: String, default: 'no' },
+  newArrival: { type: String, default: 'no' },
   category: { type: String }, 
-  image: { type: String, },
+  avatar: { type: String, },
   slug: { type: String, slug: 'name', unique: true },
   deletedAt: {type: Date, default: null }
 }, { timestamps: true })

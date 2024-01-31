@@ -1,14 +1,57 @@
 <div class="all-products-board">
   <div class="title">
     <i class="fi fi-sr-flame"></i>
-    <p class="main-title"><b>{{product.name}}</b></p>
+    <div class="main-title" style="text-transform:uppercase"><b>Tất cả nè</b></div>
+  </div>
+
+  <div class="sort-button">
+    Sắp xếp
+    {{{sortable 'price' _sort}}}
   </div>
   
   <div class="all-products">
     {{#each product}}
       <div class="product">
         <a href="/product/{{this.slug}}">
-          <img src="../img/1.jpg" alt="">
+          <img src="../uploads/{{this.avatar}}" alt="">
+          <p id="product-price">{{this.price}}</p>
+          <p id="product-details">{{this.name}}</p>
+        </a>
+        
+        <span class="product-button">
+          <div>
+            <i class="fi fi-rr-shopping-cart-add"></i> 
+          </div>
+          <div>
+            <i class="fi fi-rr-heart"></i>
+          </div> 
+        </span> 
+      </div>
+    {{/each}}
+
+    {{#each flashDealProduct}}
+      <div class="product">
+        <a href="/product/{{this.slug}}">
+          <img src="../uploads/{{this.avatar}}" alt="">
+          <p id="product-price">{{this.price}}</p>
+          <p id="product-details">{{this.name}}</p>
+        </a>
+        
+        <span class="product-button">
+          <div>
+            <i class="fi fi-rr-shopping-cart-add"></i> 
+          </div>
+          <div>
+            <i class="fi fi-rr-heart"></i>
+          </div> 
+        </span> 
+      </div>
+    {{/each}}
+
+    {{#each hotProduct}}
+      <div class="product">
+        <a href="/product/{{this.slug}}">
+          <img src="../uploads/{{this.avatar}}" alt="">
           <p id="product-price">{{this.price}}</p>
           <p id="product-details">{{this.name}}</p>
         </a>

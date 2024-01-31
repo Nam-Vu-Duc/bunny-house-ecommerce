@@ -9,7 +9,7 @@
       <p class="main-title"><b>FLASH DEAL</b></p>
     </div>
     <div class="see-more-icon">
-      <a href="/all-products" class="see-more-icon-title" style="text-decoration: none;">Xem Tất Cả</a>
+      <a href="/all-products/flash-sale" class="see-more-icon-title" style="text-decoration: none;">Xem Tất Cả</a>
       <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
     </div>
   </div>
@@ -18,7 +18,7 @@
     {{#each flashDealProduct}}
     <div class="product">
       <a href="/product/{{this.slug}}">
-        <img src="img/1.jpg" alt="" id="product-1">
+        <img src="uploads/{{this.avatar}}" alt="" id="product-1">
         <p id="product-price">{{this.price}}</p>
         <p id="product-details">{{this.name}}</p>
       </a>
@@ -44,7 +44,7 @@
       <p class="main-title"><b>SẢN PHẨM HOT</b></p>
     </div>
     <div class="see-more-icon">
-      <a href="/all-products" class="see-more-icon-title" style="text-decoration: none;">Xem Tất Cả</a>
+      <a href="/all-products/hot" class="see-more-icon-title" style="text-decoration: none;">Xem Tất Cả</a>
       <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
     </div>
   </div>
@@ -53,7 +53,7 @@
     {{#each hotProduct}}
     <div class="product">
       <a href="/product/{{this.slug}}">
-        <img src="img/1.jpg" alt="" id="product-1">
+        <img src="uploads/{{this.avatar}}" alt="" id="product-1">
         <p id="product-price">{{this.price}}</p>
         <p id="product-details">{{this.name}}</p>
       </a>
@@ -87,7 +87,7 @@
     {{#each allProduct}}
     <div class="product">
       <a href="/product/{{this.slug}}">
-        <img src="img/1.jpg" alt="" id="product-1">
+        <img src="uploads/{{this.avatar}}" alt="" id="product-1">
         <p id="product-price">{{this.price}}</p>
         <p id="product-details">{{this.name}}</p>
       </a>

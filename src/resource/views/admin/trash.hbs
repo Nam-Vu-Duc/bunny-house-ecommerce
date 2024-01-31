@@ -1,65 +1,67 @@
 <div class="update-board">
-  <div class="board-header">
+  <div class="board-sidebar">
       <p>Sản phẩm đã xoá</p>
   </div>
 
-  <table style="width:100%">
-    <tr>
-      <th>
-        Id
-      </th>
-      <th>
-        Hãng
-        {{{sortable 'brand' _sort}}}
-      </th>
-      <th>
-        Tên
-        {{{sortable 'name' _sort}}}
-      </th>
-      <th>
-        Mô tả
-        {{{sortable 'description' _sort}}}
-      </th>
-      <th>
-        Lựa chọn
-      </th>
-    </tr>
-    {{#each product}}
-    <tr>
-      <td>{{addIndex @index 1}}</td>
-      <td>{{this.brand}}</td>
-      <td>{{this.name}}</td>
-      <td>{{this.description}}</td>
-      <td>
-        <button id="{{this._id}}" onclick="clickToRestore(this.id)">Khôi phục</button>
-        <div id="id00" class="modal">
-          <form class="modal-content">
-            <div class="container">
-              <p>Bạn có muốn khôi phục sản phẩm {{this.name}} không</p>
-              <div class="clearfix">
-                <button type="button" onclick="document.getElementById('id00').style.display='none'" class="cancelbtn">Huỷ</button>
-                <button id="restore-button" type="button" class="deletebtn">Khôi phục</button>
+  <div class="table">
+    <table style="width:100%">
+      <tr>
+        <th>
+          Id
+        </th>
+        <th>
+          Hãng
+          {{{sortable 'brand' _sort}}}
+        </th>
+        <th>
+          Tên
+          {{{sortable 'name' _sort}}}
+        </th>
+        <th>
+          Mô tả
+          {{{sortable 'description' _sort}}}
+        </th>
+        <th>
+          Lựa chọn
+        </th>
+      </tr>
+      {{#each product}}
+      <tr>
+        <td>{{addIndex @index 1}}</td>
+        <td>{{this.brand}}</td>
+        <td>{{this.name}}</td>
+        <td>{{this.description}}</td>
+        <td>
+          <button id="{{this._id}}" onclick="clickToRestore(this.id)">Khôi phục</button>
+          <div id="id00" class="modal">
+            <form class="modal-content">
+              <div class="container">
+                <p>Bạn có muốn khôi phục sản phẩm {{this.name}} không</p>
+                <div class="clearfix">
+                  <button type="button" onclick="document.getElementById('id00').style.display='none'" class="cancelbtn">Huỷ</button>
+                  <button id="restore-button" type="button" class="deletebtn">Khôi phục</button>
+                </div>
               </div>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
 
-        <button id="{{this._id}}" onclick="clickToDelete(this.id)">Xoá vĩnh viễn</button>
-        <div id="id01" class="modal">
-          <form class="modal-content">
-            <div class="container">
-              <p>Bạn có muốn xoá sản phẩm {{this.name}} vĩnh viễn không</p>
-              <div class="clearfix">
-                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
-                <button id="delete-button" type="button" class="deletebtn">Xoá vĩnh viễn</button>
+          <button id="{{this._id}}" onclick="clickToDelete(this.id)">Xoá vĩnh viễn</button>
+          <div id="id01" class="modal">
+            <form class="modal-content">
+              <div class="container">
+                <p>Bạn có muốn xoá sản phẩm {{this.name}} vĩnh viễn không</p>
+                <div class="clearfix">
+                  <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
+                  <button id="delete-button" type="button" class="deletebtn">Xoá vĩnh viễn</button>
+                </div>
               </div>
-            </div>
-          </form>
-        </div>
-      </td>
-    </tr>
-    {{/each}}
-  </table>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {{/each}}
+    </table>
+  </div>
 
   <div class="total">
     <p class="total-title">Tổng sản phẩm đã xoá</p>

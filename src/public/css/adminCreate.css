@@ -2,11 +2,16 @@
   padding-left: 200px;
   display: flex;
   justify-content: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   form {
     border: 1px solid black;
     padding: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: fit-content;
   }
 
   .form-title {
@@ -27,15 +32,25 @@
     gap: 5px;
     padding: 5px 10px 5px 10px;
 
-    label {
-    };
-
     input {
       max-width: 500px;
       height: 30px;
       border-radius: 5px;
       border-style: none;
     };
+
+    #avatar {
+      width: fit-content;
+      padding-left: 5px;
+    }
+  }
+
+  select, option {
+    width: fit-content;
+    height: 30px;
+    border-radius: 5px;
+    border-style: none;
+    padding-left: 5px;
   }
 
   .submit-button {

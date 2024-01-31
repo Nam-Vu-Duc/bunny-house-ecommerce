@@ -1,3 +1,36 @@
 <div class="new-arrival-container" style="padding-top: 170px;">
-<h1>hello everyone</h1>
+  <div class="title">
+    <i class="fi fi-sr-flame"></i>
+    <div class="main-title" style="text-transform: uppercase"><b>Hàng mới về</b></div>
+  </div>
+
+  <div class="sort-button">
+    Sắp xếp
+    {{{sortable 'name' _sort}}}
+  </div>
+  
+  <div class="all-products">
+    {{#each newArrivalProduct}}
+      <div class="product">
+        <a href="/product/{{this.slug}}">
+          <img src="../img/1.jpg" alt="">
+          <p id="product-price">{{this.price}}</p>
+          <p id="product-details">{{this.name}}</p>
+        </a>
+        
+        <span class="product-button">
+          <div>
+            <i class="fi fi-rr-shopping-cart-add"></i> 
+          </div>
+          <div>
+            <i class="fi fi-rr-heart"></i>
+          </div> 
+        </span> 
+      </div>
+    {{/each}}
+  </div>
+
+  <span class="see-more-button">
+    <button>Xem thêm</button>
+  </span>
 </div>
