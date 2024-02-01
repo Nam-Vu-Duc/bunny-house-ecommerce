@@ -1,0 +1,108 @@
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+
+  form {
+    width: 500px;
+    border: 1px solid black;
+    padding: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: fit-content;
+  }
+
+  .form-title {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      font-size: larger;
+      font-weight: bolder;
+      text-transform: uppercase
+    };
+  }
+  
+  .form-group {
+    display: grid;
+    gap: 5px;
+    padding: 5px 10px 5px 10px;
+
+    input {
+      max-width: 500px;
+      height: 30px;
+      border-radius: 5px;
+      border-style: none;
+    };
+
+    #avatar {
+      width: fit-content;
+      padding-left: 5px;
+    }
+  }
+
+  select, option {
+    width: fit-content;
+    height: 30px;
+    border-radius: 5px;
+    border-style: none;
+    padding-left: 5px;
+  }
+
+  p {
+    font-size: 13px;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    font-style: italic;
+    justify-self:end
+  }
+
+  p:hover {
+    text-decoration: underline;
+  }
+
+  .other-login-methods, .other-login-methods-logo {
+    justify-self: center;
+    padding: 5px;
+  }
+
+  .other-login-methods-logo {
+    i {
+      font-size: 30px;
+    }
+  }
+  
+  button {
+    width: 100%;
+    height: 40px;
+    background-color: #D1A6A6;
+    color: white;
+    border: 1px solid #D1A6A6;
+    border-radius: 10px;
+    cursor: pointer;
+    border-color: white;
+    margin: 10px 0
+  };
+
+  button:hover {
+    background-color: white;
+    color:  #D1A6A6;
+    border: 1px solid white ;
+    border-color: #D1A6A6;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .sign-up {
+    margin-top: 10px;
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+  }
+}

@@ -1,87 +1,50 @@
-<div class="handle-products">
+<div class="login-container">
   <form id="form-1" method="post" action="/admin/created" enctype="multipart/form-data">
     <div class="form-title">
-      <p>Thêm sản phẩm mới</p>
+      <p>Đăng nhập</p>
     </div>
-    {{!-- <div class="form-group">
-      <label for="details">Loại gì nhể</label>
-      <select>
-        <option value="">Phấn má</option>
-        <option value="">Kem chống nắng</option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
-      </select>
-    </div> --}}
 
     <div class="form-group">
-      <label for="brand">Hãng gì nhể</label>
-      <input type="text" class="form-control" id="brand" name="brand">
+      <label for="brand">Tài khoản</label>
+      <input type="text" class="form-control" id="account" name="account">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="name">Tên gì nhể</label>
-      <input type="text" class="form-control" id="name" name="name">
-      <span class="form-message"></span>
-    </div>
-
-    <div class="form-group">
-      <label for="price">Giá bao nhiêu nhể</label>
-      <input type="text" class="form-control" id="price" name="price">
-      <span class="form-message"></span>
-    </div>
-
-    <div class="form-group">
-      <label for="description">Mô tả như nào nhể</label>
-      <input type="text" class="form-control" id="description" name="description">
-      <span class="form-message"></span>
-    </div>
-
-    <div class="form-group">
-      <label for="details">Chi tiết ra sao nhể</label>
-      <input type="text" class="form-control" id="details" name="details">
-      <span class="form-message"></span>
-    </div>
-
-    <div class="form-group">
-      <label for="details">Password</label>
+      <label for="details">Mật khẩu</label>
       <input type="password" class="form-control" id="password" name="password">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="details">Confirm Password</label>
+      <label for="details">Xác nhận mật khẩu</label>
       <input type="password" class="form-control" id="password-confirm" name="password-confirm">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="hotsale">Có hot không nhể</label>
-      <select name="hotsale">
-        <option value="no">Bình thường</option>
-        <option value="flash-sale">Đang Flash Sale</option>
-        <option value="hot">Đang hot</option>
-      </select>
+      <p class="forgot-password">
+        Quên mật khẩu
+      </p> 
     </div>
+
+    <button title="submit" type="submit">Đăng nhập</button>
 
     <div class="form-group">
-      <label for="newArrival">Mới ra à</label>
-      <select name="newArrival">
-        <option value="no">Ra lâu rồi</option>
-        <option value="yes">Chuẩn luôn</option>
-      </select>
+      <div class="other-login-methods">
+        Đăng nhập bằng tài khoản khác
+      </div> 
+      <div class="other-login-methods-logo">
+        <i class="fi fi-brands-facebook"></i>
+        <i class="fi fi-brands-google"></i>
+      </div>
     </div>
-
-    <div class="form-group">
-      <label for="details">Cuối cùng thì cho xin nốt cái ảnh</label>
-      <input type="file" name="avatar" id="avatar"/>
-    </div>
-    <div class="submit-button">
-      <button title="submit" type="submit">Hoàn thành</button>
-    </div>
-
   </form>
+
+  <div class="sign-up">
+    <p>Bạn chưa có tài khoản sao</p>
+    <a href="/authentication/sign-up"><p style="color: red; text-decoration:underline">Đăng kí ngay thôi</p></a>
+  </div>
 </div>
 
 <script>  
@@ -108,16 +71,6 @@ function isRequiredString(selector) {
     selector: selector,
     test: function (value) {
       return value.trim() ? undefined : 'Quên chưa nhập kìa =((('
-    }
-  }
-}
-
-// isRequiredNumber requires input must have number
-function isRequiredNumber(selector) {
-  return {
-    selector: selector,
-    test: function (value) {
-      return value > 0 ? undefined : 'Nhập tiền vô =((('
     }
   }
 }
@@ -174,11 +127,7 @@ validator({
   form: '#form-1',
   errorSelector: '.form-message',
   rules: [
-    isRequiredString('#brand'),
-    isRequiredString('#name'),
-    isRequiredNumber('#price'),
-    isRequiredString('#description'),
-    isRequiredString('#details'),
+    isRequiredString('#account'),
     isRequiredString('#password'),
     isConfirmPassword('#password-confirm', function() {
       return document.querySelector('#form-1 #password').value

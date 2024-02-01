@@ -3,11 +3,14 @@ const productRoute = require('./productRoute')
 const adminRoute = require('./adminRoute')
 const allProductsRoute = require('./allProductsRoute')
 const introduceRoute = require('./introduceRoute')
-const newArrival = require('./newArrivalRoute')
+const newArrivalRoute = require('./newArrivalRoute')
+const authenticationRoute = require('./authenticationRoute')
 
 function route(app) {
   app.use('/home', homeRoute)
 
+  app.use('/authentication', authenticationRoute)
+  
   app.use('/product', productRoute)
 
   app.use('/admin', adminRoute)
@@ -16,7 +19,7 @@ function route(app) {
 
   app.use('/introduce', introduceRoute)
 
-  app.use('/new-arrival', newArrival)
+  app.use('/new-arrival', newArrivalRoute)
 
 }
 
