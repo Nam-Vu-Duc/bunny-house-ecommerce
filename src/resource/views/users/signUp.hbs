@@ -1,29 +1,29 @@
 <div class="login-container">
-  <form id="form-1" method="post" action="/admin/created" enctype="multipart/form-data">
+  <form id="form-2" method="post" action="/authentication/creating-account">
     <div class="form-title">
       <p>Đăng ký</p>
     </div>
 
     <div class="form-group">
-      <label for="brand">Tên</label>
-      <input type="text" class="form-control" id="account" name="account">
+      <label for="name">Tên</label>
+      <input type="text" class="form-control" id="name" name="name">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="brand">Tài khoản</label>
-      <input type="text" class="form-control" id="account" name="account">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" name="email">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="details">Mật khẩu</label>
+      <label for="password">Mật khẩu</label>
       <input type="password" class="form-control" id="password" name="password">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="details">Xác nhận mật khẩu</label>
+      <label for="password-confirm">Xác nhận mật khẩu</label>
       <input type="password" class="form-control" id="password-confirm" name="password-confirm">
       <span class="form-message"></span>
     </div>
@@ -89,7 +89,7 @@ function isConfirmPassword(selector, getPasswordValue) {
 // validator function to validate input form from user
 function validator(options) {
   var formElement = document.querySelector(options.form)
-  var checkValidate = Array(7).fill(false)
+  var checkValidate = Array(4).fill(false)
 
   options.rules.forEach(function (rule, index) {
     var inputElement = formElement.querySelector(rule.selector)
@@ -114,13 +114,14 @@ function validator(options) {
 }
 
 validator({
-  form: '#form-1',
+  form: '#form-2',
   errorSelector: '.form-message',
   rules: [
-    isRequiredString('#account'),
+    isRequiredString('#name'),
+    isEmail('#email'),
     isRequiredString('#password'),
     isConfirmPassword('#password-confirm', function() {
-      return document.querySelector('#form-1 #password').value
+      return document.querySelector('#form-2 #password').value
     })
   ]
 })

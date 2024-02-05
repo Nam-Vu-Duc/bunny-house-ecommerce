@@ -1,4 +1,5 @@
 const product = require('../models/productModel')
+const user = require('../models/userModel')
 
 class adminController {
   show(req, res, next) {
@@ -63,6 +64,12 @@ class adminController {
       .then(product => { 
         const total = product.length
         res.render('admin/trash', { title: 'Thùng rác', layout: 'admin', total, product } )})
+      .catch(next)
+  }
+
+  updateProfile(req, res, next) {
+    user.findById(req.params.id).lean()
+      .then(user => { res.render('admin/profileUpdate', { title: 'Cập nhật thông tin cá nhân', layout: 'admin', user } )})
       .catch(next)
   }
 }

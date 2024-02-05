@@ -1,0 +1,62 @@
+<div class="handle-products">
+  <form method="POST" action="/admin/updated/{{product._id}}?_method=PUT">
+    <div class="form-title">
+      <p>Cập nhật thông tin cá nhân</p>
+    </div>
+    <div class="form-group">
+      <label for="brand">Hãng gì nhể</label>
+      <input type="text" class="form-control" id="brand" value="{{product.brand}}" name="brand" >
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Tên gì nhể</label>
+      <input type="text" class="form-control" id="name" value="{{product.name}}" name="name">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Giá bao nhiêu nhể</label>
+      <input type="text" class="form-control" id="price" value="{{product.price}}" name="price">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Mô tả như nào nhể</label>
+      <input type="text" class="form-control" id="description" value="{{product.description}}" name="description">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="details">Chi tiết ra sao nhể</label>
+      <input type="text" class="form-control" id="details" value="{{product.details}}" name="details">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="hotsale">Có hot không nhể</label>
+      <select name="hotsale">
+        <option value="no">Bình thường</option>
+        <option value="flash-sale">Đang Flash Sale</option>
+        <option value="hot">Đang hot</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="newArrival">Mới ra à</label>
+      <select name="newArrival">
+        <option value="no">Ra lâu rồi</option>
+        <option value="yes">Chuẩn luôn</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="details">Cuối cùng thì cho xin nốt cái ảnh</label>
+      <input type="file" name="avatar" id="avatar" />
+    </div>
+    <div class="submit-button">
+      <button title="submit" type="submit">Hoàn thành</button>
+    </div>
+
+  </form>
+</div>

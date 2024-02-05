@@ -45,18 +45,6 @@
     </div>
 
     <div class="form-group">
-      <label for="details">Password</label>
-      <input type="password" class="form-control" id="password" name="password">
-      <span class="form-message"></span>
-    </div>
-
-    <div class="form-group">
-      <label for="details">Confirm Password</label>
-      <input type="password" class="form-control" id="password-confirm" name="password-confirm">
-      <span class="form-message"></span>
-    </div>
-
-    <div class="form-group">
       <label for="hotsale">Có hot không nhể</label>
       <select name="hotsale">
         <option value="no">Bình thường</option>
@@ -122,31 +110,10 @@ function isRequiredNumber(selector) {
   }
 }
 
-// isEmail requires input must be an email 
-function isEmail(selector) {
-  return {
-    selector: selector,
-    test: function (value) {
-      var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-      return regex.test(value) ? undefined : 'Nhập cho đúng vào =((('
-    }
-  }
-}
-
-// isConfirmPassword requires reEnter password must be the same as the initial 
-function isConfirmPassword(selector, getPasswordValue) {
-  return {
-    selector: selector,
-    test: function (value) {
-      return (value === getPasswordValue() && value !== '') ? undefined : "chưa giống lắm nhỉ"
-    }
-  }
-}
-
 // validator function to validate input form from user
 function validator(options) {
   var formElement = document.querySelector(options.form)
-  var checkValidate = Array(7).fill(false)
+  var checkValidate = Array(5).fill(false)
 
   options.rules.forEach(function (rule, index) {
     var inputElement = formElement.querySelector(rule.selector)
@@ -179,10 +146,6 @@ validator({
     isRequiredNumber('#price'),
     isRequiredString('#description'),
     isRequiredString('#details'),
-    isRequiredString('#password'),
-    isConfirmPassword('#password-confirm', function() {
-      return document.querySelector('#form-1 #password').value
-    })
   ]
 })
 

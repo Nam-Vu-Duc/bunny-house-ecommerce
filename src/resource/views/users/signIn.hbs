@@ -1,12 +1,12 @@
 <div class="login-container">
-  <form id="form-1" method="post" action="/admin/created" enctype="multipart/form-data">
+  <form id="form-3" method="post" action="/authentication/checking-account">
     <div class="form-title">
       <p>Đăng nhập</p>
     </div>
 
     <div class="form-group">
-      <label for="brand">Tài khoản</label>
-      <input type="text" class="form-control" id="account" name="account">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" name="email">
       <span class="form-message"></span>
     </div>
 
@@ -17,19 +17,13 @@
     </div>
 
     <div class="form-group">
-      <label for="details">Xác nhận mật khẩu</label>
-      <input type="password" class="form-control" id="password-confirm" name="password-confirm">
-      <span class="form-message"></span>
-    </div>
-
-    <div class="form-group">
       <p class="forgot-password">
         Quên mật khẩu
       </p> 
     </div>
 
     <button title="submit" type="submit">Đăng nhập</button>
-
+    
     <div class="form-group">
       <div class="other-login-methods">
         Đăng nhập bằng tài khoản khác
@@ -99,7 +93,7 @@ function isConfirmPassword(selector, getPasswordValue) {
 // validator function to validate input form from user
 function validator(options) {
   var formElement = document.querySelector(options.form)
-  var checkValidate = Array(7).fill(false)
+  var checkValidate = Array(2).fill(false)
 
   options.rules.forEach(function (rule, index) {
     var inputElement = formElement.querySelector(rule.selector)
@@ -124,14 +118,11 @@ function validator(options) {
 }
 
 validator({
-  form: '#form-1',
+  form: '#form-3',
   errorSelector: '.form-message',
   rules: [
-    isRequiredString('#account'),
+    isEmail('#email'),
     isRequiredString('#password'),
-    isConfirmPassword('#password-confirm', function() {
-      return document.querySelector('#form-1 #password').value
-    })
   ]
 })
 

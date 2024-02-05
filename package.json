@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/Nam-Vu-Duc/bunnyStore#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.18.2",
     "express-handlebars": "^7.1.2",
+    "jsonwebtoken": "^9.0.2",
     "method-override": "^3.0.0",
     "mongoose": "^8.1.1",
     "mongoose-slug-updater": "^3.3.0",

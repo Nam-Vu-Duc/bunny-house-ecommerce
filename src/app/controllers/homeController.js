@@ -1,4 +1,5 @@
 const product = require('../models/productModel')
+const user = require('../models/userModel')
 
 class homeController {
   show(req, res, next) {
@@ -11,12 +12,11 @@ class homeController {
       .catch(next)
   }
 
-  navigate(req, res, next) {
-    product.find({ deletedAt: null }).lean()
-      .then(product => { 
-        const categories = product.filter(product => product.price === 100000)
-        const nestedCategories = product.filter(product => product.price === 200000)
-        res.render('partials/userNavigate', { categories, nestedCategories } )})
+  showUser(req, res, next) {
+    user.findOne({ _id: req.params._id }).lean()
+      .then( user => {
+        res.render('users/home', user) 
+      })
       .catch(next)
   }
 }

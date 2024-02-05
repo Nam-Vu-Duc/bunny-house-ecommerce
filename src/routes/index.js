@@ -5,6 +5,7 @@ const allProductsRoute = require('./allProductsRoute')
 const introduceRoute = require('./introduceRoute')
 const newArrivalRoute = require('./newArrivalRoute')
 const authenticationRoute = require('./authenticationRoute')
+const isAdmin = require('../app/middleware/isAdmin')
 
 function route(app) {
   app.use('/home', homeRoute)

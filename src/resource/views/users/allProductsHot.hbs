@@ -1,7 +1,7 @@
 <div class="all-products-board">
   <div class="title">
     <i class="fi fi-sr-flame"></i>
-    <div class="main-title" style="text-transform:uppercase"><b>Toàn bộ sản phẩm nè</b></div>
+    <div class="main-title" style="text-transform:uppercase"><b>Toàn bộ sản phẩm đang hot nè</b></div>
   </div>
 
   <div class="sort-button">
@@ -10,7 +10,7 @@
   </div>
   
   <div class="all-products">
-    {{#each product}}
+    {{#each hotProduct}}
       <div class="product">
         <a href="/product/{{this.slug}}">
           <img src="../uploads/{{this.avatar}}" alt="">
@@ -30,9 +30,9 @@
     {{/each}}
 </div>
 
-  <span class="see-more-button">
-    <button>Xem thêm</button>
-  </span>
+<span class="see-more-button">
+  <button>Xem thêm</button>
+</span>
 
 <script>
   
