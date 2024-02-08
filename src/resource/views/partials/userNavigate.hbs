@@ -1,38 +1,66 @@
 <div class="navigation-bar">
-  <div style="display: flex; align-items: center">  
-    <div class="dropdown">
-      <div>
-        <div style="display: flex; gap: 10px; align-items: center; padding: 0 15px 0;" class="dropdown-title">
-          <i class="fi fi-br-menu-burger"></i>
-          <h5>DANH MỤC SẢN PHẨM</h5>
-        </div>
-      </div>
-
-      
-      <div class="dropdown-content">
-        <div class="dropdown-content-dropright">
-            {{#each categories}}
-            <div class="content">
-              <a href="">{{this.name}}</a>
-              <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
-            </div>    
-            {{/each}}           
-          {{!-- <div class="dropdown-content-dropright-content">
-            <div class="content-animation">
-              <div class="content">
-                <a href="">Kem Lót</a>
-              </div>               
+  <div class="dropdown">
+    <div class="dropdown-title">
+      <i class="fi fi-br-menu-burger"></i>
+      <p>DANH MỤC SẢN PHẨM</p> 
+    </div>
+  
+    <div class="dropdown-content">
+      <div class="dropdown-content-dropright">
+        <a href="">
+          Skincare
+          <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+        </a>
+        <div class="dropdown-content-dropright-content">
+          <div class="column">
+            <div class="column-1">    
+              <a href="">Xịt khoáng</a>
+              <a href="">Mặt nạ</a>
+              <a href="">Serum</a>
+              <a href="">BHA</a>
+              <a href="">Tẩy da chết</a>
+              <a href="">Dưỡng da</a>
             </div>
-          </div>   --}}
-        </div>
-      </div>
-    </div>
 
-    <div style="display: flex; align-items: center; padding: 0 15px 0;" class="dropdown-title">
-      <a href="/introduce"><h5>GIỚI THIỆU</h5></a>
+            <div class="column-2">    
+              <a href="">Toner</a>
+              <a href="">Nước tẩy trang</a>
+              <a href="">Chấm mụn</a>
+              <a href="">Kem dưỡng ẩm</a>
+              <a href="">Sửa rửa mặt</a>
+            </div>
+          </div>
+        </div>  
+      </div>
+
+      <div class="dropdown-content-dropright">
+        <a href="">
+          Makeup
+          <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+        </a>
+        <div class="dropdown-content-dropright-content">
+          <div class="column">
+            <div class="column-1">    
+              <a href="">Phấn má</a>
+              <a href="">Mascara</a>
+              <a href="">Kẻ mắt</a>
+            </div>
+
+            <div class="column-2">    
+              <a href="">Kem chống nắng</a>
+              <a href="">Che khuyết điểm</a>
+              <a href="">Son</a>
+            </div>
+          </div>
+        </div>  
+      </div>            
     </div>
-    <div style="display: flex; align-items: center; padding: 0 15px 0;" class="dropdown-title">
-      <a href="/new-arrival"><h5>HÀNG MỚI VỀ</h5></a>
-    </div>
+  </div>
+
+  <div class="dropdown-title">
+    <a href="/introduce">GIỚI THIỆU</a>
+  </div>
+  <div class="dropdown-title">
+    <a href="/new-arrival">HÀNG MỚI VỀ</a>
   </div>
 </div>

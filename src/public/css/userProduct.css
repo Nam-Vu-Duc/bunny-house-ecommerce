@@ -8,11 +8,12 @@
 
   .table {
     width: 90%;
-    height: 90%;
+    height: fit-content ;
     background-color: white;
     border-radius: 10px;
     display: flex;
     align-items: center;
+    padding: 10px;
   }
 
   .image-box {
@@ -128,6 +129,12 @@
       }
     }
   }
+}
+
+@media screen and (max-width: 700px) {
+  .table {
+    flex-direction: column
+  };
 }
 
 .product-details-more {

@@ -10,15 +10,27 @@ nav {
   gap: 20px;
 
   .navigation-bar {
+    display: flex;
+    height: 100%;
+
     i {
       font-size: 20px;
       cursor: pointer;
       color: black;
     };
-  
-    h5 {
-      cursor: pointer;
-      font-size: 15px;
+  }
+
+  .dropdown-title {
+    display: flex; 
+    gap: 10px; 
+    align-items: center; 
+    padding: 0 15px 0;
+    height: 100%;
+
+    a {
+      text-decoration: none;
+      font-weight: bolder;
+      color: black;
     }
   }
   
@@ -32,30 +44,30 @@ nav {
       background-color: white;
       width: 100%;
       z-index: 1;
-      top: 60px;
+      top: 100%;
   
       .dropdown-content-dropright {
         position: relative;
         display: inline-block;
-        width: 100%;
+        width: 100%;          
   
-        .content {
+        a {
           padding: 10px;
-          width: 197px; 
+          width: 217px; 
           display: flex; 
           justify-content: space-between;
           cursor: pointer;
-  
-          a {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: black;
-          };
-  
-          a:hover { color: red };
-          i:hover { color: red }
+          align-items: center;
+          text-decoration: none;
+          color: black;
         };
+
+        a:hover { 
+          color: red;
+          background-color: #FFDFDF;
+          i { color: red } 
+        }
+        
       }
     };
   
@@ -63,10 +75,14 @@ nav {
       display: none;
       position: absolute;
       background-color: white;
-      width: 100%;
+      width: 200%;
       z-index: 1;
       top: 0px;
       left: 100%;
+
+      .column {
+        display: flex;
+      }
     }
     
     .dropdown-content-dropright:hover .dropdown-content-dropright-content {

@@ -17,7 +17,7 @@ class loginController {
           if(result) {
             let token = jwt.sign({email: user.email}, 'verySecretValue', {expiresIn: '1h'})
             if (user.role === 'admin') {
-              res.redirect('/admin/home')
+              res.redirect('/admin')
             } else {
               res.redirect('/home')
             }
