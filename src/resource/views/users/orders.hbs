@@ -1,0 +1,62 @@
+<div class="order-container">
+  <form action="">
+    <div class="cart">
+      <p>Giỏ hàng của tôi</p>
+      <table>
+        <tr>
+          <th></th>
+          <th>Sản phẩm</th>
+          <th>Phân loại</th>
+          <th>Giá</th>
+          <th>Số lượng</th>
+          <th>Tổng tiền</th>
+          <th>Xoá</th>
+        </tr>
+        <tr>
+          <th></th>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="delivery">
+      <p>Chọn hình thức giao hàng</p>
+
+      <input type="radio" id="direct" name="delivery" value="direct">
+      <label for="direct">Nhận hàng tại chi nhánh </label><br>
+      
+      <input type="radio" id="indirect" name="delivery" value="indirect">
+      <label for="indirect">Giao hàng tại địa chỉ người nhận</label>
+    </div>
+
+    <div class="contact-info">
+      <p>Nhập thông tin khách hàng</p>
+
+      <label for="name">Tên người mua</label>
+      <input type="text" id="name" name="name">
+      <span class="form-message"></span><br>
+
+      <label for="phone-number">Số điện thoại</label>
+      <input type="text" id="phone-number" phone-number="name">
+      <span class="form-message"></span><br>
+
+      <label for="note">Ghi chú</label>
+      <input type="text" id="note" name="note">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="total-expense">
+      <p>Tổng tiền hàng</p>
+      <p>100000</p>
+    </div>
+  </form>
+  
+  <div class="submit-button">
+    <button title="submit" type="submit">Hoàn thành</button>
+  </div>
+</div>

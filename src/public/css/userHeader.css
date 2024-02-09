@@ -67,12 +67,17 @@ header {
   .header-button {
     padding: 0 10px 0 10px; 
 
+    a {
+      text-decoration: none;
+      color: black;
+    }
+      
     i {
       font-size: 40px;
       cursor: pointer;
       padding: 10px;
     }
-  
+      
     img {
       border-radius: 50%;
       width: 40px;
@@ -90,7 +95,7 @@ header {
       position: absolute;
       align-items: center;
       justify-content: center;
-      width: 150px;
+      max-width: 150px;
       background-color: white;
       left: -55px;
       cursor: pointer;
@@ -98,25 +103,14 @@ header {
       a { text-decoration: none; color: black }
     };
   
-    .avatar-content {
+    a {
       display: flex;
       align-items: center;
       padding: 10px;
       width: 150px;
     };
   
-    .avatar-animation {
-      width: 0;
-      background: #FFDFDF;
-      transition: width 0.5s;
-    };
-  
-    .avatar-animation:hover {
-      background-color: #FFDFDF;
-      width: 150px;
-    }
-  
-    div:hover > a { color: red }
+    a:hover { color: red }
   }
   
   .dropdown-avatar:hover .avatar {

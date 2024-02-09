@@ -41,6 +41,12 @@
   tr:nth-child(odd){background-color: white}
   tr:hover {background-color: #D1A6A6;}
 
+  img {
+    border-radius: 50%;
+    width: 40px;
+    aspect-ratio: 1/1;
+  }
+
   /* Set a style for all buttons */
   button {
     width: fit-content; 

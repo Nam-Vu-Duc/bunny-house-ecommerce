@@ -5,6 +5,7 @@ const allProductsRoute = require('./allProductsRoute')
 const introduceRoute = require('./introduceRoute')
 const newArrivalRoute = require('./newArrivalRoute')
 const authenticationRoute = require('./authenticationRoute')
+const ordersRoute = require('./ordersRoute')
 
 function route(app) {
   app.use('/home', homeRoute)
@@ -21,6 +22,7 @@ function route(app) {
 
   app.use('/new-arrival', newArrivalRoute)
 
+  app.use('/orders', ordersRoute)
 }
 
 module.exports = route

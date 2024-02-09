@@ -17,6 +17,8 @@
             {{{sortable 'name' _sort}}}
           </th>
           <th>
+          </th>
+          <th>
             Mô tả
             {{{sortable 'description' _sort}}}
           </th>
@@ -29,6 +31,7 @@
           <td>{{addIndex @index 1}}</td>
           <td>{{this.brand}}</td>
           <td>{{this.name}}</td>
+          <td><img src="../uploads/{{this.avatar}}"></td>
           <td>{{this.description}}</td>
           <td>
             <a href="/admin/updating/{{this._id}}" class="update-button"><button>Sửa</button></a>
