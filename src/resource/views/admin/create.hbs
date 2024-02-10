@@ -3,16 +3,80 @@
     <div class="form-title">
       <p>Thêm sản phẩm mới</p>
     </div>
-    {{!-- <div class="form-group">
-      <label for="details">Loại gì nhể</label>
-      <select name="cate">
-        <option value="">Phấn má</option>
-        <option value="">Kem chống nắng</option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
+
+    <div class="form-group">
+      <label for="categories">Loại gì nhể</label>
+      <select name="categories">
+        <option value="">-- Chọn --</option>
+        <option value="skincare">Skincare</option>
+        <option value="makeup">Makeup</option>
       </select>
-    </div> --}}
+    </div>
+
+    <div class="form-group" style="display: none;">
+      <label for="skincare">Skincare</label>
+      <select name="skincare">
+        <option value="">-- Chọn --</option>
+        <option value="xit-khoang">
+          Xịt khoáng
+        </option>
+        <option value="mat-na">
+          Mặt nạ
+        </option>
+        <option value="serum">
+          Serum
+        </option>
+        <option value="bha">
+          BHA
+        </option>
+        <option value="tay-da-chet">
+          Tẩy da chết
+        </option>
+        <option value="duong-da">
+          Dưỡng da
+        </option>  
+        <option value="toner">
+          Toner
+        </option>
+        <option value="nuoc-tay-trang">
+          Nước tẩy trang
+        </option>
+        <option value="cham-mun">
+          Chấm mụn
+        </option>
+        <option value="kem-duong-am">
+          Kem dưỡng ẩm
+        </option>
+        <option value="sua-rua-mat">
+          Sữa rửa mặt
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group" style="display: none;">
+      <label for="makeup">Makeup</label>
+      <select name="makeup">
+        <option value="">-- Chọn --</option>
+        <option value="phan-ma">
+          Phấn má
+        </option>
+        <option value="mascara">
+          Mascara
+        </option>
+        <option value="ke-mat">
+          Kẻ mắt
+        </option>
+        <option value="kem-chong-nang">
+          Kem chống nắng
+        </option>
+        <option value="che-khuyet-diem">
+          Che khuyết điểm
+        </option>
+        <option value="son">
+          Son
+        </option>
+      </select>
+    </div>
 
     <div class="form-group">
       <label for="brand">Hãng gì nhể</label>
@@ -73,22 +137,21 @@
 </div>
 
 <script>  
-
 // executing validate
 function validating(inputElement, rule, checkValidate, index) {
-    var errorMessage = rule.test(inputElement.value)
-    var errorElement = inputElement.parentElement.querySelector('.form-message')
+  var errorMessage = rule.test(inputElement.value)
+  var errorElement = inputElement.parentElement.querySelector('.form-message')
 
-    if (errorMessage) {
-      errorElement.innerText = errorMessage
-      inputElement.parentElement.style.color = "red"
-      checkValidate[index] = false
-    } else {
-      errorElement.innerText = ''
-      inputElement.parentElement.style.color = "black"
-      checkValidate[index] = true
-    }
-  }  
+  if (errorMessage) {
+    errorElement.innerText = errorMessage
+    inputElement.parentElement.style.color = "red"
+    checkValidate[index] = false
+  } else {
+    errorElement.innerText = ''
+    inputElement.parentElement.style.color = "black"
+    checkValidate[index] = true
+  }
+}  
 
 // isRequiredString requires input must have string
 function isRequiredString(selector) {
@@ -148,5 +211,23 @@ validator({
     isRequiredString('#details'),
   ]
 })
+
+// skincare and makeup visibility
+var selectBox = document.querySelector('select[name="categories"]')
+var selectedValue = ''
+var skincareBox = document.querySelector('select[name="skincare"]').parentElement
+var makeUpBox = document.querySelector('select[name="makeup"]').parentElement
+
+selectBox.onchange = function() {
+  selectedValue = selectBox.options[selectBox.selectedIndex].value;
+  if (selectedValue === 'skincare') {
+    skincareBox.style.display = 'block'
+    makeUpBox.style.display = 'none'
+  }
+  if (selectedValue === 'makeup') {
+    skincareBox.style.display = 'none'
+    makeUpBox.style.display = 'block'
+  }
+}
 
 </script>

@@ -1,7 +1,7 @@
 const product = require('../models/productModel')
 
 class allProductsController {
-  show(req, res, next) {
+  showAll(req, res, next) {
     product.find({ deletedAt: null }).lean().sortable(req)
       .then(product => { res.render('users/allProducts', { title: 'Tất cả sản phẩm', product }) })
       .catch(next)
@@ -20,6 +20,14 @@ class allProductsController {
       .then(product => { 
         const hotProduct = product.filter(product => product.hotsale === 'hot')
         res.render('users/allProductsHot', { title: 'Sản phẩm Hottttt', hotProduct }) })
+      .catch(next)
+  }
+
+  showCategory(req, res, next) {
+    product.find({ deletedAt: null, skincare: req.params.slug }).lean().sortable(req)
+      .then(product => { 
+        // const categoryProduct = product.filter(product => product.skincare || product.skincare === 'hot')
+        res.render('users/allProductsHot', { title: 'Sản phẩm Hottttt', product }) })
       .catch(next)
   }
 }

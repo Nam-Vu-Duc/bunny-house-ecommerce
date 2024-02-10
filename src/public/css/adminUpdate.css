@@ -68,12 +68,14 @@
   .cancelbtn {
     background-color: #ccc;
     color: black;
+    width: 25%;
   }
 
   /* Add a color to the delete button */
   .deletebtn {
     background-color: #f44336;
     color: black;
+    width: 25%;
   }
 
   /* Add padding and center-align text to the container */
@@ -92,14 +94,13 @@
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: #474e5d;
     padding-top: 50px;
   }
 
   /* Modal Content/Box */
   .modal-content {
     background-color: #fefefe;
-    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    margin: 10% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
     width: 50%; /* Could be more or less, depending on screen size */
     border-radius: 5px;
