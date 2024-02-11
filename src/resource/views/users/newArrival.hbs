@@ -10,10 +10,10 @@
   </div>
   
   <div class="all-products">
-    {{#each newArrivalProduct}}
+    {{#each product}}
       <div class="product">
         <a href="/product/{{this.slug}}">
-          <img src="../img/1.jpg" alt="">
+          <img src="../uploads/{{this.avatar}}" alt="">
           <p id="product-price">{{this.price}}</p>
           <p id="product-details">{{this.name}}</p>
         </a>

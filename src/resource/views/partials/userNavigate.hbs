@@ -2,15 +2,15 @@
   <div class="dropdown">
     <div class="dropdown-title">
       <i class="fi fi-br-menu-burger"></i>
-      <p><strong>DANH MỤC SẢN PHẨM</strong></p> 
+      <p>DANH MỤC SẢN PHẨM</p> 
     </div>
   
     <div class="dropdown-content">
       <div class="dropdown-content-dropright">
-        <a href="">
+        <p>
           Skincare
           <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
-        </a>
+        </p>
         <div class="dropdown-content-dropright-content">
           <div class="column">
             <div class="column-1">    
@@ -34,10 +34,10 @@
       </div>
 
       <div class="dropdown-content-dropright">
-        <a href="">
+        <p>
           Makeup
           <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
-        </a>
+        </p>
         <div class="dropdown-content-dropright-content">
           <div class="column">
             <div class="column-1">    
@@ -57,10 +57,44 @@
     </div>
   </div>
 
-  <div class="dropdown-title">
+  <div class="title">
     <a href="/introduce">GIỚI THIỆU</a>
   </div>
-  <div class="dropdown-title">
+  <div class="title">
     <a href="/new-arrival">HÀNG MỚI VỀ</a>
   </div>
 </div>
+
+<script>
+var dropdownTitle = document.querySelector('div[class="dropdown-title"]')
+var dropdownContent = document.querySelector('div[class="dropdown-content"]')
+var dropdownContentDropRights = document.querySelectorAll('div[class="dropdown-content-dropright"]')
+var dropdownContentDropRightContents = document.querySelectorAll('div[class="dropdown-content-dropright-content"]')
+
+dropdownTitle.onclick = function() {
+  dropdownContent.style.display = (dropdownContent.style.display === 'none') ? 'block' : 'none'
+  dropdownContentDropRightContents.forEach(function(dropdownContentDropRightContent) {
+    dropdownContentDropRightContent.style.display = 'none'
+  })
+}
+
+document.addEventListener('click', function(event) {
+  if (!event.target.matches('.dropdown-title') &&
+      !event.target.closest('.dropdown-title') &&
+      !event.target.closest('.dropdown-content-dropright')
+    ) { // Check if clicked element is not a dropdown-title
+    dropdownContent.style.display = 'none'
+    dropdownContentDropRightContents.forEach(function(dropdownContentDropRightContent) {
+      dropdownContentDropRightContent.style.display = 'none'
+    })
+  }
+});
+
+for (let i = 0; i <= 1; ++i) {
+  dropdownContentDropRights[i].onclick = function() {
+    dropdownContentDropRightContents[i].style.display = (dropdownContentDropRightContents[i].style.display === 'none') ? 'block' : 'none'
+    dropdownContentDropRightContents[1-i].style.display = 'none'
+  }
+}
+
+</script>

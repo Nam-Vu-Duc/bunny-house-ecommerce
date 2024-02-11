@@ -1,36 +1,36 @@
 .flash-deal-board, .hot-products-board, .content-board {
   width: 100%;
   overflow: hidden;
-}
 
-.title {
-  display: flex; 
-  align-items: center; 
-  gap: 5px; 
-  font-size: 32px;
-
-  .main-title {
-    display: inline-block;
-    position: relative;
-    color: red;
-  }
+  .title {
+    display: flex; 
+    align-items: center; 
+    gap: 5px; 
+    font-size: 32px;
   
-  .main-title::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: red;
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
-  }
-  
-  .main-title:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
+    .main-title {
+      display: inline-block;
+      position: relative;
+      color: red;
+    }
+    
+    .main-title::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: red;
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+    
+    .main-title:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
   }
 }
 

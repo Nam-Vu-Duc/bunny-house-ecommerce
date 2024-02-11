@@ -8,18 +8,16 @@ class allProductsController {
   }
 
   showFlashSale(req, res, next) {
-    product.find({ deletedAt: null }).lean().sortable(req)
+    product.find({ deletedAt: null, hotsale: 'flash-sale' }).lean().sortable(req)
       .then(product => { 
-        const flashDealProduct = product.filter(product => product.hotsale === 'flash-sale')
-        res.render('users/allProductsFlashSale', { title: 'Sản phẩm Flash Saleeeee', flashDealProduct }) })
+        res.render('users/allProductsFlashSale', { title: 'Sản phẩm Flash Saleeeee', product }) })
       .catch(next)
   }
 
   showHot(req, res, next) {
-    product.find({ deletedAt: null }).lean().sortable(req)
+    product.find({ deletedAt: null, hotsale: 'hot' }).lean().sortable(req)
       .then(product => { 
-        const hotProduct = product.filter(product => product.hotsale === 'hot')
-        res.render('users/allProductsHot', { title: 'Sản phẩm Hottttt', hotProduct }) })
+        res.render('users/allProductsHot', { title: 'Sản phẩm Hottttt', product }) })
       .catch(next)
   }
 
