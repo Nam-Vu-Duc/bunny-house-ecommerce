@@ -22,7 +22,8 @@
 </div>
   
 <div class="header-button">
-  <a href="/orders">
+  <a href="/orders" class="orders">
+    <span class="orders-quantity"></span>    
     <i class="fi fi-rr-shopping-cart-add"></i>
   </a>
 
@@ -37,3 +38,17 @@
   
   <i class="fi fi-rs-toggle-on" onclick="myFunction()"></i>
 </div>
+
+<script>
+  var getOrdersQuantity = document.querySelector('span.orders-quantity')
+  
+  function updateCartCount() {
+    var countObject = JSON.parse(localStorage.getItem('product_cart_count')) || {};
+    var countOrdersQuantity = countObject.localCounting || 0;
+    getOrdersQuantity.innerText = countOrdersQuantity
+  }
+
+  document.addEventListener('cartUpdated', updateCartCount);
+  updateCartCount()
+
+</script>

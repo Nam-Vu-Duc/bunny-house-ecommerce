@@ -1,56 +1,74 @@
 <div class="product-details">
-    <div class="table">
-      <div class="image-box">
-        <div class="thumbnails">
-          <img src="../uploads/{{product.avatar}}" />
-          <img src="../uploads/{{product.avatar}}" />
-          <img src="../uploads/{{product.avatar}}" />
-          <img src="../uploads/{{product.avatar}}" />
-          <img src="../uploads/{{product.avatar}}" />
-        </div>
+  <div class="table">
+    <div class="image-box">
+      <div class="thumbnails">
+        <img src="../uploads/{{product.avatar}}" />
+        <img src="../uploads/{{product.avatar}}" />
+        <img src="../uploads/{{product.avatar}}" />
+        <img src="../uploads/{{product.avatar}}" />
+        <img src="../uploads/{{product.avatar}}" />
+      </div>
 
-        <div class="image">
-          <img src="../uploads/{{product.avatar}}" />
-        </div>
+      <div class="image">
+        <img src="../uploads/{{product.avatar}}" />
+      </div>
+    </div>
+    
+    <div class="details-box">
+      <div class="brand">
+        <p>{{product.brand}}</p>
+      </div>
+
+      <div class="name">
+        <p>{{product.name}}</p>
+      </div>
+
+      <div class="price">
+        <p>{{product.price}}</p>
       </div>
       
-      <div class="details-box">
-        <div class="brand">
-          <p>{{product.brand}}</p>
-        </div>
+      <div class="description">
+        <p>{{product.description}}</p>
+      </div>
 
-        <div class="name">
-          <p>{{product.name}}</p>
+      <div class="button">
+        <div class="add-to-cart-btn">
+          <i class="fi fi-rr-shopping-cart-add"></i> 
         </div>
-  
-        <div class="price">
-          <p>{{product.price}}</p>
-        </div>
-        
-        <div class="description">
-          <p>{{product.description}}</p>
-        </div>
-
-        <div class="button">
-          <div>
-            <i class="fi fi-rr-shopping-cart-add"></i> 
-          </div>
-          <div>
-            <i class="fi fi-rr-heart"></i>
-          </div>
+        <div>
+          <i class="fi fi-rr-heart"></i>
         </div>
       </div>
     </div>
-
   </div>
+</div>
 
-  <div class="product-details-more">
-    <div class="table">
-      <div class="title">
-        <p>Thông tin sản phẩm</p>
-      </div>
-      <div class="details">
-        <p>{{product.details}}</p>
-      </div>
+<div class="product-details-more">
+  <div class="table">
+    <div class="title">
+      <p>Thông tin sản phẩm</p>
+    </div>
+    <div class="details">
+      <p>{{product.details}}</p>
     </div>
   </div>
+</div>
+
+<script>
+  var getAddToCart = document.querySelector('div.add-to-cart-btn')
+  var myObjFromStorage = JSON.parse(localStorage.getItem('product_cart_count')) || { }
+  var myObj = {
+    localCounting: myObjFromStorage.localCounting || 0
+  } 
+    
+  localStorage.setItem('product_cart_count', JSON.stringify(myObj))
+  myObj.localCounting = myObjFromStorage.localCounting
+
+  getAddToCart.onclick = function() {
+    myObj.localCounting++
+    localStorage.setItem('product_cart_count', JSON.stringify(myObj));
+    console.log(myObj)
+    document.dispatchEvent(new CustomEvent('cartUpdated'));
+  }
+
+</script>
