@@ -1,4 +1,14 @@
 <div class="order-container">
+  <div class="process">
+    <span>1</span>
+    <span></span>
+    <span>2</span>
+    <span></span>
+    <span>3</span>
+    <span></span>
+    <span>4</span>
+  </div>
+
   <form action="">
     <div class="cart">
       <p>Giỏ hàng của tôi</p>
@@ -55,8 +65,37 @@
       <p>100000</p>
     </div>
   </form>
-  
-  <div class="submit-button">
-    <button title="submit" type="submit">Hoàn thành</button>
+
+  <div class="button">
+    <button class="next-button">Tiếp theo</button>
+    <button title="submit" type="submit" class="submit-button">Hoàn thành</button>
   </div>
 </div>
+
+<script>
+  var getDelivery = document.querySelector('div.delivery')
+  var getContactInfo = document.querySelector('div.contact-info')
+  var getTotalExpense = document.querySelector('div.total-expense')
+  var getNextButton = document.querySelector('button.next-button')
+  var getSubmitButton = document.querySelector('button.submit-button')
+
+  getDelivery.style.display = 'none'
+  getContactInfo.style.display = 'none'
+  getTotalExpense.style.display = 'none'
+  getSubmitButton.style.display = 'none'
+
+  getNextButton.onclick = function() {
+    if (getDelivery.style.display === 'none') {
+      getDelivery.style.display = 'block'
+    } else if (getContactInfo.style.display === 'none') {
+      getContactInfo.style.display = 'grid'
+    } else {
+      getTotalExpense.style.display = 'block'
+    }
+    if (getTotalExpense.style.display === 'block') {
+      getNextButton.style.display = 'none'
+      getSubmitButton.style.display = 'block'
+    }
+  }
+
+</script>

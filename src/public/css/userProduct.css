@@ -117,14 +117,10 @@
         width: 100px;
         height: 30px;
         border: 1px solid #D1A6A6;
-        border-radius: 5px
+        border-radius: 5px;
       };
     
       div:hover {
-        border-radius: 5px;
-        border-color: #D1A6A6;
-        background-color: #D1A6A6;
-        i { color: white };
         cursor: pointer;
       }
     }
