@@ -1,11 +1,11 @@
 <div class="order-container">
-  <div class="process">
+  <div class="progress">
     <span>1</span>
-    <span></span>
+    <progress id="first-progress" value="0" max="100"></progress>
     <span>2</span>
-    <span></span>
+    <progress id="second-progress" value="0" max="100"></progress>
     <span>3</span>
-    <span></span>
+    <progress id="third-progress" value="0" max="100"></progress>
     <span>4</span>
   </div>
 
@@ -78,7 +78,13 @@
   var getTotalExpense = document.querySelector('div.total-expense')
   var getNextButton = document.querySelector('button.next-button')
   var getSubmitButton = document.querySelector('button.submit-button')
+  var getProgressMarks = document.querySelector('div.progress').querySelectorAll('span')
+  var getProgressBars = document.querySelectorAll('progress')
 
+  getProgressMarks[0].style.backgroundColor = '#D1A6A6'
+  getProgressMarks[0].style.color = 'white'
+
+  // set default display to 'none' on start
   getDelivery.style.display = 'none'
   getContactInfo.style.display = 'none'
   getTotalExpense.style.display = 'none'
@@ -87,11 +93,32 @@
   getNextButton.onclick = function() {
     if (getDelivery.style.display === 'none') {
       getDelivery.style.display = 'block'
-    } else if (getContactInfo.style.display === 'none') {
+
+      getProgressMarks[1].style.backgroundColor = '#D1A6A6'
+      getProgressMarks[1].style.color = 'white'
+
+      getProgressBars[0].value = '100'
+      getProgressBars[0].style.accentColor = '#D1A6A6'
+    } 
+    else if (getContactInfo.style.display === 'none') {
       getContactInfo.style.display = 'grid'
-    } else {
+
+      getProgressMarks[2].style.backgroundColor = '#D1A6A6'
+      getProgressMarks[2].style.color = 'white'
+
+      getProgressBars[1].value = '100'
+      getProgressBars[1].style.accentColor = '#D1A6A6'
+    } 
+    else {
       getTotalExpense.style.display = 'block'
+
+      getProgressMarks[3].style.backgroundColor = '#D1A6A6'
+      getProgressMarks[3].style.color = 'white'
+
+      getProgressBars[2].value = '100'
+      getProgressBars[2].style.accentColor = '#D1A6A6'
     }
+
     if (getTotalExpense.style.display === 'block') {
       getNextButton.style.display = 'none'
       getSubmitButton.style.display = 'block'

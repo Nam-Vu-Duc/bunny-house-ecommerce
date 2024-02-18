@@ -1,11 +1,16 @@
 .order-container {
   margin-top: 170px;
 
-  .process {
+  .progress {
     display: flex;
     align-items: center;
     justify-content:center;
     padding: 10px;
+    position: fixed;
+    height: 30px;
+    width: 100%;
+    z-index: 1;
+    background-color: white;
 
     span {
       display: flex;
@@ -13,8 +18,13 @@
       justify-content: center;
       background-color: white;
       border-radius: 50%;
-      width: 20px;
+      width: 30px;
+      aspect-ratio: 1/1;
     }
+  }
+
+  form {
+    padding-top: 50px;
   }
   
   .cart, .delivery, .contact-info, .total-expense {
@@ -93,6 +103,4 @@
       border: 1px solid white ;
     }
   }
-
-  
 }
