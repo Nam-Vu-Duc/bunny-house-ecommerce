@@ -80,16 +80,6 @@ function isEmail(selector) {
   }
 }
 
-// isConfirmPassword requires reEnter password must be the same as the initial 
-function isConfirmPassword(selector, getPasswordValue) {
-  return {
-    selector: selector,
-    test: function (value) {
-      return (value === getPasswordValue() && value !== '') ? undefined : "chưa giống lắm nhỉ"
-    }
-  }
-}
-
 // validator function to validate input form from user
 function validator(options) {
   var formElement = document.querySelector(options.form)
@@ -112,7 +102,7 @@ function validator(options) {
           validating(inputElement, rule, checkValidate, index)
         })
         break
-      }
+      } 
     }
   }
 }

@@ -6,6 +6,7 @@ const introduceRoute = require('./introduceRoute')
 const newArrivalRoute = require('./newArrivalRoute')
 const authenticationRoute = require('./authenticationRoute')
 const ordersRoute = require('./ordersRoute')
+const checkAdmin = require('../app/middleware/checkAdmin')
 
 function route(app) {
   app.use('/home', homeRoute)
@@ -14,7 +15,7 @@ function route(app) {
   
   app.use('/product', productRoute)
 
-  app.use('/admin', adminRoute)
+  app.use('/admin', checkAdmin, adminRoute)
 
   app.use('/all-products', allProductsRoute)
 
