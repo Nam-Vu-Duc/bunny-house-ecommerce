@@ -1,8 +1,8 @@
 module.exports = function checkAdmin(req, res, next) {
-  var role = req.role
-  if (role === 'admin') {
-    next()
+  var token = req.cookies.auth_token
+  if (!token) {
+    res.json({ message: 'you do not have permission'})
   } else {
-    res.status(403).json({ message: 'Unauthorized access: Admin role required' });
+    next()
   }
 }

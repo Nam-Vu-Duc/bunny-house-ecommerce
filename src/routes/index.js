@@ -7,8 +7,11 @@ const newArrivalRoute = require('./newArrivalRoute')
 const authenticationRoute = require('./authenticationRoute')
 const ordersRoute = require('./ordersRoute')
 const checkAdmin = require('../app/middleware/checkAdmin')
+const cookieParser = require('cookie-parser')
 
 function route(app) {
+  app.use(cookieParser())
+
   app.use('/home', homeRoute)
 
   app.use('/authentication', authenticationRoute)

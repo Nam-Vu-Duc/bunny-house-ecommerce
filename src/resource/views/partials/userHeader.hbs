@@ -32,7 +32,8 @@
       <img src="../../img/4.jpg" alt="loading"/>
     </div>
     <div class="avatar">
-      <a href="/authentication/sign-in">Đăng nhập</a>
+      <a href="/authentication/sign-in" class="log-in">Đăng nhập</a>
+      <a href="/home" class="log-out">Đăng xuat</a>
     </div>
   </div>
   
@@ -40,6 +41,7 @@
 </div>
 
 <script>
+  // update cart-orders base on each users using local storage
   var getOrdersQuantity = document.querySelector('span.orders-quantity')
   
   function updateCartCount() {
@@ -50,5 +52,34 @@
 
   document.addEventListener('cartUpdated', updateCartCount);
   updateCartCount()
+
+  // update avatar logged-in or not logged-in
+  var getLogIn = document.querySelector('a.log-in')
+  var getLogOut = document.querySelector('a.log-out')
+
+  function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  var token = getCookie("auth_token")
+  if (token) {
+    getLogIn.style.display = 'none'
+    getLogOut.style.display = 'block'
+  } else {
+    getLogIn.style.display = 'block'
+    getLogOut.style.display = 'none'
+  }
 
 </script>

@@ -7,7 +7,7 @@ class loginController {
     res.render('users/signIn', { title: 'Đăng nhập', layout: 'empty' })
   }
 
-  checkingAccount(req, res, next) {
+  async checkingAccount(req, res, next) {
     var email = req.body.email
     var password = req.body.password
 
@@ -15,7 +15,14 @@ class loginController {
       .then(user => {
         bcrypt.compare(password, user.password, function(err, result) {
           if(result) {
-            let token = jwt.sign({email: user.email}, 'verySecretValue', {expiresIn: '1h'})
+            const payload = { email: user.email }; // Payload with only essential data
+            const token = jwt.sign(payload, 'YOUR_STRONG_SECRET', { expiresIn: '15m' });
+
+            res.cookie('auth_token', token, {
+              // httpOnly: true,
+              // secure: true,
+            });
+
             if (user.role === 'admin') {
               res.redirect('/admin')
             } else {
