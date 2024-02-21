@@ -40,6 +40,10 @@
       <i class="fi fi-br-circle-user"></i>
       <p>Cập nhật thông tin cá nhân</p>
     </a>
+    <a href="/home" class="sidebar-button">
+      <i class="fi fi-br-circle-user"></i>
+      <p>Đăng xuất</p>
+    </a>
   </div>
 </div>
 
@@ -59,5 +63,12 @@
 
   let helloText = `Chúc bạn một ${checkDay} vui vẻ !!!`
   document.getElementById('welcome-text').innerHTML = helloText
+
+  // log-out
+  var logOutButton = document.querySelectorAll('a.sidebar-button')[8]
+
+  logOutButton.onclick = function() {
+    document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
 
 </script>

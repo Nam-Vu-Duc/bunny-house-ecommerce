@@ -73,6 +73,8 @@
 </div>
 
 <script>
+
+  // display each process logic
   var getDelivery = document.querySelector('div.delivery')
   var getContactInfo = document.querySelector('div.contact-info')
   var getTotalExpense = document.querySelector('div.total-expense')
@@ -124,5 +126,12 @@
       getSubmitButton.style.display = 'block'
     }
   }
+
+  // get data to display from localStorage
+  var productInfo = JSON.parse(localStorage.getItem('product_cart_count')) || {};
+  var productName = productInfo.productName || {};
+  var getNameField = document.querySelectorAll('td')[0] 
+  getNameField.innerText = productName[0] || ''
+
 
 </script>

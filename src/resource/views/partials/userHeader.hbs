@@ -54,8 +54,8 @@
   updateCartCount()
 
   // update avatar logged-in or not logged-in
-  var getLogIn = document.querySelector('a.log-in')
-  var getLogOut = document.querySelector('a.log-out')
+  var getHeaderLogInButton = document.querySelector('a.log-in')
+  var getHeaderLogOutButton = document.querySelector('a.log-out')
 
   function getCookie(cname) {
     let name = cname + "=";
@@ -75,11 +75,15 @@
 
   var token = getCookie("auth_token")
   if (token) {
-    getLogIn.style.display = 'none'
-    getLogOut.style.display = 'block'
+    getHeaderLogInButton.style.display = 'none'
+    getHeaderLogOutButton.style.display = 'block'
   } else {
-    getLogIn.style.display = 'block'
-    getLogOut.style.display = 'none'
+    getHeaderLogInButton.style.display = 'block'
+    getHeaderLogOutButton.style.display = 'none'
   }
 
+  // log-out and clear cookie
+  getHeaderLogOutButton.onclick = function() {
+    document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
 </script>

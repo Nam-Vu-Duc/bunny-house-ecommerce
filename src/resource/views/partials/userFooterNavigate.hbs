@@ -1,0 +1,98 @@
+<div class="drop-up-menu">
+  <div class="drop-up-content">
+    <p>
+      Skincare
+      <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+    </p>
+    <p>
+      Makeup
+      <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+    </p>
+  </div>
+
+  <div class="drop-up-right-content">
+    <div class="column">
+      <div class="column-1">    
+        <a href="/all-products/xit-khoang">Xịt khoáng</a>
+        <a href="/all-products/mat-na">Mặt nạ</a>
+        <a href="/all-products/serum">Serum</a>
+        <a href="/all-products/bha">BHA</a>
+        <a href="/all-products/tay-da-chet">Tẩy da chết</a>
+        <a href="/all-products/duong-da">Dưỡng da</a>
+      </div>
+
+      <div class="column-2">    
+        <a href="/all-products/toner">Toner</a>
+        <a href="/all-products/nuoc-tay-trang">Nước tẩy trang</a>
+        <a href="/all-products/cham-mun">Chấm mụn</a>
+        <a href="/all-products/kem-duong-am">Kem dưỡng ẩm</a>
+        <a href="/all-products/sua-rua-mat">Sữa rửa mặt</a>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="column-1">    
+        <a href="/all-products/phan-ma">Phấn má</a>
+        <a href="/all-products/mascara">Mascara</a>
+        <a href="/all-products/ke-mat">Kẻ mắt</a>
+      </div>
+
+      <div class="column-2">    
+        <a href="/all-products/kem-chong-nang">Kem chống nắng</a>
+        <a href="/all-products/che-khuyet-diem">Che khuyết điểm</a>
+        <a href="/all-products/son">Son</a>
+      </div>
+    </div>
+  </div>  
+</div>
+
+<div class="footer-menu">
+  <div class="footer-drop-up-list-title">
+    <i class="fi fi-br-menu-burger"></i>
+    <p>DANH MỤC</p> 
+  </div>
+
+  <div class="title">
+    <a href="/authentication/sign-in" class="log-in">ĐĂNG NHẬP</a>
+    <a href="" class="logged-in">TÀI KHOẢN</a>
+  </div>
+</div>
+
+<script>
+
+// dropdown logic
+var dropUpMenu = document.querySelector('div.drop-up-menu')
+var dropUpTitle = document.querySelector('div.footer-drop-up-list-title')
+var dropUpContents = document.querySelector('div.drop-up-content').querySelectorAll('p')
+var dropUpRightContents = document.querySelector('div.drop-up-right-content').querySelectorAll('div.column')
+
+dropUpTitle.onclick = function() {
+  dropUpMenu.style.display = (dropUpMenu.style.display === 'none') ? 'flex' : 'none'
+}
+
+{{!-- document.addEventListener('click', function(event) {
+  if (!event.target.matches('.footer-drop-up-list-title') &&
+      !event.target.closest('.footer-drop-up-list-title') &&
+      !event.target.closest('.drop-up-content-drop-right')
+    ) { // Check if clicked element is not a drop-up-title
+    dropUpContent.style.display = 'none'
+    dropUpContentDropRightContents.forEach(function(dropUpContentDropRightContent) {
+      dropUpContentDropRightContent.style.display = 'none'
+    })
+  }
+}); --}}
+
+for (let i = 0; i <= 1; ++i) {
+  dropUpContents[i].onclick = function() {
+    dropUpRightContents[i].style.display = (dropUpRightContents[i].style.display === 'none') ? 'flex' : 'none'
+    dropUpRightContents[1-i].style.display = 'none'
+    dropUpContents[i].style.backgroundColor = '#FFDFDF'
+    dropUpContents[1-i].style.backgroundColor = 'white'
+  }
+}
+
+// update logged-in or not logged-in logic
+  var getBottomLogInButton = document.querySelector('a.log-in')
+  var getBottomLoggedInButton = document.querySelector('a.logged-in')
+
+</script>
