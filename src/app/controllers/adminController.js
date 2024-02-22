@@ -6,6 +6,10 @@ class adminController {
     res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin' })
   }
 
+  allOrders(req, res, next) {
+    res.render('admin/orders', { title: 'Đơn đặt hàng', layout: 'admin' })
+  }
+
   create(req, res, next) {
     res.render('admin/create', { title: 'Thêm sản phẩm mới', layout: 'admin' })
   }

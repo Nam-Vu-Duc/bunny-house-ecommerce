@@ -18,16 +18,19 @@ const adminController = require('../app/controllers/adminController')
 // home page
 router.get('/', adminController.show)
 
-// create item form
+// users' orders page
+router.get('/all-orders', adminController.allOrders)
+
+// create item page
 router.get('/create', adminController.create)
 
 // create item api
 router.post('/created', upload.single('avatar'), adminController.created)
 
-// update item board
+// all items page
 router.get('/update', adminController.update)
 
-// update item form
+// update item page
 router.get('/updating/:id', adminController.updating)
 
 // update item api
@@ -42,10 +45,10 @@ router.delete('/delete/:id', adminController.delete)
 // restore item api
 router.get('/restore/:id', adminController.restore)
 
-// deleted item board
+// deleted item page
 router.get('/trash', adminController.trash)
 
-// update profile form
+// update profile page
 router.get('/update-profile', adminController.updateProfile)
 
 module.exports = router

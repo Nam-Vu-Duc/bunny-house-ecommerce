@@ -9,27 +9,23 @@
     <span>4</span>
   </div>
 
-  <form action="">
+  <form action="/orders/create-orders" method="post">
     <div class="cart">
       <p>Giỏ hàng của tôi</p>
       <table>
         <tr>
-          <th></th>
-          <th>Sản phẩm</th>
-          <th>Phân loại</th>
+          <th>Tên Sản Phẩm</th>
           <th>Giá</th>
-          <th>Số lượng</th>
-          <th>Tổng tiền</th>
+          <th>Số Lượng</th>
+          <th>Tổng Tiền</th>
           <th>Xoá</th>
         </tr>
         <tr>
-          <th></th>
-          <td>1</td>
-          <td>2</td>
-          <td>3</td>
-          <td>4</td>
-          <td>5</td>
-          <td>6</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
       </table>
     </div>
@@ -64,11 +60,14 @@
       <p>Tổng tiền hàng</p>
       <p>100000</p>
     </div>
+
+    <div class="button">
+      <button title="submit" type="submit" class="submit-button">Hoàn thành</button>
+    </div>
   </form>
 
   <div class="button">
     <button class="next-button">Tiếp theo</button>
-    <button title="submit" type="submit" class="submit-button">Hoàn thành</button>
   </div>
 </div>
 
@@ -128,10 +127,20 @@
   }
 
   // get data to display from localStorage
-  var productInfo = JSON.parse(localStorage.getItem('product_cart_count')) || {};
-  var productName = productInfo.productName || {};
-  var getNameField = document.querySelectorAll('td')[0] 
-  getNameField.innerText = productName[0] || ''
-
+  var getProductInfo = JSON.parse(localStorage.getItem('product_cart_count')) || {};
+  var productInfoLength = getProductInfo.productInfo.length 
+  var getTable = document.querySelector('table')
+  for (let i = 0; i < productInfoLength; ++i) {
+    // create new row for new product
+    var newProductRow = document.createElement('tr') 
+    // create new element and get data from localStorage
+    var newProductName = document.createElement('td')
+    newProductName.innerText = getProductInfo.productInfo[i].name 
+    var newProductPrice = document.createElement('td')
+    newProductPrice.innerText = getProductInfo.productInfo[i].price 
+    newProductRow.appendChild(newProductName)
+    newProductRow.appendChild(newProductPrice)
+    getTable.appendChild(newProductRow)
+  }
 
 </script>

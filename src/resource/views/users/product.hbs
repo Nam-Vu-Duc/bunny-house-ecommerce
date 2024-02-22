@@ -31,12 +31,18 @@
         <p>{{product.description}}</p>
       </div>
 
+      <div class="quantity">
+        <i class="fi fi-rr-minus-circle"></i>
+        <p></p>
+        <i class="fi fi-rr-add"></i>
+      </div>
+
       <div class="button">
         <div class="add-to-cart-btn">
-          <i class="fi fi-rr-shopping-cart-add"></i> 
+          <p>Thêm Vào Giỏ</p>
         </div>
         <div>
-          <i class="fi fi-rr-heart"></i>
+          <p><a href="">Mua Ngay</a></p> 
         </div>
       </div>
     </div>
@@ -56,57 +62,74 @@
 
 <script>
   var getAddToCart = document.querySelector('div.add-to-cart-btn')
-  var icon = getAddToCart.querySelector('i.fi-rr-shopping-cart-add')
+  var addToCartText = getAddToCart.querySelector('p')
+  var getIncreaseQuantity = document.querySelector('i.fi-rr-add')
+  var getDecreaseQuantity = document.querySelector('i.fi-rr-minus-circle')
+  var getQuantity = document.querySelector('div.quantity').querySelector('p')
+  // increase quantity onclick
+  getIncreaseQuantity.onclick = function() {
+    getQuantity.innerText++
+  }
+
+  // decrease quantity onclick and min = 0
+  getDecreaseQuantity.onclick = function() {
+    if (getQuantity.innerText === '0') {
+      getQuantity.innerText = 0
+    } else {
+      getQuantity.innerText--
+    }
+  }
 
   // get obj from storage first, if not created, return {}
   var myObjFromStorage = JSON.parse(localStorage.getItem('product_cart_count')) || {}
   var myObj = {
     localCounting: myObjFromStorage.localCounting || 0,
-    productName: myObjFromStorage.productName || [],
-    allProducts: [
-      product = {
-        name: 'abc',
-        price: 'xyz'
-      },
-    ]
+    productInfo: myObjFromStorage.productInfo || []
   } 
   
   // set value to the myObj, stringify because localStorage only store string type
   localStorage.setItem('product_cart_count', JSON.stringify(myObj))
   myObj.localCounting = myObjFromStorage.localCounting
-  myObj.productName = myObjFromStorage.productName
-  myObj.allProducts = myObjFromStorage.allProducts
+  myObj.productInfo = myObjFromStorage.productInfo
 
   // check if the item has already been added, return the button type to added
-  var listProductLength = myObj.productName.length
+  var listProductLength = myObj.productInfo.length
   for (let i = 0; i < listProductLength; ++i) {
-    if (myObj.productName[i] === `{{product.slug}}`) {
+    if (myObj.productInfo[i].slug === `{{product.slug}}`) {
       getAddToCart.style.backgroundColor = '#D1A6A6'
-      icon.style.color = 'white'
+      addToCartText.style.color = 'white'
+      getQuantity.innerText = myObj.productInfo[i].quantity
       break
     } 
+    
   }
 
   getAddToCart.onclick = function() {
     // the item has not yet been added, click to add
     if (getAddToCart.style.backgroundColor === '') {
       getAddToCart.style.backgroundColor = '#D1A6A6'
-      icon.style.color = 'white'
+      addToCartText.style.color = 'white'
       // add 1 to the cartCounting and store the item slug in the localStorage
       myObj.localCounting++
-      myObj.productName.push(`{{product.slug}}`)
-      myObj.allProducts.push(`{{product.slug}}`)
+      
+      var newProductInfo = {
+        slug: `{{product.slug}}`,
+        name: `{{product.name}}`,
+        price: `{{product.price}}`,
+        quantity: getQuantity.innerText
+      };
+      myObj.productInfo.push(newProductInfo)
     } else {
     // the item has already been added, click to remove
       getAddToCart.style.backgroundColor = ''
-      icon.style.color = '#D1A6A6'
+      addToCartText.style.color = '#D1A6A6'
       myObj.localCounting--
       // minus 1 from the cartCounting and remove the item slug from the localStorage
-      listProductLength = myObj.productName.length
-      for (let i = 0; i < listProductLength; ++i) {
-        if (myObj.productName[i] === `{{product.slug}}`) {
-          myObj.productName.splice(i, 1)
-          myObj.allProducts.splice(i, 1)
+      listProductLength = myObj.productInfo.length
+      for (let i = 0; i < listProductLength; i++) {
+        if (myObj.productInfo[i].slug === `{{product.slug}}`) {
+          myObj.productInfo.splice(i, 1)
+          break
         }
       }
     }

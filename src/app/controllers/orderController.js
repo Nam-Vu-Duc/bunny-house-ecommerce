@@ -8,6 +8,17 @@ class orderController {
         res.render('users/orders', { title: 'Đơn hàng', newArrivalProduct }) })
       .catch(next)
   }
+
+  createOrders(req, res, next) {
+    // let newProduct = new product(req.body)
+    // if (req.file) {
+    //   newProduct.avatar = req.file.filename
+    // }
+    // newProduct.save()
+    //   .then(() => res.redirect('/admin/update'))
+    //   .catch(next)
+    res.json(req.body)
+  }
 }
 
 module.exports = new orderController

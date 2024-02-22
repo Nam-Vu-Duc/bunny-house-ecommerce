@@ -12,7 +12,6 @@ const user = new Schema({
   password: { type: String, },
   role: { type: String, default: 'user' },
   slug: { type: String, slug: 'name', unique: true },
-  deletedAt: {type: Date, default: null }
 }, { timestamps: true })
 
 module.exports = mongoose.model('user', user);
