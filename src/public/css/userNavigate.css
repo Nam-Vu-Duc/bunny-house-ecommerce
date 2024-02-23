@@ -58,7 +58,7 @@ nav {
         display: inline-block;
         width: 100%;          
   
-        a, p {
+        a {
           padding: 10px;
           display: flex; 
           justify-content: space-between;
@@ -70,7 +70,7 @@ nav {
           margin-block-end: 0;
         };
 
-        a:hover, p:hover { 
+        a:hover { 
           color: red;
           background-color: #FFDFDF;
           i { color: red } 

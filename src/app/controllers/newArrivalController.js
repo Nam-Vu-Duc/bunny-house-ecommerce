@@ -4,7 +4,7 @@ class newArrivalController {
   show(req, res, next) {
     product.find({ deletedAt: null, newArrival: 'yes' }).lean().sortable(req)
       .then(product => { 
-        res.render('users/newArrival', { title: 'Sản phẩm mới ra lòoooo', product }) })
+        res.render('users/newArrival', { title: 'Sản Phẩm Mới Về', product }) })
       .catch(next)
   }
 }

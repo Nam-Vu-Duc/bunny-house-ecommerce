@@ -87,7 +87,8 @@
     background-color: white; 
     max-width: 220px;
     padding: 5px 12px 5px 12px;
-    scroll-snap-align: none start
+    scroll-snap-align: none start;
+    a, p { text-decoration: none; color: black}
   };
   
   .product:hover {

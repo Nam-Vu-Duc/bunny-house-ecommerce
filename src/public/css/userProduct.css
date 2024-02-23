@@ -125,17 +125,27 @@
       align-items: center;
       gap: 5px;
         
-      div {
+      .add-to-cart, .buy-now, .out-of-order {
         display: flex;
         align-items: center;
         justify-content: center;
         width: fit-content;
         height: 30px;
-        border: 1px solid #D1A6A6;
         border-radius: 5px;
         padding: 10px;
-        p, a { color: #D1A6A6; text-decoration: none }
       };
+
+      .add-to-cart, .buy-now {
+        border: 1px solid #D1A6A6;
+        p, a { color: #D1A6A6; text-decoration: none }
+      }
+
+      .out-of-order {
+        display: none;
+        background-color: red;
+        color: white;
+      }
+
     
       div:hover {
         cursor: pointer;

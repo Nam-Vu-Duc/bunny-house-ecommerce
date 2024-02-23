@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 class loginController {
   signIn(req, res, next) {
-    res.render('users/signIn', { title: 'Đăng nhập', layout: 'empty' })
+    res.render('users/signIn', { title: 'Đăng Nhập', layout: 'empty' })
   }
 
   async checkingAccount(req, res, next) {
@@ -17,11 +17,14 @@ class loginController {
           if(result) {
             const payload = { email: user.email }; // Payload with only essential data
             const token = jwt.sign(payload, 'YOUR_STRONG_SECRET', { expiresIn: '15m' });
+            const userId = user._id.toString()
 
             res.cookie('auth_token', token, {
               // httpOnly: true,
               // secure: true,
             });
+
+            res.cookie('user_id', userId)
 
             if (user.role === 'admin') {
               res.redirect('/admin')

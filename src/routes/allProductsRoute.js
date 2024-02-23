@@ -10,6 +10,8 @@ router.get('/flash-sale', allProductsController.showFlashSale)
 
 router.get('/hot', allProductsController.showHot)
 
-router.get('/:slug', allProductsController.showCategory)
+router.get('/skincare/:slug', allProductsController.showSkincare)
+
+router.get('/makeup/:slug', allProductsController.showMakeUp)
 
 module.exports = router

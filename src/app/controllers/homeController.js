@@ -7,7 +7,7 @@ class homeController {
       .then(product => { 
         const flashDealProduct = product.filter(product => product.hotsale === 'flash-sale').slice(0, 5)
         const hotProduct = product.filter(product => product.hotsale === 'hot').slice(0, 5)
-        const allProduct = product
+        const allProduct = product.slice(0, 10)
         res.render('users/home', { title: 'Cửa hàng mỹ phẩm BunnyStore' , flashDealProduct, hotProduct, allProduct }) })
       .catch(next)
   }

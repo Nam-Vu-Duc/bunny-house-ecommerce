@@ -38,11 +38,14 @@
       </div>
 
       <div class="button">
-        <div class="add-to-cart-btn">
+        <div class="add-to-cart">
           <p>Thêm Vào Giỏ</p>
         </div>
-        <div>
+        <div class="buy-now">
           <p><a href="">Mua Ngay</a></p> 
+        </div>
+        <div class="out-of-order">
+          <p>Hết Hàng</p>
         </div>
       </div>
     </div>
@@ -61,7 +64,9 @@
 </div>
 
 <script>
-  var getAddToCart = document.querySelector('div.add-to-cart-btn')
+  var getAddToCart = document.querySelector('div.add-to-cart')
+  var getBuyNow = document.querySelector('div.buy-now')
+  var getOutOfOrder = document.querySelector('div.out-of-order')
   var addToCartText = getAddToCart.querySelector('p')
   var getQuantityDiv = document.querySelector('div.quantity')
   var getIncreaseQuantity = document.querySelector('i.fi-rr-add')
@@ -71,6 +76,13 @@
   // set default quantity value to 0 on first load and hidden the quantity div
   getQuantityValue.innerText = 0
   getQuantityDiv.style.visibility = 'hidden'
+
+  // display out-of-order if true
+  if (`{{product.hotsale}}` === 'out-of-order') {
+    getAddToCart.style.display = 'none'
+    getBuyNow.style.display = 'none'
+    getOutOfOrder.style.display = 'flex'
+  }
   
   // get obj from storage first, if not created, return {}
   var myObjFromStorage = JSON.parse(localStorage.getItem('product_cart_count')) || {}
