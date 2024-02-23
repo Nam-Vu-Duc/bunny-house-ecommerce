@@ -5,7 +5,7 @@
     </div>
 
     <div class="form-group">
-      <label for="name">Tên</label>
+      <label for="name">Họ Tên</label>
       <input type="text" class="form-control" id="name" name="name">
       <span class="form-message"></span>
     </div>
@@ -17,18 +17,18 @@
     </div>
 
     <div class="form-group">
-      <label for="password">Mật khẩu</label>
+      <label for="password">Mật Khẩu</label>
       <input type="password" class="form-control" id="password" name="password">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="password-confirm">Xác nhận mật khẩu</label>
+      <label for="password-confirm">Xác Nhận Mật Khẩu</label>
       <input type="password" class="form-control" id="password-confirm" name="password-confirm">
       <span class="form-message"></span>
     </div>
 
-    <button title="submit" type="submit">Đăng kí</button>
+    <button title="submit" type="submit">Đăng Ký</button>
   </form>
 
   <div class="sign-up">
@@ -60,7 +60,7 @@ function isRequiredString(selector) {
   return {
     selector: selector,
     test: function (value) {
-      return value.trim() ? undefined : 'Quên chưa nhập kìa =((('
+      return value.trim() ? undefined : 'Quên Chưa Nhập Kìa =((('
     }
   }
 }
@@ -71,7 +71,7 @@ function isEmail(selector) {
     selector: selector,
     test: function (value) {
       var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-      return regex.test(value) ? undefined : 'Nhập cho đúng vào =((('
+      return regex.test(value) ? undefined : 'Nhập Đúng Email Vô =((('
     }
   }
 }
@@ -81,7 +81,7 @@ function isConfirmPassword(selector, getPasswordValue) {
   return {
     selector: selector,
     test: function (value) {
-      return (value === getPasswordValue() && value !== '') ? undefined : "chưa giống lắm nhỉ"
+      return (value === getPasswordValue() && value !== '') ? undefined : "Mật Khẩu Chưa Trùng Rồi"
     }
   }
 }

@@ -32,10 +32,10 @@
     padding: 5px 10px 5px 10px;
 
     input {
-      max-width: 500px;
-      height: 30px;
+      width: 100%;
+      min-height: 30px;
       border-radius: 5px;
-      border-style: none
+      border-style: none;
     };
 
     #avatar {

@@ -34,7 +34,7 @@ router.get('/update', adminController.update)
 router.get('/updating/:id', adminController.updating)
 
 // update item api
-router.put('/updated/:id', adminController.updated)
+router.put('/updated/:id', upload.single('avatar'), adminController.updated)
 
 // soft delete item api
 router.delete('/soft-delete/:id', adminController.softDelete)

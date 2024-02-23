@@ -5,7 +5,7 @@
     </div>
 
     <div class="form-group">
-      <label for="categories">Loại gì nhể</label>
+      <label for="categories">Chọn Dòng Sản Phẩm</label>
       <select name="categories">
         <option value="">-- Chọn --</option>
         <option value="skincare">Skincare</option>
@@ -18,10 +18,10 @@
       <select name="skincare">
         <option value="">-- Chọn --</option>
         <option value="xit-khoang">
-          Xịt khoáng
+          Xịt Khoáng
         </option>
         <option value="mat-na">
-          Mặt nạ
+          Mặt Nạ
         </option>
         <option value="serum">
           Serum
@@ -30,25 +30,25 @@
           BHA
         </option>
         <option value="tay-da-chet">
-          Tẩy da chết
+          Tẩy Da Chết
         </option>
         <option value="duong-da">
-          Dưỡng da
+          Dưỡng Da
         </option>  
         <option value="toner">
           Toner
         </option>
         <option value="nuoc-tay-trang">
-          Nước tẩy trang
+          Nước Tẩy Trang
         </option>
         <option value="cham-mun">
-          Chấm mụn
+          Chấm Mụn
         </option>
         <option value="kem-duong-am">
-          Kem dưỡng ẩm
+          Kem Dưỡng Ẩm
         </option>
         <option value="sua-rua-mat">
-          Sữa rửa mặt
+          Sữa Rửa Mặt
         </option>
       </select>
     </div>
@@ -58,19 +58,19 @@
       <select name="makeup">
         <option value="">-- Chọn --</option>
         <option value="phan-ma">
-          Phấn má
+          Phấn Má
         </option>
         <option value="mascara">
           Mascara
         </option>
         <option value="ke-mat">
-          Kẻ mắt
+          Kẻ Mắt
         </option>
         <option value="kem-chong-nang">
-          Kem chống nắng
+          Kem Chống Nắng
         </option>
         <option value="che-khuyet-diem">
-          Che khuyết điểm
+          Che Khuyết Điểm
         </option>
         <option value="son">
           Son
@@ -79,37 +79,37 @@
     </div>
 
     <div class="form-group">
-      <label for="brand">Hãng gì nhể</label>
+      <label for="brand">Hãng Sản Phẩm</label>
       <input type="text" class="form-control" id="brand" name="brand">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="name">Tên gì nhể</label>
+      <label for="name">Tên Sản phẩm</label>
       <input type="text" class="form-control" id="name" name="name">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="price">Giá bao nhiêu nhể</label>
+      <label for="price">Giá Sản Phẩm</label>
       <input type="text" class="form-control" id="price" name="price">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="description">Mô tả như nào nhể</label>
+      <label for="description">Giới Thiệu Sản Phẩm</label>
       <input type="text" class="form-control" id="description" name="description">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="details">Chi tiết ra sao nhể</label>
+      <label for="details">Chi tiết Sản Phẩm</label>
       <input type="text" class="form-control" id="details" name="details">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="hotsale">Có hot không nhể</label>
+      <label for="hotsale">Tình Trạng Sản Phẩm</label>
       <select name="hotsale">
         <option value="no">Bình thường</option>
         <option value="flash-sale">Đang Flash Sale</option>
@@ -118,19 +118,19 @@
     </div>
 
     <div class="form-group">
-      <label for="newArrival">Mới ra à</label>
+      <label for="newArrival">Hàng Mới Về</label>
       <select name="newArrival">
-        <option value="no">Ra lâu rồi</option>
-        <option value="yes">Chuẩn luôn</option>
+        <option value="no">Không</option>
+        <option value="yes">Chuẩn luôn, mới về</option>
       </select>
     </div>
 
     <div class="form-group">
-      <label>Cuối cùng thì cho xin nốt cái ảnh</label>
+      <label>Ảnh Sản Phẩm</label>
       <input type="file" name="avatar" id="avatar"/>
     </div>
     <div class="submit-button">
-      <button title="submit" type="submit">Hoàn thành</button>
+      <button title="submit" type="submit">Đăng</button>
     </div>
 
   </form>
@@ -158,7 +158,7 @@ function isRequiredString(selector) {
   return {
     selector: selector,
     test: function (value) {
-      return value.trim() ? undefined : 'Quên chưa nhập kìa =((('
+      return value.trim() ? undefined : 'Chưa Nhập Kìa =((('
     }
   }
 }
@@ -168,7 +168,7 @@ function isRequiredNumber(selector) {
   return {
     selector: selector,
     test: function (value) {
-      return value > 0 ? undefined : 'Nhập tiền vô =((('
+      return value > 0 ? undefined : 'Chưa Nhập Tiền Kìa =((('
     }
   }
 }

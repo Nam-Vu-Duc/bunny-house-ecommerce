@@ -20,13 +20,6 @@
           <th>Tổng Tiền</th>
           <th>Xoá</th>
         </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
       </table>
     </div>
 
@@ -130,17 +123,51 @@
   var getProductInfo = JSON.parse(localStorage.getItem('product_cart_count')) || {};
   var productInfoLength = getProductInfo.productInfo.length 
   var getTable = document.querySelector('table')
+  var totalOrderPrice = 0
+
+  // create new row for new product have name, price, quantity and totalPrice
   for (let i = 0; i < productInfoLength; ++i) {
-    // create new row for new product
+    // create new row
     var newProductRow = document.createElement('tr') 
+
     // create new element and get data from localStorage
     var newProductName = document.createElement('td')
     newProductName.innerText = getProductInfo.productInfo[i].name 
     var newProductPrice = document.createElement('td')
     newProductPrice.innerText = getProductInfo.productInfo[i].price 
+    var newProductQuantity = document.createElement('td')
+    newProductQuantity.innerText = getProductInfo.productInfo[i].quantity
+    var newProductTotalPrice = document.createElement('td')
+    newProductTotalPrice.innerText = getProductInfo.productInfo[i].price * getProductInfo.productInfo[i].quantity
+    
+    // calculate all product prices
+    totalOrderPrice += getProductInfo.productInfo[i].price * getProductInfo.productInfo[i].quantity
+
+    // add each element to the row
     newProductRow.appendChild(newProductName)
     newProductRow.appendChild(newProductPrice)
+    newProductRow.appendChild(newProductQuantity)
+    newProductRow.appendChild(newProductTotalPrice)
+
+    // add each row to the table
     getTable.appendChild(newProductRow)
   }
+
+  // calculate total ordersPrice
+  var totalOrder = document.createElement('tr')
+  var totalOrderTitle = document.createElement('td')
+  totalOrderTitle.innerText = 'Tổng Đơn Hàng'
+  var totalOrderPrices = document.createElement('td')
+  totalOrderPrices.innerText = totalOrderPrice
+
+  // add each element to the total order row
+  totalOrder.appendChild(totalOrderTitle)
+  totalOrder.appendChild(document.createElement('td'))
+  totalOrder.appendChild(document.createElement('td'))
+  totalOrder.appendChild(totalOrderPrices)
+
+  // add total order row to the bottom of the table
+  getTable.appendChild(totalOrder)
+
 
 </script>

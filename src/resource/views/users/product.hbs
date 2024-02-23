@@ -63,23 +63,15 @@
 <script>
   var getAddToCart = document.querySelector('div.add-to-cart-btn')
   var addToCartText = getAddToCart.querySelector('p')
+  var getQuantityDiv = document.querySelector('div.quantity')
   var getIncreaseQuantity = document.querySelector('i.fi-rr-add')
   var getDecreaseQuantity = document.querySelector('i.fi-rr-minus-circle')
-  var getQuantity = document.querySelector('div.quantity').querySelector('p')
-  // increase quantity onclick
-  getIncreaseQuantity.onclick = function() {
-    getQuantity.innerText++
-  }
-
-  // decrease quantity onclick and min = 0
-  getDecreaseQuantity.onclick = function() {
-    if (getQuantity.innerText === '0') {
-      getQuantity.innerText = 0
-    } else {
-      getQuantity.innerText--
-    }
-  }
-
+  var getQuantityValue = document.querySelector('div.quantity').querySelector('p')
+  
+  // set default quantity value to 0 on first load and hidden the quantity div
+  getQuantityValue.innerText = 0
+  getQuantityDiv.style.visibility = 'hidden'
+  
   // get obj from storage first, if not created, return {}
   var myObjFromStorage = JSON.parse(localStorage.getItem('product_cart_count')) || {}
   var myObj = {
@@ -96,35 +88,82 @@
   var listProductLength = myObj.productInfo.length
   for (let i = 0; i < listProductLength; ++i) {
     if (myObj.productInfo[i].slug === `{{product.slug}}`) {
+      // change button color to 'added button'
       getAddToCart.style.backgroundColor = '#D1A6A6'
       addToCartText.style.color = 'white'
-      getQuantity.innerText = myObj.productInfo[i].quantity
+
+      // visible the quantity div
+      getQuantityDiv.style.visibility = 'visible'
+      getQuantityValue.innerText = myObj.productInfo[i].quantity 
       break
     } 
-    
   }
 
+  // increase quantity onclick
+  getIncreaseQuantity.onclick = function() {
+    // increase the quantity on page
+    getQuantityValue.innerText++
+    listProductLength = myObj.productInfo.length
+    for (let i = 0; i < listProductLength; ++i) {
+      if (myObj.productInfo[i].slug === `{{product.slug}}`) {
+        // store the quantity on page to localStorage
+        myObj.productInfo[i].quantity = getQuantityValue.innerText
+        localStorage.setItem('product_cart_count', JSON.stringify(myObj));
+      }
+    }
+  }
+
+  // decrease quantity onclick and min = 1
+  getDecreaseQuantity.onclick = function() {
+    for (let i = 0; i < listProductLength; ++i) {
+      if (myObj.productInfo[i].slug === `{{product.slug}}`) {
+        if (getQuantityValue.innerText === '1') {
+          getQuantityValue.innerText = 1
+          myObj.productInfo[i].quantity = 1
+        } else {
+          getQuantityValue.innerText--
+          myObj.productInfo[i].quantity = getQuantityValue.innerText
+        }
+        localStorage.setItem('product_cart_count', JSON.stringify(myObj));
+      }
+    }
+  }
+
+  // change addToCart button behavior onclick
   getAddToCart.onclick = function() {
     // the item has not yet been added, click to add
     if (getAddToCart.style.backgroundColor === '') {
+      // change button color to 'added button'
       getAddToCart.style.backgroundColor = '#D1A6A6'
       addToCartText.style.color = 'white'
-      // add 1 to the cartCounting and store the item slug in the localStorage
+
+      // add 1 to the cartCounting and set the quantity value min = 1
       myObj.localCounting++
+      getQuantityValue.innerText = 1
+      getQuantityDiv.style.visibility = 'visible'
       
+      // create new added product 
       var newProductInfo = {
         slug: `{{product.slug}}`,
         name: `{{product.name}}`,
         price: `{{product.price}}`,
-        quantity: getQuantity.innerText
+        quantity: getQuantityValue.innerText
       };
+
+      // store new added product to localStorage
       myObj.productInfo.push(newProductInfo)
     } else {
-    // the item has already been added, click to remove
+      // the item has already been added, click to remove
+      // change button color to 'default button'
       getAddToCart.style.backgroundColor = ''
       addToCartText.style.color = '#D1A6A6'
+
+      // minus 1 from the cartCounting and reset the productQuantity to 0
       myObj.localCounting--
-      // minus 1 from the cartCounting and remove the item slug from the localStorage
+      getQuantityValue.innerText = 0
+      getQuantityDiv.style.visibility = 'hidden'
+
+      // remove the product from the localStorage
       listProductLength = myObj.productInfo.length
       for (let i = 0; i < listProductLength; i++) {
         if (myObj.productInfo[i].slug === `{{product.slug}}`) {

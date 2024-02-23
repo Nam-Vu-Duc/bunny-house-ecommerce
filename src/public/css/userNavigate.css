@@ -93,19 +93,19 @@ nav {
       }
     }
     
-    /* .dropdown-content-dropright:hover .dropdown-content-dropright-content {
+    .dropdown-content-dropright:hover .dropdown-content-dropright-content {
       display: block;
-    } */
+    }
   }
   
   .dropdown:hover {
-    /* .dropdown-content {
+    .dropdown-content {
       display: block;
     };
   
     .dropdown-content-dropright-content {
       display: none;
-    } */
+    }
   };
 }
 
