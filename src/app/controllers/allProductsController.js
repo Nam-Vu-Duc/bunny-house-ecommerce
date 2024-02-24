@@ -3,19 +3,15 @@ const product = require('../models/productModel')
 class allProductsController {
   showAll(req, res, next) {
     product.find({ deletedAt: null }).lean().sortable(req)
-      .then(product => { res.render('users/allProducts', { title: 'Toàn Bộ Sản Phẩm', product }) })
-      .catch(next)
-  }
-
-  showFlashSale(req, res, next) {
-    product.find({ deletedAt: null, hotsale: 'flash-sale' }).lean().sortable(req)
-      .then(product => { res.render('users/allProductsFlashSale', { title: 'Sản Phẩm Flash Sale', product }) })
-      .catch(next)
-  }
-
-  showHot(req, res, next) {
-    product.find({ deletedAt: null, hotsale: 'hot' }).lean().sortable(req)
-      .then(product => { res.render('users/allProductsHot', { title: 'Sản Phẩm Hot', product }) })
+      .then(product => { 
+        const type = req.params.slug
+        if (type === 'flash-sale') {
+          product = product.filter(product => product.hotsale === 'flash-sale' )
+        }
+        if (type === 'hot') {
+          product = product.filter(product => product.hotsale === 'hot' )
+        }
+        res.render('users/allProducts', { title: 'Toàn Bộ Sản Phẩm', product, type }) })
       .catch(next)
   }
 

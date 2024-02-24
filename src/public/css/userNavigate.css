@@ -9,7 +9,7 @@ nav {
   display: flex;
   gap: 20px;
 
-  .navigation-bar {
+  .navigation-container {
     display: flex;
     height: 100%;
 

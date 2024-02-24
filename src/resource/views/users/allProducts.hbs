@@ -1,4 +1,4 @@
-<div class="all-products-board">
+<div class="user-all-products-container">
   <div class="title">
     <i class="fi fi-sr-flame"></i>
     <div class="main-title" style="text-transform:uppercase"><b>Toàn bộ sản phẩm nè</b></div>
@@ -19,8 +19,42 @@
         </a>
       </div>
     {{/each}}
+  </div>
+
+  <span class="see-more-button">
+    <button>Xem thêm</button>
+  </span>
+
 </div>
 
-<span class="see-more-button">
-  <button>Xem thêm</button>
-</span>
+<script>
+
+  // update main-title base on params.slug
+  var getSlug = `{{type}}`
+  var mainTitle = document.querySelector('div.main-title').querySelector('b')
+
+  if (getSlug === 'flash-sale') {
+    mainTitle.innerText = 'Toàn bộ sản phẩm đang sale nè'
+  }
+  if (getSlug === 'hot') {
+    mainTitle.innerText = 'Toàn bộ sản phẩm đang hot nè'
+  }
+
+  // pagination 
+  var seeMoreButton = document.querySelector('span.see-more-button').querySelector('button')
+  var allProducts = document.querySelectorAll('div.product')
+  var allProductsLength = allProducts.length
+
+  var index = 5
+  for (let i = index; i < allProductsLength; ++i) {
+    allProducts[i].style.display = 'none'
+  }
+
+  seeMoreButton.onclick = function() {
+    index += 5
+    for (let i = 5; i < index; ++i) {
+      allProducts[i].style.display = 'grid'
+    }
+  }
+
+</script>

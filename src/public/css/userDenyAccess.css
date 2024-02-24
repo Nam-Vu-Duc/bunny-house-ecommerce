@@ -1,0 +1,9 @@
+.deny-access-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  a { color: red; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+}

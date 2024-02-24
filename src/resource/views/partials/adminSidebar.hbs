@@ -28,14 +28,6 @@
       <i class="fi fi-br-trash"></i>
       <p>Kho</p>
     </a>
-    <a href="/admin/introduce-update" class="sidebar-button">
-      <i class="fi fi-bs-link-alt"></i>
-      <p>Sửa Giới Thiệu</p>
-    </a>
-    <a href="/admin/footer-update" class="sidebar-button">
-      <i class="fi fi-bs-link-alt"></i>
-      <p>Sửa Chân Trang</p>
-    </a>
     <a href="/home" class="sidebar-button">
       <i class="fi fi-br-browser"></i>
       <p>Trang Người Dùng</p>
@@ -69,7 +61,7 @@
   document.getElementById('welcome-text').innerHTML = helloText
 
   // log-out
-  var logOutButton = document.querySelectorAll('a.sidebar-button')[9]
+  var logOutButton = document.querySelectorAll('a.sidebar-button')[7]
 
   logOutButton.onclick = function() {
     document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
