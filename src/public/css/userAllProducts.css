@@ -37,6 +37,23 @@
   }
 }
 
+.all-category-skincare, .all-category-makeup {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 10px;
+
+  a {
+    text-decoration: none;
+    border: 1px solid #D1A6A6;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: white;
+    color: #D1A6A6;
+  }
+}
+
 .sort-button {
   width: fit-content;
   margin-right: 0;
