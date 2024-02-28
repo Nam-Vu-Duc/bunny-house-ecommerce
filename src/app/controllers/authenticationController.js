@@ -40,7 +40,7 @@ class loginController {
   }
 
   signUp(req, res, next) {
-    res.render('users/signUp', { title: 'Đăng kí', layout: 'empty' })
+    res.render('users/signUp', { title: 'Đăng Ký', layout: 'empty' })
   }
 
   async creatingAccount(req, res, next) {

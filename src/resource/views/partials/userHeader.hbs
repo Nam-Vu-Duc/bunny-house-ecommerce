@@ -27,17 +27,14 @@
     <i class="fi fi-rr-shopping-cart-add"></i>
   </a>
 
-  <div class="dropdown-avatar">
-    <div class="avatar-image">
-      <img src="../../img/4.jpg" alt="loading"/>
-    </div>
-    <div class="avatar">
-      <a href="/authentication/sign-in" class="log-in">Đăng nhập</a>
-      <a href="/home" class="log-out">Đăng xuat</a>
-    </div>
-  </div>
-  
-  <i class="fi fi-rs-toggle-on" onclick="myFunction()"></i>
+  <img src="../../img/4.jpg" class="dropdown-avatar" alt="loading"/>
+</div>
+
+<div class="avatar-menu">
+  <a href="/authentication/sign-in" class="log-in">Đăng nhập</a>
+  <a href="/home" class="log-out">Cập Nhật Thông Tin</a>
+  <a href="/orders/progress/" class="log-out">Tiến Độ Giao Hàng</a>
+  <a href="/home" class="log-out">Đăng Xuất</a>
 </div>
 
 <script>
@@ -53,9 +50,31 @@
   document.addEventListener('cartUpdated', updateCartCount);
   updateCartCount()
 
+  // onclick avatar
+  var getAvatarMenu = document.querySelector('div.avatar-menu')
+  var getAvatar = document.querySelector('img.dropdown-avatar')
+  
+  getAvatarMenu.style.display = 'none'
+  getAvatar.onclick = function() {
+    if (getAvatarMenu.style.display === 'none') {
+      getAvatarMenu.style.display = 'block'
+    } else {
+      getAvatarMenu.style.display = 'none'
+    }
+  }
+
+  document.addEventListener('click', function(event) {
+  if (!event.target.matches('.dropdown-avatar') &&
+      !event.target.closest('.dropdown-avatar') 
+    ) { 
+    getAvatarMenu.style.display = 'none'
+  }
+});
+
   // update avatar logged-in or not logged-in
   var getHeaderLogInButton = document.querySelector('a.log-in')
-  var getHeaderLogOutButton = document.querySelector('a.log-out')
+  var getHeaderLogOutButton = document.querySelectorAll('a.log-out')
+  var headerLogOutButtonLength = getHeaderLogOutButton.length
 
   function getCookie(cname) {
     let name = cname + "=";
@@ -76,14 +95,19 @@
   var token = getCookie("auth_token")
   if (token) {
     getHeaderLogInButton.style.display = 'none'
-    getHeaderLogOutButton.style.display = 'block'
+    for (let i = 0; i < headerLogOutButtonLength; ++i) {
+      getHeaderLogOutButton[i].style.display = 'block'
+    }
+    
   } else {
     getHeaderLogInButton.style.display = 'block'
-    getHeaderLogOutButton.style.display = 'none'
+    for (let i = 0; i < headerLogOutButtonLength; ++i) {
+      getHeaderLogOutButton[i].style.display = 'none'
+    }
   }
 
   // log-out and clear cookie
-  getHeaderLogOutButton.onclick = function() {
+  getHeaderLogOutButton[2].onclick = function() {
     document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }

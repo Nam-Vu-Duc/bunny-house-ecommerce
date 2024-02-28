@@ -1,40 +1,41 @@
 <div class="sign-up-container">
-  <form id="form-2" method="post" action="/authentication/creating-account">
-    <div class="form-title">
-      <p>Đăng ký</p>
+  <div class="sign-up-form">
+    <img src="../../img/4.jpg">
+    <div class="form-input">
+      <p class="form-title">Đăng ký</p>
+      <form id="form-2" method="post" action="/authentication/creating-account">
+        <div class="form-group">
+          <input type="text" class="form-control" id="name" name="name" placeholder="Họ Tên">
+          <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+          <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+          <input type="password" class="form-control" id="password" name="password" placeholder="Mật Khẩu">
+          <span class="form-message"></span> 
+        </div>
+
+        <div class="form-group">
+          <input type="password" class="form-control" id="password-confirm" name="password-confirm" placeholder="Xác Nhận Mật Khẩu">
+          <span class="form-message"></span>
+        </div>
+
+        <div class="form-action">
+          <button title="submit" type="submit">Đăng Ký</button>
+        </div>
+
+        <div class="sign-in">
+          <p>Đã có tài khoản ? </p>
+          <a href="/authentication/sign-in"><p style="color: red; text-decoration:underline">Đăng nhập ngay thôi</p></a>
+        </div>
+      </form>
     </div>
-
-    <div class="form-group">
-      <label for="name">Họ Tên</label>
-      <input type="text" class="form-control" id="name" name="name">
-      <span class="form-message"></span>
-    </div>
-
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="text" class="form-control" id="email" name="email">
-      <span class="form-message"></span>
-    </div>
-
-    <div class="form-group">
-      <label for="password">Mật Khẩu</label>
-      <input type="password" class="form-control" id="password" name="password">
-      <span class="form-message"></span>
-    </div>
-
-    <div class="form-group">
-      <label for="password-confirm">Xác Nhận Mật Khẩu</label>
-      <input type="password" class="form-control" id="password-confirm" name="password-confirm">
-      <span class="form-message"></span>
-    </div>
-
-    <button title="submit" type="submit">Đăng Ký</button>
-  </form>
-
-  <div class="sign-up">
-    <p>Đã có tài khoản ? </p>
-    <a href="/authentication/sign-in"><p style="color: red; text-decoration:underline">Đăng nhập ngay thôi</p></a>
   </div>
+  
 </div>
 
 <script>  

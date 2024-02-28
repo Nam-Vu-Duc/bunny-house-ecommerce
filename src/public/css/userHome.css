@@ -88,7 +88,9 @@
     max-width: 220px;
     padding: 5px 12px 5px 12px;
     scroll-snap-align: none start;
-    a, p { text-decoration: none; color: black}
+    border-radius: 5px;
+    a, p { text-decoration: none; color: black};
+    
   };
   
   .product:hover {
