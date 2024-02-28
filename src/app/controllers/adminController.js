@@ -20,15 +20,14 @@ class adminController {
       newProduct.avatar = req.file.filename
     }
     newProduct.save()
-      .then(() => res.redirect('/admin/update'))
+      .then(() => res.redirect('/admin/allProducts'))
       .catch(next)
   }
 
   update(req, res, next) {
     product.find({ deletedAt: null }).lean().sortable(req)
       .then(product => { 
-        const total = product.length
-        res.render('admin/update', { title: 'Toàn bộ sản phẩm', layout: 'admin', total, product })})
+        res.render('admin/allProducts', { title: 'Toàn bộ sản phẩm', layout: 'admin', product })})
       .catch(next)
   }
 
@@ -41,7 +40,7 @@ class adminController {
   updated(req, res, next) {
     product.updateOne({ _id: req.params.id}, req.body)
       .then(() => { 
-        res.redirect('/admin/update')})
+        res.redirect('/admin/allProducts')})
       .catch(next)
   }
 
@@ -59,7 +58,7 @@ class adminController {
 
   restore(req, res, next) {
     product.updateOne({ _id: req.params.id}, { deletedAt: null })
-      .then(() => res.redirect('/admin/update'))
+      .then(() => res.redirect('/admin/allProducts'))
       .catch(next)
   }
 

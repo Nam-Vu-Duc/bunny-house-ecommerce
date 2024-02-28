@@ -30,6 +30,7 @@ app.engine('hbs', handlebars.engine({
   defaultLayout: 'users',
   helpers: {
     addIndex: (a, b) => a + b,
+
     sortable: (field, _sort) => {
       const sortType = field === _sort.column ? _sort.type : 'default'
 
@@ -51,7 +52,8 @@ app.engine('hbs', handlebars.engine({
       const output = `<a href="${address}"><i class="${icon}"></i></a>`
 
       return new Handlebars.SafeString(output)
-    }
+    },
+
   }
 }))
 

@@ -2,6 +2,28 @@
   margin-left: 200px;
   overflow-x: auto;
 
+  .total {
+    border: 1px solid black;
+    max-width: 200px;
+    height: fit-content;
+    padding: 5px;
+
+    .total-title, .total-number {
+      max-width: 200px;
+      font-weight: bolder;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-block-start: 5px;
+      margin-block-end: 5px;
+    }
+  }
+
+  .filter {
+    background-color: #FFDFDF;
+    padding: 5px;
+  }
+
   .board-sidebar {
     width: 100%;
     display: flex;
@@ -25,8 +47,9 @@
   table, th, td {
     border-bottom: 1px solid #ddd;
     border-collapse: collapse;
-    padding: 5px;
+    padding: 5px 0;
     text-align: center;
+    max-width: 100%;
   }
 
   th {
@@ -58,13 +81,22 @@
     cursor: pointer;
   };
 
+  
   button:hover {
     background-color: #D1A6A6;
     color: white;
     border: 1px solid white ;
   }
 
-/* Add a color to the cancel button */
+  .see-more-button {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 10px 0 10px 0;
+  }
+
+
+  /* Add a color to the cancel button */
   .cancelbtn {
     background-color: #ccc;
     color: black;
@@ -94,16 +126,19 @@
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    padding-top: 50px;
+    background-color: rgba(0, 0, 0, 0.4);
   }
 
   /* Modal Content/Box */
   .modal-content {
     background-color: #fefefe;
-    margin: 10% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
     width: 50%; /* Could be more or less, depending on screen size */
     border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
   }
 
   /* Clear floats */
@@ -117,24 +152,6 @@
   @media screen and (max-width: 300px) {
     .cancelbtn, .deletebtn {
       width: 100%;
-    }
-  }
-
-  .total {
-    border: 1px solid black;
-    max-width: 200px;
-    height: fit-content;
-    margin-top: 20px;
-
-
-    .total-title, .total-number {
-      max-width: 200px;
-      font-weight: bolder;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-block-start: 5px;
-      margin-block-end: 5px;
     }
   }
 }
