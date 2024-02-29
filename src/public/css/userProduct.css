@@ -1,10 +1,13 @@
 .product-details-container {
   width: 100%;
-  height: 500px;
-  padding-top: 170px;
+  height: max-content;
+  margin-top: 170px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  padding: 10px 0;
+  gap: 10px;
 
   .table {
     width: 90%;
@@ -13,7 +16,6 @@
     border-radius: 10px;
     display: flex;
     align-items: center;
-    padding: 10px;
   }
 
   .image-box {
@@ -59,38 +61,22 @@
   .details-box {
     width: 50%;
     height: 100%;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 10px;
 
-    .brand {
+    .title {
       width: 100%;
-      height: 10%;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
 
-      p {
-        font-size: larger;
-        font-weight: bolder;
-        color: #c73030;
+      h1, h3 {
+        width: fit-content;
+        margin-block-start: 0;
+        margin-block-end: 0;
+        padding: 5px 0;
       }
-    }
 
-    .name {
-      width: 100%;
-      height: 10%;
-
-      p {
-        font-size: larger;
-        font-weight: bolder;
-      }
-    }
-
-    .price {
-      width: 100%;
-      height: 10%;
-
-      p {
-        font-size: larger;
-        font-weight: bolder;
+      h1 {
         color: #c73030;
       }
     }
@@ -152,6 +138,21 @@
       }
     }
   }
+
+  .more-details {
+    width: 90%;
+    background-color: white;
+    border-radius: 10px;
+    align-items: center;
+  
+    h3 {
+      padding: 5px;
+    }
+
+    p {
+      padding: 0px 10px;
+    }
+  }
 }
 
 @media screen and (max-width: 700px) {
@@ -160,34 +161,6 @@
   };
 }
 
-.product-details-more {
-  width: 100%;
-  height:fit-content;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 10px;
+  
 
-  .table {
-    width: 90%;
-    height: 90%;
-    background-color: white;
-    border-radius: 10px;
-    align-items: center;
-  }
-
-  .title {
-    width: 100%;
-    height: 50px;
-
-    p {
-      font-size: 15px;
-      font-weight: bolder;
-      white-space: pre-wrap;
-    }
-  }
-
-  p {
-    padding: 0px 10px 5px 10px;
-  }
-}
+  

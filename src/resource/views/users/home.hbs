@@ -16,16 +16,14 @@
   
   <div class="flash-deal-products">
     {{#each flashDealProduct}}
-    <div class="product">
-      <a href="/product/{{this.slug}}">
+    <a href="/product/{{this.slug}}">
+      <div class="product">
         <img src="uploads/{{this.avatar}}" alt="" id="product-1">
-        <p id="product-price"><del>123</del></p>
-        <p id="product-price">{{this.price}}</p>
+        <p id="product-price">{{this.price}}đ</p>
         <p id="product-details">{{this.name}}</p>
-      </a>
-    </div>
+      </div>
+    </a>
     {{/each}}
-    
   </div>
 </div>
 
@@ -43,13 +41,13 @@
   
   <div class="hot-products">
     {{#each hotProduct}}
-    <div class="product">
-      <a href="/product/{{this.slug}}">
+    <a href="/product/{{this.slug}}">
+      <div class="product">
         <img src="uploads/{{this.avatar}}" alt="" id="product-1">
-        <p id="product-price">{{this.price}}</p>
+        <p id="product-price">{{this.price}}đ</p>
         <p id="product-details">{{this.name}}</p>
-      </a>
-    </div>
+      </div>
+    </a>
     {{/each}}
   </div>
 </div>
@@ -68,13 +66,13 @@
 
   <div class="products">
     {{#each allProduct}}
-    <div class="product">
-      <a href="/product/{{this.slug}}">
+    <a href="/product/{{this.slug}}">
+      <div class="product">
         <img src="uploads/{{this.avatar}}" alt="" id="product-1">
-        <p id="product-price">{{this.price}}</p>
+        <p id="product-price">{{this.price}}đ</p>
         <p id="product-details">{{this.name}}</p>
-      </a>
-    </div>
+      </div>
+    </a>
     {{/each}}
   </div>
 </div>
@@ -94,4 +92,11 @@
       <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-Zalo-Arc.png" alt="loading" style="width: 30px;"/>
     </div> 
   </div>              
-</div>    
+</div>
+
+<script>
+  {{!-- var changePriceType = document.querySelectorAll('p#product-price')
+  for (let i = 0; i < changePriceType.length; ++i) {
+    changePriceType[i].innerText = changePriceType[i].innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  } --}}
+</script>

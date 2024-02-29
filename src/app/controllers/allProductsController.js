@@ -4,6 +4,7 @@ class allProductsController {
   showAll(req, res, next) {
     product.find({ deletedAt: null }).lean().sortable(req)
       .then(product => { 
+        product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
         const type = req.params.slug
         let title = 'Toàn Bộ Sản Phẩm'
         if (type === 'flash-sale') {
@@ -33,6 +34,7 @@ class allProductsController {
   showSkincare(req, res, next) {
     product.find({ deletedAt: null, skincare: req.params.slug }).lean().sortable(req)
       .then(product => { 
+        product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
         const type = req.params.slug
         let title = type.charAt(0).toUpperCase() + type.slice(1).replaceAll('-', ' ')
         res.render('users/allProducts', { title: title, product, type }) })
@@ -42,6 +44,7 @@ class allProductsController {
   showMakeUp(req, res, next) {
     product.find({ deletedAt: null, makeup: req.params.slug }).lean().sortable(req)
       .then(product => { 
+        product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
         const type = req.params.slug
         let title = type.charAt(0).toUpperCase() + type.slice(1).replaceAll('-', ' ')
         res.render('users/allProducts', { title: title, product, type }) })

@@ -3,21 +3,21 @@
   width: 100%;
   overflow: hidden;
   padding-bottom: 50px;
-}
 
-.title {
-  display: flex; 
-  align-items: center; 
-  gap: 5px; 
-  font-size: 32px;
-  color: red;
-  margin-top: 10px;
-
-  .main-title {
-    display: inline-block;
-    position: relative;
-  }
+  .title {
+    display: flex; 
+    align-items: center; 
+    gap: 5px; 
+    font-size: 32px;
+    color: red;
+    margin-top: 10px;
   
+    .main-title {
+      display: inline-block;
+      position: relative;
+    }
+  }
+
   .main-title::after {
     content: '';
     position: absolute;
