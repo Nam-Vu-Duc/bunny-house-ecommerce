@@ -27,7 +27,7 @@
     padding-top: 50px;
   }
   
-  .cart, .delivery, .contact-info, .total-expense {
+  .cart, .contact-info, .payment-method {
     background-color: white;
 
     p {
@@ -44,10 +44,6 @@
   }
 
   .cart {
-    .table {
-      /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
-    }
-  
     table, th, td {
       border-bottom: 1px solid #F0F0F0;
       border-collapse: collapse;
@@ -73,6 +69,8 @@
   }
 
   .contact-info {
+    margin-top: 10px;
+
     input {
       max-width: 50%;
       height: 30px;

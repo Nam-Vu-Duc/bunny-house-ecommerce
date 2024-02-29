@@ -5,13 +5,11 @@
     <span>2</span>
     <progress id="second-progress" value="0" max="100"></progress>
     <span>3</span>
-    <progress id="third-progress" value="0" max="100"></progress>
-    <span>4</span>
   </div>
 
   <form action="/orders/create-orders" method="post">
     <div class="cart">
-      <p>Giỏ hàng của tôi</p>
+      <p>Giỏ Hàng Của Tôi</p>
       <table>
         <tr>
           <th>Tên Sản Phẩm</th>
@@ -23,35 +21,34 @@
       </table>
     </div>
 
-    <div class="delivery">
-      <p>Chọn hình thức giao hàng</p>
-
-      <input type="radio" id="direct" name="delivery" value="direct">
-      <label for="direct">Nhận hàng tại chi nhánh </label><br>
-      
-      <input type="radio" id="indirect" name="delivery" value="indirect">
-      <label for="indirect">Giao hàng tại địa chỉ người nhận</label>
-    </div>
-
     <div class="contact-info">
-      <p>Nhập thông tin khách hàng</p>
+      <p>Thông Tin Khách Hàng</p>
 
-      <label for="name">Tên người mua</label>
+      <label for="name">Tên Khách Hàng</label>
       <input type="text" id="name" name="name">
       <span class="form-message"></span><br>
 
-      <label for="phone-number">Số điện thoại</label>
-      <input type="text" id="phone-number" phone-number="name">
+      <label for="phone">Số Điện Thoại</label>
+      <input type="text" id="phone" name="phone">
       <span class="form-message"></span><br>
 
-      <label for="note">Ghi chú</label>
+      <label for="address">Địa Chỉ Nhận Hàng</label>
+      <input type="text" id="address" name="address">
+      <span class="form-message"></span><br>
+
+      <label for="note">Ghi Chú</label>
       <input type="text" id="note" name="note">
       <span class="form-message"></span>
     </div>
 
-    <div class="total-expense">
-      <p>Tổng tiền hàng</p>
-      <p>100000</p>
+    <div class="payment-method">
+      <p>Hình Thức Thanh Toán</p>
+
+      <input type="radio" id="cash" name="payment-method" value="cash">
+      <label for="cash">Trả Tiền Mặt</label><br>
+      
+      <input type="radio" id="cashless" name="payment-method" value="cashless">
+      <label for="cashless">Chuyển Khoản</label>
     </div>
 
     <div class="button">
@@ -67,9 +64,8 @@
 <script>
 
   // display each process logic
-  var getDelivery = document.querySelector('div.delivery')
   var getContactInfo = document.querySelector('div.contact-info')
-  var getTotalExpense = document.querySelector('div.total-expense')
+  var getPaymentMethod = document.querySelector('div.payment-method')
   var getNextButton = document.querySelector('button.next-button')
   var getSubmitButton = document.querySelector('button.submit-button')
   var getProgressMarks = document.querySelector('div.progress').querySelectorAll('span')
@@ -79,14 +75,13 @@
   getProgressMarks[0].style.color = 'white'
 
   // set default display to 'none' on start
-  getDelivery.style.display = 'none'
   getContactInfo.style.display = 'none'
-  getTotalExpense.style.display = 'none'
+  getPaymentMethod.style.display = 'none'
   getSubmitButton.style.display = 'none'
 
   getNextButton.onclick = function() {
-    if (getDelivery.style.display === 'none') {
-      getDelivery.style.display = 'block'
+    if (getContactInfo.style.display === 'none') {
+      getContactInfo.style.display = 'grid'
 
       getProgressMarks[1].style.backgroundColor = '#D1A6A6'
       getProgressMarks[1].style.color = 'white'
@@ -94,26 +89,17 @@
       getProgressBars[0].value = '100'
       getProgressBars[0].style.accentColor = '#D1A6A6'
     } 
-    else if (getContactInfo.style.display === 'none') {
-      getContactInfo.style.display = 'grid'
+    else {
+      getPaymentMethod.style.display = 'block'
 
       getProgressMarks[2].style.backgroundColor = '#D1A6A6'
       getProgressMarks[2].style.color = 'white'
 
       getProgressBars[1].value = '100'
       getProgressBars[1].style.accentColor = '#D1A6A6'
-    } 
-    else {
-      getTotalExpense.style.display = 'block'
-
-      getProgressMarks[3].style.backgroundColor = '#D1A6A6'
-      getProgressMarks[3].style.color = 'white'
-
-      getProgressBars[2].value = '100'
-      getProgressBars[2].style.accentColor = '#D1A6A6'
     }
 
-    if (getTotalExpense.style.display === 'block') {
+    if (getPaymentMethod.style.display === 'block') {
       getNextButton.style.display = 'none'
       getSubmitButton.style.display = 'block'
     }
@@ -132,11 +118,22 @@
 
     // create new element and get data from localStorage
     var newProductName = document.createElement('td')
+    var newProductNameInput = document.createElement('input')
+    newProductNameInput.setAttribute('name', 'productName_' + i)
+    newProductNameInput.setAttribute('value', getProductInfo.productInfo[i].name)
+    newProductNameInput.style.display = 'none'
     newProductName.innerText = getProductInfo.productInfo[i].name 
+
     var newProductPrice = document.createElement('td')
     newProductPrice.innerText = getProductInfo.productInfo[i].price 
+
     var newProductQuantity = document.createElement('td')
+    var newProductQuantityInput = document.createElement('input')
+    newProductQuantityInput.setAttribute('name', 'productQuantity_' + i)
+    newProductQuantityInput.setAttribute('value', getProductInfo.productInfo[i].quantity)
+    newProductQuantityInput.style.display = 'none'
     newProductQuantity.innerText = getProductInfo.productInfo[i].quantity
+
     var newProductTotalPrice = document.createElement('td')
     newProductTotalPrice.innerText = getProductInfo.productInfo[i].price * getProductInfo.productInfo[i].quantity
     
@@ -145,8 +142,13 @@
 
     // add each element to the row
     newProductRow.appendChild(newProductName)
+    newProductRow.appendChild(newProductNameInput)
+
     newProductRow.appendChild(newProductPrice)
+
     newProductRow.appendChild(newProductQuantity)
+    newProductRow.appendChild(newProductQuantityInput)
+
     newProductRow.appendChild(newProductTotalPrice)
 
     // add each row to the table
@@ -158,6 +160,10 @@
   var totalOrderTitle = document.createElement('td')
   totalOrderTitle.innerText = 'Tổng Đơn Hàng'
   var totalOrderPrices = document.createElement('td')
+  var totalOrderPricesInput = document.createElement('input')
+  totalOrderPricesInput.setAttribute('name', 'totalProductPrice')
+  totalOrderPricesInput.setAttribute('value', totalOrderPrice)
+  totalOrderPricesInput.style.display = 'none'
   totalOrderPrices.innerText = totalOrderPrice
 
   // add each element to the total order row
@@ -165,7 +171,8 @@
   totalOrder.appendChild(document.createElement('td'))
   totalOrder.appendChild(document.createElement('td'))
   totalOrder.appendChild(totalOrderPrices)
-
+  totalOrder.appendChild(totalOrderPricesInput)
+  
   // add total order row to the bottom of the table
   getTable.appendChild(totalOrder)
 

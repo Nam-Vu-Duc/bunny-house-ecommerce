@@ -1,4 +1,4 @@
-const product = require('../models/productModel')
+const order = require('../models/orderModel')
 
 class orderController {
   show(req, res, next) {
@@ -9,15 +9,20 @@ class orderController {
     res.render('users/orders', { title: 'Đơn hàng' })
   }
 
-  createOrders(req, res, next) {
-    // let newProduct = new product(req.body)
-    // if (req.file) {
-    //   newProduct.avatar = req.file.filename
-    // }
-    // newProduct.save()
-    //   .then(() => res.redirect('/admin/update'))
+  async createOrders(req, res, next) {
+    // const newOrder = new order({
+    //   products: products.map((product, index) => ({ // Map to desired format
+    //     name: product[`productName_${index}`],
+    //     quantity: parseInt(product[`productQuantity_${index}`]) // Handle potential parsing errors
+    //   })),
+    //   totalProductPrice,
+    //   customerInfo
+    // });
+
+    // await newOrder.save()
+    //   .then(() => res.json({ message: 'sucessfully' }))
     //   .catch(next)
-    res.json(req.body)
+
   }
 }
 

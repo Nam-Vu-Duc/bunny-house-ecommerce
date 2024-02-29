@@ -14,12 +14,12 @@ class adminController {
     res.render('admin/create', { title: 'Thêm sản phẩm mới', layout: 'admin' })
   }
 
-  created(req, res, next) {
+  async created(req, res, next) {
     let newProduct = new product(req.body)
     if (req.file) {
       newProduct.avatar = req.file.filename
     }
-    newProduct.save()
+    await newProduct.save()
       .then(() => res.redirect('/admin/allProducts'))
       .catch(next)
   }
