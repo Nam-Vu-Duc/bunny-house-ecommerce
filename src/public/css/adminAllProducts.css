@@ -45,7 +45,7 @@
   }
 
   table, th, td {
-    border-bottom: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     border-collapse: collapse;
     padding: 5px 0;
     text-align: center;
@@ -58,6 +58,10 @@
     a { text-decoration: none }
     i { color: black }
     gap: 5px;
+  }
+
+  tr {
+    border-radius: 5px;
   }
 
   tr:nth-child(even){background-color: #f2f2f2}

@@ -18,8 +18,11 @@ const adminController = require('../app/controllers/adminController')
 // home page
 router.get('/', adminController.show)
 
-// users' orders page
+// admin' orders page
 router.get('/all-orders', adminController.allOrders)
+
+// orderInfo page
+router.get('/all-orders/:id', adminController.orderInfo)
 
 // create item page
 router.get('/create', adminController.create)
@@ -28,7 +31,7 @@ router.get('/create', adminController.create)
 router.post('/created', upload.single('avatar'), adminController.created)
 
 // all items page
-router.get('/update', adminController.update)
+router.get('/all-products', adminController.update)
 
 // update item page
 router.get('/updating/:id', adminController.updating)

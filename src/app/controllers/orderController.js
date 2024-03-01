@@ -10,19 +10,25 @@ class orderController {
   }
 
   async createOrders(req, res, next) {
-    // const newOrder = new order({
-    //   products: products.map((product, index) => ({ // Map to desired format
-    //     name: product[`productName_${index}`],
-    //     quantity: parseInt(product[`productQuantity_${index}`]) // Handle potential parsing errors
-    //   })),
-    //   totalProductPrice,
-    //   customerInfo
-    // });
+    const { productName, productQuantity, totalProductPrice, ...customerInfo } = req.body
 
-    // await newOrder.save()
-    //   .then(() => res.json({ message: 'sucessfully' }))
-    //   .catch(next)
+    const newOrder = new order({
+      products: productName.map((product, index) => ({
+        name: productName[index],
+        quantity: parseInt(productQuantity[index])
+      })),
+      totalProductPrice: totalProductPrice,
+      customerInfo: {
+        name: customerInfo.name,
+        phone: customerInfo.phone,
+        address: customerInfo.address,
+        note: customerInfo.note
+      },
+    });
 
+    await newOrder.save()
+      .then(() => res.json({ message: 'sucessfully' }))
+      .catch(next)
   }
 }
 

@@ -1,0 +1,60 @@
+<div class="admin-all-orders-container">  
+  <div class="board-sidebar">
+    <p>Tổng Đơn Hàng</p>
+  </div>
+
+  <div class="table">
+    <table style="width:100%">
+      <tr>
+        <th>
+          ID
+        </th>
+        <th>
+          Mã Đơn Hàng
+        </th>
+        <th>
+          Tên Người Mua
+        </th>
+        <th>
+          Tổng Số Tiền
+        </th>
+        <th>
+          Ngày Đặt Hàng
+        </th>
+        <th>
+        </th>
+      </tr>
+      {{#each order}}
+      <tr>
+        <th>
+          {{addIndex @index 1}}
+        </th>
+        <th>
+          {{this._id}}
+        </th>
+        <th>
+          {{this.customerInfo.name}}
+        </th>
+        <th>
+          {{this.totalProductPrice}}
+        </th>
+        <th>
+          {{this.createdAt}}
+        </th>
+        <th>
+          <a href="/admin/all-orders/{{this._id}}">Chi Tiết</a>
+        </th>
+      </tr>
+      {{/each}}
+    </table>
+  </div>
+
+  <div class="total">
+    <p class="total-title">Tổng Đơn Hàng</p>
+    <p class="total-number">{{total}}</p>
+  </div>
+</div>
+
+<script>
+
+</script>

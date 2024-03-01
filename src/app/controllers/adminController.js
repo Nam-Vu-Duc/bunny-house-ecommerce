@@ -1,5 +1,6 @@
 const product = require('../models/productModel')
 const user = require('../models/userModel')
+const order = require('../models/orderModel')
 
 class adminController {
   show(req, res, next) {
@@ -7,7 +8,28 @@ class adminController {
   }
 
   allOrders(req, res, next) {
-    res.render('admin/orders', { title: 'Đơn đặt hàng', layout: 'admin' })
+    order.find({ deletedAt: null }).lean()
+      .then(order => {
+        for (let i = 0; i < order.length; ++i) {
+          order[i].totalProductPrice = order[i].totalProductPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+          order[i].createdAt = order[i].createdAt.getDate() + '/' + (order[i].createdAt.getMonth()+1) + '/' + order[i].createdAt.getFullYear()
+        }
+        // order.forEach(order => 
+        //   order.totalProductPrice = order.totalProductPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        // )
+        res.render('admin/allOrders', { title: 'Đơn đặt hàng', layout: 'admin', order })
+      })
+      .catch(next)
+  }
+
+  orderInfo(req, res, next) {
+    order.findOne({ _id: req.params.id }).lean()
+      .then(order => {
+        order.totalProductPrice = order.totalProductPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        const title = 'Đơn của ' + order.customerInfo.name
+        res.render('admin/order', { title: title, layout: 'admin', order })
+      })
+      .catch(next)
   }
 
   create(req, res, next) {
@@ -27,7 +49,8 @@ class adminController {
   update(req, res, next) {
     product.find({ deletedAt: null }).lean().sortable(req)
       .then(product => { 
-        res.render('admin/allProducts', { title: 'Toàn bộ sản phẩm', layout: 'admin', product })})
+        res.render('admin/allProducts', { title: 'Toàn bộ sản phẩm', layout: 'admin', product })
+      })
       .catch(next)
   }
 

@@ -119,26 +119,28 @@
     // create new element and get data from localStorage
     var newProductName = document.createElement('td')
     var newProductNameInput = document.createElement('input')
-    newProductNameInput.setAttribute('name', 'productName_' + i)
+    newProductNameInput.setAttribute('name', 'productName')
     newProductNameInput.setAttribute('value', getProductInfo.productInfo[i].name)
     newProductNameInput.style.display = 'none'
     newProductName.innerText = getProductInfo.productInfo[i].name 
 
     var newProductPrice = document.createElement('td')
-    newProductPrice.innerText = getProductInfo.productInfo[i].price 
+    newProductPrice.innerText = getProductInfo.productInfo[i].price
+    {{!-- .toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') --}}
 
     var newProductQuantity = document.createElement('td')
     var newProductQuantityInput = document.createElement('input')
-    newProductQuantityInput.setAttribute('name', 'productQuantity_' + i)
+    newProductQuantityInput.setAttribute('type', 'hidden')
+    newProductQuantityInput.setAttribute('name', 'productQuantity')
     newProductQuantityInput.setAttribute('value', getProductInfo.productInfo[i].quantity)
-    newProductQuantityInput.style.display = 'none'
     newProductQuantity.innerText = getProductInfo.productInfo[i].quantity
 
     var newProductTotalPrice = document.createElement('td')
-    newProductTotalPrice.innerText = getProductInfo.productInfo[i].price * getProductInfo.productInfo[i].quantity
+    var convertNewProductTotalPriceToString = ((getProductInfo.productInfo[i].price*1000) * getProductInfo.productInfo[i].quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') 
+    newProductTotalPrice.innerText = convertNewProductTotalPriceToString
     
     // calculate all product prices
-    totalOrderPrice += getProductInfo.productInfo[i].price * getProductInfo.productInfo[i].quantity
+    totalOrderPrice += (getProductInfo.productInfo[i].price*1000) * getProductInfo.productInfo[i].quantity
 
     // add each element to the row
     newProductRow.appendChild(newProductName)
@@ -157,14 +159,18 @@
 
   // calculate total ordersPrice
   var totalOrder = document.createElement('tr')
+
   var totalOrderTitle = document.createElement('td')
   totalOrderTitle.innerText = 'Tổng Đơn Hàng'
+
   var totalOrderPrices = document.createElement('td')
+
   var totalOrderPricesInput = document.createElement('input')
+  totalOrderPricesInput.setAttribute('type', 'hidden')
   totalOrderPricesInput.setAttribute('name', 'totalProductPrice')
   totalOrderPricesInput.setAttribute('value', totalOrderPrice)
-  totalOrderPricesInput.style.display = 'none'
-  totalOrderPrices.innerText = totalOrderPrice
+  var convertTotalOrderPricesToString = totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') 
+  totalOrderPrices.innerText = convertTotalOrderPricesToString
 
   // add each element to the total order row
   totalOrder.appendChild(totalOrderTitle)

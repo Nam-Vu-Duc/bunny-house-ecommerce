@@ -19,6 +19,7 @@ const order = new Schema({
     note: String
   },
   totalProductPrice: Number,
+  status: { type: String, default: 'preparing' },
   deletedAt: {type: Date, default: null }
 }, { timestamps: true })
 
