@@ -67,11 +67,11 @@
   else if (getSlug === 'new-arrival') {
     mainTitle.innerText = 'Toàn bộ sản phẩm mới về'
   }
-  else if (getSlug === 'skincare') {
+  else if ('/all-products/skincare' === window.location.pathname.slice(0, 22)) {
     mainTitle.innerText = 'Toàn bộ sản phẩm skincare'
     getSkincareCategory.style.display = 'flex'
   }
-  else if (getSlug === 'makeup') {
+  else if ('/all-products/makeup' === window.location.pathname.slice(0, 20)) {
     mainTitle.innerText = 'Toàn bộ sản phẩm makeup'
     getMakeupCategory.style.display = 'flex'
   } 
@@ -100,5 +100,9 @@
       }
     } 
   }
+
+  console.log( '/all-products/skincare' === window.location.pathname.slice(0, 22))
+  console.log( window.location.pathname.slice(0, 22))
+
 
 </script>

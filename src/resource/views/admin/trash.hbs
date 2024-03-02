@@ -11,15 +11,16 @@
         </th>
         <th>
           Hãng
-          {{{sortable 'brand' _sort}}}
         </th>
         <th>
           Tên
-          {{{sortable 'name' _sort}}}
         </th>
         <th>
-          Mô tả
-          {{{sortable 'description' _sort}}}
+          Loại
+        </th>
+        <th>
+          Giá
+          {{{sortable 'price' _sort}}}
         </th>
         <th>
           Lựa chọn
@@ -27,12 +28,21 @@
       </tr>
       {{#each product}}
       <tr>
-        <td>{{addIndex @index 1}}</td>
-        <td>{{this.brand}}</td>
-        <td>{{this.name}}</td>
-        <td>{{this.description}}</td>
-        <td>
-          <button id="{{this._id}}" onclick="clickToRestore(this.id)">Khôi phục</button>
+        <td style="width: 10%;">{{addIndex @index 1}}</td>
+        <td style="width: 15%;">{{this.brand}}</td>
+        <td style="
+              display: flex; 
+              justify-content: start;
+              align-items: center
+              "
+        >
+          <img src="../uploads/{{this.avatar}}">
+          <p>{{this.name}}</p>
+        </td>
+        <td style="width: 10%;">{{this.skincare}}</td>
+        <td style="width: 10%;">{{this.price}}</td>
+        <td style="width: 15%;">
+          <button id="{{this._id}}" onclick="clickToRestore(this.id)">Khôi Phục</button>
           <div id="id00" class="modal">
             <form class="modal-content">
               <div class="container">
@@ -45,7 +55,7 @@
             </form>
           </div>
 
-          <button id="{{this._id}}" onclick="clickToDelete(this.id)">Xoá vĩnh viễn</button>
+          <button id="{{this._id}}" onclick="clickToDelete(this.id)">Xoá</button>
           <div id="id01" class="modal">
             <form class="modal-content">
               <div class="container">
@@ -101,6 +111,15 @@
     restoreForm.submit()
   }
 
-  
+  var allProducts = document.querySelectorAll('tr')
+  var allProductsLength = allProducts.length
 
+  for (let i = 1; i < allProductsLength; ++i) {
+    let productName = allProducts[i].querySelectorAll('td')[3]
+    if (productName.innerText !== '') {
+      productName.innerText = 'Skincare'
+    } else {
+      productName.innerText = 'Makeup'
+    }
+  }
 </script>

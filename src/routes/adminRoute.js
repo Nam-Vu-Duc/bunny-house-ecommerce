@@ -31,7 +31,7 @@ router.get('/create', adminController.create)
 router.post('/created', upload.single('avatar'), adminController.created)
 
 // all items page
-router.get('/all-products', adminController.update)
+router.get('/all-products', adminController.allProducts)
 
 // update item page
 router.get('/updating/:id', adminController.updating)

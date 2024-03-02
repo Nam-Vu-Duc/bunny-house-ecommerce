@@ -22,6 +22,9 @@
           Ngày Đặt Hàng
         </th>
         <th>
+          Tình Trạng
+        </th>
+        <th>
         </th>
       </tr>
       {{#each order}}
@@ -40,6 +43,9 @@
         </th>
         <th>
           {{this.createdAt}}
+        </th>
+        <th>
+          {{this.status}}
         </th>
         <th>
           <a href="/admin/all-orders/{{this._id}}">Chi Tiết</a>

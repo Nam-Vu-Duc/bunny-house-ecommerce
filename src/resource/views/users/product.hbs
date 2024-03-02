@@ -35,9 +35,11 @@
         <div class="add-to-cart">
           <p>Thêm Vào Giỏ</p>
         </div>
-        <div class="buy-now">
-          <p><a href="">Mua Ngay</a></p> 
-        </div>
+        <a href="/orders">
+          <div class="buy-now">
+            <p>Mua Ngay</p> 
+          </div>
+        </a>
         <div class="out-of-order">
           <p>Hết Hàng</p>
         </div>
@@ -102,7 +104,7 @@
   }
 
   // increase quantity onclick
-  getIncreaseQuantity.onclick = function() {
+  getIncreaseQuantity.onclick = function () {
     // increase the quantity on page
     getQuantityValue.innerText++
     listProductLength = myObj.productInfo.length
@@ -116,7 +118,7 @@
   }
 
   // decrease quantity onclick and min = 1
-  getDecreaseQuantity.onclick = function() {
+  getDecreaseQuantity.onclick = function () {
     for (let i = 0; i < listProductLength; ++i) {
       if (myObj.productInfo[i].slug === `{{product.slug}}`) {
         if (getQuantityValue.innerText === '1') {
@@ -131,8 +133,8 @@
     }
   }
 
-  // change addToCart button behavior onclick
-  getAddToCart.onclick = function() {
+  // change addToCart button behavior and increase or decrease the quantity onclick
+  getAddToCart.onclick = function () {
     // the item has not yet been added, click to add
     if (getAddToCart.style.backgroundColor === '') {
       // change button color to 'added button'
@@ -180,4 +182,24 @@
     console.log(myObj)
   }
 
+  // add immediately item to cart and redirect to the orders page
+  getBuyNow.onclick = function () {
+    if (getAddToCart.style.backgroundColor === '') {
+      myObj.localCounting++
+      getQuantityValue.innerText = 1
+      getQuantityDiv.style.visibility = 'visible'
+
+      var newProductInfo = {
+        slug: `{{product.slug}}`,
+        name: `{{product.name}}`,
+        price: `{{product.price}}`,
+        quantity: getQuantityValue.innerText
+      };
+
+      myObj.productInfo.push(newProductInfo)
+      localStorage.setItem('product_cart_count', JSON.stringify(myObj));
+    } else {
+
+    }
+  }
 </script>

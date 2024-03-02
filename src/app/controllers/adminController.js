@@ -13,6 +13,15 @@ class adminController {
         for (let i = 0; i < order.length; ++i) {
           order[i].totalProductPrice = order[i].totalProductPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
           order[i].createdAt = order[i].createdAt.getDate() + '/' + (order[i].createdAt.getMonth()+1) + '/' + order[i].createdAt.getFullYear()
+          if (order[i].status === 'preparing') {
+            order[i].status = 'Đang Xử Lý'
+          } 
+          if (order[i].status === 'delivering') {
+            order[i].status = 'Đang Giao Cho Khách'
+          } 
+          if (order[i].status === 'done') {
+            order[i].status = 'Đã Hoàn Thành'
+          } 
         }
         // order.forEach(order => 
         //   order.totalProductPrice = order.totalProductPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -46,7 +55,7 @@ class adminController {
       .catch(next)
   }
 
-  update(req, res, next) {
+  allProducts(req, res, next) {
     product.find({ deletedAt: null }).lean().sortable(req)
       .then(product => { 
         res.render('admin/allProducts', { title: 'Toàn bộ sản phẩm', layout: 'admin', product })
@@ -81,15 +90,14 @@ class adminController {
 
   restore(req, res, next) {
     product.updateOne({ _id: req.params.id}, { deletedAt: null })
-      .then(() => res.redirect('/admin/allProducts'))
+      .then(() => res.redirect('/admin/all-products'))
       .catch(next)
   }
 
   trash(req, res, next) {
     product.find({ deletedAt: { $ne: null } }).lean()
       .then(product => { 
-        const total = product.length
-        res.render('admin/trash', { title: 'Thùng rác', layout: 'admin', total, product } )})
+        res.render('admin/trash', { title: 'Thùng rác', layout: 'admin', product } )})
       .catch(next)
   }
 

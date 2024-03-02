@@ -47,19 +47,19 @@
 
 // executing validate
 function validating(inputElement, rule, checkValidate, index) {
-    var errorMessage = rule.test(inputElement.value)
-    var errorElement = inputElement.parentElement.querySelector('.form-message')
+  var errorMessage = rule.test(inputElement.value)
+  var errorElement = inputElement.parentElement.querySelector('.form-message')
 
-    if (errorMessage) {
-      errorElement.innerText = errorMessage
-      inputElement.parentElement.style.color = "red"
-      checkValidate[index] = false
-    } else {
-      errorElement.innerText = ''
-      inputElement.parentElement.style.color = "black"
-      checkValidate[index] = true
-    }
-  }  
+  if (errorMessage) {
+    errorElement.innerText = errorMessage
+    inputElement.parentElement.style.color = "red"
+    checkValidate[index] = false
+  } else {
+    errorElement.innerText = ''
+    inputElement.parentElement.style.color = "black"
+    checkValidate[index] = true
+  }
+}  
 
 // isRequiredString requires input must have string
 function isRequiredString(selector) {
