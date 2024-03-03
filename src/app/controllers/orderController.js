@@ -10,7 +10,12 @@ class orderController {
   }
 
   async createOrders(req, res, next) {
-    const { productName, productQuantity, totalProductPrice, ...customerInfo } = req.body
+    let { productName, productQuantity, totalProductPrice, ...customerInfo } = req.body
+
+    if(!Array.isArray(productName)) {
+      productName = [productName]
+      productQuantity = [productQuantity]
+    }
 
     const newOrder = new order({
       products: productName.map((product, index) => ({

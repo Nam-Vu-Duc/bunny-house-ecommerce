@@ -2,41 +2,79 @@
     <div class="title">Thông Tin Đơn Hàng</div>
 
     <div class="info-group">
-      <p>Mã Đơn Hàng</p>
+      <title>Mã Đơn Hàng</title>
       {{order._id}}
     </div>
     <div class="info-group">
-      <p>Tên Khách Hàng</p> 
+      <title>Tên Khách Hàng</title> 
       {{order.customerInfo.name}}
     </div>
     <div class="info-group">
-      <p>Số Điện Thoại</p> 
+      <title>Số Điện Thoại</title> 
       {{order.customerInfo.phone}}
     </div>
     <div class="info-group">
-      <p>Địa Chỉ Nhận Hàng</p>
+      <title>Địa Chỉ Nhận Hàng</title>
       {{order.customerInfo.address}}
     </div>
     <div class="info-group">
-      <p>Ghi Chú</p>
+      <title>Ghi Chú</title>
       {{order.customerInfo.note}}
     </div>
     <div class="info-group">
-      <p>Tổng Tiền</p>
+      <title>Tổng Tiền</title>
       {{order.totalProductPrice}}đ
     </div>
     <div class="info-group">
-      <p>Trạng Thái Đơn Hàng</p>
-      {{order.status}}
+      <title>Trạng Thái Đơn Hàng</title>
+      <p class="preparing">Đang Xử Lý</p>
+      <p class="delivering">Đang Giao Hàng</p>
+      <p class="done">Hoàn Thành</p>
+      <button type="submit">Cập nhật</button>
     </div>
 
     <div class="title">Thông Tin Sản Phẩm</div>
 
     {{#each order.products}}
     <div class="product-group">
-      <p>Tên Sản Phẩm</p>{{this.name}}
-      <p>Số lượng</p>{{this.quantity}}
+      <title>Tên Sản Phẩm</title>{{this.name}}
+      <title>Số lượng</title>{{this.quantity}}
     </div>
     {{/each}}
-
 </div>
+
+<script>
+  var getPreparingButton = document.querySelector('p.preparing')
+  var getDeliveringButton = document.querySelector('p.delivering')
+  var getDoneButton = document.querySelector('p.done')
+  console.log(`{{order.status}}`)
+
+  if (`{{order.status}}` === 'preparing') {
+    getPreparingButton.style.backgroundColor = '#D1A6A6'
+  }
+  if (`{{order.status}}` === 'delivering') {
+    getDeliveringButton.style.backgroundColor = '#D1A6A6'
+  }
+  if (`{{order.status}}` === 'done') {
+    getDoneButton.style.backgroundColor = '#D1A6A6'
+  }
+
+  getPreparingButton.onclick = function() {
+    getPreparingButton.style.backgroundColor = '#D1A6A6'
+    getDeliveringButton.style.backgroundColor = ''
+    getDoneButton.style.backgroundColor = ''
+  }
+
+  getDeliveringButton.onclick = function() {
+    getPreparingButton.style.backgroundColor = ''
+    getDeliveringButton.style.backgroundColor = '#D1A6A6'
+    getDoneButton.style.backgroundColor = ''
+  }
+
+  getDoneButton.onclick = function() {
+    getPreparingButton.style.backgroundColor = ''
+    getDeliveringButton.style.backgroundColor = ''
+    getDoneButton.style.backgroundColor = '#D1A6A6'
+  }
+
+</script>
