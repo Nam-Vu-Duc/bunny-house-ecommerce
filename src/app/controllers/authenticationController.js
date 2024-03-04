@@ -8,8 +8,8 @@ class loginController {
   }
 
   async checkingAccount(req, res, next) {
-    var email = req.body.email
-    var password = req.body.password
+    const email = req.body.email
+    const password = req.body.password
 
     user.findOne({email: email})
       .then(user => {

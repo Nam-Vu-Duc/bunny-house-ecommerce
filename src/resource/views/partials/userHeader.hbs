@@ -31,10 +31,10 @@
 </div>
 
 <div class="avatar-menu">
-  <a href="/authentication/sign-in" class="log-in">Đăng nhập</a>
+  {{!-- <a href="/authentication/sign-in" class="log-in">Đăng nhập</a>
   <a href="/home" class="log-out">Cập Nhật Thông Tin</a>
   <a href="/orders/progress/" class="log-out">Tiến Độ Giao Hàng</a>
-  <a href="/home" class="log-out">Đăng Xuất</a>
+  <a href="/home" class="log-out">Đăng Xuất</a> --}}
 </div>
 
 <script>
@@ -72,9 +72,7 @@
 });
 
   // update avatar logged-in or not logged-in
-  var getHeaderLogInButton = document.querySelector('a.log-in')
-  var getHeaderLogOutButton = document.querySelectorAll('a.log-out')
-  var headerLogOutButtonLength = getHeaderLogOutButton.length
+
 
   function getCookie(cname) {
     let name = cname + "=";
@@ -92,22 +90,33 @@
     return "";
   }
 
-  var token = getCookie("auth_token")
+  var token = getCookie('auth_token')
+  var user_id = getCookie('user_id')
   if (token) {
-    getHeaderLogInButton.style.display = 'none'
-    for (let i = 0; i < headerLogOutButtonLength; ++i) {
-      getHeaderLogOutButton[i].style.display = 'block'
-    }
-    
-  } else {
-    getHeaderLogInButton.style.display = 'block'
-    for (let i = 0; i < headerLogOutButtonLength; ++i) {
-      getHeaderLogOutButton[i].style.display = 'none'
-    }
+    var updateProfileButton = document.createElement('a')
+    updateProfileButton.innerText = 'Cập Nhật Thông Tin'
+    updateProfileButton.setAttribute('href', `/update-profile/${user_id}`)
+    getAvatarMenu.appendChild(updateProfileButton)
+
+    var checkOrderButton = document.createElement('a')
+    checkOrderButton.innerText = 'Tiến Độ Giao Hàng'
+    checkOrderButton.setAttribute('href', `/orders/checking/${user_id}`)
+    getAvatarMenu.appendChild(checkOrderButton)
+
+    var logOutButton = document.createElement('a')
+    logOutButton.innerText = 'Đăng Xuất'
+    logOutButton.setAttribute('href', '/home')
+    getAvatarMenu.appendChild(logOutButton)
+  } 
+  else {
+    var logInButton = document.createElement('a')
+    logInButton.innerText = 'Đăng nhập'
+    logInButton.setAttribute('href', '/authentication/sign-in')
+    getAvatarMenu.appendChild(logInButton)
   }
 
   // log-out and clear cookie
-  getHeaderLogOutButton[2].onclick = function() {
+  logOutButton.onclick = function() {
     document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }

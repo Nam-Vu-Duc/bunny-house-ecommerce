@@ -18,102 +18,43 @@
     }
   }
 
-  table, th, td {
-    border-bottom: 1px solid #ddd;
-    border-collapse: collapse;
-    padding: 5px;
-    text-align: center;
-  }
-
-  th {
-    background-color: #D1A6A6;
-    height: 50px;
-    a { text-decoration: none }
-    i { color: black }
-    gap: 5px;
-  }
-
-  tr:nth-child(even){background-color: #f2f2f2}
-  tr:nth-child(odd){background-color: white}
-  tr:hover {background-color: #D1A6A6;}
-
-  img {
-    border-radius: 50%;
-    width: 40px;
-    aspect-ratio: 1/1;
-  }
-
-  /* Set a style for all buttons */
-  button {
-    width: fit-content; 
-    height: 30px;
-    background-color: white;
-    color: #D1A6A6;
-    border: 1px solid #D1A6A6;
-    border-radius: 5px;
-    cursor: pointer;
-  };
-
-  button:hover {
-    background-color: #D1A6A6;
-    color: white;
-    border: 1px solid white ;
-  }
-
-/* Add a color to the cancel button */
-  .cancelbtn {
-    background-color: #ccc;
-    color: black;
-    width: 25%;
-  }
-
-  /* Add a color to the delete button */
-  .deletebtn {
-    background-color: #f44336;
-    color: black;
-    width: 25%;
-  }
-
-  /* Add padding and center-align text to the container */
-  .container {
-    padding: 16px;
-    text-align: center;
-  }
-
-  /* The Modal (background) */
-  .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 2; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    padding-top: 50px;
-  }
-
-  /* Modal Content/Box */
-  .modal-content {
-    background-color: #fefefe;
-    margin: 10% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-    border: 1px solid #888;
-    width: 50%; /* Could be more or less, depending on screen size */
-    border-radius: 5px;
-  }
-
-  /* Clear floats */
-  .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-
-  /* Change styles for cancel button and delete button on extra small screens */
-  @media screen and (max-width: 300px) {
-    .cancelbtn, .deletebtn {
-      width: 100%;
+  .table {
+    table, th, td {
+      text-align: center;
     }
+
+    table {
+      width: 100%;
+      border-spacing: 0px 10px;
+      padding: 0px 10px;
+    }
+
+    th {
+      background-color:#D1A6A6;
+      height: 50px;
+      a { text-decoration: none }
+      i { color: black }
+    }
+
+    tr {
+      background-color:#F0F0F0;
+      height: 50px;
+
+      td:first-child {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+      td:last-child {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+    }
+    
+    tr:hover {
+      filter: brightness(85%);
+    }
+
+    a { text-decoration: none; color: black; font-weight: bolder;}
   }
 
   .total {
@@ -133,4 +74,12 @@
       margin-block-end: 5px;
     }
   }
+
+  /* Change styles for cancel button and delete button on extra small screens */
+  @media screen and (max-width: 300px) {
+    .cancelbtn, .deletebtn {
+      width: 100%;
+    }
+  }
 }
+

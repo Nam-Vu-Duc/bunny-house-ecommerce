@@ -90,10 +90,10 @@
 
 <script>
   // display delete confirmation box
-  var courseId;
-  var deleteForm = document.forms['delete-form']
-  var deleteButton = document.getElementById('delete-button')
-  var formButton = document.getElementsByClassName('form-button')
+  let courseId;
+  let deleteForm = document.forms['delete-form']
+  let deleteButton = document.getElementById('delete-button')
+  let formButton = document.getElementsByClassName('form-button')
 
   function reply_click(clicked_id) {
     document.getElementById('id01').style.display='block'
@@ -107,9 +107,9 @@
   }
 
   // pagination button, 10 items on each click
-  var seeMoreButton = document.querySelector('span.see-more-button').querySelector('button')
-  var allProducts = document.querySelectorAll('tr')
-  var allProductsLength = allProducts.length
+  let seeMoreButton = document.querySelector('span.see-more-button').querySelector('button')
+  let allProducts = document.querySelectorAll('tr')
+  let allProductsLength = allProducts.length
 
   for (let i = 1; i < allProductsLength; ++i) {
     let productName = allProducts[i].querySelectorAll('td')[3]
@@ -120,8 +120,9 @@
     }
   }
 
-  var firstIndex = 1
-  var nextIndex = 11 
+  // pagination
+  let firstIndex = 1
+  let nextIndex = 11 
   for (let i = nextIndex; i < allProductsLength; ++i) {
     allProducts[i].style.display = 'none'
   }
@@ -130,23 +131,12 @@
     firstIndex += 10
     nextIndex += 10
     if (firstIndex < allProductsLength) {
-      {{!-- for (let i = firstIndex; i < nextIndex; ++i) {
-        // display product row
-        allProducts[i].style.display = 'table-row'
-
-        // display and CSS productName
-        let productName = allProducts[i].querySelectorAll('td')[2]
-        productName.style.display = 'flex'
-        productName.style.justifyContent = 'start'
-        productName.style.alignItems = 'center'
-      } --}}
       checkFilter(firstIndex, nextIndex, allProducts, selectButton)
     } 
   }
   
   // filter button logic
-  var selectButton = document.querySelector('select')
-
+  let selectButton = document.querySelector('select')
   selectButton.onchange = function () {
      checkFilter(1, nextIndex, allProducts, selectButton)
   }

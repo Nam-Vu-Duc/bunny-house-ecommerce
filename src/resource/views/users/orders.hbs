@@ -11,19 +11,25 @@
     <div class="cart">
       <p>Giỏ Hàng Của Tôi</p>
       <table>
-        <tr>
-          <th>Tên Sản Phẩm</th>
-          <th>Giá</th>
-          <th>Số Lượng</th>
-          <th>Tổng Tiền</th>
-          <th>Xoá</th>
-        </tr>
+        <thead>
+          <tr>
+            <td></td>
+            <td>Tên Sản Phẩm</td>
+            <td>Giá</td>
+            <td>Số Lượng</td>
+            <td>Tổng Tiền</td>
+            <td>Xoá</td>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+        </tfoot>
       </table>
     </div>
 
     <div class="contact-info">
       <p>Thông Tin Khách Hàng</p>
-
       <label for="name">Tên Khách Hàng *</label>
       <input type="text" id="name" name="name">
       <span class="form-message"></span><br>
@@ -108,13 +114,30 @@
   // get data to display from localStorage
   var getProductInfo = JSON.parse(localStorage.getItem('product_cart_count')) || {};
   var productInfoLength = getProductInfo.productInfo.length 
-  var getTable = document.querySelector('table')
+  var getTableBody = document.querySelector('tbody')
   var totalOrderPrice = 0
+
+  var newProductUserId = document.createElement('input')
+  newProductUserId.setAttribute('name', 'userId')
+  newProductUserId.style.display = 'none'
+
+  var userId = getCookie('user_id')
+  if (userId) {
+    newProductUserId.setAttribute('value', userId)
+  } else {
+    newProductUserId.setAttribute('value', 'guest')
+  }
 
   // create new row for new product have name, price, quantity and totalPrice
   for (let i = 0; i < productInfoLength; ++i) {
     // create new row
     var newProductRow = document.createElement('tr') 
+
+    // create img link 
+    var newProductImage = document.createElement('td')
+    var productImage = document.createElement('img')
+    productImage.setAttribute('src', `../uploads/${getProductInfo.productInfo[i].image}`)
+    newProductImage.appendChild(productImage)
 
     // create new element and get data from localStorage
     var newProductName = document.createElement('td')
@@ -123,6 +146,7 @@
     var newProductAnchorTag = document.createElement('a')
     newProductAnchorTag.setAttribute('href', `/product/${getProductInfo.productInfo[i].slug}`)
     newProductAnchorTag.innerText = getProductInfo.productInfo[i].name
+    newProductAnchorTag.style.paddingLeft = '5px'
     newProductName.appendChild(newProductAnchorTag)
 
     // create an input store the name value to submit the form
@@ -145,10 +169,16 @@
     var convertNewProductTotalPriceToString = ((getProductInfo.productInfo[i].price*1000) * getProductInfo.productInfo[i].quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') 
     newProductTotalPrice.innerText = `${convertNewProductTotalPriceToString} đ`
     
+    var newProductDelete = document.createElement('td')
+    newProductDelete.innerText = 'Xoá'
+
     // calculate all product prices
     totalOrderPrice += (getProductInfo.productInfo[i].price*1000) * getProductInfo.productInfo[i].quantity
 
     // add each element to the row
+    newProductRow.appendChild(newProductUserId)
+    newProductRow.appendChild(newProductImage)
+
     newProductRow.appendChild(newProductName)
     newProductRow.appendChild(newProductNameInput)
 
@@ -159,12 +189,14 @@
 
     newProductRow.appendChild(newProductTotalPrice)
 
+    newProductRow.appendChild(newProductDelete)
+
     // add each row to the table
-    getTable.appendChild(newProductRow)
+    getTableBody.appendChild(newProductRow)
   }
 
   // calculate total ordersPrice
-  var totalOrder = document.createElement('tr')
+  var getTableFooter = document.querySelector('tfoot')
 
   var totalOrderTitle = document.createElement('td')
   totalOrderTitle.innerText = 'Tổng Đơn Hàng'
@@ -179,14 +211,13 @@
   totalOrderPrices.innerText = `${convertTotalOrderPricesToString} đ`
 
   // add each element to the total order row
-  totalOrder.appendChild(totalOrderTitle)
-  totalOrder.appendChild(document.createElement('td'))
-  totalOrder.appendChild(document.createElement('td'))
-  totalOrder.appendChild(totalOrderPrices)
-  totalOrder.appendChild(totalOrderPricesInput)
-  
-  // add total order row to the bottom of the table
-  getTable.appendChild(totalOrder)
+  getTableFooter.appendChild(totalOrderTitle)
+  getTableFooter.appendChild(document.createElement('td'))
+  getTableFooter.appendChild(document.createElement('td'))
+  getTableFooter.appendChild(totalOrderPricesInput)
+  getTableFooter.appendChild(totalOrderPrices)
+  getTableFooter.appendChild(document.createElement('td'))
+  getTableFooter.appendChild(document.createElement('td'))
 
   //
   function validating(inputElement, rule, checkValidate, index) {

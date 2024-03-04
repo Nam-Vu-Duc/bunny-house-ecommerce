@@ -5,13 +5,14 @@ class orderController {
     res.render('users/orders', { title: 'Đơn hàng' })
   }
 
-  ordersProgress(req, res, next) {
-    res.render('users/orders', { title: 'Đơn hàng' })
+  ordersChecking(req, res, next) {
+    res.render('users/ordersChecking', { title: 'Kiểm Tra Đơn Hàng' })
   }
 
   async createOrders(req, res, next) {
     let { productName, productQuantity, totalProductPrice, ...customerInfo } = req.body
 
+    // if the req.body has only 1 record, then convert the productName % productQuantity to an array
     if(!Array.isArray(productName)) {
       productName = [productName]
       productQuantity = [productQuantity]
@@ -22,13 +23,14 @@ class orderController {
         name: productName[index],
         quantity: parseInt(productQuantity[index])
       })),
-      totalProductPrice: totalProductPrice,
       customerInfo: {
+        userId: customerInfo.userId,
         name: customerInfo.name,
         phone: customerInfo.phone,
         address: customerInfo.address,
         note: customerInfo.note
       },
+      totalProductPrice: totalProductPrice
     });
 
     await newOrder.save()

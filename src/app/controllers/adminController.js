@@ -51,7 +51,7 @@ class adminController {
       newProduct.avatar = req.file.filename
     }
     await newProduct.save()
-      .then(() => res.redirect('/admin/allProducts'))
+      .then(() => res.redirect('/admin/all-products'))
       .catch(next)
   }
 

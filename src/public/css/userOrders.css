@@ -29,6 +29,7 @@
   
   .cart, .contact-info, .payment-method {
     background-color: white;
+    margin-top: 10px;
 
     p {
       background-color: #F0F0F0;
@@ -36,42 +37,64 @@
       padding: 10px;
       text-transform: capitalize;
       font-weight: bolder;
-    }
-
-    input, label {
-      padding-left: 5px;
+      margin-block-start: 0px;
     }
   }
 
   .cart {
-    table, th, td {
-      border-bottom: 1px solid #F0F0F0;
-      border-collapse: collapse;
-      padding: 5px;
+    table, thead, td, tfoot {
       text-align: center;
     }
 
     table {
       width: 100%;
-    }
+      border-spacing: 0px 10px;
+      padding: 0px 10px;
   
-    th {
-      background-color: #F0F0F0;
-      height: 50px;
-      a { text-decoration: none }
-      i { color: black }
-      gap: 5px;
-    }
-  
-    tr:nth-child(even){background-color: #F0F0F0}
-    tr:nth-child(odd){background-color: white}
-    tr:hover {background-color: #D1A6A6;}
+      thead, tfoot {
+        background-color: #D1A6A6;
+        height: 50px;
+        a { text-decoration: none }
+        i { color: black };
+      }
 
-    a { text-decoration: none; color: black;}
+      tbody {
+        background-color:#F0F0F0;
+        height: 50px;
+
+        td:first-child {
+          border-top-left-radius: 10px;
+          border-bottom-left-radius: 10px;
+        }
+
+        td:last-child {
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+        }
+      }
+
+      /* tr:nth-child(even){background-color: #F0F0F0}
+      tr:nth-child(odd){background-color: white}
+      tr:hover {background-color: #D1A6A6;} */
+
+      a { text-decoration: none; color: black;}
+    }
+  }
+
+  img {
+    border-radius: 50%;
+    width: 40px;
+    aspect-ratio: 1/1;
   }
 
   .contact-info {
-    margin-top: 10px;
+    label, input, span {
+      margin: 0 10px;
+    }
+
+    label:first-child {
+      margin-top: 10px;
+    }
 
     input {
       max-width: 50%;
@@ -79,6 +102,8 @@
       border-radius: 5px;
       border: 1px solid black;
     }
+
+
   }
 
   .button {

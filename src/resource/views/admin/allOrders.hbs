@@ -13,7 +13,7 @@
           Mã Đơn Hàng
         </th>
         <th>
-          Tên Người Mua
+          Tên Khách Hàng
         </th>
         <th>
           Tổng Số Tiền
@@ -29,27 +29,27 @@
       </tr>
       {{#each order}}
       <tr>
-        <th>
+        <td>
           {{addIndex @index 1}}
-        </th>
-        <th>
+        </td>
+        <td>
           {{this._id}}
-        </th>
-        <th>
+        </td>
+        <td>
           {{this.customerInfo.name}}
-        </th>
-        <th>
+        </td>
+        <td>
           {{this.totalProductPrice}}
-        </th>
-        <th>
+        </td>
+        <td>
           {{this.createdAt}}
-        </th>
-        <th>
+        </td>
+        <td>
           {{this.status}}
-        </th>
-        <th>
+        </td>
+        <td>
           <a href="/admin/all-orders/{{this._id}}">Chi Tiết</a>
-        </th>
+        </td>
       </tr>
       {{/each}}
     </table>
