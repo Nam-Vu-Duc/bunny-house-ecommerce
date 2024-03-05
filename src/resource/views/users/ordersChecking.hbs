@@ -14,7 +14,7 @@
     var errorMessage = document.querySelector('span.error-message')
 
     // when submit, the form will push the input value from user to the URL for backend
-    getSubmitButton.onclick = function() {
+    getSubmitButton.onclick = function () {
         var orderCode = getForm.querySelector('input').value
         var regex = /^[a-f\d]{24}$/i
 
@@ -23,31 +23,51 @@
             // if matched, submit form and pass value to URL for backend
             getForm.setAttribute('method', 'get')
             getForm.setAttribute('action', `/orders/checking/${orderCode}`)
-            getForm.onsubmit = function() {}
-        } 
+            getForm.onsubmit = function () { }
+        }
         else {
             // if not matched, prevent submit, enter again
-            getForm.onsubmit = function(e) { e.preventDefault() }
-            errorMessage.innerText = 'Ma san pham khong dung'
+            getForm.onsubmit = function (e) { e.preventDefault() }
+            errorMessage.innerText = 'Mã Sản Phẩm Không Đúng'
+            errorMessage.style.color = 'red'
+            getOrderContainer.removeChild(orderProcess)
         }
     }
 
     // if found user's order, display their order info 
-    if(`{{order}}`) {
-        var orderName = document.createElement('p')
-        orderName.innerText = `{{order.customerInfo.name}}`
-        getOrderContainer.appendChild(orderName)
+    if (`{{order}}`) {
         var orderProcess = document.createElement('div')
         orderProcess.setAttribute('class', 'order-process')
         orderProcess.innerHTML = `
-            <i class="fi fi-ss-person-dolly"></i>
-            <i class="fi fi-bs-shipping-fast"></i>
-            <i class="fi fi-ss-check-circle"></i>
+            <table>
+                <thead>
+                    <tr>
+                        <td style="width: 20%">Ngày Đặt Hàng</td>
+                        <td style="width: 20%">Người Đặt</td>
+                        <td style="width: 50%">Tiến Độ</td>
+                        <td style="width: 10%"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{order.createdAt}}</td>
+                        <td>{{order.customerInfo.name}}</td>
+                        <td>
+                            {{!-- <i class="fi fi-ss-person-dolly"></i>
+                            <i class="fi fi-bs-shipping-fast"></i>
+                            <i class="fi fi-ss-check-circle"></i> --}}
+                            {{order.status}}
+                        </td>
+                        <td>Chi Tiết</td>
+                    </tr>
+                </tbody>
+            </table>            
         `
         getOrderContainer.appendChild(orderProcess)
-        
-    } else {
-        errorMessage.innerText = 'khong tim thay don hang'
     }
-
+    else {
+        errorMessage.innerText = 'Không Tìm Thấy Đơn Hàng'
+        errorMessage.style.color = 'red'
+        getOrderContainer.removeChild(orderProcess)
+    }
 </script>

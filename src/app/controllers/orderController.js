@@ -13,6 +13,16 @@ class orderController {
     // if matched, then find it in db
     order.findOne({ _id: req.params.id }).lean()
     .then(order => {
+      order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
+      if (order.status === 'preparing') {
+        order.status = 'Đang Xử Lý'
+      } 
+      if (order.status === 'delivering') {
+        order.status = 'Đang Giao'
+      } 
+      if (order.status === 'done') {
+        order.status = 'Đã Hoàn Thành'
+      } 
       res.render('users/ordersChecking', { title: 'Kiểm Tra Đơn Hàng', order })
     })
     .catch(next)

@@ -1,7 +1,7 @@
 <div class="store-logo">
   <a href="/home">
-    <image src="../../img/logo.jpg" class="image-front"/>
-    <image src="../../img/full_logo.jpg" class="image-back"/>
+    <image src="../../../img/logo.jpg" class="image-front"/>
+    <image src="../../../img/full_logo.jpg" class="image-back"/>
   </a>
 </div>
 
@@ -27,14 +27,10 @@
     <i class="fi fi-rr-shopping-cart-add"></i>
   </a>
 
-  <img src="../../img/4.jpg" class="dropdown-avatar" alt="loading"/>
+  <img src="../../../img/4.jpg" class="dropdown-avatar" alt="loading"/>
 </div>
 
 <div class="avatar-menu">
-  {{!-- <a href="/authentication/sign-in" class="log-in">Đăng nhập</a>
-  <a href="/home" class="log-out">Cập Nhật Thông Tin</a>
-  <a href="/orders/progress/" class="log-out">Tiến Độ Giao Hàng</a>
-  <a href="/home" class="log-out">Đăng Xuất</a> --}}
 </div>
 
 <script>
@@ -43,37 +39,35 @@
   
   function updateCartCount() {
     var countObject = JSON.parse(localStorage.getItem('product_cart_count')) || {};
-    var countOrdersQuantity = countObject.localCounting || 0;
-    getOrdersQuantity.innerText = countOrdersQuantity
-  }
+      var countOrdersQuantity = countObject.localCounting || 0;
+      getOrdersQuantity.innerText = countOrdersQuantity
+    }
 
-  document.addEventListener('cartUpdated', updateCartCount);
-  updateCartCount()
+    document.addEventListener('cartUpdated', updateCartCount);
+    updateCartCount()
 
-  // onclick avatar
-  var getAvatarMenu = document.querySelector('div.avatar-menu')
-  var getAvatar = document.querySelector('img.dropdown-avatar')
-  
-  getAvatarMenu.style.display = 'none'
-  getAvatar.onclick = function() {
-    if (getAvatarMenu.style.display === 'none') {
-      getAvatarMenu.style.display = 'block'
-    } else {
+    // onclick avatar
+    var getAvatarMenu = document.querySelector('div.avatar-menu')
+    var getAvatar = document.querySelector('img.dropdown-avatar')
+    
+    getAvatarMenu.style.display = 'none'
+    getAvatar.onclick = function() {
+      if (getAvatarMenu.style.display === 'none') {
+        getAvatarMenu.style.display = 'block'
+      } else {
+        getAvatarMenu.style.display = 'none'
+      }
+    }
+
+    document.addEventListener('click', function(event) {
+    if (!event.target.matches('.dropdown-avatar') &&
+        !event.target.closest('.dropdown-avatar') 
+      ) { 
       getAvatarMenu.style.display = 'none'
     }
-  }
-
-  document.addEventListener('click', function(event) {
-  if (!event.target.matches('.dropdown-avatar') &&
-      !event.target.closest('.dropdown-avatar') 
-    ) { 
-    getAvatarMenu.style.display = 'none'
-  }
-});
+  });
 
   // update avatar logged-in or not logged-in
-
-
   function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -100,7 +94,7 @@
 
     var checkOrderButton = document.createElement('a')
     checkOrderButton.innerText = 'Tiến Độ Giao Hàng'
-    checkOrderButton.setAttribute('href', `/orders/checking/${user_id}`)
+    checkOrderButton.setAttribute('href', `/orders/checking/user/${user_id}`)
     getAvatarMenu.appendChild(checkOrderButton)
 
     var logOutButton = document.createElement('a')
@@ -116,8 +110,11 @@
   }
 
   // log-out and clear cookie
-  logOutButton.onclick = function() {
-    document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  if (logOutButton) {
+    logOutButton.onclick = function() {
+      document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
   }
+  
 </script>
