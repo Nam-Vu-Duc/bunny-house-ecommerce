@@ -1,29 +1,35 @@
 .order-checking-container {
-  margin-top: 170px;
   height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   flex-direction: column;
-  gap: 10px;
 
-  input {
-    width: 50%;
-    height: 50px;
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+
+    input {
+      width: 80%;
+      height: 50px;
+      border: 1px solid white;
+      border-radius: 10px;
+    }
+  
+    input::placeholder {
+      text-align: center; 
+      
+   }
+  
+    button {
+    width: 30%;
+    height: 30px;
     border: 1px solid white;
-    border-radius: 10px;
+    border-radius: 5px;
+    background-color: #D1A6A6;
+    }
   }
-
-  input::placeholder {
-    text-align: center; 
-    
- }
-
- button {
-  width: 10%;
-  height: 30px;
-  border: 1px solid white;
-  border-radius: 5px;
-  background-color: #D1A6A6;
- }
 }

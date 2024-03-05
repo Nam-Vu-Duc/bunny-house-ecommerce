@@ -9,8 +9,17 @@ class orderController {
     res.render('users/ordersChecking', { title: 'Kiểm Tra Đơn Hàng' })
   }
 
+  orderChecked(req, res, next) {
+    // if matched, then find it in db
+    order.findOne({ _id: req.params.id }).lean()
+    .then(order => {
+      res.render('users/ordersChecking', { title: 'Kiểm Tra Đơn Hàng', order })
+    })
+    .catch(next)
+  }
+
   async createOrders(req, res, next) {
-    let { productName, productQuantity, totalProductPrice, ...customerInfo } = req.body
+    let { productName, productQuantity, totalProductPrice, paymentMethod, ...customerInfo } = req.body
 
     // if the req.body has only 1 record, then convert the productName % productQuantity to an array
     if(!Array.isArray(productName)) {
@@ -30,7 +39,8 @@ class orderController {
         address: customerInfo.address,
         note: customerInfo.note
       },
-      totalProductPrice: totalProductPrice
+      totalProductPrice: totalProductPrice,
+      paymentMethod: paymentMethod
     });
 
     await newOrder.save()

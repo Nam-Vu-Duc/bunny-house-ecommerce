@@ -8,6 +8,8 @@ router.get('/', orderController.show)
 
 router.get('/checking', orderController.ordersChecking)
 
+router.get('/checking/:id', orderController.orderChecked)
+
 router.post('/create-orders', orderController.createOrders)
 
 module.exports = router

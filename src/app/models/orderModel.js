@@ -20,6 +20,7 @@ const order = new Schema({
     note: String
   },
   totalProductPrice: Number,
+  paymentMethod: String,
   status: { type: String, default: 'preparing' },
   deletedAt: {type: Date, default: null }
 }, { timestamps: true })

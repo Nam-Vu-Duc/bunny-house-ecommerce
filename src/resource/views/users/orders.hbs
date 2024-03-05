@@ -49,10 +49,10 @@
     <div class="payment-method">
       <p>Hình Thức Thanh Toán</p>
 
-      <input type="radio" id="cash" name="payment-method" value="cash">
+      <input type="radio" id="cash" name="paymentMethod" value="cash">
       <label for="cash">Trả Tiền Mặt</label><br>
       
-      <input type="radio" id="cashless" name="payment-method" value="cashless">
+      <input type="radio" id="cashless" name="paymentMethod" value="transfer">
       <label for="cashless">Chuyển Khoản</label>
     </div>
 
@@ -211,6 +211,7 @@
   totalOrderPrices.innerText = `${convertTotalOrderPricesToString} đ`
 
   // add each element to the total order row
+  getTableFooter.appendChild(document.createElement('td'))
   getTableFooter.appendChild(totalOrderTitle)
   getTableFooter.appendChild(document.createElement('td'))
   getTableFooter.appendChild(document.createElement('td'))
