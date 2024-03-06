@@ -4,7 +4,8 @@ const adminRoute = require('./adminRoute')
 const allProductsRoute = require('./allProductsRoute')
 const introduceRoute = require('./introduceRoute')
 const authenticationRoute = require('./authenticationRoute')
-const ordersRoute = require('./ordersRoute')
+const allOrdersRoute = require('./allOrdersRoute')
+const orderRoute = require('./orderRoute')
 const checkAdmin = require('../app/middleware/checkAdmin')
 const cookieParser = require('cookie-parser')
 
@@ -15,15 +16,17 @@ function route(app) {
 
   app.use('/authentication', authenticationRoute)
   
-  app.use('/product', productRoute)
-
   app.use('/admin', checkAdmin, adminRoute)
-
+  
   app.use('/all-products', allProductsRoute)
+  
+  app.use('/product', productRoute)
 
   app.use('/introduce', introduceRoute)
 
-  app.use('/orders', ordersRoute)
+  app.use('/all-orders', allOrdersRoute)
+
+  app.use('/order', orderRoute)
 }
 
 module.exports = route

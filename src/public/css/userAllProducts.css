@@ -37,7 +37,7 @@
 }
 
 .all-category-skincare, .all-category-makeup {
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;

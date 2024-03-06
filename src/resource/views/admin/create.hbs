@@ -5,18 +5,16 @@
     </div>
 
     <div class="form-group">
-      <label for="categories">Chọn Dòng Sản Phẩm</label>
       <select name="categories">
-        <option value="">-- Chọn --</option>
+        <option value="">-- Chọn Dòng Sản Phẩm --</option>
         <option value="skincare">Skincare</option>
         <option value="makeup">Makeup</option>
       </select>
     </div>
 
     <div class="form-group" style="display: none;">
-      <label for="skincare">Skincare</label>
       <select name="skincare">
-        <option value="">-- Chọn --</option>
+        <option value="">-- Skincare --</option>
         <option value="xit-khoang">
           Xịt Khoáng
         </option>
@@ -54,9 +52,8 @@
     </div>
 
     <div class="form-group" style="display: none;">
-      <label for="makeup">Makeup</label>
       <select name="makeup">
-        <option value="">-- Chọn --</option>
+        <option value="">-- Makeup --</option>
         <option value="phan-ma">
           Phấn Má
         </option>
@@ -79,38 +76,33 @@
     </div>
 
     <div class="form-group">
-      <label for="brand">Hãng Sản Phẩm</label>
-      <input type="text" class="form-control" id="brand" name="brand">
+      <input type="text" class="form-control" id="brand" name="brand" placeholder="Hãng Sản Phẩm">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="name">Tên Sản phẩm</label>
-      <input type="text" class="form-control" id="name" name="name">
+      <input type="text" class="form-control" id="name" name="name" placeholder="Tên Sản phẩm">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="price">Giá Sản Phẩm</label>
-      <input type="text" class="form-control" id="price" name="price">
+      <input type="text" class="form-control" id="price" name="price" placeholder="Giá Sản Phẩm">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="description">Giới Thiệu Sản Phẩm</label>
-      <input type="text" class="form-control" id="description" name="description">
+      <input type="text" class="form-control" id="description" name="description" placeholder="Giới Thiệu Sản Phẩm">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="details">Chi tiết Sản Phẩm</label>
-      <input type="text" class="form-control" id="details" name="details">
+      <input type="text" class="form-control" id="details" name="details" placeholder="Chi tiết Sản Phẩm">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <label for="hotsale">Tình Trạng Sản Phẩm</label>
       <select name="hotsale">
+        <option value="no">-- Tình Trạng Sản Phẩm --</option>
         <option value="no">Bình thường</option>
         <option value="flash-sale">Đang Flash Sale</option>
         <option value="hot">Đang hot</option>
@@ -119,8 +111,8 @@
     </div>
 
     <div class="form-group">
-      <label for="newArrival">Hàng Mới Về</label>
       <select name="newArrival">
+        <option value="no">-- Hàng Mới Về --</option>
         <option value="no">Không</option>
         <option value="yes">Chuẩn luôn, mới về</option>
       </select>
@@ -145,11 +137,13 @@ function validating(inputElement, rule, checkValidate, index) {
 
   if (errorMessage) {
     errorElement.innerText = errorMessage
-    inputElement.parentElement.style.color = "red"
+    inputElement.style.border = '2px solid red'
+    inputElement.parentElement.style.color = 'red'
     checkValidate[index] = false
   } else {
     errorElement.innerText = ''
-    inputElement.parentElement.style.color = "black"
+    inputElement.style.border = 'none'
+    inputElement.parentElement.style.color = 'black'
     checkValidate[index] = true
   }
 }  

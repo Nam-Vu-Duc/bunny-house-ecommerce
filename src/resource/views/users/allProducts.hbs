@@ -5,26 +5,9 @@
   </div>
 
   <div class="all-category-skincare">
-    <a href="/all-products/skincare/xit-khoang">Xịt khoáng</a>
-    <a href="/all-products/skincare/mat-na">Mặt nạ</a>
-    <a href="/all-products/skincare/serum">Serum</a>
-    <a href="/all-products/skincare/bha">BHA</a>
-    <a href="/all-products/skincare/tay-da-chet">Tẩy da chết</a>
-    <a href="/all-products/skincare/duong-da">Dưỡng da</a>
-    <a href="/all-products/skincare/toner">Toner</a>
-    <a href="/all-products/skincare/nuoc-tay-trang">Nước tẩy trang</a>
-    <a href="/all-products/skincare/cham-mun">Chấm mụn</a>
-    <a href="/all-products/skincare/kem-duong-am">Kem dưỡng ẩm</a>
-    <a href="/all-products/skincare/sua-rua-mat">Sữa rửa mặt</a>
   </div>
 
   <div class="all-category-makeup">
-    <a href="/all-products/makeup/phan-ma">Phấn má</a>
-    <a href="/all-products/makeup/mascara">Mascara</a>
-    <a href="/all-products/makeup/ke-mat">Kẻ mắt</a>  
-    <a href="/all-products/makeup/kem-chong-nang">Kem chống nắng</a>
-    <a href="/all-products/makeup/che-khuyet-diem">Che khuyết điểm</a>
-    <a href="/all-products/makeup/son">Son</a>
   </div>
 
   <div class="sort-button">
@@ -33,7 +16,7 @@
   </div>
   
   <div class="all-products">
-    {{#each product}}
+    {{!-- {{#each product}}
       <div class="product">
         <a href="/product/{{this.slug}}">
           <img src="../../uploads/{{this.avatar}}" alt="">
@@ -41,7 +24,7 @@
           <p id="product-details">{{this.name}}</p>
         </a>
       </div>
-    {{/each}}
+    {{/each}} --}}
   </div>
 
   <span class="see-more-button">
@@ -69,11 +52,30 @@
   }
   else if (getSlug === 'skincare') {
     mainTitle.innerText = 'Toàn bộ sản phẩm skincare'
-    getSkincareCategory.style.display = 'flex'
+    getSkincareCategory.innerHTML = `
+      <a href="/all-products/skincare/xit-khoang">Xịt khoáng</a>
+      <a href="/all-products/skincare/mat-na">Mặt nạ</a>
+      <a href="/all-products/skincare/serum">Serum</a>
+      <a href="/all-products/skincare/bha">BHA</a>
+      <a href="/all-products/skincare/tay-da-chet">Tẩy da chết</a>
+      <a href="/all-products/skincare/duong-da">Dưỡng da</a>
+      <a href="/all-products/skincare/toner">Toner</a>
+      <a href="/all-products/skincare/nuoc-tay-trang">Nước tẩy trang</a>
+      <a href="/all-products/skincare/cham-mun">Chấm mụn</a>
+      <a href="/all-products/skincare/kem-duong-am">Kem dưỡng ẩm</a>
+      <a href="/all-products/skincare/sua-rua-mat">Sữa rửa mặt</a>
+    `
   }
   else if (getSlug === 'makeup') {
     mainTitle.innerText = 'Toàn bộ sản phẩm makeup'
-    getMakeupCategory.style.display = 'flex'
+    getMakeupCategory.innerHTML = `
+      <a href="/all-products/makeup/phan-ma">Phấn má</a>
+      <a href="/all-products/makeup/mascara">Mascara</a>
+      <a href="/all-products/makeup/ke-mat">Kẻ mắt</a>  
+      <a href="/all-products/makeup/kem-chong-nang">Kem chống nắng</a>
+      <a href="/all-products/makeup/che-khuyet-diem">Che khuyết điểm</a>
+      <a href="/all-products/makeup/son">Son</a>
+    `
   } 
   else {
     getSlug = getSlug.replaceAll('-', ' ')
@@ -82,10 +84,9 @@
 
   // pagination 
   var seeMoreButton = document.querySelector('span.see-more-button').querySelector('button')
-  var allProducts = document.querySelectorAll('div.product')
-  var allProductsLength = allProducts.length
+  var allProductsContainer = document.querySelectorAll('div.all-products')
 
-  var firstIndex = 0
+  {{!-- var firstIndex = 0
   var nextIndex = 10 
   for (let i = nextIndex; i < allProductsLength; ++i) {
     allProducts[i].style.display = 'none'
@@ -99,6 +100,6 @@
         allProducts[i].style.display = 'grid'
       }
     } 
-  }
+  } --}}
 
 </script>

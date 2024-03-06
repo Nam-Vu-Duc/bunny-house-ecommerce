@@ -1,0 +1,40 @@
+<div class="order-container">
+  <div class="title">Thông Tin Đơn Hàng</div>
+
+  <div class="info-group">
+    <title>Mã Đơn Hàng</title>
+    {{order._id}}
+  </div>
+  <div class="info-group">
+    <title>Tên Khách Hàng</title> 
+    {{order.customerInfo.name}}
+  </div>
+  <div class="info-group">
+    <title>Số Điện Thoại</title> 
+    {{order.customerInfo.phone}}
+  </div>
+  <div class="info-group">
+    <title>Địa Chỉ Nhận Hàng</title>
+    {{order.customerInfo.address}}
+  </div>
+  <div class="info-group">
+    <title>Ghi Chú</title>
+    {{order.customerInfo.note}}
+  </div>
+  <div class="info-group">
+    <title>Tổng Tiền</title>
+    {{order.totalProductPrice}}đ
+  </div>
+  <div class="info-group">
+    <title>Trạng Thái Đơn Hàng</title>
+  </div>
+
+  <div class="title">Thông Tin Sản Phẩm</div>
+
+  {{#each order.products}}
+  <div class="product-group">
+    <title>Tên Sản Phẩm</title>{{this.name}}
+    <title>Số lượng</title>{{this.quantity}}
+  </div>
+  {{/each}}
+</div>

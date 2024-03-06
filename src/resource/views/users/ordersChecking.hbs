@@ -22,7 +22,7 @@
         if (regex.test(orderCode)) {
             // if matched, submit form and pass value to URL for backend
             getForm.setAttribute('method', 'get')
-            getForm.setAttribute('action', `/orders/checking/${orderCode}`)
+            getForm.setAttribute('action', `/all-orders/checking/${orderCode}`)
             getForm.onsubmit = function () { }
         }
         else {
@@ -58,7 +58,7 @@
                             <i class="fi fi-ss-check-circle"></i> --}}
                             {{order.status}}
                         </td>
-                        <td>Chi Tiết</td>
+                        <td><a href="/order/{{order._id}}">Chi Tiết</td>
                     </tr>
                 </tbody>
             </table>            
