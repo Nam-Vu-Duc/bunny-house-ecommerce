@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="/css/userHeader.css">
   <link rel="stylesheet" href="/css/userHome.css">
   <link rel="stylesheet" href="/css/userIntroduce.css">
-  <link rel="stylesheet" href="/css/userNavigate.css">
   <link rel="stylesheet" href="/css/userOrder.css">
   <link rel="stylesheet" href="/css/userOrdersChecking.css">
   <link rel="stylesheet" href="/css/userProduct.css">
@@ -28,11 +27,7 @@
     {{> userHeader}}
   </header>
   
-  <nav>
-    {{> userNavigate}}
-  </nav>
-  
-  <main style="margin-top: 170px;">
+  <main style="margin-top: 70px">
     {{{body}}}
   </main>
 
@@ -40,8 +35,8 @@
     {{> userFooter}}
   </footer>
 
-  <footerNav>
+  {{!-- <footerNav>
     {{> userFooterNavigate}}
-  </footerNav>
+  </footerNav> --}}
 </body>
 </html>

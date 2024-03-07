@@ -1,24 +1,66 @@
 <div class="store-logo">
   <a href="/home">
-    <image src="../../../img/logo.jpg" class="image-front"/>
-    <image src="../../../img/full_logo.jpg" class="image-back"/>
+    <image src="../../../img/logo.jpg"/>
   </a>
 </div>
 
-<div class="search-bar" style="width: 50%; position: relative;">
-  <form method="get" action="">
-    <input
-      id="search-input"
-      type="text" 
-      class="form-control"
-      placeholder="nhập mã hàng, tên sản phẩm để tìm kiếm"
-      name="q"
-    >
+<div class="dropdown">
+  <div class="dropdown-title">
+    <i class="fi fi-br-menu-burger"></i>
+    <p>DANH MỤC SẢN PHẨM</p> 
+  </div>
 
-    <button type="submit" class="btn btn-primary">
-      <i class="fi fi-br-search" ></i>
-    </button>
-  </form>
+  <ul>
+    <li>
+      <a href="/all-products/skincare">
+        Skincare
+        <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+      </a>
+      <ul>
+          <li><a href="/all-products/skincare/xit-khoang">Xịt khoáng</a></li>
+          <li><a href="/all-products/skincare/mat-na">Mặt nạ</a></li>
+          <li><a href="/all-products/skincare/serum">Serum</a></li>
+          <li><a href="/all-products/skincare/bha">BHA</a></li>
+          <li><a href="/all-products/skincare/tay-da-chet">Tẩy da chết</a></li>
+          <li><a href="/all-products/skincare/duong-da">Dưỡng da</a></li>
+          <li><a href="/all-products/skincare/toner">Toner</a></li>
+          <li><a href="/all-products/skincare/nuoc-tay-trang">Nước tẩy trang</a></li>
+          <li><a href="/all-products/skincare/cham-mun">Chấm mụn</a></li>
+          <li><a href="/all-products/skincare/kem-duong-am">Kem dưỡng ẩm</a></li>
+          <li><a href="/all-products/skincare/sua-rua-mat">Sữa rửa mặt</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="/all-products/makeup">
+        Makeup
+        <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
+      </a>
+      <ul>
+        <li><a href="/all-products/makeup/phan-ma">Phấn má</a></li>
+        <li><a href="/all-products/makeup/mascara">Mascara</a></li>
+        <li><a href="/all-products/makeup/ke-mat">Kẻ mắt</a></li>
+        <li><a href="/all-products/makeup/kem-chong-nang">Kem chống nắng</a></li>
+        <li><a href="/all-products/makeup/che-khuyet-diem">Che khuyết điểm</a></li>
+        <li><a href="/all-products/makeup/son">Son</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class="title">
+  <a href="/introduce">GIỚI THIỆU</a>
+</div>
+
+<div class="title">
+  <a href="/all-products/new-arrival">HÀNG MỚI VỀ</a>
+</div>
+
+<div class="title">
+  <a href="/all-orders/checking">ĐƠN HÀNG</a>
+</div>
+
+<div class="title">
+  <i class="fi fi-br-search" ></i>
 </div>
   
 <div class="header-button">
@@ -33,8 +75,11 @@
 <div class="avatar-menu">
 </div>
 
+<form method="get" action="" class="search-form">
+</form>
+
 <script>
-  // update cart-orders base on each users using local storage
+  // update cart-orders base on each user using local storage
   var getOrdersQuantity = document.querySelector('span.orders-quantity')
   
   function updateCartCount() {
@@ -43,29 +88,51 @@
       getOrdersQuantity.innerText = countOrdersQuantity
     }
 
-    document.addEventListener('cartUpdated', updateCartCount);
-    updateCartCount()
+  document.addEventListener('cartUpdated', updateCartCount);
+  updateCartCount()
 
-    // onclick avatar
-    var getAvatarMenu = document.querySelector('div.avatar-menu')
-    var getAvatar = document.querySelector('img.dropdown-avatar')
-    
-    getAvatarMenu.style.display = 'none'
-    getAvatar.onclick = function() {
-      if (getAvatarMenu.style.display === 'none') {
-        getAvatarMenu.style.display = 'block'
-      } else {
-        getAvatarMenu.style.display = 'none'
-      }
+  // onclick search icon
+  var getSearchIcon = document.querySelector('i.fi-br-search')
+  var getForm = document.querySelector('form.search-form')
+  getForm.style.display = 'none'
+
+  // create input element
+  var searchInput = document.createElement('input')
+  searchInput.setAttribute('id', 'search-input')
+  searchInput.setAttribute('type', 'text')
+  searchInput.setAttribute('placeholder', 'nhập mã hàng, tên sản phẩm để tìm kiếm')
+
+  getSearchIcon.onclick = function() {
+    if (getForm.style.display === 'none') {
+      getForm.style.display = 'block'
+      getForm.appendChild(searchInput)
+    } 
+    else {
+      getForm.style.display = 'none'
+      getForm.removeChild(searchInput)
     }
+  }
 
-    document.addEventListener('click', function(event) {
-    if (!event.target.matches('.dropdown-avatar') &&
-        !event.target.closest('.dropdown-avatar') 
-      ) { 
+  // onclick avatar
+  var getAvatarMenu = document.querySelector('div.avatar-menu')
+  var getAvatar = document.querySelector('img.dropdown-avatar')
+  getAvatarMenu.style.display = 'none'
+
+  getAvatar.onclick = function() {
+    if (getAvatarMenu.style.display === 'none') {
+      getAvatarMenu.style.display = 'block'
+    } else {
       getAvatarMenu.style.display = 'none'
     }
-  });
+  }
+
+  document.addEventListener('click', function(event) {
+  if (!event.target.matches('.dropdown-avatar') &&
+      !event.target.closest('.dropdown-avatar') 
+    ) { 
+    getAvatarMenu.style.display = 'none'
+  }
+});
 
   // update avatar logged-in or not logged-in
   function getCookie(cname) {

@@ -16,7 +16,7 @@
   </div>
   
   <div class="all-products">
-    {{!-- {{#each product}}
+    {{#each product}}
       <div class="product">
         <a href="/product/{{this.slug}}">
           <img src="../../uploads/{{this.avatar}}" alt="">
@@ -24,7 +24,7 @@
           <p id="product-details">{{this.name}}</p>
         </a>
       </div>
-    {{/each}} --}}
+    {{/each}}
   </div>
 
   <span class="see-more-button">
@@ -84,9 +84,10 @@
 
   // pagination 
   var seeMoreButton = document.querySelector('span.see-more-button').querySelector('button')
-  var allProductsContainer = document.querySelectorAll('div.all-products')
+  var allProducts = document.querySelectorAll('div.product')
+  var allProductsLength = allProducts.length
 
-  {{!-- var firstIndex = 0
+  var firstIndex = 0
   var nextIndex = 10 
   for (let i = nextIndex; i < allProductsLength; ++i) {
     allProducts[i].style.display = 'none'
@@ -100,6 +101,6 @@
         allProducts[i].style.display = 'grid'
       }
     } 
-  } --}}
+  }
 
 </script>
