@@ -1,0 +1,14 @@
+<div class="user-all-brands-container">
+  <div class="title">
+    <i class="fi fi-sr-flame"></i>
+    <div class="main-title" style="text-transform:uppercase"><b>Toàn bộ thương hiệu</b></div>
+  </div>
+  
+  <div class="all-products">
+    {{#each product}}
+      <a href="/all-products/all-brands/{{this}}">
+        {{this}}
+      </a>
+    {{/each}}
+  </div>
+</div>

@@ -1,17 +1,22 @@
-.flash-deal-board, .hot-products-board, .content-board {
+.flash-deal-board, .hot-products-board, .content-board, .famous-brand-board {
   width: 100%;
   overflow: hidden;
+  padding-top: 20px;
 
   .title {
     display: flex; 
     align-items: center; 
+    justify-content: center;
     gap: 5px; 
     font-size: 32px;
+
+    i { color: red;}
   
     .main-title {
       display: inline-block;
       position: relative;
       color: red;
+      text-decoration: none;
     }
     
     .main-title::after {
@@ -34,38 +39,7 @@
   }
 }
 
-.see-more-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-
-  .see-more-icon-title {
-    display: inline-block;
-    position: relative;
-    color: red;
-  }
-  
-  .see-more-icon-title::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: red;
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
-  }
-  
-  .see-more-icon-title:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-}
-
-.flash-deal-products, .hot-products, .products {
+.products {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
   overflow-x: scroll;
@@ -73,7 +47,6 @@
   box-sizing: content-box;
   scroll-behavior: smooth;
   align-items: center;
-  cursor: pointer;
   gap: 5px;
   height: auto;
   padding: 15px;
@@ -119,6 +92,36 @@
   font-size: 14px;
 }
 
-.flash-deal-products::-webkit-scrollbar, .hot-products::-webkit-scrollbar, .products::-webkit-scrollbar {
+.products::-webkit-scrollbar {
   display: none;
+}
+
+.famous-brand-board {
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: red;
+    text-decoration: none;
+    font-size: larger;
+  }
+  
+  a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: red;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  
+  a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
 }

@@ -3,18 +3,12 @@
 </div>
 
 <div class="flash-deal-board">
-  <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
-    <div class="title">
-      <i class="fi fi-sr-flame"></i>
-      <p class="main-title"><b>FLASH DEAL</b></p>
-    </div>
-    <div class="see-more-icon">
-      <a href="/all-products/flash-sale" class="see-more-icon-title" style="text-decoration: none;">Xem Tất Cả</a>
-      <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
-    </div>
+  <div class="title">
+    <i class="fi fi-sr-flame"></i>
+    <a href="/all-products/flash-sale" class="main-title"><b>FLASH DEAL</b></a>
   </div>
   
-  <div class="flash-deal-products">
+  <div class="products">
     {{#each flashDealProduct}}
     <a href="/product/{{this.slug}}">
       <div class="product">
@@ -28,18 +22,12 @@
 </div>
 
 <div class="hot-products-board">
-  <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
-    <div class="title">
-      <i class="fi fi-sr-flame"></i>
-      <p class="main-title"><b>SẢN PHẨM HOT</b></p>
-    </div>
-    <div class="see-more-icon">
-      <a href="/all-products/hot" class="see-more-icon-title" style="text-decoration: none;">Xem Tất Cả</a>
-      <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
-    </div>
+  <div class="title">
+    <i class="fi fi-sr-flame"></i>
+    <a href="/all-products/hot" class="main-title"><b>SẢN PHẨM HOT</b></a>
   </div>
   
-  <div class="hot-products">
+  <div class="products">
     {{#each hotProduct}}
     <a href="/product/{{this.slug}}">
       <div class="product">
@@ -53,15 +41,9 @@
 </div>
 
 <div class="content-board">
-  <div class="board-title" style="display: flex; align-items: center; color: red; justify-content: space-between;">
-    <div class="title">
-      <i class="fi fi-sr-flame"></i>
-      <p class="main-title"><b>TOÀN BỘ SẢN PHẨM</b></p>
-    </div>
-    <div class="see-more-icon">
-      <a href="/all-products" class="see-more-icon-title" style="text-decoration: none;">Xem Tất Cả</a>
-      <i class="fi fi-rr-angle-small-right" style="padding-top: 5px;"></i>
-    </div>
+  <div class="title">
+    <i class="fi fi-sr-flame"></i>
+    <a href="/all-products" class="main-title"><b>TOÀN BỘ SẢN PHẨM</b></a>
   </div>
 
   <div class="products">
@@ -72,6 +54,21 @@
         <p id="product-price">{{this.price}}đ</p>
         <p id="product-details">{{this.name}}</p>
       </div>
+    </a>
+    {{/each}}
+  </div>
+</div>
+
+<div class="famous-brand-board">
+  <div class="title">
+    <i class="fi fi-sr-flame"></i>
+    <a href="/all-products/all-brands" class="main-title"><b>THƯƠNG HIỆU NỔI BẬT</b></a>
+  </div>
+
+  <div class="products">
+    {{#each allProduct}}
+    <a href="/all-products/all-brands/{{this.brand}}">
+      {{this.brand}}
     </a>
     {{/each}}
   </div>

@@ -1,11 +1,17 @@
 const product = require('../models/productModel')
 
 class allProductsController {
-  showAll(req, res, next) {
-    product.find({ deletedAt: null }).lean().sortable(req)
+  showAllProducts(req, res, next) {
+    const currentPage = req.query.page || 1;
+    const itemsPerPage = 10;
+    const skip = (currentPage - 1) * itemsPerPage;
+    const type = req.params.slug
+
+    product.find({ deletedAt: null })
+        .lean()
+        .sortable(req)
       .then(product => { 
         product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
-        const type = req.params.slug
         let title = 'Toàn Bộ Sản Phẩm'
         if (type === 'flash-sale') {
           product = product.filter(product => product.hotsale === 'flash-sale' )
@@ -27,7 +33,11 @@ class allProductsController {
           product = product.filter(product => product.makeup !== '' )
           title = 'Sản Phẩm Makeup'
         }
-        res.render('users/allProducts', { title: title, product, type }) })
+
+        const productLength = product.length
+        const newProduct = product.slice(skip, skip + itemsPerPage)
+        
+        res.render('users/allProducts', { title: title, newProduct, type, productLength }) })
       .catch(next)
   }
 
@@ -36,8 +46,10 @@ class allProductsController {
       .then(product => { 
         product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
         const type = req.params.slug
-        let title = type.charAt(0).toUpperCase() + type.slice(1).replaceAll('-', ' ')
-        res.render('users/allProducts', { title: title, product, type }) })
+        const title = type.charAt(0).toUpperCase() + type.slice(1).replaceAll('-', ' ')
+        const newProduct = product
+
+        res.render('users/allProducts', { title: title, newProduct, type }) })
       .catch(next)
   }
 
@@ -46,8 +58,29 @@ class allProductsController {
       .then(product => { 
         product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
         const type = req.params.slug
-        let title = type.charAt(0).toUpperCase() + type.slice(1).replaceAll('-', ' ')
-        res.render('users/allProducts', { title: title, product, type }) })
+        const title = type.charAt(0).toUpperCase() + type.slice(1).replaceAll('-', ' ')
+        const newProduct = product
+        
+        res.render('users/allProducts', { title: title, newProduct, type }) })
+      .catch(next)
+  }
+
+  showAllBrands(req, res, next) {
+    product.find({ deletedAt: null }).distinct("brand").lean()
+      .then(product => { 
+        const title = req.params.slug
+        console.log(product)
+        res.render('users/allBrands', { title: title, product }) })
+      .catch(next)
+  }
+
+  showBrand(req, res, next) {
+    product.find({ deletedAt: null, brand: req.params.slug }).lean()
+      .then(product => { 
+        const title = req.params.slug
+        const newProduct = product
+
+        res.render('users/allProducts', { title: title, newProduct }) })
       .catch(next)
   }
 }

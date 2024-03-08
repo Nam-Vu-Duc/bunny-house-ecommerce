@@ -16,7 +16,7 @@
   </div>
   
   <div class="all-products">
-    {{#each product}}
+    {{#each newProduct}}
       <div class="product">
         <a href="/product/{{this.slug}}">
           <img src="../../uploads/{{this.avatar}}" alt="">
@@ -27,14 +27,11 @@
     {{/each}}
   </div>
 
-  <span class="see-more-button">
-    <button>Xem thêm</button>
+  <span class="pagination">
   </span>
-
 </div>
 
 <script>
-
   // update main-title base on params.slug
   var getSlug = `{{type}}`
   var mainTitle = document.querySelector('div.main-title').querySelector('b')
@@ -83,24 +80,16 @@
   }
 
   // pagination 
-  var seeMoreButton = document.querySelector('span.see-more-button').querySelector('button')
-  var allProducts = document.querySelectorAll('div.product')
-  var allProductsLength = allProducts.length
+  var pagination = document.querySelector('span.pagination')
+  var productLength = `{{productLength}}`
+  var currentPage = 1
 
-  var firstIndex = 0
-  var nextIndex = 10 
-  for (let i = nextIndex; i < allProductsLength; ++i) {
-    allProducts[i].style.display = 'none'
-  }
-
-  seeMoreButton.onclick = function() {
-    firstIndex += 10
-    nextIndex += 10
-    if (firstIndex < allProductsLength) {
-      for (let i = firstIndex; i < nextIndex; ++i) {
-        allProducts[i].style.display = 'grid'
-      }
-    } 
+  for (let i = 0; i < productLength; i += 10) {
+    var newPage = document.createElement('a')
+    newPage.setAttribute('href', `/all-products/${getSlug}?page=${currentPage}`)
+    newPage.innerText = `${currentPage}`
+    pagination.appendChild(newPage)
+    currentPage++
   }
 
 </script>
