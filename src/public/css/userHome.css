@@ -97,7 +97,40 @@
 }
 
 .famous-brand-board {
-  a {
+  .brands {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .inner {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    gap: 5px;
+    animation: loop 10s linear infinite;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: white;
+
+    a { 
+      text-decoration: none; 
+      color: black;
+      width: max-content;
+    }
+  }
+
+  .fade {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  /* a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,5 +156,11 @@
   a:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
-  }
+  } */
+}
+
+@keyframes loop {
+  0% { transform: translateX(0) }
+
+  100% { transform: translateX(-50%) }
 }

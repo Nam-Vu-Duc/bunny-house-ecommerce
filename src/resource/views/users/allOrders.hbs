@@ -13,12 +13,12 @@
       <table>
         <thead>
           <tr>
-            <td></td>
-            <td>Tên Sản Phẩm</td>
-            <td>Giá</td>
-            <td>Số Lượng</td>
-            <td>Tổng Tiền</td>
-            <td>Xoá</td>
+            <td style="width: 10%;"></td>
+            <td style="width: 50%;">Tên Sản Phẩm</td>
+            <td style="width: 10%;">Giá</td>
+            <td style="width: 10%;">Số Lượng</td>
+            <td style="width: 10%;">Tổng Tiền</td>
+            <td style="width: 10%;">Xoá</td>
           </tr>
         </thead>
         <tbody>
@@ -54,6 +54,9 @@
       
       <input type="radio" id="cashless" name="paymentMethod" value="transfer">
       <label for="cashless">Chuyển Khoản</label>
+      <div class="bank-account">
+        <span>19037654462013<br>Techcombank<br>Đặng Quỳnh Ly</span>
+      </div>
     </div>
 
     <div class="button">
@@ -67,55 +70,80 @@
 </div>
 
 <script>
-  // display each process logic
-  var getContactInfo = document.querySelector('div.contact-info')
-  var getPaymentMethod = document.querySelector('div.payment-method')
-  var getNextButton = document.querySelector('button.next-button')
-  var getSubmitButton = document.querySelector('button.submit-button')
-  var getProgressMarks = document.querySelector('div.progress').querySelectorAll('span')
-  var getProgressBars = document.querySelectorAll('progress')
+// display each process logic
+var getContactInfo = document.querySelector('div.contact-info')
+var getPaymentMethod = document.querySelector('div.payment-method')
+var getNextButton = document.querySelector('button.next-button')
+var getSubmitButton = document.querySelector('button.submit-button')
+var getProgressMarks = document.querySelector('div.progress').querySelectorAll('span')
+var getProgressBars = document.querySelectorAll('progress')
+var getTableBody = document.querySelector('tbody')
+var getTableFooter = document.querySelector('tfoot')
+// define a total order price, store as an object to change initial value through each function
+var totalOrderPrice = {
+  total: 0
+}
 
-  getProgressMarks[0].style.backgroundColor = '#D1A6A6'
-  getProgressMarks[0].style.color = 'white'
+// display each process for customer
+function displayProcess(
+  getContactInfo,
+  getPaymentMethod,
+  getNextButton,
+  getSubmitButton,
+  getProgressMarks,
+  getProgressBars,
+) {
+    getProgressMarks[0].style.backgroundColor = '#D1A6A6'
+    getProgressMarks[0].style.color = 'white'
 
-  // set default display to 'none' on start
-  getContactInfo.style.display = 'none'
-  getPaymentMethod.style.display = 'none'
-  getSubmitButton.style.display = 'none'
+    // set default display to 'none' on start
+    getContactInfo.style.display = 'none'
+    getPaymentMethod.style.display = 'none'
+    getSubmitButton.style.display = 'none'
 
-  getNextButton.onclick = function() {
-    if (getContactInfo.style.display === 'none') {
-      getContactInfo.style.display = 'grid'
+    getNextButton.onclick = function() {
+      if (getContactInfo.style.display === 'none') {
+        getContactInfo.style.display = 'grid'
 
-      getProgressMarks[1].style.backgroundColor = '#D1A6A6'
-      getProgressMarks[1].style.color = 'white'
-      getProgressMarks[0].innerHTML = `<i class="fi fi-br-check"></i>`
+        getProgressMarks[1].style.backgroundColor = '#D1A6A6'
+        getProgressMarks[1].style.color = 'white'
+        getProgressMarks[0].innerHTML = `<i class="fi fi-br-check"></i>`
 
-      getProgressBars[0].value = '100'
-      getProgressBars[0].style.accentColor = '#D1A6A6'
-    } 
-    else {
-      getPaymentMethod.style.display = 'block'
+        getProgressBars[0].value = '100'
+        getProgressBars[0].style.accentColor = '#D1A6A6'
+      } 
+      else {
+        getPaymentMethod.style.display = 'block'
 
-      getProgressMarks[2].style.backgroundColor = '#D1A6A6'
-      getProgressMarks[2].style.color = 'white'
-      getProgressMarks[1].innerHTML = `<i class="fi fi-br-check"></i>`
+        getProgressMarks[2].style.backgroundColor = '#D1A6A6'
+        getProgressMarks[2].style.color = 'white'
+        getProgressMarks[1].innerHTML = `<i class="fi fi-br-check"></i>`
 
-      getProgressBars[1].value = '100'
-      getProgressBars[1].style.accentColor = '#D1A6A6'
-    }
+        getProgressBars[1].value = '100'
+        getProgressBars[1].style.accentColor = '#D1A6A6'
+      }
 
-    if (getPaymentMethod.style.display === 'block') {
-      getNextButton.style.display = 'none'
-      getSubmitButton.style.display = 'block'
+      if (getPaymentMethod.style.display === 'block') {
+        getNextButton.style.display = 'none'
+        getSubmitButton.style.display = 'block'
+      }
     }
   }
+displayProcess(
+  getContactInfo,
+  getPaymentMethod,
+  getNextButton,
+  getSubmitButton,
+  getProgressMarks,
+  getProgressBars
+)
 
-  // get data to display from localStorage
+// create table body
+function updateTableBody(totalOrderPrice) {
   var getProductInfo = JSON.parse(localStorage.getItem('product_cart_count')) || {};
   var productInfoLength = getProductInfo.productInfo.length 
   var getTableBody = document.querySelector('tbody')
-  var totalOrderPrice = 0
+  totalOrderPrice.total = 0
 
   var newProductUserId = document.createElement('input')
   newProductUserId.setAttribute('name', 'userId')
@@ -170,10 +198,11 @@
     newProductTotalPrice.innerText = `${convertNewProductTotalPriceToString} đ`
     
     var newProductDelete = document.createElement('td')
+    newProductDelete.setAttribute('class', 'delete-button')
     newProductDelete.innerText = 'Xoá'
 
     // calculate all product prices
-    totalOrderPrice += (getProductInfo.productInfo[i].price*1000) * getProductInfo.productInfo[i].quantity
+    totalOrderPrice.total += (getProductInfo.productInfo[i].price*1000) * getProductInfo.productInfo[i].quantity
 
     // add each element to the row
     newProductRow.appendChild(newProductUserId)
@@ -194,10 +223,13 @@
     // add each row to the table
     getTableBody.appendChild(newProductRow)
   }
+  deleteCart(totalOrderPrice)
+}
+updateTableBody(totalOrderPrice)
 
-  // calculate total ordersPrice
+// create table footer
+function updateTableFooter(totalOrderPrice) {
   var getTableFooter = document.querySelector('tfoot')
-
   var totalOrderTitle = document.createElement('td')
   totalOrderTitle.innerText = 'Tổng Đơn Hàng'
 
@@ -206,8 +238,8 @@
   var totalOrderPricesInput = document.createElement('input')
   totalOrderPricesInput.setAttribute('type', 'hidden')
   totalOrderPricesInput.setAttribute('name', 'totalProductPrice')
-  totalOrderPricesInput.setAttribute('value', totalOrderPrice)
-  var convertTotalOrderPricesToString = totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') 
+  totalOrderPricesInput.setAttribute('value', totalOrderPrice.total)
+  var convertTotalOrderPricesToString = totalOrderPrice.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') 
   totalOrderPrices.innerText = `${convertTotalOrderPricesToString} đ`
 
   // add each element to the total order row
@@ -219,9 +251,38 @@
   getTableFooter.appendChild(totalOrderPrices)
   getTableFooter.appendChild(document.createElement('td'))
   getTableFooter.appendChild(document.createElement('td'))
+}
+updateTableFooter(totalOrderPrice)
 
-  //
-  function validating(inputElement, rule, checkValidate, index) {
+// delete all previous elements
+function deleteCartItem(tableElement) {
+  while (tableElement.lastChild) {
+    tableElement.removeChild(tableElement.lastChild)
+  }
+}
+
+// delete item from cart 
+function deleteCart(totalOrderPrice) {
+  var deleteButton = document.querySelectorAll('td.delete-button')
+
+  for (let i = 0; i < deleteButton.length; ++i) {
+    deleteButton[i].onclick = function() {
+      var getProductInfo = JSON.parse(localStorage.getItem('product_cart_count')) || {};
+      getProductInfo.localCounting--
+      getProductInfo.productInfo.splice(i,1)
+      localStorage.setItem('product_cart_count', JSON.stringify(getProductInfo));
+      document.dispatchEvent(new CustomEvent('cartUpdated'));
+      deleteCartItem(getTableBody)
+      updateTableBody(totalOrderPrice)
+      deleteCartItem(getTableFooter)
+      updateTableFooter(totalOrderPrice)
+    }
+  }
+}
+deleteCart(totalOrderPrice)
+
+//
+function validating(inputElement, rule, checkValidate, index) {
   var errorMessage = rule.test(inputElement.value)
   var errorElement = inputElement.parentElement.querySelectorAll('.form-message')[index]
   var errorLabelElement = inputElement.parentElement.querySelectorAll('label')[index]
@@ -278,7 +339,6 @@ function validator(options) {
     }
   }
 }
-
 validator({
   form: '#form-4',
   errorSelector: '.form-message',

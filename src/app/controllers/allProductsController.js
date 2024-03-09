@@ -15,7 +15,7 @@ class allProductsController {
         let title = 'Toàn Bộ Sản Phẩm'
         if (type === 'flash-sale') {
           product = product.filter(product => product.hotsale === 'flash-sale' )
-          title = 'Sản Phẩm Đang Flash-sale'
+          title = 'Sản Phẩm Đang Flash Sale'
         }
         if (type === 'hot') {
           product = product.filter(product => product.hotsale === 'hot' )
@@ -37,7 +37,7 @@ class allProductsController {
         const productLength = product.length
         const newProduct = product.slice(skip, skip + itemsPerPage)
         
-        res.render('users/allProducts', { title: title, newProduct, type, productLength }) })
+        res.render('users/allProducts', { title: title, newProduct, type, productLength, currentPage }) })
       .catch(next)
   }
 
@@ -46,10 +46,9 @@ class allProductsController {
       .then(product => { 
         product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
         const type = req.params.slug
-        const title = type.charAt(0).toUpperCase() + type.slice(1).replaceAll('-', ' ')
         const newProduct = product
 
-        res.render('users/allProducts', { title: title, newProduct, type }) })
+        res.render('users/allProducts', { title: 'Dòng Skincare', newProduct, type }) })
       .catch(next)
   }
 
@@ -58,10 +57,9 @@ class allProductsController {
       .then(product => { 
         product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
         const type = req.params.slug
-        const title = type.charAt(0).toUpperCase() + type.slice(1).replaceAll('-', ' ')
         const newProduct = product
         
-        res.render('users/allProducts', { title: title, newProduct, type }) })
+        res.render('users/allProducts', { title: 'Dòng Makeup', newProduct, type }) })
       .catch(next)
   }
 
@@ -69,7 +67,6 @@ class allProductsController {
     product.find({ deletedAt: null }).distinct("brand").lean()
       .then(product => { 
         const title = req.params.slug
-        console.log(product)
         res.render('users/allBrands', { title: title, product }) })
       .catch(next)
   }

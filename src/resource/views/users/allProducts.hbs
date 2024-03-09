@@ -38,45 +38,97 @@
   var getSkincareCategory = document.querySelector('div.all-category-skincare')
   var getMakeupCategory = document.querySelector('div.all-category-makeup')
 
-  if (getSlug === 'flash-sale') {
-    mainTitle.innerText = 'Toàn bộ sản phẩm đang sale'
-  }
-  else if (getSlug === 'hot') {
-    mainTitle.innerText = 'Toàn bộ sản phẩm đang hot'
-  }
-  else if (getSlug === 'new-arrival') {
-    mainTitle.innerText = 'Toàn bộ sản phẩm mới về'
-  }
-  else if (getSlug === 'skincare') {
-    mainTitle.innerText = 'Toàn bộ sản phẩm skincare'
-    getSkincareCategory.innerHTML = `
-      <a href="/all-products/skincare/xit-khoang">Xịt khoáng</a>
-      <a href="/all-products/skincare/mat-na">Mặt nạ</a>
-      <a href="/all-products/skincare/serum">Serum</a>
-      <a href="/all-products/skincare/bha">BHA</a>
-      <a href="/all-products/skincare/tay-da-chet">Tẩy da chết</a>
-      <a href="/all-products/skincare/duong-da">Dưỡng da</a>
-      <a href="/all-products/skincare/toner">Toner</a>
-      <a href="/all-products/skincare/nuoc-tay-trang">Nước tẩy trang</a>
-      <a href="/all-products/skincare/cham-mun">Chấm mụn</a>
-      <a href="/all-products/skincare/kem-duong-am">Kem dưỡng ẩm</a>
-      <a href="/all-products/skincare/sua-rua-mat">Sữa rửa mặt</a>
-    `
-  }
-  else if (getSlug === 'makeup') {
-    mainTitle.innerText = 'Toàn bộ sản phẩm makeup'
-    getMakeupCategory.innerHTML = `
-      <a href="/all-products/makeup/phan-ma">Phấn má</a>
-      <a href="/all-products/makeup/mascara">Mascara</a>
-      <a href="/all-products/makeup/ke-mat">Kẻ mắt</a>  
-      <a href="/all-products/makeup/kem-chong-nang">Kem chống nắng</a>
-      <a href="/all-products/makeup/che-khuyet-diem">Che khuyết điểm</a>
-      <a href="/all-products/makeup/son">Son</a>
-    `
-  } 
-  else {
-    getSlug = getSlug.replaceAll('-', ' ')
-    mainTitle.innerText = `Toàn bộ sản phẩm ${getSlug}`
+  switch (getSlug) {
+    case 'flash-sale': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm đang sale'
+      break
+    case 'hot': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm đang hot'
+      break
+    case 'new-arrival': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm mới về'
+      break
+    case 'xit-khoang': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Xịt khoáng'
+      break
+    case 'mat-na': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Mặt nạ'
+      break
+    case 'mat-na': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Mặt nạ'
+      break
+    case 'serum': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Serum'
+      break
+    case 'bha': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Bha'
+      break
+    case 'tay-da-chet': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Tẩy da chết'
+      break
+    case 'duong-da': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Dưỡng da'
+      break
+    case 'toner': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm toner'
+      break
+    case 'nuoc-tay-trang': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Nước tẩy trang'
+      break
+    case 'cham-mun': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Chấm mụn'
+      break
+    case 'kem-duong-am': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Kem dưỡng ẩm'
+      break
+    case 'sua-rua-mat': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Sữa rửa mặt'
+      break
+    case 'phan-ma': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Phấn má'
+      break
+    case 'mascara': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm mascara'
+      break
+    case 'ke-mat': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Kẻ mắt'
+      break
+    case 'kem-chong-nang': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Kem chống nắng'
+      break
+    case 'che-khuyet-diem': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm Che khuyết điểm'
+      break
+    case 'son': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm son'
+      break
+    case 'makeup': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm makeup'
+      getMakeupCategory.innerHTML = `
+        <a href="/all-products/makeup/phan-ma">Phấn má</a>
+        <a href="/all-products/makeup/mascara">Mascara</a>
+        <a href="/all-products/makeup/ke-mat">Kẻ mắt</a>  
+        <a href="/all-products/makeup/kem-chong-nang">Kem chống nắng</a>
+        <a href="/all-products/makeup/che-khuyet-diem">Che khuyết điểm</a>
+        <a href="/all-products/makeup/son">Son</a>
+      `
+      break
+    case 'skincare': 
+      mainTitle.innerText = 'Toàn bộ sản phẩm skincare'
+      getSkincareCategory.innerHTML = `
+        <a href="/all-products/skincare/xit-khoang">Xịt khoáng</a>
+        <a href="/all-products/skincare/mat-na">Mặt nạ</a>
+        <a href="/all-products/skincare/serum">Serum</a>
+        <a href="/all-products/skincare/bha">BHA</a>
+        <a href="/all-products/skincare/tay-da-chet">Tẩy da chết</a>
+        <a href="/all-products/skincare/duong-da">Dưỡng da</a>
+        <a href="/all-products/skincare/toner">Toner</a>
+        <a href="/all-products/skincare/nuoc-tay-trang">Nước tẩy trang</a>
+        <a href="/all-products/skincare/cham-mun">Chấm mụn</a>
+        <a href="/all-products/skincare/kem-duong-am">Kem dưỡng ẩm</a>
+        <a href="/all-products/skincare/sua-rua-mat">Sữa rửa mặt</a>
+      `
+      break
   }
 
   // pagination 
@@ -90,6 +142,17 @@
     newPage.innerText = `${currentPage}`
     pagination.appendChild(newPage)
     currentPage++
+  }
+
+  var allPagesTag = pagination.querySelectorAll('a')
+  for (let i = 0; i < allPagesTag.length; ++i) {
+    if (allPagesTag[i].innerText === `{{currentPage}}`) {
+      allPagesTag[i].style.borderColor = '#D1A6A6'
+      allPagesTag[i].style.backgroundColor = '#D1A6A6'
+      allPagesTag[i].style.color = 'white'
+      allPagesTag[i].style.width = '25px'
+      allPagesTag[i].style.height = '25px'
+    }
   }
 
 </script>

@@ -47,7 +47,6 @@
   var getPreparingButton = document.querySelector('p.preparing')
   var getDeliveringButton = document.querySelector('p.delivering')
   var getDoneButton = document.querySelector('p.done')
-  console.log(`{{order.status}}`)
 
   if (`{{order.status}}` === 'preparing') {
     getPreparingButton.style.backgroundColor = '#D1A6A6'

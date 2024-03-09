@@ -69,6 +69,10 @@
           border-top-right-radius: 10px;
           border-bottom-right-radius: 10px;
         }
+
+        .delete-button {
+          cursor: pointer;
+        }
       }
 
       /* tr:nth-child(even){background-color: #F0F0F0}
@@ -100,8 +104,16 @@
       border-radius: 5px;
       border: 1px solid black;
     }
+  }
 
+  .payment-method {
+    .bank-account {
+      display: none;
+    }
 
+    input[value="transfer"]:checked ~ .bank-account {
+      display: block;
+    }
   }
 
   .button {
