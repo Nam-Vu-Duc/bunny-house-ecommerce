@@ -8,21 +8,21 @@ const Schema = mongoose.Schema
 const order = new Schema({
   products: [
     {
-      name: String,
-      quantity: Number
+      name          : String,
+      quantity      : Number
     }
   ],
   customerInfo: {
-    userId: String,
-    name: String,
-    phone: String,
-    address: String,
-    note: String
+    userId          : String,
+    name            : String,
+    phone           : String,
+    address         : String,
+    note            : String
   },
-  totalProductPrice: Number,
-  paymentMethod: String,
-  status: { type: String, default: 'preparing' },
-  deletedAt: {type: Date, default: null }
+  totalProductPrice : Number,
+  paymentMethod     : String,
+  status            : { type: String, default: 'preparing' },
+  deletedAt         : {type: Date, default: null }
 }, { timestamps: true })
 
 module.exports = mongoose.model('order', order);

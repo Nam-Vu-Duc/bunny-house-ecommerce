@@ -1,0 +1,46 @@
+<div class="user-update-profile-container">
+  <form method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
+    <div class="form-title">
+      <p>Sửa Thông Tin Cá Nhân</p>
+    </div>
+
+    <div class="form-group">
+      <input 
+        type="text" 
+        class="form-control" 
+        id="name" 
+        name="name" 
+        value="{{user.userInfo.name}}"
+      >
+
+      <input 
+        type="text" 
+        class="form-control" 
+        id="phone" 
+        name="phone" 
+        value="{{user.userInfo.phone}}"
+      >
+
+      <input 
+        type="text" 
+        class="form-control" 
+        id="gender" 
+        name="gender" 
+        value="{{user.userInfo.gender}}"
+      >
+
+      <input 
+        type="text" 
+        class="form-control" 
+        id="address" 
+        name="address" 
+        value="{{user.userInfo.address}}"
+      >
+    </div>
+
+    <button type="submit">Cập Nhật</button>
+  </form>  
+</div>   
+
+<script>
+</script>

@@ -65,12 +65,12 @@ class adminController {
 
   updating(req, res, next) {
     product.findById(req.params.id).lean()
-      .then(product => { res.render('admin/updating', { title: 'Sửa sản phẩm', layout: 'admin', product } )})
+      .then(product => { res.render('admin/updateProduct', { title: 'Sửa sản phẩm', layout: 'admin', product } )})
       .catch(next)
   }
 
   updated(req, res, next) {
-    product.updateOne({ _id: req.params.id}, req.body)
+    product.updateOne({ _id: req.params.id }, req.body)
       .then(() => { 
         res.redirect('/admin/allProducts')})
       .catch(next)
@@ -103,7 +103,7 @@ class adminController {
 
   updateProfile(req, res, next) {
     user.findById(req.params.id).lean()
-      .then(user => { res.render('admin/profileUpdate', { title: 'Cập nhật thông tin cá nhân', layout: 'admin', user } )})
+      .then(user => { res.render('admin/updateProfile', { title: 'Cập nhật thông tin cá nhân', layout: 'admin', user } )})
       .catch(next)
   }
 }

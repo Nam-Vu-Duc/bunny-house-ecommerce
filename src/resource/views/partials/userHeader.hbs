@@ -156,12 +156,12 @@
   if (token) {
     var updateProfileButton = document.createElement('a')
     updateProfileButton.innerText = 'Cập Nhật Thông Tin'
-    updateProfileButton.setAttribute('href', `/update-profile/${user_id}`)
+    updateProfileButton.setAttribute('href', `/profile/update/${user_id}`)
     getAvatarMenu.appendChild(updateProfileButton)
 
     var checkOrderButton = document.createElement('a')
     checkOrderButton.innerText = 'Tiến Độ Giao Hàng'
-    checkOrderButton.setAttribute('href', `/orders/checking/user/${user_id}`)
+    checkOrderButton.setAttribute('href', `/profile/orders${user_id}`)
     getAvatarMenu.appendChild(checkOrderButton)
 
     var logOutButton = document.createElement('a')
