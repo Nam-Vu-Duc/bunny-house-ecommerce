@@ -10,11 +10,12 @@ class profileController {
   }
 
   updatedProfile(req, res, next) {
-    user.updateOne({ _id: req.params.id }, req.body).lean()
-      .then(user => {
-        res.redirect('/profile/update/:id')
-      })
-      .catch(next)
+    // user.updateOne({ _id: req.params.id }, req.body)
+    //   .then(user => {
+    //     res.redirect('/home')
+    //   })
+    //   .catch(next)
+    res.json(req.body)
   }
 
   orders(req, res, next) {

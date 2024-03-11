@@ -24,6 +24,9 @@ router.get('/all-orders', adminController.allOrders)
 // orderInfo page
 router.get('/all-orders/:id', adminController.orderInfo)
 
+// update order api
+router.put('/order-updated/:id', adminController.orderUpdated)
+
 // create item page
 router.get('/create', adminController.create)
 
@@ -52,6 +55,9 @@ router.get('/restore/:id', adminController.restore)
 router.get('/trash', adminController.trash)
 
 // update profile page
-router.get('/update-profile', adminController.updateProfile)
+router.get('/update-profile/:id', adminController.updateProfile)
+
+//
+router.put('/profile-updated/:id', adminController.profileUpdated)
 
 module.exports = router

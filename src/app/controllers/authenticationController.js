@@ -26,7 +26,7 @@ class loginController {
 
             res.cookie('user_id', userId)
 
-            if (user.role === 'admin') {
+            if (user.loginInfo.role === 'admin') {
               res.redirect('/admin')
             } else {
               res.redirect('/home')

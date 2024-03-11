@@ -35,31 +35,37 @@
     transform-origin: bottom left;
   }
 
-  a {
+  .all-brands {
+    scroll-behavior: smooth;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(min(11.25rem, 100%), 1fr));
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    overflow-x: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .brand {
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    color: red;
-    text-decoration: none;
-    font-size: larger;
+    height: 100px;
   }
-  
-  a::after {
-    content: '';
-    position: absolute;
+
+  a {
+    display: flex;
     width: 100%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: red;
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
-  }
-  
-  a:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; 
+    color: black;
   }
 }

@@ -12,7 +12,7 @@ module.exports = function checkAdmin(req, res, next) {
   // if logged-in as user, deny access to admin page
   user.findOne({ _id: role })
   .then(user => {
-    if (user.role !== 'admin') {
+    if (user.loginInfo.role !== 'admin') {
       return res.render('partials/denyAccess', { title: 'Warning', layout: 'empty' })
     }
     next()

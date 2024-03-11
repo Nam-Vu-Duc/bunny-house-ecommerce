@@ -1,0 +1,70 @@
+.user-update-profile-container {
+  .form-title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      font-size: larger;
+      font-weight: bolder;
+      text-transform: uppercase
+    };
+  }
+
+  .form-group {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  img {
+    max-width: 100px;
+    aspect-ratio: 1 / 1;
+  }
+
+  label {
+    font-weight: bolder;
+    text-transform: capitalize;
+  }
+
+  input:not(input[type='radio']) {
+    width: 50%;
+    height: 40px;
+    border: 1px solid #D1A6A6;
+    border-radius: 5px;
+    text-indent: 10px;
+  }
+
+  .submit-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0 10px 0;
+  }
+  
+  button {
+    width: 10%; 
+    height: 30px;
+    background-color: white;
+    color: #D1A6A6;
+    border: 1px solid #D1A6A6;
+    border-radius: 5px;
+    cursor: pointer;
+  };
+
+  button:hover {
+    background-color: #D1A6A6;
+    color: white;
+    border: 1px solid white ;
+  }
+}

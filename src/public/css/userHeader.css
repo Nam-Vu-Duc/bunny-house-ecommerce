@@ -80,7 +80,7 @@ header {
     border-radius: 5px;
     width: max-content;
     right: 20px;
-    top: 70px;
+    top: 60px;
 
     a {
       padding: 10px;
@@ -137,21 +137,21 @@ header {
       margin-block-end: 0;
       list-style: none;
       padding-inline-start: 0;
-      transition: 0.5s ease-in-out;
-      transform-origin: 50% 0;
     };
 
     li {
       width: 200px;
       height: 45px;
+      padding: 5px;
     }
 
     ul > li > ul {
       position: absolute;
       top: 0;
-      left: 200px;
+      left: 210px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr); /* Three columns of equal width */
+      justify-content: start;
+      grid-template-columns: auto auto auto
     }
 
     a {
@@ -161,9 +161,10 @@ header {
       text-decoration: none;
       color: black;
       padding: 10px;
+      border-radius: 5px;
     }
 
-    li:hover { 
+    a:hover { 
       color: red;
       background-color: #FFDFDF;
       i { color: red } 

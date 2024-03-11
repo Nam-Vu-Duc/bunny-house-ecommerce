@@ -72,16 +72,4 @@
       i { padding-left: 0 }
     }
   }
-
-  .admin-all-orders-container, 
-  .admin-all-products-container,
-  .admin-create-product-container,
-  .admin-home-container,
-  .admin-trash-products-container,
-  .admin-update-product-container,
-  .admin-update-profile-container {
-    margin-left: 100px;
-  }
-
-
 }

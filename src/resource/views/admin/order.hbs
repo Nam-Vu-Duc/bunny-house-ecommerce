@@ -1,36 +1,35 @@
 <div class="order-details-container">
+  <form method="POST" action="/admin/order-updated/{{order._id}}?_method=PUT">
     <div class="title">Thông Tin Đơn Hàng</div>
 
     <div class="info-group">
       <title>Mã Đơn Hàng</title>
       {{order._id}}
     </div>
+
     <div class="info-group">
       <title>Tên Khách Hàng</title> 
       {{order.customerInfo.name}}
     </div>
+
     <div class="info-group">
       <title>Số Điện Thoại</title> 
       {{order.customerInfo.phone}}
     </div>
+
     <div class="info-group">
       <title>Địa Chỉ Nhận Hàng</title>
       {{order.customerInfo.address}}
     </div>
+
     <div class="info-group">
       <title>Ghi Chú</title>
       {{order.customerInfo.note}}
     </div>
+
     <div class="info-group">
       <title>Tổng Tiền</title>
       {{order.totalProductPrice}}đ
-    </div>
-    <div class="info-group">
-      <title>Trạng Thái Đơn Hàng</title>
-      <p class="preparing">Đang Xử Lý</p>
-      <p class="delivering">Đang Giao Hàng</p>
-      <p class="done">Hoàn Thành</p>
-      <button type="submit">Cập nhật</button>
     </div>
 
     <div class="title">Thông Tin Sản Phẩm</div>
@@ -41,12 +40,28 @@
       <title>Số lượng</title>{{this.quantity}}
     </div>
     {{/each}}
+
+    <div class="title">Trạng Thái Đơn Hàng</div>
+
+    <div class="info-group">
+      <input type="radio" id="preparing" name="status" value="preparing">
+      <label id="preparing" for="preparing">Đang Xử Lý</label>
+
+      <input type="radio" id="delivering" name="status" value="delivering">
+      <label id="delivering" for="delivering">Đang Giao Hàng</label>
+
+      <input type="radio" id="done" name="status" value="done">
+      <label id="done" for="done">Hoàn Thành</label>
+    </div>
+
+    <button type="submit">Cập nhật</button>    
+  </form>     
 </div>
 
 <script>
-  var getPreparingButton = document.querySelector('p.preparing')
-  var getDeliveringButton = document.querySelector('p.delivering')
-  var getDoneButton = document.querySelector('p.done')
+  var getPreparingButton = document.querySelector('label#preparing')
+  var getDeliveringButton = document.querySelector('label#delivering')
+  var getDoneButton = document.querySelector('label#done')
 
   if (`{{order.status}}` === 'preparing') {
     getPreparingButton.style.backgroundColor = '#D1A6A6'
