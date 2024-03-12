@@ -136,6 +136,7 @@
   var productLength = `{{productLength}}`
   var currentPage = 1
 
+  // díplay all pages tag
   for (let i = 0; i < productLength; i += 10) {
     var newPage = document.createElement('a')
     newPage.setAttribute('href', `/all-products/${getSlug}?page=${currentPage}`)
@@ -144,6 +145,7 @@
     currentPage++
   }
 
+  // Style the current selected page
   var allPagesTag = pagination.querySelectorAll('a')
   for (let i = 0; i < allPagesTag.length; ++i) {
     if (allPagesTag[i].innerText === `{{currentPage}}`) {

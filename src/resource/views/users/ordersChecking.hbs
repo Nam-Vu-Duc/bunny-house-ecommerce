@@ -16,6 +16,8 @@
     // when submit, the form will push the input value from user to the URL for backend
     getSubmitButton.onclick = function () {
         var orderCode = getForm.querySelector('input').value
+        
+        // mongoDB objectId regex
         var regex = /^[a-f\d]{24}$/i
 
         // check code input from user

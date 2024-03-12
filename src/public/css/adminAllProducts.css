@@ -98,14 +98,6 @@
     border: 1px solid white ;
   }
 
-  .see-more-button {
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    padding: 10px 0 10px 0;
-  }
-
-
   /* Add a color to the cancel button */
   .cancelbtn {
     background-color: #ccc;
@@ -157,6 +149,24 @@
     clear: both;
     display: table;
   }
+
+  .pagination {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 10px;
+  
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid black;
+      border-radius: 5px;
+      text-decoration: none;
+      width: 20px;
+      color: black;
+    }
+  }  
 
   /* Change styles for cancel button and delete button on extra small screens */
   @media screen and (max-width: 300px) {

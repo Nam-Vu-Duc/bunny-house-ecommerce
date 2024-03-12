@@ -7,9 +7,7 @@ class allProductsController {
     const skip = (currentPage - 1) * itemsPerPage;
     const type = req.params.slug
 
-    product.find({ deletedAt: null })
-        .lean()
-        .sortable(req)
+    product.find({ deletedAt: null }).lean().sortable(req)
       .then(product => { 
         product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
         let title = 'Toàn Bộ Sản Phẩm'

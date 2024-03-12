@@ -3,7 +3,6 @@ const router = express.Router()
 
 const allProductsController = require('../app/controllers/allProductsController')
 
-// productController.index
 router.get('/all-brands', allProductsController.showAllBrands)
 
 router.get('/all-brands/:slug', allProductsController.showBrand)

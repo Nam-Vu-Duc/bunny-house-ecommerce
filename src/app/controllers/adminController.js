@@ -48,11 +48,11 @@ class adminController {
     res.json(req.body)
   }
 
-  create(req, res, next) {
+  createProduct(req, res, next) {
     res.render('admin/create', { title: 'Thêm sản phẩm mới', layout: 'admin' })
   }
 
-  async created(req, res, next) {
+  async productCreated(req, res, next) {
     let newProduct = new product(req.body)
     if (req.file) {
       newProduct.avatar = req.file.filename
@@ -63,20 +63,27 @@ class adminController {
   }
 
   allProducts(req, res, next) {
+    const currentPage = req.query.page || 1;
+    const itemsPerPage = 10;
+    const skip = (currentPage - 1) * itemsPerPage;
+
     product.find({ deletedAt: null }).lean().sortable(req)
       .then(product => { 
-        res.render('admin/allProducts', { title: 'Toàn bộ sản phẩm', layout: 'admin', product })
+        const productLength = product.length
+        const newProduct = product.slice(skip, skip + itemsPerPage)
+
+        res.render('admin/allProducts', { title: 'Toàn bộ sản phẩm', layout: 'admin', currentPage, productLength, newProduct })
       })
       .catch(next)
   }
 
-  updating(req, res, next) {
+  updatingProduct(req, res, next) {
     product.findById(req.params.id).lean()
       .then(product => { res.render('admin/updateProduct', { title: 'Sửa sản phẩm', layout: 'admin', product } )})
       .catch(next)
   }
 
-  updated(req, res, next) {
+  productUpdated(req, res, next) {
     product.updateOne({ _id: req.params.id }, req.body)
       .then(() => { 
         res.redirect('/admin/all-products')})
@@ -89,7 +96,7 @@ class adminController {
       .catch(next)
   }
 
-  delete(req, res, next) {
+  deleteProduct(req, res, next) {
     product.deleteOne({ _id: req.params.id})
       .then(() => res.redirect('back'))
       .catch(next)

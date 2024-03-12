@@ -322,7 +322,6 @@ function validator(options) {
     // input blur
     inputElement.onblur = function () {
       validating(inputElement, rule, checkValidate, index)
-      console.log(checkValidate)
     }
   })
 
@@ -339,6 +338,7 @@ function validator(options) {
     }
   }
 }
+
 validator({
   form: '#form-4',
   errorSelector: '.form-message',
@@ -348,5 +348,20 @@ validator({
     isRequiredString('#address'),
   ]
 })
+
+// create successfully message
+if (`{{successful}}` && `{{newOrderId}}`) {
+  var orderSuccessfullyMessage = document.createElement('div')
+  orderSuccessfullyMessage.setAttribute('class', 'order-successfully-message')
+  orderSuccessfullyMessage.innerHTML = `
+    <i class="fi fi-ss-check-circle"></i>
+    <h3>Chúc mừng bạn đã đặt hàng thành công !!!</h3>
+    <h3>Mã đơn hàng của bạn là: {{newOrderId}}</h3>
+    <h5>Nếu là người mới, bạn hãy lưu lại mã này để theo dõi đơn hàng ở mục 'Đơn hàng' nhé</h5>
+    <h5>Còn nếu bạn đã có tài khoản rồi thì có thể theo dõi đơn hàng ở mục 'Tiến độ đơn hàng' luôn nha</h5>
+    <a href="/all-orders"><button>OK</button></a>
+  `
+  document.body.appendChild(orderSuccessfullyMessage)
+}
 
 </script>

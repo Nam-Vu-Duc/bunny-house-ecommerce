@@ -2,7 +2,9 @@ const order = require('../models/orderModel')
 
 class orderController {
   show(req, res, next) {
-    res.render('users/allOrders', { title: 'Đơn hàng' })
+    const successful = req.flash('successful')
+    const newOrderId = req.flash('newOrderId')
+    res.render('users/allOrders', { title: 'Đơn hàng', successful, newOrderId })
   }
 
   ordersChecking(req, res, next) {
@@ -56,7 +58,12 @@ class orderController {
     });
 
     await newOrder.save()
-      .then(() => res.json({ message: 'sucessfully' }))
+      .then(() => {
+        const newOrderId = newOrder._id
+        req.flash('newOrderId', newOrderId)
+        req.flash('successful', 'order successfully')
+        return res.redirect('/all-orders')
+      })
       .catch(next)
   }
 }

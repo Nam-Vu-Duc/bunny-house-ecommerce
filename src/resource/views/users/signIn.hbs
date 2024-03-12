@@ -15,6 +15,8 @@
         </div>
 
         <div class="form-group">
+          <p class="wrong-info">
+          </p> 
           <p class="forgot-password">
             Quên mật khẩu ?
           </p> 
@@ -44,6 +46,12 @@
 </div>
 
 <script>  
+// 
+var wrongInfo = document.querySelector('p.wrong-info')
+if (`{{error}}`) {
+  wrongInfo.innerText = `{{error}}`
+  wrongInfo.style.color = 'red'
+}
 
 // executing validate
 function validating(inputElement, rule, checkValidate, index) {
@@ -62,7 +70,7 @@ function validating(inputElement, rule, checkValidate, index) {
 }  
 
 // isRequiredString requires input must have string
-function isRequiredString(selector) {
+function isRequiredString(selector) {  
   return {
     selector: selector,
     test: function (value) {

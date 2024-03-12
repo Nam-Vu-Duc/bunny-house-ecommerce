@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken')
 
 class loginController {
   signIn(req, res, next) {
-    res.render('users/signIn', { title: 'Đăng Nhập', layout: 'empty' })
+    const error = req.flash('error')
+    res.render('users/signIn', { title: 'Đăng Nhập', layout: 'empty', message: error, error})
   }
 
   async checkingAccount(req, res, next) {
@@ -13,6 +14,11 @@ class loginController {
 
     user.findOne({ 'loginInfo.email':  email })
       .then(user => {
+        if (!user) {
+          req.flash('error', 'Email không đúng')
+          return res.redirect('/authentication/sign-in')
+        }
+
         bcrypt.compare(password, user.loginInfo.password, function(err, result) {
           if(result) {
             const payload = { email: user.email }; // Payload with only essential data
@@ -32,7 +38,9 @@ class loginController {
               res.redirect('/home')
             }
           } else {
-            res.json({ message: 'password does not match' })
+            // res.json({ message: 'password does not match' })
+            req.flash('error', 'Mật khẩu không đúng')
+            return res.redirect('/authentication/sign-in')
           }
         })
       })

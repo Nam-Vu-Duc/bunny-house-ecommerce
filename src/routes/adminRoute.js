@@ -28,25 +28,25 @@ router.get('/all-orders/:id', adminController.orderInfo)
 router.put('/order-updated/:id', adminController.orderUpdated)
 
 // create item page
-router.get('/create', adminController.create)
+router.get('/create', adminController.createProduct)
 
 // create item api
-router.post('/created', upload.single('avatar'), adminController.created)
+router.post('/created', upload.single('avatar'), adminController.productCreated)
 
 // all items page
 router.get('/all-products', adminController.allProducts)
 
 // update item page
-router.get('/updating/:id', adminController.updating)
+router.get('/updating/:id', adminController.updatingProduct)
 
 // update item api
-router.put('/updated/:id', upload.single('avatar'), adminController.updated)
+router.put('/updated/:id', upload.single('avatar'), adminController.productUpdated)
 
 // soft delete item api
 router.delete('/soft-delete/:id', adminController.softDelete)
 
 // hard delete item api
-router.delete('/delete/:id', adminController.delete)
+router.delete('/delete/:id', adminController.deleteProduct)
 
 // restore item api
 router.get('/restore/:id', adminController.restore)

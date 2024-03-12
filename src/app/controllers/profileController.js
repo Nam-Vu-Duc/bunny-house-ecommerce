@@ -1,4 +1,5 @@
 const user = require('../models/userModel')
+const order = require('../models/orderModel')
 
 class profileController {
   updateProfile(req, res, next) {
@@ -19,7 +20,24 @@ class profileController {
   }
 
   orders(req, res, next) {
-    res.render('users/product', { title: ''  })
+    order.find({ 'customerInfo.userId': req.params.id, deletedAt: null }).lean()
+      .then(order => {
+        for (let i = 0; i < order.length; ++i) {
+          order[i].totalProductPrice = order[i].totalProductPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+          order[i].createdAt = order[i].createdAt.getDate() + '/' + (order[i].createdAt.getMonth()+1) + '/' + order[i].createdAt.getFullYear()
+          if (order[i].status === 'preparing') {
+            order[i].status = 'Đang Xử Lý'
+          } 
+          if (order[i].status === 'delivering') {
+            order[i].status = 'Đang Giao Cho Khách'
+          } 
+          if (order[i].status === 'done') {
+            order[i].status = 'Đã Hoàn Thành'
+          } 
+        }
+        res.render('users/ordersProfile', { title: 'Tổng Đơn Hàng Của Bạn', order })
+      })
+      .catch(next)
   }
 }
 
