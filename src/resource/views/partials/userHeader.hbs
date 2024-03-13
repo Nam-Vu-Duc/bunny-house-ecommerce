@@ -155,14 +155,9 @@
   var user_id = getCookie('user_id')
   if (token) {
     var updateProfileButton = document.createElement('a')
-    updateProfileButton.innerText = 'Cập Nhật Thông Tin'
+    updateProfileButton.innerText = 'Thông tin cá nhân'
     updateProfileButton.setAttribute('href', `/profile/update/${user_id}`)
     getAvatarMenu.appendChild(updateProfileButton)
-
-    var checkOrderButton = document.createElement('a')
-    checkOrderButton.innerText = 'Tiến Độ Giao Hàng'
-    checkOrderButton.setAttribute('href', `/profile/orders/${user_id}`)
-    getAvatarMenu.appendChild(checkOrderButton)
 
     var logOutButton = document.createElement('a')
     logOutButton.innerText = 'Đăng Xuất'

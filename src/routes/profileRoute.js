@@ -7,6 +7,4 @@ router.get('/update/:id', profileController.updateProfile)
 
 router.put('/updated/:id', profileController.updatedProfile)
 
-router.get('/orders/:id', profileController.orders)
-
 module.exports = router

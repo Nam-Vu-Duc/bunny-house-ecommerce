@@ -1,62 +1,206 @@
 <div class="user-update-profile-container">
-  <form method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
-    <div class="form-title">
-      <p>Sửa Thông Tin Cá Nhân</p>
-    </div>
-
-    <div class="avatar">
-      <img src="../../../img/logo.jpg" alt="">
-    </div>
-
-    <div class="form-group">
-      <label for="name">Tên Khách Hàng</label>
-      <input 
-        type="text" 
-        class="form-control" 
-        id="name" 
-        name="name" 
-        value="{{user.userInfo.name}}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label for="phone">Số điện thoại</label>
-      <input 
-        type="text" 
-        class="form-control" 
-        id="phone" 
-        name="phone" 
-        value="{{user.userInfo.phone}}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label for="gender">Giới tính</label>
-      <div>
-        <input type="radio" id="male" name="gender" value="male">
-        <label for="cash">Nam</label>
-        
-        <input type="radio" id="female" name="gender" value="female">
-        <label for="cashless">Nữ</label>
+    <div class="sidebar-menu">
+      <div class="avatar">
+        <img src="../../../img/logo.jpg" alt="">
+        <span>{{user.userInfo.name}}</span>
+      </div>
+      <div class="tag">
+        <ul>
+          <li class="profile">
+            <i class="fi fi-br-circle-user"></i>
+            <span>Thông tin cá nhân</span>
+          </li>
+          <li class="orders">
+            <i class="fi fi-rr-piggy-bank"></i>
+            <span>Thông tin đơn hàng</span>
+          </li>
+          <li class="feedback">
+            <i class="fi fi-rr-feedback-alt"></i>
+            <Span>Góp ý</Span>
+          </li>
+        </ul>
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="address">Địa chỉ nhận hàng</label>
-      <input 
-        type="text" 
-        class="form-control" 
-        id="address" 
-        name="address" 
-        value="{{user.userInfo.address}}"
-      >
+    <div class="content">
+      
     </div>
-
-    <div class="submit-button">
-      <button type="submit">Cập Nhật</button>
-    </div>
-  </form>  
 </div>   
 
 <script>
+  var profileButton = document.querySelector('li.profile')
+  var ordersButton = document.querySelector('li.orders')
+  var feedbackButton = document.querySelector('li.feedback')
+  var contentContainer = document.querySelector('div.content')
+
+  // display profile update on first loaded page
+  if (contentContainer.innerText === '') {
+    contentContainer.innerHTML = `
+      <form method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
+        <div class="form-group">
+          <label for="name">Tên Khách Hàng</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="name" 
+            name="name" 
+            value="{{user.userInfo.name}}"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Giới tính</label>
+          <div>
+            <input type="radio" id="male" name="gender" value="male">
+            <label for="cash">Nam</label>
+            
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="cashless">Nữ</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Số điện thoại</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="phone" 
+            name="phone" 
+            value="{{user.userInfo.phone}}"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="address">Địa chỉ nhận hàng</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="address" 
+            name="address" 
+            value="{{user.userInfo.address}}"
+          >
+        </div>
+      </form> 
+
+      <div class="submit-button">
+        <button type="submit">Cập Nhật</button>
+      </div>
+    `
+  }
+
+  profileButton.onclick = function() {
+    contentContainer.innerHTML = `
+      <form method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
+        <div class="form-group">
+          <label for="name">Tên Khách Hàng</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="name" 
+            name="name" 
+            value="{{user.userInfo.name}}"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Giới tính</label>
+          <div>
+            <input type="radio" id="male" name="gender" value="male">
+            <label for="cash">Nam</label>
+            
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="cashless">Nữ</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Số điện thoại</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="phone" 
+            name="phone" 
+            value="{{user.userInfo.phone}}"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="address">Địa chỉ nhận hàng</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="address" 
+            name="address" 
+            value="{{user.userInfo.address}}"
+          >
+        </div>
+      </form> 
+
+      <div class="submit-button">
+        <button type="submit">Cập Nhật</button>
+      </div>
+    `
+  }
+
+  ordersButton.onclick = function() {
+    contentContainer.innerHTML = `
+      <table style="width:100%">
+        <tr>
+          <th>
+            Tên Người Nhận
+          </th>
+          <th>
+            Tổng Số Tiền
+          </th>
+          <th>
+            Ngày Đặt Hàng
+          </th>
+          <th>
+            Tình Trạng
+          </th>
+          <th>
+          </th>
+        </tr>
+        {{#each order}}
+        <tr>
+          <td>
+            {{this.customerInfo.name}}
+          </td>
+          <td>
+            {{this.totalProductPrice}}
+          </td>
+          <td>
+            {{this.createdAt}}
+          </td>
+          <td>
+            {{this.status}}
+          </td>
+          <td>
+            <a href="/order/{{this._id}}">Chi Tiết</a>
+          </td>
+        </tr>
+        {{/each}}
+      </table>
+    `
+  }
+
+  feedbackButton.onclick = function() {
+    contentContainer.innerHTML = `
+      <form method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
+        <div class="form-group">
+          <label for="phone">Bạn có góp ý gì cho mình thì điền vô đây nha</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="phone" 
+            name="phone" 
+          >
+        </div>
+      </form> 
+
+      <div class="submit-button">
+        <button type="submit">Cập Nhật</button>
+      </div>
+    `
+  }
 </script>

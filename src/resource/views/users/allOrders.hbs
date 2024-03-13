@@ -199,7 +199,10 @@ function updateTableBody(totalOrderPrice) {
     
     var newProductDelete = document.createElement('td')
     newProductDelete.setAttribute('class', 'delete-button')
-    newProductDelete.innerText = 'Xoá'
+    newProductDelete.innerHTML = `
+      <i class="fi fi-tr-trash-slash"></i>
+      xoá
+    `
 
     // calculate all product prices
     totalOrderPrice.total += (getProductInfo.productInfo[i].price*1000) * getProductInfo.productInfo[i].quantity
