@@ -36,6 +36,10 @@
   // display profile update on first loaded page
   if (contentContainer.innerText === '') {
     contentContainer.innerHTML = `
+      <p>
+        Thông Tin Cá Nhân
+      </p>
+
       <form method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
         <div class="form-group">
           <label for="name">Tên Khách Hàng</label>
@@ -90,6 +94,10 @@
 
   profileButton.onclick = function() {
     contentContainer.innerHTML = `
+      <p>
+        Thông Tin Cá Nhân
+      </p>
+
       <form method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
         <div class="form-group">
           <label for="name">Tên Khách Hàng</label>
@@ -144,6 +152,10 @@
 
   ordersButton.onclick = function() {
     contentContainer.innerHTML = `
+      <p>
+        Thông Tin Đơn Hàng
+      </p>
+
       <table style="width:100%">
         <tr>
           <th>
@@ -186,6 +198,9 @@
 
   feedbackButton.onclick = function() {
     contentContainer.innerHTML = `
+      <p>
+        Góp ý
+      </p>
       <form method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
         <div class="form-group">
           <label for="phone">Bạn có góp ý gì cho mình thì điền vô đây nha</label>

@@ -28,6 +28,8 @@
   .cart, .contact-info, .payment-method {
     background-color: white;
     margin-top: 10px;
+    border-radius: 5px;
+    padding: 10px;
 
     p {
       background-color: #F0F0F0;
@@ -36,6 +38,10 @@
       text-transform: capitalize;
       font-weight: bolder;
       margin-block-start: 0px;
+      margin-block-end: 0px;
+      font-size: x-large;
+      text-align: center;
+      border-radius: 5px;
     }
   }
 
@@ -52,22 +58,14 @@
       thead, tfoot {
         background-color: #D1A6A6;
         height: 50px;
-        a { text-decoration: none }
-        i { color: black };
+        font-weight: bolder;
       }
 
       tbody {
-        background-color:#F0F0F0;
-        height: 50px;
-
-        td:first-child {
-          border-top-left-radius: 10px;
-          border-bottom-left-radius: 10px;
-        }
-
-        td:last-child {
-          border-top-right-radius: 10px;
-          border-bottom-right-radius: 10px;
+        td {
+          height: 100px;
+          border-bottom: 1px solid black;
+          padding: 5px 0;
         }
 
         .delete-button {
@@ -75,44 +73,81 @@
         }
       }
 
-      /* tr:nth-child(even){background-color: #F0F0F0}
-      tr:nth-child(odd){background-color: white}
-      tr:hover {background-color: #D1A6A6;} */
+      img {
+        /* border-radius: 50%; */
+        width: 100px;
+        aspect-ratio: 1/1;
+      }
 
       a { text-decoration: none; color: black;}
     }
   }
 
-  img {
-    border-radius: 50%;
-    width: 40px;
-    aspect-ratio: 1/1;
-  }
-
   .contact-info {
-    label, input, span {
-      margin: 0 10px;
-    }
+    .info {
+      display: grid;
+      grid-template-columns: auto auto;
 
-    label:first-child {
-      margin-top: 10px;
-    }
+      .form-group {
+        width: 80%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
 
-    input {
-      max-width: 50%;
-      height: 30px;
-      border-radius: 5px;
-      border: 1px solid black;
+      label {
+        font-weight: bolder;
+        text-transform: capitalize;
+      }
+    
+      input {
+        width: 100%;
+        height: 40px;
+        border: 1px solid black;
+        border-radius: 5px;
+        text-indent: 10px;
+      }
     }
   }
 
   .payment-method {
+    .form-group {
+      padding: 10px;
+      gap: 5px;
+    }
+
+    label {
+      font-weight: bolder;
+      text-transform: capitalize;
+    }
+
+    .bank-account {
+      width: 100%;
+      background-color: #FFDFDF;
+      border-radius: 5px;
+      padding: 5px;
+      display: flex;
+      justify-content: start;
+
+      .bank-info {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+      }
+
+      img {
+        width: 200px;
+      }
+    }
+    
     .bank-account {
       display: none;
     }
 
     input[value="transfer"]:checked ~ .bank-account {
-      display: block;
+      display: flex;
     }
   }
 

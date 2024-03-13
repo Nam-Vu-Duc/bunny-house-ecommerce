@@ -73,11 +73,10 @@
 }
 
 .all-products {
-  padding-right: 17px;
   scroll-behavior: smooth;
   align-items: center;
   cursor: pointer;
-  gap: 5px;
+  gap: 10px;
   height: auto;
   padding: 15px;
   display: grid;
@@ -95,12 +94,13 @@
     max-width: 220px;
     padding: 5px 12px 5px 12px;
     scroll-snap-align: none start;
+    border-radius: 10px;
     a, p { text-decoration: none; color: black}
   };
   
   .product:hover {
     border: 1.5px solid red;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 1rem black;
     scale: 1.05;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
