@@ -47,7 +47,7 @@
   box-sizing: content-box;
   scroll-behavior: smooth;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
   height: auto;
   padding: 15px;
   display: grid;
@@ -63,7 +63,7 @@
     max-width: 220px;
     padding: 5px 12px;
     scroll-snap-align: none start;
-    border-radius: 5px;
+    border-radius: 10px;
   };
   
   .product:hover {

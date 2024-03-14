@@ -1,6 +1,6 @@
 <div class="admin-trash-products-container">
   <div class="board-sidebar">
-      <p>Sản phẩm đã xoá</p>
+      <p>Sản phẩm đã xoá: {{totalDeletedProduct}}</p>
   </div>
 
   <div class="table">
@@ -39,7 +39,7 @@
           <img src="../uploads/{{this.avatar}}">
           <p>{{this.name}}</p>
         </td>
-        <td style="width: 10%;">{{this.skincare}}</td>
+        <td style="width: 10%;">{{this.categories}}</td>
         <td style="width: 10%;">{{this.price}}</td>
         <td style="width: 15%;">
           <button id="{{this._id}}" onclick="clickToRestore(this.id)">Khôi Phục</button>
@@ -71,11 +71,6 @@
       </tr>
       {{/each}}
     </table>
-  </div>
-
-  <div class="total">
-    <p class="total-title">Tổng sản phẩm đã xoá</p>
-    <p class="total-number">{{total}}</p>
   </div>
 </div>
 
@@ -109,17 +104,5 @@
   restoreButton.onclick = function () {
     restoreForm.action = '/admin/restore/' + productId 
     restoreForm.submit()
-  }
-
-  var allProducts = document.querySelectorAll('tr')
-  var allProductsLength = allProducts.length
-
-  for (let i = 1; i < allProductsLength; ++i) {
-    let productName = allProducts[i].querySelectorAll('td')[3]
-    if (productName.innerText !== '') {
-      productName.innerText = 'Skincare'
-    } else {
-      productName.innerText = 'Makeup'
-    }
   }
 </script>

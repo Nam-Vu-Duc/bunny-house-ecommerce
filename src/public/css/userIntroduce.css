@@ -1,0 +1,25 @@
+.introduce-container {
+  padding: 10px;
+
+  h2, h5 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    img {
+      width: 200px;
+    }
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px 0;
+
+    img { width: 30% };
+
+    span { width: 50%; font-size: larger};
+  }
+}

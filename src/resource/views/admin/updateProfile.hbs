@@ -3,61 +3,60 @@
     <p>Sửa Thông Tin Cá Nhân</p>
   </div>
 
-  <div class="form-data">
-    <form method="POST" action="/admin/profile-updated/{{user._id}}?_method=PUT">
-      <div class="avatar">
-        <img src="../../../img/logo.jpg" alt="">
-      </div>
-
-      <div class="form-group">
-        <label for="name">Tên Quản Trị Viên</label>
-        <input 
-          type="text" 
-          class="form-control" 
-          id="name" 
-          name="name" 
-          value="{{user.userInfo.name}}"
-        >
-      </div>
-
-      <div class="form-group">
-        <label for="phone">Số điện thoại</label>
-        <input 
-          type="text" 
-          class="form-control" 
-          id="phone" 
-          name="phone" 
-          value="{{user.userInfo.phone}}"
-        >
-      </div>
-
-      <div class="form-group">
-        <label for="gender">Giới tính</label>
-        <div>
-          <input type="radio" id="male" name="gender" value="male">
-          <label for="cash">Nam</label>
-          
-          <input type="radio" id="female" name="gender" value="female">
-          <label for="cashless">Nữ</label>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="address">Địa Chỉ Nhà</label>
-        <input 
-          type="text" 
-          class="form-control" 
-          id="address" 
-          name="address" 
-          value="{{user.userInfo.address}}"
-        >
-      </div>
-
-      <div class="submit-button">
-      <button type="submit">Cập Nhật</button>
-      </div>  
-    </form>
+  <div class="avatar">
+    <img src="../../../img/logo.jpg" alt="">
   </div>
+
+  <form method="POST" action="/admin/profile-updated/{{user._id}}?_method=PUT">
+
+    <div class="form-group">
+      <label for="name">Tên Quản Trị Viên</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="name" 
+        name="name" 
+        value="{{user.userInfo.name}}"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="gender">Giới tính</label>
+      <div>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="cash">Nam</label>
+        
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="cashless">Nữ</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Số điện thoại</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="phone" 
+        name="phone" 
+        value="{{user.userInfo.phone}}"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="address">Địa Chỉ Nhà</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="address" 
+        name="address" 
+        value="{{user.userInfo.address}}"
+      >
+    </div>
+  </form>
+  
+  <div class="submit-button">
+    <button type="submit">Cập Nhật</button>
+  </div>  
 </div>   
 
 <script>

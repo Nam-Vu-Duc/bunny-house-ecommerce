@@ -1,26 +1,15 @@
 <div class="admin-all-products-container">  
   <div class="board-sidebar">
-    <p>Tổng sản phẩm</p>
+    <p>Tổng sản phẩm: {{productLength}}</p>
   </div>
 
-  <div style="
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;"
-  >
-    <div class="total">
-      <p class="total-title">Tổng sản phẩm</p>
-      <p class="total-number"></p>
-    </div>
-
-    <select class="filter">
-      <option value="">Lọc Sản Phẩm</option>
-      <option value="Skincare">Skincare</option>
-      <option value="Makeup">Makeup</option>
-    </select>
-  </div>
+  <select class="filter">
+    <option value="">Lọc Sản Phẩm</option>
+    <option value="skincare">Skincare</option>
+    <option value="makeup">Makeup</option>
+    <option value="">Toàn bộ</option>
+  </select>
   
-
   <div class="table">
     <table>
       <tr>
@@ -38,7 +27,6 @@
         </th>
         <th>
           Giá
-          {{{sortable 'price' _sort}}}
         </th>
         <th>
           Lựa chọn
@@ -58,7 +46,7 @@
           <img src="../uploads/{{this.avatar}}">
           <p>{{this.name}}</p>
         </td>
-        <td style="width: 10%;">{{this.skincare}}</td>
+        <td style="width: 10%;">{{this.categories}}</td>
         <td style="width: 10%;">{{this.price}}</td>
         <td style="width: 10%;">
           <a href="/admin/updating/{{this._id}}" class="update-button"><button>Sửa</button></a>
@@ -116,7 +104,7 @@
   // díplay all pages tag
   for (let i = 0; i < productLength; i += 10) {
     var newPage = document.createElement('a')
-    newPage.setAttribute('href', `/admin/all-products?page=${currentPage}`)
+    newPage.setAttribute('href', `/admin/all-products?page=${currentPage}&type={{productType}}`)
     newPage.innerText = `${currentPage}`
     pagination.appendChild(newPage)
     currentPage++
@@ -135,40 +123,30 @@
   }
 
   // 
-  var allProducts = document.querySelectorAll('tr')
-  for (let i = 1; i < productLength; ++i) {
-    let productName = allProducts[i].querySelectorAll('td')[3]
-    if (productName.innerText !== '') {
-      productName.innerText = 'Skincare'
-    } else {
-      productName.innerText = 'Makeup'
-    }
-  }
+  var currentProducts = document.querySelectorAll('tr')
+  var currentProductLength = currentProducts.length
   
-  // total product
-  var totalProduct = document.querySelector('p.total-number')
-  totalProduct.innerText = `{{productLength}}`
-
   // filter button logic
   let selectButton = document.querySelector('select')
   selectButton.onchange = function () {
-     checkFilter(1, nextIndex, allProducts, selectButton)
+    location = `/admin/all-products?page={{currentPage}}&type=${this.value}`
   }
 
-  function checkFilter(firstIndex, nextIndex, allProducts, selectButton) {
-    for (let i = firstIndex; i < nextIndex; ++i) {
+{{!-- 
+  function checkFilter(firstIndex, currentProductLength, currentProducts, selectButton) {
+    for (let i = firstIndex; i < currentProductLength; ++i) {
       if (selectButton.value === '') {
-        allProducts[i].style.display = 'table-row'
+        currentProducts[i].style.display = 'table-row'
       } 
       else {
-        if (allProducts[i].querySelectorAll('td')[3].innerText === selectButton.value) {
-          allProducts[i].style.display = 'table-row'
+        if (currentProducts[i].querySelectorAll('td')[3].innerText === selectButton.value) {
+          currentProducts[i].style.display = 'table-row'
         }
-        if (allProducts[i].querySelectorAll('td')[3].innerText !== selectButton.value) {
-          allProducts[i].style.display = 'none'
+        if (currentProducts[i].querySelectorAll('td')[3].innerText !== selectButton.value) {
+          currentProducts[i].style.display = 'none'
         }
       }
     }
-  }
+  } --}}
   
 </script>

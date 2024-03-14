@@ -23,10 +23,9 @@ class adminController {
             order[i].status = 'Đã Hoàn Thành'
           } 
         }
-        // order.forEach(order => 
-        //   order.totalProductPrice = order.totalProductPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-        // )
-        res.render('admin/allOrders', { title: 'Đơn đặt hàng', layout: 'admin', order })
+
+        const totalOrders = order.length
+        res.render('admin/allOrders', { title: 'Đơn đặt hàng', layout: 'admin', order, totalOrders })
       })
       .catch(next)
   }
@@ -63,16 +62,21 @@ class adminController {
   }
 
   allProducts(req, res, next) {
-    const currentPage = req.query.page || 1;
+    const currentPage = req.query.page || 1
+    const productType = req.query.type || ''
     const itemsPerPage = 10;
     const skip = (currentPage - 1) * itemsPerPage;
 
     product.find({ deletedAt: null }).lean().sortable(req)
       .then(product => { 
-        const productLength = product.length
-        const newProduct = product.slice(skip, skip + itemsPerPage)
+        let newProduct = product
+        if (productType !== '') {
+          newProduct = newProduct.filter(product => product.categories === productType)
+        }
+        const productLength = newProduct.length
+        newProduct = newProduct.slice(skip, skip + itemsPerPage)
 
-        res.render('admin/allProducts', { title: 'Toàn bộ sản phẩm', layout: 'admin', currentPage, productLength, newProduct })
+        res.render('admin/allProducts', { title: 'Toàn bộ sản phẩm', layout: 'admin', productLength, newProduct, productType, currentPage })
       })
       .catch(next)
   }
@@ -111,7 +115,8 @@ class adminController {
   trash(req, res, next) {
     product.find({ deletedAt: { $ne: null } }).lean()
       .then(product => { 
-        res.render('admin/trash', { title: 'Thùng rác', layout: 'admin', product } )})
+        const totalDeletedProduct = product.length
+        res.render('admin/trash', { title: 'Thùng rác', layout: 'admin', product, totalDeletedProduct } )})
       .catch(next)
   }
 

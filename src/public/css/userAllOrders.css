@@ -1,28 +1,6 @@
 .all-orders-container {
-  .progress {
-    display: flex;
-    align-items: center;
-    justify-content:center;
-    padding: 10px;
-    position: fixed;
-    height: 30px;
-    width: 100%;
-    z-index: 1;
-    background-color: white;
-
-    span {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: white;
-      border-radius: 50%;
-      width: 30px;
-      aspect-ratio: 1/1;
-    }
-  }
-
   form {
-    padding-top: 50px;
+    padding-top: 10px;
   }
   
   .cart, .contact-info, .payment-method {

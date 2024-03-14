@@ -17,10 +17,7 @@
       height: 50px;
       border: 1px solid white;
       border-radius: 10px;
-    }
-  
-    input::placeholder {
-      text-align: center; 
+      text-align: center;
     }
   
     button {
