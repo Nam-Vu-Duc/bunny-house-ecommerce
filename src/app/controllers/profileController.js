@@ -8,7 +8,7 @@ class profileController {
         order.find({ 'customerInfo.userId': req.params.id, deletedAt: null }).lean()
         .then(order => {
           for (let i = 0; i < order.length; ++i) {
-            order[i].totalProductPrice = order[i].totalProductPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+            order[i].totalOrderPrice = order[i].totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
             order[i].createdAt = order[i].createdAt.getDate() + '/' + (order[i].createdAt.getMonth()+1) + '/' + order[i].createdAt.getFullYear()
             if (order[i].status === 'preparing') {
               order[i].status = 'Đang Xử Lý'

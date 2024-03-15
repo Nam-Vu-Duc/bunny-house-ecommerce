@@ -33,27 +33,39 @@ class orderController {
   }
 
   async createOrders(req, res, next) {
-    let { productName, productQuantity, totalProductPrice, paymentMethod, ...customerInfo } = req.body
+    let { 
+      productName, 
+      productPrice, 
+      productQuantity,  
+      productTotalPrice, 
+      totalOrderPrice, 
+      paymentMethod, 
+      ...customerInfo 
+    } = req.body
 
     // if the req.body has only 1 record, then convert the productName % productQuantity to an array
     if(!Array.isArray(productName)) {
-      productName = [productName]
-      productQuantity = [productQuantity]
+      productName       = [productName]
+      productPrice      = [productPrice]
+      productQuantity   = [productQuantity]
+      productTotalPrice = [productTotalPrice]
     }
 
     const newOrder = new order({
       products: productName.map((product, index) => ({
-        name: productName[index],
-        quantity: parseInt(productQuantity[index])
+        name      : productName[index],
+        price     : productPrice[index],
+        quantity  : productQuantity[index],
+        totalPrice: productTotalPrice[index]
       })),
       customerInfo: {
-        userId: customerInfo.userId,
-        name: customerInfo.name,
-        phone: customerInfo.phone,
-        address: customerInfo.address,
-        note: customerInfo.note
+        userId  : customerInfo.userId,
+        name    : customerInfo.name,
+        phone   : customerInfo.phone,
+        address : customerInfo.address,
+        note    : customerInfo.note
       },
-      totalProductPrice: totalProductPrice,
+      totalOrderPrice: totalOrderPrice,
       paymentMethod: paymentMethod
     });
 

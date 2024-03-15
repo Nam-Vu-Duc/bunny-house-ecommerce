@@ -11,7 +11,7 @@ class adminController {
     order.find({ deletedAt: null }).lean()
       .then(order => {
         for (let i = 0; i < order.length; ++i) {
-          order[i].totalProductPrice = order[i].totalProductPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+          order[i].totalOrderPrice = order[i].totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
           order[i].createdAt = order[i].createdAt.getDate() + '/' + (order[i].createdAt.getMonth()+1) + '/' + order[i].createdAt.getFullYear()
           if (order[i].status === 'preparing') {
             order[i].status = 'Đang Xử Lý'
@@ -33,9 +33,12 @@ class adminController {
   orderInfo(req, res, next) {
     order.findOne({ _id: req.params.id }).lean()
       .then(order => {
-        order.totalProductPrice = order.totalProductPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-        const title = 'Đơn của ' + order.customerInfo.name
-        res.render('admin/order', { title: title, layout: 'admin', order })
+        order.products.forEach(product => {
+          product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+          product.totalPrice = product.totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        });
+        order.totalOrderPrice = order.totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        res.render('admin/order', { title: `Đơn của ${order.customerInfo.name}`, layout: 'admin', order })
       })
       .catch(next)
   }
@@ -69,6 +72,7 @@ class adminController {
 
     product.find({ deletedAt: null }).lean().sortable(req)
       .then(product => { 
+        product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
         let newProduct = product
         if (productType !== '') {
           newProduct = newProduct.filter(product => product.categories === productType)
@@ -115,6 +119,7 @@ class adminController {
   trash(req, res, next) {
     product.find({ deletedAt: { $ne: null } }).lean()
       .then(product => { 
+        product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
         const totalDeletedProduct = product.length
         res.render('admin/trash', { title: 'Thùng rác', layout: 'admin', product, totalDeletedProduct } )})
       .catch(next)

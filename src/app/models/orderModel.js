@@ -9,7 +9,9 @@ const order = new Schema({
   products: [
     {
       name          : String,
-      quantity      : Number
+      price         : Number,
+      quantity      : Number,
+      totalPrice    : Number
     }
   ],
   customerInfo: {
@@ -19,7 +21,7 @@ const order = new Schema({
     address         : String,
     note            : String
   },
-  totalProductPrice : Number,
+  totalOrderPrice   : Number,
   paymentMethod     : String,
   status            : { type: String, default: 'preparing' },
   deletedAt         : {type: Date, default: null }

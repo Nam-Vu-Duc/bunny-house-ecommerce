@@ -1,40 +1,101 @@
 <div class="order-container">
-  <div class="title">Thông Tin Đơn Hàng</div>
+   <table>
+    <thead>
+      <tr>
+        <td colspan="2">
+          Thông tin chung
+        </td>
+        <td></td>
+      </tr>
+    </thead>
+    <tr>
+      <td>
+        Mã Đơn Hàng
+      </td>
+      <td>
+        {{order._id}}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Ngày Đặt Hàng
+      </td>
+      <td>
+        {{order.createdAt}}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Tên Khách Hàng
+      </td>
+      <td>
+        {{order.customerInfo.name}}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Số Điện Thoại
+      </td>
+      <td>
+        {{order.customerInfo.phone}}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Địa Chỉ Nhận Hàng
+      </td>
+      <td>
+        {{order.customerInfo.address}}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Ghi Chú
+      </td>
+      <td>
+        {{order.customerInfo.note}}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Tổng Tiền
+      </td>
+      <td>
+        {{order.totalOrderPrice}} đ
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Trạng Thái Đơn Hàng
+      </td>
+      <td>
+        {{order.status}}
+      </td>
+    </tr>
+   </table>
 
-  <div class="info-group">
-    <title>Mã Đơn Hàng</title>
-    {{order._id}}
-  </div>
-  <div class="info-group">
-    <title>Tên Khách Hàng</title> 
-    {{order.customerInfo.name}}
-  </div>
-  <div class="info-group">
-    <title>Số Điện Thoại</title> 
-    {{order.customerInfo.phone}}
-  </div>
-  <div class="info-group">
-    <title>Địa Chỉ Nhận Hàng</title>
-    {{order.customerInfo.address}}
-  </div>
-  <div class="info-group">
-    <title>Ghi Chú</title>
-    {{order.customerInfo.note}}
-  </div>
-  <div class="info-group">
-    <title>Tổng Tiền</title>
-    {{order.totalProductPrice}}đ
-  </div>
-  <div class="info-group">
-    <title>Trạng Thái Đơn Hàng</title>
-  </div>
-
-  <div class="title">Thông Tin Sản Phẩm</div>
-
-  {{#each order.products}}
-  <div class="product-group">
-    <title>Tên Sản Phẩm</title>{{this.name}}
-    <title>Số lượng</title>{{this.quantity}}
-  </div>
-  {{/each}}
+  <table>
+    <thead>
+      <tr>
+        <td style="width: 50%;">Sản Phẩm  </td>
+        <td style="width: 15%;">          </td>
+        <td style="width: 10%;">Đơn Giá   </td>
+        <td style="width: 10%;">Số Lượng  </td>
+        <td style="width: 10%;">Tổng Tiền </td>
+        <td style="width: 5% ;">          </td>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each order.products}}
+      <tr>
+        <td>{{this.name}}        </td>
+        <td></td>
+        <td style="text-align: center;">{{this.price}} đ        </td>
+        <td style="text-align: center;">{{this.quantity}}       </td>
+        <td style="text-align: center;">{{this.totalPrice}} đ   </td>
+        <td></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </div>

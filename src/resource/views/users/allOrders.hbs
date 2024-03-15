@@ -11,7 +11,7 @@
           <tr>
             <td style="width: 15%;"></td>
             <td style="width: 50%;">Sản Phẩm</td>
-            <td style="width: 10%;">Giá</td>
+            <td style="width: 10%;">Đơn Giá</td>
             <td style="width: 10%;">Số Lượng</td>
             <td style="width: 10%;">Tổng Tiền</td>
             <td style="width: 5%;"></td>
@@ -177,24 +177,41 @@ function updateTableBody(totalOrderPrice) {
 
     // create an input store the name value to submit the form
     var newProductNameInput = document.createElement('input')
+    newProductNameInput.setAttribute('type', 'hidden')
     newProductNameInput.setAttribute('name', 'productName')
     newProductNameInput.setAttribute('value', getProductInfo.productInfo[i].name)
-    newProductNameInput.style.display = 'none'
 
+    // create product price element
     var newProductPrice = document.createElement('td')
     newProductPrice.innerText = `${getProductInfo.productInfo[i].price} đ`
 
+    // create an input store the price value to submit the form
+    var newProductPriceInput = document.createElement('input')
+    newProductPriceInput.setAttribute('type', 'hidden')
+    newProductPriceInput.setAttribute('name', 'productPrice')
+    newProductPriceInput.setAttribute('value', getProductInfo.productInfo[i].price*1000)
+
+    // create product quantity element
     var newProductQuantity = document.createElement('td')
+    newProductQuantity.innerText = getProductInfo.productInfo[i].quantity
+
+    // create an input store the quantity value to submit the form
     var newProductQuantityInput = document.createElement('input')
     newProductQuantityInput.setAttribute('type', 'hidden')
     newProductQuantityInput.setAttribute('name', 'productQuantity')
     newProductQuantityInput.setAttribute('value', getProductInfo.productInfo[i].quantity)
-    newProductQuantity.innerText = getProductInfo.productInfo[i].quantity
 
+    // create product total price element
     var newProductTotalPrice = document.createElement('td')
     var convertNewProductTotalPriceToString = ((getProductInfo.productInfo[i].price*1000) * getProductInfo.productInfo[i].quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') 
     newProductTotalPrice.innerText = `${convertNewProductTotalPriceToString} đ`
     
+    // create an input store the total price value to submit the form
+    var newProductTotalPriceInput = document.createElement('input')
+    newProductTotalPriceInput.setAttribute('type', 'hidden')
+    newProductTotalPriceInput.setAttribute('name', 'productTotalPrice')
+    newProductTotalPriceInput.setAttribute('value', convertNewProductTotalPriceToString*1000)
+
     var newProductDelete = document.createElement('td')
     newProductDelete.setAttribute('class', 'delete-button')
     newProductDelete.innerHTML = `
@@ -212,11 +229,13 @@ function updateTableBody(totalOrderPrice) {
     newProductRow.appendChild(newProductNameInput)
 
     newProductRow.appendChild(newProductPrice)
+    newProductRow.appendChild(newProductPriceInput)
 
     newProductRow.appendChild(newProductQuantity)
     newProductRow.appendChild(newProductQuantityInput)
 
     newProductRow.appendChild(newProductTotalPrice)
+    newProductRow.appendChild(newProductTotalPriceInput)
 
     newProductRow.appendChild(newProductDelete)
 
@@ -237,7 +256,7 @@ function updateTableFooter(totalOrderPrice) {
 
   var totalOrderPricesInput = document.createElement('input')
   totalOrderPricesInput.setAttribute('type', 'hidden')
-  totalOrderPricesInput.setAttribute('name', 'totalProductPrice')
+  totalOrderPricesInput.setAttribute('name', 'totalOrderPrice')
   totalOrderPricesInput.setAttribute('value', totalOrderPrice.total)
   var convertTotalOrderPricesToString = totalOrderPrice.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') 
   totalOrderPrices.innerText = `${convertTotalOrderPricesToString} đ`

@@ -1,58 +1,111 @@
 <div class="order-details-container">
   <form method="POST" action="/admin/order-updated/{{order._id}}?_method=PUT">
-    <div class="title">Thông Tin Đơn Hàng</div>
+    <table>
+      <thead>
+        <tr>
+          <td colspan="2">
+            Thông tin chung
+          </td>
+          <td></td>
+        </tr>
+      </thead>
+      <tr>
+        <td>
+          Mã Đơn Hàng
+        </td>
+        <td>
+          {{order._id}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Ngày Đặt Hàng
+        </td>
+        <td>
+          {{order.createdAt}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Tên Khách Hàng
+        </td>
+        <td>
+          {{order.customerInfo.name}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Số Điện Thoại
+        </td>
+        <td>
+          {{order.customerInfo.phone}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Địa Chỉ Nhận Hàng
+        </td>
+        <td>
+          {{order.customerInfo.address}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Ghi Chú
+        </td>
+        <td>
+          {{order.customerInfo.note}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Tổng Tiền
+        </td>
+        <td>
+          {{order.totalOrderPrice}} đ
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Trạng thái đơn hàng
+        </td>
+        <td>
+          <input type="radio" id="preparing" name="status" value="preparing">
+          <label id="preparing" for="preparing">Đang Xử Lý</label>
 
-    <div class="info-group">
-      <title>Mã Đơn Hàng</title>
-      {{order._id}}
-    </div>
+          <input type="radio" id="delivering" name="status" value="delivering">
+          <label id="delivering" for="delivering">Đang Giao Hàng</label>
 
-    <div class="info-group">
-      <title>Tên Khách Hàng</title> 
-      {{order.customerInfo.name}}
-    </div>
+          <input type="radio" id="done" name="status" value="done">
+          <label id="done" for="done">Hoàn Thành</label>
+        </td>
+      </tr>
+    </table>
 
-    <div class="info-group">
-      <title>Số Điện Thoại</title> 
-      {{order.customerInfo.phone}}
-    </div>
-
-    <div class="info-group">
-      <title>Địa Chỉ Nhận Hàng</title>
-      {{order.customerInfo.address}}
-    </div>
-
-    <div class="info-group">
-      <title>Ghi Chú</title>
-      {{order.customerInfo.note}}
-    </div>
-
-    <div class="info-group">
-      <title>Tổng Tiền</title>
-      {{order.totalProductPrice}}đ
-    </div>
-
-    <div class="title">Thông Tin Sản Phẩm</div>
-
-    {{#each order.products}}
-    <div class="product-group">
-      <title>Tên Sản Phẩm</title>{{this.name}}
-      <title>Số lượng</title>{{this.quantity}}
-    </div>
-    {{/each}}
-
-    <div class="title">Trạng Thái Đơn Hàng</div>
-
-    <div class="info-group">
-      <input type="radio" id="preparing" name="status" value="preparing">
-      <label id="preparing" for="preparing">Đang Xử Lý</label>
-
-      <input type="radio" id="delivering" name="status" value="delivering">
-      <label id="delivering" for="delivering">Đang Giao Hàng</label>
-
-      <input type="radio" id="done" name="status" value="done">
-      <label id="done" for="done">Hoàn Thành</label>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <td style="width: 50%;">Sản Phẩm  </td>
+          <td style="width: 15%;">          </td>
+          <td style="width: 10%;">Đơn Giá   </td>
+          <td style="width: 10%;">Số Lượng  </td>
+          <td style="width: 10%;">Tổng Tiền </td>
+          <td style="width: 5% ;">          </td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each order.products}}
+        <tr>
+          <td>{{this.name}}        </td>
+          <td></td>
+          <td style="text-align: center;">{{this.price}} đ        </td>
+          <td style="text-align: center;">{{this.quantity}}       </td>
+          <td style="text-align: center;">{{this.totalPrice}} đ   </td>
+          <td></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
 
     <button type="submit">Cập nhật</button>    
   </form>     
@@ -64,31 +117,49 @@
   var getDoneButton = document.querySelector('label#done')
 
   if (`{{order.status}}` === 'preparing') {
-    getPreparingButton.style.backgroundColor = '#D1A6A6'
+    getPreparingButton.style.backgroundColor = 'white'
+    getPreparingButton.style.color = 'red'
   }
   if (`{{order.status}}` === 'delivering') {
-    getDeliveringButton.style.backgroundColor = '#D1A6A6'
+    getDeliveringButton.style.backgroundColor = 'white'
+    getDeliveringButton.style.color = 'red'
   }
   if (`{{order.status}}` === 'done') {
-    getDoneButton.style.backgroundColor = '#D1A6A6'
+    getDoneButton.style.backgroundColor = 'white'
+    getDoneButton.style.color = 'red'
   }
 
   getPreparingButton.onclick = function() {
-    getPreparingButton.style.backgroundColor = '#D1A6A6'
+    getPreparingButton.style.backgroundColor = 'white'
+    getPreparingButton.style.color = 'red'
+
     getDeliveringButton.style.backgroundColor = ''
+    getDeliveringButton.style.color = ''
+
     getDoneButton.style.backgroundColor = ''
+    getDoneButton.style.color = ''
   }
 
   getDeliveringButton.onclick = function() {
     getPreparingButton.style.backgroundColor = ''
-    getDeliveringButton.style.backgroundColor = '#D1A6A6'
+    getPreparingButton.style.color = ''
+
+    getDeliveringButton.style.backgroundColor = 'white'
+    getDeliveringButton.style.color = 'red'
+
     getDoneButton.style.backgroundColor = ''
+    getDoneButton.style.color = ''
   }
 
   getDoneButton.onclick = function() {
     getPreparingButton.style.backgroundColor = ''
+    getPreparingButton.style.color = ''
+
     getDeliveringButton.style.backgroundColor = ''
-    getDoneButton.style.backgroundColor = '#D1A6A6'
+    getDeliveringButton.style.color = ''
+
+    getDoneButton.style.backgroundColor = 'white'
+    getDoneButton.style.color = 'red'
   }
 
 </script>
