@@ -1,6 +1,7 @@
 const product = require('../models/productModel')
 const user = require('../models/userModel')
 const order = require('../models/orderModel')
+const cloudinary = require('cloudinary').v2
 
 class adminController {
   show(req, res, next) {
@@ -44,10 +45,10 @@ class adminController {
   }
 
   orderUpdated(req, res, next) {
-    // order.findById(req.params.id).lean()
-    //   .then(user => { res.render('admin/updateProfile', { title: 'Cập nhật thông tin cá nhân', layout: 'admin', user } )})
-    //   .catch(next)
-    res.json(req.body)
+    order.updateOne({ _id: req.params.id }, { status: req.body.status })
+      .then(() => { 
+        res.redirect('/admin/all-orders')})
+      .catch(next)
   }
 
   createProduct(req, res, next) {
@@ -57,7 +58,7 @@ class adminController {
   async productCreated(req, res, next) {
     let newProduct = new product(req.body)
     if (req.file) {
-      newProduct.avatar = req.file.filename
+      newProduct.img = req.file.path
     }
     await newProduct.save()
       .then(() => res.redirect('/admin/all-products'))
@@ -92,7 +93,19 @@ class adminController {
   }
 
   productUpdated(req, res, next) {
-    product.updateOne({ _id: req.params.id }, req.body)
+    product.updateOne({ _id: req.params.id }, {
+      categories  : req.body.categories,
+      skincare    : req.body.skincare,
+      makeup      : req.body.makeup,
+      brand       : req.body.brand,
+      name        : req.body.name,
+      price       : req.body.price,
+      description : req.body.description,
+      details     : req.body.details,
+      hotsale     : req.body.hotsale,
+      newArrival  : req.body.newArrival,
+      img         : req.file.path
+    })
       .then(() => { 
         res.redirect('/admin/all-products')})
       .catch(next)
@@ -105,6 +118,11 @@ class adminController {
   }
 
   deleteProduct(req, res, next) {
+    product.findOne({ _id: req.params.id})
+      .then(product => {
+        cloudinary.uploader.destroy(product.img)
+      })
+
     product.deleteOne({ _id: req.params.id})
       .then(() => res.redirect('back'))
       .catch(next)
@@ -132,7 +150,15 @@ class adminController {
   }
 
   profileUpdated(req, res, next) {
-    res.json(req.body)
+    user.updateOne({ _id: req.params.id}, {
+      'userInfo.name'   : req.body.name,
+      'userInfo.phone'  : req.body.phone,
+      'userInfo.gender' : req.body.gender,
+      'userInfo.address': req.body.address,
+    })
+      .then(() => res.redirect('back'))
+      .catch(next)
+    // res.json(req.body)
   }
 }
 

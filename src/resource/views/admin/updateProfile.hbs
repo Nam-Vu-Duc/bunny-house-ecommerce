@@ -7,7 +7,7 @@
     <img src="../../../img/logo.jpg" alt="">
   </div>
 
-  <form method="POST" action="/admin/profile-updated/{{user._id}}?_method=PUT">
+  <form class="admin-update-form" method="POST" action="/admin/profile-updated/{{user._id}}?_method=PUT">
 
     <div class="form-group">
       <label for="name">Tên Quản Trị Viên</label>
@@ -60,4 +60,22 @@
 </div>   
 
 <script>
+  var getSubmitButton = document.querySelector('div.submit-button').querySelector('button')
+  var getSubmitForm = document.querySelector('form.admin-update-form')
+
+  getSubmitButton.onclick = function() {
+    getSubmitForm.submit()
+  }
+
+  // auto checked gender input
+  var maleGender = document.querySelector('input#male')
+  var femaleGender = document.querySelector('input#female')
+  var userGender = `{{user.userInfo.gender}}`
+  if (userGender === 'male') { 
+    maleGender.checked = true
+  } 
+  if (userGender === 'female') { 
+    femaleGender.checked = true
+  } 
+
 </script>

@@ -14,65 +14,63 @@
     </div>
     
     <div class="form-group" style="display: none">
-      <label for="skincare">Skincare</label>
       <select name="skincare">
-        <option value="">-- Chọn -- </option>
-        <option value="Xịt khoáng">
-          Xịt khoáng
+        <option value="">-- Skincare --</option>
+        <option value="xit-khoang">
+          Xịt Khoáng
         </option>
-        <option value="Mặt nạ">
-          Mặt nạ
+        <option value="mat-na">
+          Mặt Nạ
         </option>
-        <option value="Serum">
+        <option value="serum">
           Serum
         </option>
-        <option value="BHA">
+        <option value="bha">
           BHA
         </option>
-        <option value="Tẩy da chết">
-          Tẩy da chết
+        <option value="tay-da-chet">
+          Tẩy Da Chết
         </option>
-        <option value="Dưỡng da">
-          Dưỡng da
+        <option value="duong-da">
+          Dưỡng Da
         </option>  
-        <option value="Toner">
+        <option value="toner">
           Toner
         </option>
-        <option value="Nước tẩy trang">
-          Nước tẩy trang
+        <option value="nuoc-tay-trang">
+          Nước Tẩy Trang
         </option>
-        <option value="Chấm mụn">
-          Chấm mụn
+        <option value="cham-mun">
+          Chấm Mụn
         </option>
-        <option value="Kem dưỡng ẩm">
-          Kem dưỡng ẩm
+        <option value="kem-duong-am">
+          Kem Dưỡng Ẩm
         </option>
-        <option value="Sữa rửa mặt">
-          Sữa rửa mặt
+        <option value="sua-rua-mat">
+          Sữa Rửa Mặt
         </option>
       </select>
     </div>
 
     <div class="form-group" style="display: none">
-      <label for="makeup">Makeup</label>
       <select name="makeup">
-        <option value="">-- Chọn -- </option>
-        <option value="Phấn má">
-          Phấn má
+        <option value="">-- Makeup --</option>
+        <option value="phan-ma">
+          Phấn Má
         </option>
-        <option value="Mascara">
+        <option value="mascara">
           Mascara
         </option>
-        <option value="Kẻ mắt">
-          Kẻ mắt
+        <option value="ke-mat">
+          Kẻ Mắt
         </option>
-        <option value="Kem chống nắng">
-          Kem chống nắng
+        <option value="kem-chong-nang">
+          Kem Chống Nắng
         </option>
-        <option value="Che khuyết điểm">
-          Che khuyết điểm
+        <option value="che-khuyet-diem">
+          Che Khuyết Điểm
         </option>
-        <option value="Son">
+        <option value="son">
           Son
         </option>
       </select>
@@ -127,7 +125,7 @@
 
     <div class="form-group">
       <label for="details">Cuối cùng thì cho xin nốt cái ảnh</label>
-      <input type="file" name="avatar" id="avatar" />
+      <input type="file" name="img" id="img" value="{{product.avatar}}"/>
     </div>
     <div class="submit-button">
       <button title="submit" type="submit">Hoàn thành</button>
@@ -138,21 +136,65 @@
 
 <script>
 
-var selectBox = document.querySelector('select[name="categories"]')
-var selectedValue = ''
+var selectedValue = 'skincare'
 var skincareBox = document.querySelector('select[name="skincare"]').parentElement
 var makeUpBox = document.querySelector('select[name="makeup"]').parentElement
+var categoriesSelectOptions = document.querySelector('select[name="categories"]').querySelectorAll('option')
+var hotsaleSelectOptions = document.querySelector('select[name="hotsale"]').querySelectorAll('option')
+var newArrivalSelectOptions = document.querySelector('select[name="newArrival"]').querySelectorAll('option')
+var productType = ''
 
-selectBox.onchange = function() {
-  selectedValue = selectBox.options[selectBox.selectedIndex].value;
-  if (selectedValue === 'skincare') {
-    skincareBox.style.display = 'block'
-    makeUpBox.style.display = 'none'
+// selected product category
+categoriesSelectOptions.forEach(option => {
+  if (option.value === `{{product.categories}}`) {
+    option.setAttribute('selected', 'selected')
   }
-  if (selectedValue === 'makeup') {
-    skincareBox.style.display = 'none'
-    makeUpBox.style.display = 'block'
+})
+
+// selected product hotsale
+hotsaleSelectOptions.forEach(option => {
+  if (option.value === `{{product.hotsale}}`) {
+    option.setAttribute('selected', 'selected')
   }
+})
+
+// selected product newArrival
+newArrivalSelectOptions.forEach(option => {
+  if (option.value === `{{product.newArrival}}`) {
+    option.setAttribute('selected', 'selected')
+  }
+})
+
+// display product category
+if (`{{product.categories}}` === 'skincare') {
+  skincareBox.style.display = 'block'
+  makeUpBox.style.display = 'none'
+  productType = 'skincare'
+}
+
+if (`{{product.categories}}` === 'makeup') {
+  skincareBox.style.display = 'none'
+  makeUpBox.style.display = 'block'
+  productType = 'makeup'
+}
+
+// selected product type
+if (productType === 'skincare') {
+  var skincareSelectOptions = document.querySelector('select[name="skincare"]').querySelectorAll('option')
+  skincareSelectOptions.forEach(option => {
+    if (option.value === `{{product.skincare}}`) {
+      option.setAttribute('selected', 'selected')
+    }
+  })
+}
+
+if (productType === 'makeup') {
+  var makeupSelectOptions = document.querySelector('select[name="makeup"]').querySelectorAll('option')
+  makeupSelectOptions.forEach(option => {
+    if (option.value === `{{product.makeup}}`) {
+      option.setAttribute('selected', 'selected')
+    }
+  })
 }
 
 </script>

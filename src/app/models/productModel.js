@@ -6,9 +6,9 @@ mongoose.plugin(slug)
 const Schema = mongoose.Schema
 
 const product = new Schema({
-  categories   : { type: String }, 
-  skincare     : { type: String }, 
-  makeup       : { type: String }, 
+  categories   : { type: String, }, 
+  skincare     : { type: String, }, 
+  makeup       : { type: String, }, 
   brand        : { type: String, },
   name         : { type: String, },
   price        : { type: Number, },
@@ -16,7 +16,7 @@ const product = new Schema({
   details      : { type: String, },
   hotsale      : { type: String, default: 'no' },
   newArrival   : { type: String, default: 'no' },
-  avatar       : { type: String, },
+  img          : { type: String, },
   slug         : { type: String, slug: 'name', unique: true },
   deletedAt    : {type: Date, default: null }
 }, { timestamps: true })

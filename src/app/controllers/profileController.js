@@ -29,12 +29,14 @@ class profileController {
   }
 
   updatedProfile(req, res, next) {
-    // user.updateOne({ _id: req.params.id }, req.body)
-    //   .then(user => {
-    //     res.redirect('/home')
-    //   })
-    //   .catch(next)
-    res.json(req.body)
+    user.updateOne({ _id: req.params.id}, {
+      'userInfo.name': req.body.name,
+      'userInfo.phone': req.body.phone,
+      'userInfo.gender': req.body.gender,
+      'userInfo.address': req.body.address,
+    })
+      .then(() => res.redirect('back'))
+      .catch(next)
   }
 }
 

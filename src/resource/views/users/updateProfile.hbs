@@ -40,7 +40,7 @@
         Thông Tin Cá Nhân
       </p>
 
-      <form method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
+      <form class="update-profile" method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
         <div class="form-group">
           <label for="name">Tên Khách Hàng</label>
           <input 
@@ -86,10 +86,29 @@
         </div>
       </form> 
 
-      <div class="submit-button">
+      <div class="update-profile-button">
         <button type="submit">Cập Nhật</button>
       </div>
     `
+  }
+
+  // auto checked gender input
+  var maleGender = document.querySelector('input#male')
+  var femaleGender = document.querySelector('input#female')
+  var userGender = `{{user.userInfo.gender}}`
+  if (userGender === 'male') { 
+    maleGender.checked = true
+  } 
+  if (userGender === 'female') { 
+    femaleGender.checked = true
+  } 
+
+  // submit update profile form
+  var updateProfileForm = document.querySelector('form.update-profile')
+  var updateProfileButton = document.querySelector('div.update-profile-button').querySelector('button')
+
+  updateProfileButton.onclick = function() {
+    updateProfileForm.submit()
   }
 
   profileButton.onclick = function() {
@@ -98,7 +117,7 @@
         Thông Tin Cá Nhân
       </p>
 
-      <form method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
+      <form class="update-profile" method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
         <div class="form-group">
           <label for="name">Tên Khách Hàng</label>
           <input 
@@ -144,10 +163,27 @@
         </div>
       </form> 
 
-      <div class="submit-button">
+      <div class="update-profile-button">
         <button type="submit">Cập Nhật</button>
       </div>
     `
+    var maleGender = document.querySelector('input#male')
+    var femaleGender = document.querySelector('input#female')
+    var userGender = `{{user.userInfo.gender}}`
+    if (userGender === 'male') { 
+      maleGender.checked = true
+    } 
+    if (userGender === 'female') { 
+      femaleGender.checked = true
+    } 
+
+    // submit update profile form
+    var updateProfileForm = document.querySelector('form.update-profile')
+    var updateProfileButton = document.querySelector('div.update-profile-button').querySelector('button')
+
+    updateProfileButton.onclick = function() {
+      updateProfileForm.submit()
+    }
   }
 
   ordersButton.onclick = function() {
@@ -201,7 +237,7 @@
       <p>
         Góp ý
       </p>
-      <form method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
+      <form class="update-feedback" method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
         <div class="form-group">
           <label for="phone">Bạn có góp ý gì cho mình thì điền vô đây nha</label>
           <input 
@@ -213,9 +249,12 @@
         </div>
       </form> 
 
-      <div class="submit-button">
+      <div class="update-feedback-button">
         <button type="submit">Cập Nhật</button>
       </div>
     `
   }
+
+  {{!-- var updateFeedbackForm = document.querySelector('form.update-feedback')
+  var updateFeedbackButton = document.querySelector('div.update-feedback-button').querySelector('button') --}}
 </script>

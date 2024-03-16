@@ -74,7 +74,7 @@
   }
   
   button {
-    width: 10%; 
+    width: fit-content; 
     height: 30px;
     background-color: white;
     color: #D1A6A6;

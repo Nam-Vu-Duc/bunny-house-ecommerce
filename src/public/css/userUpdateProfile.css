@@ -93,14 +93,14 @@
       }
     }
 
-    .submit-button {
+    .update-profile-button, .update-feedback-button {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
 
       button {
-        width: 10%; 
+        width: fit-content; 
         height: 30px;
         background-color: white;
         color: #D1A6A6;
