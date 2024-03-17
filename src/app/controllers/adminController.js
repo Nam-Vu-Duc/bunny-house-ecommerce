@@ -11,19 +11,19 @@ class adminController {
   allOrders(req, res, next) {
     order.find({ deletedAt: null }).lean()
       .then(order => {
-        for (let i = 0; i < order.length; ++i) {
-          order[i].totalOrderPrice = order[i].totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-          order[i].createdAt = order[i].createdAt.getDate() + '/' + (order[i].createdAt.getMonth()+1) + '/' + order[i].createdAt.getFullYear()
-          if (order[i].status === 'preparing') {
-            order[i].status = 'Đang Xử Lý'
+        order.forEach(order => {
+          order.totalOrderPrice = order.totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+          order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
+          if (order.status === 'preparing') {
+            order.status = 'Đang Xử Lý'
           } 
-          if (order[i].status === 'delivering') {
-            order[i].status = 'Đang Giao Cho Khách'
+          if (order.status === 'delivering') {
+            order.status = 'Đang Giao Cho Khách'
           } 
-          if (order[i].status === 'done') {
-            order[i].status = 'Đã Hoàn Thành'
+          if (order.status === 'done') {
+            order.status = 'Đã Hoàn Thành'
           } 
-        }
+        })
 
         const totalOrders = order.length
         res.render('admin/allOrders', { title: 'Đơn đặt hàng', layout: 'admin', order, totalOrders })
@@ -39,6 +39,7 @@ class adminController {
           product.totalPrice = product.totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
         });
         order.totalOrderPrice = order.totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
         res.render('admin/order', { title: `Đơn của ${order.customerInfo.name}`, layout: 'admin', order })
       })
       .catch(next)
@@ -93,22 +94,24 @@ class adminController {
   }
 
   productUpdated(req, res, next) {
-    product.updateOne({ _id: req.params.id }, {
-      categories  : req.body.categories,
-      skincare    : req.body.skincare,
-      makeup      : req.body.makeup,
-      brand       : req.body.brand,
-      name        : req.body.name,
-      price       : req.body.price,
-      description : req.body.description,
-      details     : req.body.details,
-      hotsale     : req.body.hotsale,
-      newArrival  : req.body.newArrival,
-      img         : req.file.path
-    })
-      .then(() => { 
-        res.redirect('/admin/all-products')})
-      .catch(next)
+    // product.updateOne({ _id: req.params.id }, {
+    //   categories  : req.body.categories,
+    //   skincare    : req.body.skincare,
+    //   makeup      : req.body.makeup,
+    //   brand       : req.body.brand,
+    //   oldPrice    : req.body.oldPrice,
+    //   name        : req.body.name,
+    //   price       : req.body.price,
+    //   description : req.body.description,
+    //   details     : req.body.details,
+    //   hotsale     : req.body.hotsale,
+    //   newArrival  : req.body.newArrival,
+    //   img         : req.file.path
+    // })
+    //   .then(() => { 
+    //     res.redirect('/admin/all-products')})
+    //   .catch(next)
+    res.json(req.body)
   }
 
   softDelete(req, res, next) {

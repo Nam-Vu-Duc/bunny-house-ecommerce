@@ -162,7 +162,7 @@ function updateTableBody(totalOrderPrice) {
     // create img link 
     var newProductImage = document.createElement('td')
     var productImage = document.createElement('img')
-    productImage.setAttribute('src', `../uploads/${getProductInfo.productInfo[i].image}`)
+    productImage.setAttribute('src', `${getProductInfo.productInfo[i].image}`)
     newProductImage.appendChild(productImage)
 
     // create new element and get data from localStorage

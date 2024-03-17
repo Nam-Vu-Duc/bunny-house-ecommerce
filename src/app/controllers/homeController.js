@@ -5,7 +5,11 @@ class homeController {
   show(req, res, next) {
     product.find({ deletedAt: null }).lean()
       .then(product => {
-        product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
+        product.forEach(product => {
+          product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+          product.oldPrice = product.oldPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        }
+        )
         const flashDealProduct = product.filter(product => product.hotsale === 'flash-sale').slice(0, 5)
         const hotProduct = product.filter(product => product.hotsale === 'hot').slice(0, 5)
         const allProduct = product.slice(0, 5)
