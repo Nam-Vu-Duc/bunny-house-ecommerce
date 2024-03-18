@@ -9,7 +9,10 @@ class allProductsController {
 
     product.find({ deletedAt: null }).lean().sortable(req)
       .then(product => { 
-        product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
+        product.forEach(product => {
+          product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+          product.oldPrice = product.oldPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        })
         let title = 'Toàn Bộ Sản Phẩm'
         if (type === 'flash-sale') {
           product = product.filter(product => product.hotsale === 'flash-sale' )

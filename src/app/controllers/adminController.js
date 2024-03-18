@@ -120,14 +120,13 @@ class adminController {
       .catch(next)
   }
 
-  deleteProduct(req, res, next) {
-    product.findOne({ _id: req.params.id})
+  async deleteProduct(req, res, next) {
+    product.findOne({ _id: req.params.id })
       .then(product => {
-        cloudinary.uploader.destroy(product.img)
+        cloudinary.uploader.destroy('https://res.cloudinary.com/bunny-store/image/upload/v1710733317/products/3695a2e6-00ae-4713-8017-0087ac3559ef_ek4oea.jpg')
+        // product.deleteOne()
+        //   .then(() => res.redirect('back'))
       })
-
-    product.deleteOne({ _id: req.params.id})
-      .then(() => res.redirect('back'))
       .catch(next)
   }
 

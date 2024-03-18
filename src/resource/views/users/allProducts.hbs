@@ -20,6 +20,7 @@
       <div class="product">
         <a href="/product/{{this.slug}}">
           <img src="{{this.img}}" alt="">
+          <p id="product-old-price" style="display:none"><del>{{this.oldPrice}}đ </del></p>
           <p id="product-price">{{this.price}}đ</p>
           <p id="product-details">{{this.name}}</p>
         </a>
@@ -41,6 +42,8 @@
   switch (getSlug) {
     case 'flash-sale': 
       mainTitle.innerText = 'Toàn bộ sản phẩm đang sale'
+      var oldPrice = document.querySelectorAll('p#product-old-price')
+      oldPrice.forEach(oldPrice => oldPrice.style.display = '')
       break
     case 'hot': 
       mainTitle.innerText = 'Toàn bộ sản phẩm đang hot'
