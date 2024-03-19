@@ -1,18 +1,121 @@
 <div class="admin-home-container">
-  <h1>xin chao admin</h1>
-  <h1>Thống kê</h1>
-  <div class="order-info">
-    <span>Đơn hàng đang xử lý</span>
-    <span>Đơn hàng đang giao</span>
-    <span>Đơn hàng đã hoàn thành</span>
-  </div>
-  <div class="product-info">
-    <span>Sản phẩm đang có</span>
-    <span>Sản phẩm đ</span>
-    <span>đơn hàng đã hoàn thành</span>
-  </div>
-  <div class="finance-info">
-    <span>Tổng doanh thu</span>
-    <span>Đơn có doanh thu cao nhất</span>
+  <h1></h1>
+  <h2>Bảng thống kê</h2>
+
+  <div class="info-table">  
+    <div class="order-info">
+      <table>
+        <thead>
+          <tr>
+            <td colspan="3">
+              Thông tin đặt hàng
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tổng đơn hàng</td>
+            <td>{{allOrders}}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Đơn hàng đang xử lý</td>
+            <td>{{preparingOrders}}</td>
+            <td><a href="">Chi tiết</a></td>
+          </tr>
+          <tr>
+            <td>Đơn hàng đang giao</td>
+            <td>{{deliveringOrders}}</td>
+            <td><a href="">Chi tiết</a></td>
+          </tr>
+          <tr>
+            <td>Đơn hàng đã hoàn thành</td>
+            <td>{{doneOrders}}</td>
+            <td><a href="">Chi tiết</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="product-info">
+      <table>
+        <thead>
+          <tr>
+            <td colspan="3">
+              Thông tin sản phẩm
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tổng số sản phẩm</td>
+            <td>{{allProducts}}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Tổng số thương hiệu</td>
+            <td>{{allBrands}}</td>
+            <td><a href="">Chi tiết</a></td>
+          </tr>
+          <tr>
+            <td>Sản phẩm Skincare</td>
+            <td>{{allSkincareProducts}}</td>
+            <td><a href="">Chi tiết</a></td>
+          </tr>
+          <tr>
+            <td>Sản phẩm Makeup</td>
+            <td>{{allMakeupProducts}}</td>
+            <td><a href="">Chi tiết</a></td>
+          </tr>
+          <tr>
+            <td>Sản phẩm đã xoá</td>
+            <td></td>
+            <td><a href="">Chi tiết</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="finance-info">
+      <table>
+        <thead>
+          <tr>
+            <td colspan="3">
+              Thông tin doanh thu
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tổng doanh thu</td>
+            <td>{{totalRevenueToCurrency}} đ</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Đơn hàng có doanh thu cao nhất</td>
+            <td>{{maxOrderValueToCurrency}} đ</td>
+            <td><a href="">Chi tiết</a></td>
+          </tr>
+          <tr>
+            <td>Khách hàng mua nhiều nhất</td>
+            <td></td>
+            <td><a href="">Chi tiết</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td><a href="">Chi tiết</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
+
+<script>
+  var greetingLine = document.querySelector('h1')
+  var date = new Date()
+  var dateNow = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear()
+  greetingLine.innerText = `Cập nhật thông tin đến ngày ${dateNow}`
+
+</script>

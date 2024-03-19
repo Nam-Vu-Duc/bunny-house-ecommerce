@@ -4,8 +4,32 @@ const order = require('../models/orderModel')
 const cloudinary = require('cloudinary').v2
 
 class adminController {
-  show(req, res, next) {
-    res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin' })
+  async show(req, res, next) {
+    const orders = await order.find({ deletedAt: null }).lean()
+    const products = await product.find({ deletedAt: null }).lean()
+
+    // order info
+    const allOrders = orders.length
+    const preparingOrders = orders.filter(order => order.status === 'preparing').length
+    const deliveringOrders = orders.filter(order => order.status === 'delivering').length
+    const doneOrders = orders.filter(order => order.status === 'done').length
+
+    // product info
+    const allProducts = products.length
+    const allBrands = [...new Set(products.map(product => product.brand))].length
+    const allSkincareProducts = products.filter(product => product.categories === 'skincare').length
+    const allMakeupProducts = products.filter(product => product.categories === 'makeup').length
+    const deletedProducts = products.filter(product => product.deletedAt !== null).length
+
+    // finance info
+    const totalRevenue = orders.map(order => order.totalOrderPrice).reduce((sum, num) => sum + num, 0)
+    const totalRevenueToCurrency = totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    const maxOrderValue = orders.map(order => order.totalOrderPrice).reduce((max, num) => {
+      return Math.max(max, num)
+    })
+    const maxOrderValueToCurrency = maxOrderValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+
+    res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin', allOrders, preparingOrders, deliveringOrders, doneOrders, allProducts, allBrands, allSkincareProducts, allMakeupProducts, deletedProducts, totalRevenueToCurrency, maxOrderValueToCurrency })
   }
 
   allOrders(req, res, next) {

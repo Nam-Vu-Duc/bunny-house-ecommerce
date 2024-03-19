@@ -1,6 +1,48 @@
 .admin-home-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  h1, h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: capitalize;
+  }
+
+  .info-table {
+    table {
+      width: 100%;
+      border-spacing: 0px 10px;
+  
+      thead {
+        background-color: #D1A6A6;
+        height: 50px;
+        font-weight: bolder;
+        text-align: center;
+      }
+  
+      tbody {
+        td {
+          height: 50px;
+          border-bottom: 1px solid black;
+          padding: 5px 0;
+  
+          label {
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+  
+          input {
+            display: none;
+          }
+        }
+  
+        td:first-child {
+          width: 50%;
+        }
+  
+        td:nth-child(2) {
+          width: 30%;
+        }
+      }
+    }
+  }
 }
