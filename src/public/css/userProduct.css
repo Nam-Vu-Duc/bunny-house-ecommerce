@@ -157,7 +157,24 @@
 
 @media screen and (max-width: 700px) {
   .table {
-    flex-direction: column
+    flex-direction: column;
+
+    .image-box {
+      width: 90% !important;
+
+      .image {
+        margin-left: 0;
+        margin-top: 10px
+      }
+    }
+
+    .details-box {
+      width: 90% !important;
+
+      .button > div {
+        width: 50% !important
+      }
+    }
   };
 }
 

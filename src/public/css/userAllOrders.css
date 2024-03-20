@@ -44,6 +44,7 @@
           height: 100px;
           border-bottom: 1px solid black;
           padding: 5px 0;
+          white-space: nowrap;
         }
 
         .delete-button {
@@ -57,7 +58,10 @@
         aspect-ratio: 1/1;
       }
 
-      a { text-decoration: none; color: black;}
+      a { 
+        text-decoration: none; 
+        color: black;
+      }
     }
   }
 
@@ -176,6 +180,9 @@
     color: #D1A6A6;
     font-size: 50px;
   }
+  h5, h3 {
+    text-align: center;
+  }
 
   h5 {
     font-style: italic;
@@ -192,4 +199,14 @@
     border-radius: 5px;
     cursor: pointer;
   };
+}
+
+@media screen and (max-width: 700px) {
+  table tr td:nth-child(2) {
+    width: 20% !important;
+  }
+
+  .contact-info .info{
+    grid-template-columns: auto !important
+  }
 }

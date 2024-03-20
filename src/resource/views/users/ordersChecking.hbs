@@ -8,14 +8,14 @@
 </div>
 
 <script>
-    var getForm = document.querySelector('form#form-5')
-    var getSubmitButton = getForm.querySelector('button')
+    var getOrderCheckingForm = document.querySelector('form#form-5')
+    var getSubmitButton = getOrderCheckingForm.querySelector('button')
     var getOrderContainer = document.querySelector('div.order-checking-container')
     var errorMessage = document.querySelector('span.error-message')
 
     // when submit, the form will push the input value from user to the URL for backend
     getSubmitButton.onclick = function () {
-        var orderCode = getForm.querySelector('input').value
+        var orderCode = getOrderCheckingForm.querySelector('input').value
         
         // mongoDB objectId regex
         var regex = /^[a-f\d]{24}$/i
@@ -23,13 +23,13 @@
         // check code input from user
         if (regex.test(orderCode)) {
             // if matched, submit form and pass value to URL for backend
-            getForm.setAttribute('method', 'get')
-            getForm.setAttribute('action', `/all-orders/checking/${orderCode}`)
-            getForm.submit()
+            getOrderCheckingForm.setAttribute('method', 'get')
+            getOrderCheckingForm.setAttribute('action', `/all-orders/checking/${orderCode}`)
+            getOrderCheckingForm.submit()
         }
         else {
             // if not matched, prevent submit, enter again
-            getForm.onsubmit = function (e) { e.preventDefault() }
+            getOrderCheckingForm.onsubmit = function (e) { e.preventDefault() }
             errorMessage.innerText = 'Mã Sản Phẩm Không Đúng'
             errorMessage.style.color = 'red'
             getOrderContainer.removeChild(orderProcess)

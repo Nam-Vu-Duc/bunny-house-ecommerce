@@ -1,13 +1,13 @@
 <div class="product-details-container">
   <div class="table">
     <div class="image-box">
-      <div class="thumbnails">
+      {{!-- <div class="thumbnails">
         <img src="" />
         <img src="" />
         <img src="" />
         <img src="" />
         <img src="" />
-      </div>
+      </div> --}}
 
       <div class="image">
         <img src="{{product.img}}" />
@@ -35,11 +35,12 @@
         <div class="add-to-cart">
           <p>Thêm Vào Giỏ</p>
         </div>
-        <a href="/all-orders">
-          <div class="buy-now">
+        
+        <div class="buy-now">
+          <a href="/all-orders">
             <p>Mua Ngay</p> 
-          </div>
-        </a>
+          </a>
+        </div>
         <div class="out-of-order">
           <p>Hết Hàng</p>
         </div>

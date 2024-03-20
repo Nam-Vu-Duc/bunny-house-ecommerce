@@ -35,7 +35,6 @@
     transform-origin: bottom left;
   }
 
-
   .sort {
     background-color: #FFDFDF;
     padding: 5px;
@@ -45,17 +44,17 @@
     padding: 10px;
 
     ul {
-      list-style: none;
-      width: 100%;
-      /* margin-block-start: 0;
-      margin-block-end: 0; */
-      list-style: none;
       padding-inline-start: 0;
-      display: grid;
-      justify-content: start;
+      list-style: none;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+      overflow-x: scroll;
+      box-sizing: content-box;
+      scroll-behavior: smooth;
       align-items: center;
-      justify-content: space-around;
+      display: grid;
       grid-template-columns: repeat(6, minmax(min(175px, 100%), 1fr));
+      scroll-snap-type: x mandatory;
     }
 
     li {
@@ -63,6 +62,7 @@
       border-radius: 5px;
       padding: 5px;
       background-color: white;
+      scroll-snap-align: none start;
     }
 
     a {
@@ -90,9 +90,7 @@
     padding: 15px;
     display: grid;
     grid-template-columns: repeat(5, minmax(min(11.25rem, 100%), 1fr));
-    /* grid-template-columns: 25% 25% 25% 25%; */
     scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
     overflow-x: scroll;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
@@ -146,7 +144,26 @@
 }
 
 @media screen and (max-width: 500px) {
-  .all-products {
-    grid-template-columns: repeat(2, minmax(min(11.25rem, 100%), 1fr));
+  .title {
+    font-size: 25px !important;
   }
+
+  .all-category-skincare, .all-category-makeup {
+    ul {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+      overflow-x: scroll;
+      box-sizing: content-box;
+      scroll-behavior: smooth;
+      align-items: center;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(min(175px, 100%), 1fr));
+      scroll-snap-type: x mandatory;
+    }
+  }
+
+  .all-products {
+    grid-template-columns: repeat(2, minmax(min(11.25rem, 100%), 1fr)) !important;
+  }
+
 }

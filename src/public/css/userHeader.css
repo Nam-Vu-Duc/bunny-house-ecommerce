@@ -135,6 +135,7 @@ header {
       color: black;
       font-size: medium;
       cursor: pointer;
+      width: 100%;
     }
   }
 

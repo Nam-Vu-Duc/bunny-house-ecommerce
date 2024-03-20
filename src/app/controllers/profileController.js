@@ -12,10 +12,10 @@ class profileController {
         order.status = 'Đang Xử Lý'
       } 
       if (order.status === 'delivering') {
-        order.status = 'Đang Giao Cho Khách'
+        order.status = 'Đang Giao'
       } 
       if (order.status === 'done') {
-        order.status = 'Đã Hoàn Thành'
+        order.status = 'Hoàn Thành'
       } 
     });
 
