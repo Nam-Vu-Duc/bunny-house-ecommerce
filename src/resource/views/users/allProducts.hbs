@@ -10,11 +10,12 @@
   <div class="all-category-makeup">
   </div>
 
-  <div class="sort-button">
-    Sắp xếp
-    {{{sortable 'price' _sort}}}
-  </div>
-  
+  <select class="sort">
+    <option value="">Sắp xếp theo</option>
+    <option value="asc">Giá tăng dần</option>
+    <option value="desc">Giá giảm dần</option>
+  </select>
+
   <div class="all-products">
     {{#each newProduct}}
       <div class="product">
@@ -108,28 +109,127 @@
     case 'makeup': 
       mainTitle.innerText = 'Toàn bộ sản phẩm makeup'
       getMakeupCategory.innerHTML = `
-        <a href="/all-products/makeup/phan-ma">Phấn má</a>
-        <a href="/all-products/makeup/mascara">Mascara</a>
-        <a href="/all-products/makeup/ke-mat">Kẻ mắt</a>  
-        <a href="/all-products/makeup/kem-chong-nang">Kem chống nắng</a>
-        <a href="/all-products/makeup/che-khuyet-diem">Che khuyết điểm</a>
-        <a href="/all-products/makeup/son">Son</a>
+        <ul>
+          <li>
+            <a href="/all-products/makeup/phan-ma">
+              Phấn má
+              <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710647688/cHJvZHVjdHMvaWM5b29ka2tzZ3F1aW1vYndrM3U=/preview" alt="">
+            </a>
+          </li>
+          <li>
+            <a href="/all-products/makeup/mascara">
+              Mascara
+              <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710647373/cHJvZHVjdHMvbHdnZmVjYWpzMHNxdnBrYWxwaXA=/preview" alt="">
+            </a>
+          </li>
+          <li>
+            <a href="/all-products/makeup/ke-mat">
+              Kẻ mắt
+              <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710647427/cHJvZHVjdHMvZ2d4M3dleDQ1em96YTFyd2xuczM=/preview" alt="">
+            </a>
+          </li>
+          <li>
+            <a href="/all-products/makeup/kem-chong-nang">
+              Kem chống nắng
+              <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710648070/cHJvZHVjdHMvZGVyNmRsNG1jNjYwdnZ6dXFmdm8=/preview" alt="">
+            </a>
+          </li>
+          <li>
+            <a href="/all-products/makeup/che-khuyet-diem">
+              Che khuyết điểm
+              <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710648154/cHJvZHVjdHMvZm13a3RoZGJ5cnpzZHpjdGluZDQ=/preview" alt="">
+            </a>
+          </li>
+          <li>
+            <a href="/all-products/makeup/son">
+              Son
+              <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710647180/cHJvZHVjdHMvc2Z5YWVqdWVtaHl4YWRweHJqOWs=/preview" alt="">
+            </a>
+          </li>
+        </ul>
       `
       break
     case 'skincare': 
       mainTitle.innerText = 'Toàn bộ sản phẩm skincare'
       getSkincareCategory.innerHTML = `
-        <a href="/all-products/skincare/xit-khoang">Xịt khoáng</a>
-        <a href="/all-products/skincare/mat-na">Mặt nạ</a>
-        <a href="/all-products/skincare/serum">Serum</a>
-        <a href="/all-products/skincare/bha">BHA</a>
-        <a href="/all-products/skincare/tay-da-chet">Tẩy da chết</a>
-        <a href="/all-products/skincare/duong-da">Dưỡng da</a>
-        <a href="/all-products/skincare/toner">Toner</a>
-        <a href="/all-products/skincare/nuoc-tay-trang">Nước tẩy trang</a>
-        <a href="/all-products/skincare/cham-mun">Chấm mụn</a>
-        <a href="/all-products/skincare/kem-duong-am">Kem dưỡng ẩm</a>
-        <a href="/all-products/skincare/sua-rua-mat">Sữa rửa mặt</a>
+        <ul>
+            <li>
+              <a href="/all-products/skincare/xit-khoang">
+                Xịt khoáng
+                <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710647064/cHJvZHVjdHMvYmozc2ZhZTRkeGllb2psY2s4aWk=/preview" alt="">
+              </a>
+            </li>
+
+            <li>
+              <a href="/all-products/skincare/mat-na">
+                Mặt nạ
+                <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710648052/cHJvZHVjdHMveWNtMG9ucXM2MjRsaHMyaDczZDM=/preview" alt="">
+              </a>
+            </li>
+
+            <li>
+              <a href="/all-products/skincare/serum">
+                Serum
+                <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710648014/cHJvZHVjdHMvc2ZzY3p6emFjc3JudjBveHB3NHQ=/preview" alt="">
+            </a>
+            </li>
+
+            <li>
+              <a href="/all-products/skincare/bha">
+                BHA
+                <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710647156/cHJvZHVjdHMvaXRwZncycnZiZ2x3amxsZm1md2Q=/preview" alt="">
+            </a>
+            </li>
+
+            <li>
+              <a href="/all-products/skincare/tay-da-chet">
+                Tẩy da chết
+                <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710647212/cHJvZHVjdHMvYXFqcjlhZDlrMWdzb2x0dWNzM3I=/preview" alt="">
+              </a>
+            </li>
+
+            <li>
+              <a href="/all-products/skincare/duong-da">
+                Dưỡng da
+                <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710647079/cHJvZHVjdHMvYnNiaHFoMm1jdWE4b2trZndwY3E=/preview" alt="">
+              </a>
+            </li>
+
+            <li>
+              <a href="/all-products/skincare/toner">
+                Toner
+                <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710647707/cHJvZHVjdHMvajNnbWtrbmxodGp1cnU4aWc1aW0=/preview" alt="">
+              </a>
+            </li>
+
+            <li>
+              <a href="/all-products/skincare/nuoc-tay-trang">
+                Nước tẩy trang
+                <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710647750/cHJvZHVjdHMvZDg1amlmanBnZGdhMTVrenBha2E=/preview" alt="">
+              </a>
+            </li>
+
+            <li>
+              <a href="/all-products/skincare/cham-mun">
+                Chấm mụn
+                <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710647968/cHJvZHVjdHMvYWFyMmpxc2x3ZTlza2RidG1yb3Y=/preview" alt="">
+              </a>
+            </li>
+            
+            <li>
+              <a href="/all-products/skincare/kem-duong-am">
+                Kem dưỡng ẩm
+                <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710648227/cHJvZHVjdHMvdGl2azJ0ZTNlY2hpcmhlbXljdXA=/preview" alt="">
+              </a>
+            </li>
+
+            <li>
+              <a href="/all-products/skincare/sua-rua-mat">
+                Sữa rửa mặt
+                <img src="https://res-console.cloudinary.com/bunny-store/thumbnails/v1/image/upload/v1710648203/cHJvZHVjdHMvenk4YXBsaGd1emxzdWNtbGZ3Z3Q=/preview" alt="">
+              </a>
+            </li>
+        </ul>
       `
       break
   }
@@ -137,12 +237,21 @@
   // pagination 
   var pagination = document.querySelector('span.pagination')
   var productLength = `{{productLength}}`
+  var sortedColumn = `{{sortedColumn}}`
+  var sort = `{{sort}}`
   var currentPage = 1
 
   // díplay all pages tag
   for (let i = 0; i < productLength; i += 10) {
     var newPage = document.createElement('a')
-    newPage.setAttribute('href', `/all-products/${getSlug}?page=${currentPage}`)
+    {{!-- if (getSlug === 'skincare') {
+      newPage.setAttribute('href', `/all-products/skincare/${getSlug}?page=${currentPage}&column=${sortedColumn}&sort=${sort}`)
+    } else if (getSlug === 'makeup') {
+      newPage.setAttribute('href', `/all-products/makeup/${getSlug}?page=${currentPage}&column=${sortedColumn}&sort=${sort}`)
+    } else {
+      newPage.setAttribute('href', `/all-products/${getSlug}?page=${currentPage}&column=${sortedColumn}&sort=${sort}`)
+    } --}}
+    newPage.setAttribute('href', `/all-products/${getSlug}?page=${currentPage}&column=${sortedColumn}&sort=${sort}`)
     newPage.innerText = `${currentPage}`
     pagination.appendChild(newPage)
     currentPage++
@@ -159,5 +268,26 @@
       allPagesTag[i].style.height = '25px'
     }
   }
+
+  // sort
+  let selectButton = document.querySelector('select')
+  selectButton.onchange = function () {
+    {{!-- if (getSlug === 'skincare') {
+      location = `/all-products/skincare/${getSlug}?page=1&column=price&sort=${this.value}`
+    } else if (getSlug === 'makeup') {
+      location = `/all-products/makeup/${getSlug}?page=1&column=price&sort=${this.value}`    
+    } else {
+      location = `/all-products/${getSlug}?page=1&column=price&sort=${this.value}`
+    } --}}
+    location = `/all-products/${getSlug}?page=1&column=price&sort=${this.value}`
+  }
+
+  let selectButtonOptions = selectButton.querySelectorAll('option')
+
+  selectButtonOptions.forEach(option => {
+    if (option.value === `{{sort}}`) {
+      option.setAttribute('selected', 'selected')
+    }
+  })
 
 </script>

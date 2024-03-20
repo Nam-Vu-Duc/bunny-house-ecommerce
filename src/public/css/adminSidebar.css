@@ -42,7 +42,7 @@
       text-decoration: none;
       color: black;
       font-weight: bolder;
-      text-transform: uppercase;
+      text-transform:capitalize;
       gap: 10px;
 
       i { 

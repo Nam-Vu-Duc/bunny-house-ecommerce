@@ -3,9 +3,9 @@ const order = require('../models/orderModel')
 
 class profileController {
   async updateProfile(req, res, next) {
-    const user = await user.findOne({ _id: req.params.id }).lean()
-    const order = await order.find({ 'customerInfo.userId': req.params.id, deletedAt: null }).lean()
-    order.forEach(order => {
+    const userInfo = await user.findOne({ _id: req.params.id }).lean()
+    const orderInfo = await order.find({ 'customerInfo.userId': req.params.id, deletedAt: null }).lean()
+    orderInfo.forEach(order => {
       order.totalOrderPrice = order.totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
       order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
       if (order.status === 'preparing') {
@@ -19,7 +19,7 @@ class profileController {
       } 
     });
 
-    res.render('users/updateProfile', { title: 'Cập nhật thông tin', user, order })
+    res.render('users/updateProfile', { title: 'Cập nhật thông tin', userInfo, orderInfo })
 
     // user.findOne({ _id: req.params.id }).lean()
     //   .then(user => {

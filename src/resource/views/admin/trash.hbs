@@ -5,72 +5,77 @@
 
   <div class="table">
     <table style="width:100%">
-      <tr>
-        <th>
-          Id
-        </th>
-        <th>
-          Hãng
-        </th>
-        <th>
-          Tên
-        </th>
-        <th>
-          Loại
-        </th>
-        <th>
-          Giá
-          {{{sortable 'price' _sort}}}
-        </th>
-        <th>
-          Lựa chọn
-        </th>
-      </tr>
-      {{#each product}}
-      <tr>
-        <td style="width: 10%;">{{addIndex @index 1}}</td>
-        <td style="width: 15%;">{{this.brand}}</td>
-        <td style="
-              display: flex; 
-              justify-content: start;
-              align-items: center
-              "
-        >
-          <img src="{{this.img}}">
-          <p>{{this.name}}</p>
-        </td>
-        <td style="width: 10%;">{{this.categories}}</td>
-        <td style="width: 10%;">{{this.price}}</td>
-        <td style="width: 15%;">
-          <button id="{{this._id}}" onclick="clickToRestore(this.id)">Khôi Phục</button>
-          <div id="id00" class="modal">
-            <form class="modal-content">
-              <div class="container">
-                <p>Bạn có muốn khôi phục sản phẩm {{this.name}} không</p>
-                <div class="clearfix">
-                  <button type="button" onclick="document.getElementById('id00').style.display='none'" class="cancelbtn">Huỷ</button>
-                  <button id="restore-button" type="button" class="deletebtn">Khôi phục</button>
-                </div>
-              </div>
-            </form>
-          </div>
+      <thead>
+        <tr>
+          <td>
+            Id
+          </td>
+          <td>
+            Hãng
+          </td>
+          <td>
+            Tên
+          </td>
+          <td>
+            Loại
+          </td>
+          <td>
+            Giá
+          </td>
+          <td>
+            Lựa chọn
+          </td>
+        </tr>
+      </thead>
 
-          <button id="{{this._id}}" onclick="clickToDelete(this.id)">Xoá</button>
-          <div id="id01" class="modal">
-            <form class="modal-content">
-              <div class="container">
-                <p>Bạn có muốn xoá sản phẩm {{this.name}} vĩnh viễn không</p>
-                <div class="clearfix">
-                  <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
-                  <button id="delete-button" type="button" class="deletebtn">Xoá vĩnh viễn</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </td>
-      </tr>
-      {{/each}}
+      <tbody>
+        {{#each product}}
+        <tr>
+          <td style="width: 10%;">{{addIndex @index 1}}</td>
+          <td style="width: 15%;">{{this.brand}}</td>
+          <td style="
+                display: flex; 
+                justify-content: start;
+                align-items: center
+                "
+          >
+            <img src="{{this.img}}">
+            <p>{{this.name}}</p>
+          </td>
+          <td style="width: 10%;">{{this.categories}}</td>
+          <td style="width: 10%;">{{this.price}}</td>
+          <td style="width: 15%;">
+            <button id="{{this._id}}" onclick="clickToRestore(this.id)">Khôi Phục</button>
+            <button id="{{this._id}}" onclick="clickToDelete(this.id)">Xoá</button>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
     </table>
+
+    <div id="id00" class="modal">
+      <form class="modal-content">
+        <div class="container">
+          <p>Bạn có muốn khôi phục sản phẩm {{this.name}} không</p>
+          <div class="clearfix">
+            <button type="button" onclick="document.getElementById('id00').style.display='none'" class="cancelbtn">Huỷ</button>
+            <button id="restore-button" type="button" class="deletebtn">Khôi phục</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div id="id01" class="modal">
+      <form class="modal-content">
+        <div class="container">
+          <p>Bạn có muốn xoá sản phẩm {{this.name}} vĩnh viễn không</p>
+          <div class="clearfix">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
+            <button id="delete-button" type="button" class="deletebtn">Xoá vĩnh viễn</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 

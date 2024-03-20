@@ -34,103 +34,114 @@
     transform: scaleX(1);
     transform-origin: bottom left;
   }
-}
 
-.all-category-skincare, .all-category-makeup {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  margin-top: 10px;
 
-  a {
-    text-decoration: none;
-    border: 1px solid #D1A6A6;
-    border-radius: 5px;
+  .sort {
+    background-color: #FFDFDF;
     padding: 5px;
-    background-color: white;
-    color: #D1A6A6;
   }
-}
 
-.sort-button {
-  width: fit-content;
-  margin-right: 0;
-  margin-left: auto;
-  border-radius: 5px;
-  border: 1px solid black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  padding: 5px;
-  border-color: #D1A6A6;
-  color: #D1A6A6;
-  background-color: white;
+  .all-category-skincare, .all-category-makeup {
+    padding: 10px;
 
-  a { text-decoration: none }
-  i { color: #D1A6A6 }
-}
+    ul {
+      list-style: none;
+      width: 100%;
+      /* margin-block-start: 0;
+      margin-block-end: 0; */
+      list-style: none;
+      padding-inline-start: 0;
+      display: grid;
+      justify-content: start;
+      align-items: center;
+      justify-content: space-around;
+      grid-template-columns: repeat(6, minmax(min(175px, 100%), 1fr));
+    }
 
-.all-products {
-  scroll-behavior: smooth;
-  align-items: center;
-  cursor: pointer;
-  gap: 10px;
-  height: auto;
-  padding: 15px;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(min(11.25rem, 100%), 1fr));
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  overflow-x: scroll;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  
-  img { max-width: 100%; aspect-ratio: 1 / 1 };
+    li {
+      border: 1px solid #D1A6A6;
+      border-radius: 5px;
+      padding: 5px;
+      background-color: white;
+    }
 
-  .product {
-    background-color: white; 
-    max-width: 220px;
-    padding: 5px 12px;
-    scroll-snap-align: none start;
-    border-radius: 10px;
-    a, p { text-decoration: none; color: black}
-  };
-  
-  .product:hover {
-    border: 1.5px solid red;
-    border-radius: 10px;
-    box-shadow: 1rem black;
-    scale: 1.05;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    a {
+      display: flex; 
+      justify-content: space-between;
+      align-items: center;
+      text-decoration: none;
+      color: black;
+      padding: 5px;
+      height: 100%;
+    }
+
+    img {
+      width: 40px;
+      aspect-ratio: 1/1;
+      border-radius: 10px;
+    }
   }
-}
 
-#product-details {
-  display: flex; 
-  height: 50px; 
-  text-overflow: ellipsis; 
-  overflow: hidden;
-  word-wrap: break-word;
-  font-size: 14px;
-}
-
-.pagination {
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  gap: 10px;
-
-  a {
-    display: flex;
+  .all-products {
+    scroll-behavior: smooth;
     align-items: center;
-    justify-content: center;
-    border: 1px solid black;
-    border-radius: 5px;
-    text-decoration: none;
-    width: 20px;
-    color: black;
+    gap: 10px;
+    height: auto;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(min(11.25rem, 100%), 1fr));
+    /* grid-template-columns: 25% 25% 25% 25%; */
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    overflow-x: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    
+    img { max-width: 100%; aspect-ratio: 1 / 1 };
+
+    .product {
+      background-color: white; 
+      max-width: 220px;
+      padding: 5px 12px;
+      scroll-snap-align: none start;
+      border-radius: 10px;
+      a, p { text-decoration: none; color: black}
+    };
+    
+    .product:hover {
+      border: 1.5px solid red; 
+      border-radius: 10px;
+      box-shadow: 1rem black;
+      scale: 1.05;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+  }
+
+  #product-details {
+    display: flex; 
+    height: 50px; 
+    text-overflow: ellipsis; 
+    overflow: hidden;
+    word-wrap: break-word;
+    font-size: 14px;
+  }
+
+  .pagination {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 10px;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid black;
+      border-radius: 5px;
+      text-decoration: none;
+      width: 20px;
+      color: black;
+    }
   }
 }
 

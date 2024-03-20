@@ -1,5 +1,5 @@
 <div class="admin-all-products-container">  
-  <div class="board-sidebar">
+  <div class="board-title">
     <p>Tổng sản phẩm: {{productLength}}</p>
   </div>
 
@@ -12,66 +12,69 @@
   
   <div class="table">
     <table>
-      <tr>
-        <th>
-          Id
-        </th>
-        <th>
-          Hãng
-        </th>
-        <th>
-          Tên
-        </th>
-        <th>
-          Loại
-        </th>
-        <th>
-          Giá
-        </th>
-        <th>
-          Lựa chọn
-        </th>
-      </tr>
+      <thead>
+        <tr>
+          <td>
+            Id
+          </td>
+          <td>
+            Hãng
+          </td>
+          <td>
+            Tên
+          </td>
+          <td>
+            Loại
+          </td>
+          <td>
+            Giá
+          </td>
+          <td>
+            Lựa chọn
+          </td>
+        </tr>
+      </thead>
 
-      {{#each newProduct}}
-      <tr>
-        <td style="width: 10%;">{{addIndex @index 1}}</td>
-        <td style="width: 20%;">{{this.brand}}</td>
-        <td style="
-              display: flex; 
-              justify-content: start;
-              align-items: center
-              "
-        >
-          <img src="{{this.img}}">
-          <p>{{this.name}}</p>
-        </td>
-        <td style="width: 10%;">{{this.categories}}</td>
-        <td style="width: 10%;">{{this.price}} đ</td>
-        <td style="width: 10%;">
-          <a href="/admin/updating/{{this._id}}" class="update-button"><button>Sửa</button></a>
-          <button id="{{this._id}}" onclick="reply_click(this.id)">Xoá</button>
-          <div id="id01" class="modal">
-            <form class="modal-content">
-              <div class="container">
-                <p><strong>Xoá sản phẩm ?</strong></p>
-                <p>Bạn có muốn xoá sản phẩm {{this.name}} không</p>
-                <div class="clearfix">
-                  <button id="delete-button" type="button" class="deletebtn">Xoá</button>
-                  <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </td>
-      </tr>
-      {{/each}}
+      <tbody>
+        {{#each newProduct}}
+        <tr>
+          <td style="width: 10%;">{{addIndex @index 1}}</td>
+          <td style="width: 20%;">{{this.brand}}</td>
+          <td style="
+                display: flex; 
+                justify-content: start;
+                align-items: center
+                "
+          >
+            <img src="{{this.img}}">
+            <p>{{this.name}}</p>
+          </td>
+          <td style="width: 10%;">{{this.categories}}</td>
+          <td style="width: 10%;">{{this.price}} đ</td>
+          <td style="width: 10%;">
+            <a href="/admin/updating/{{this._id}}" class="update-button"><button>Sửa</button></a>
+            <button id="{{this._id}}" onclick="reply_click(this.id)">Xoá</button>
+            
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
     </table>
+
+    <div id="id01" class="modal">
+      <form class="modal-content">
+        <div class="container">
+          <p><strong>Xoá sản phẩm ?</strong></p>
+          <p>Bạn có muốn xoá sản phẩm {{this.name}} không</p>
+          <div class="clearfix">
+            <button id="delete-button" type="button" class="deletebtn">Xoá</button>
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 
-  {{!-- <span class="see-more-button">
-    <button>Xem thêm</button>
-  </span> --}}
   <span class="pagination">
   </span>
 </div>
@@ -99,10 +102,10 @@
   // pagination 
   var pagination = document.querySelector('span.pagination')
   var productLength = `{{productLength}}`
-  var currentPage = 1
-
+  
   // díplay all pages tag
   for (let i = 0; i < productLength; i += 10) {
+    var currentPage = 1
     var newPage = document.createElement('a')
     newPage.setAttribute('href', `/admin/all-products?page=${currentPage}&type={{productType}}`)
     newPage.innerText = `${currentPage}`
@@ -121,32 +124,11 @@
       allPagesTag[i].style.height = '25px'
     }
   }
-
-  // 
-  var currentProducts = document.querySelectorAll('tr')
-  var currentProductLength = currentProducts.length
   
   // filter button logic
   let selectButton = document.querySelector('select')
   selectButton.onchange = function () {
     location = `/admin/all-products?page={{currentPage}}&type=${this.value}`
   }
-
-{{!-- 
-  function checkFilter(firstIndex, currentProductLength, currentProducts, selectButton) {
-    for (let i = firstIndex; i < currentProductLength; ++i) {
-      if (selectButton.value === '') {
-        currentProducts[i].style.display = 'table-row'
-      } 
-      else {
-        if (currentProducts[i].querySelectorAll('td')[3].innerText === selectButton.value) {
-          currentProducts[i].style.display = 'table-row'
-        }
-        if (currentProducts[i].querySelectorAll('td')[3].innerText !== selectButton.value) {
-          currentProducts[i].style.display = 'none'
-        }
-      }
-    }
-  } --}}
   
 </script>

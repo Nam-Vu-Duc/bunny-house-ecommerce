@@ -22,9 +22,9 @@ class adminController {
     const deletedProducts = products.filter(product => product.deletedAt !== null).length
 
     // finance info
-    const totalRevenue = orders.map(order => order.totalOrderPrice).reduce((sum, num) => sum + num, 0)
+    const totalRevenue = orders.filter(order => order.status === 'done').map(order => order.totalOrderPrice).reduce((sum, num) => sum + num, 0)
     const totalRevenueToCurrency = totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-    const maxOrderValue = orders.map(order => order.totalOrderPrice).reduce((max, num) => {
+    const maxOrderValue = orders.filter(order => order.status === 'done').map(order => order.totalOrderPrice).reduce((max, num) => {
       return Math.max(max, num)
     })
     const maxOrderValueToCurrency = maxOrderValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -33,24 +33,26 @@ class adminController {
   }
 
   allOrders(req, res, next) {
+    const currentPage = req.query.page || 1
+    const orderType = req.query.type || ''
+    const itemsPerPage = 10;
+    const skip = (currentPage - 1) * itemsPerPage;
+
     order.find({ deletedAt: null }).lean()
       .then(order => {
         order.forEach(order => {
           order.totalOrderPrice = order.totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
           order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
-          if (order.status === 'preparing') {
-            order.status = 'Đang Xử Lý'
-          } 
-          if (order.status === 'delivering') {
-            order.status = 'Đang Giao Cho Khách'
-          } 
-          if (order.status === 'done') {
-            order.status = 'Đã Hoàn Thành'
-          } 
         })
 
-        const totalOrders = order.length
-        res.render('admin/allOrders', { title: 'Đơn đặt hàng', layout: 'admin', order, totalOrders })
+        let newOrder = order
+        if (orderType !== '') {
+          newOrder = newOrder.filter(order => order.status === orderType)
+        }
+        const orderLength = newOrder.length
+        newOrder = newOrder.slice(skip, skip + itemsPerPage)
+
+        res.render('admin/allOrders', { title: 'Đơn đặt hàng', layout: 'admin', orderLength, newOrder, orderType, currentPage })
       })
       .catch(next)
   }

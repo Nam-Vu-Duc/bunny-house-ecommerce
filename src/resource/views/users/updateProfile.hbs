@@ -2,7 +2,7 @@
     <div class="sidebar-menu">
       <div class="avatar">
         <img src="../../../img/logo.jpg" alt="">
-        <span>{{user.userInfo.name}}</span>
+        <span>{{userInfo.userInfo.name}}</span>
       </div>
       <div class="tag">
         <ul>
@@ -48,7 +48,7 @@
             class="form-control" 
             id="name" 
             name="name" 
-            value="{{user.userInfo.name}}"
+            value="{{userInfo.userInfo.name}}"
           >
         </div>
 
@@ -70,7 +70,7 @@
             class="form-control" 
             id="phone" 
             name="phone" 
-            value="{{user.userInfo.phone}}"
+            value="{{userInfo.userInfo.phone}}"
           >
         </div>
 
@@ -81,7 +81,7 @@
             class="form-control" 
             id="address" 
             name="address" 
-            value="{{user.userInfo.address}}"
+            value="{{userInfo.userInfo.address}}"
           >
         </div>
       </form> 
@@ -95,7 +95,7 @@
   // auto checked gender input
   var maleGender = document.querySelector('input#male')
   var femaleGender = document.querySelector('input#female')
-  var userGender = `{{user.userInfo.gender}}`
+  var userGender = `{{userInfo.userInfo.gender}}`
   if (userGender === 'male') { 
     maleGender.checked = true
   } 
@@ -125,7 +125,7 @@
             class="form-control" 
             id="name" 
             name="name" 
-            value="{{user.userInfo.name}}"
+            value="{{userInfo.userInfo.name}}"
           >
         </div>
 
@@ -147,7 +147,7 @@
             class="form-control" 
             id="phone" 
             name="phone" 
-            value="{{user.userInfo.phone}}"
+            value="{{userInfo.userInfo.phone}}"
           >
         </div>
 
@@ -158,7 +158,7 @@
             class="form-control" 
             id="address" 
             name="address" 
-            value="{{user.userInfo.address}}"
+            value="{{userInfo.userInfo.address}}"
           >
         </div>
       </form> 
@@ -169,7 +169,7 @@
     `
     var maleGender = document.querySelector('input#male')
     var femaleGender = document.querySelector('input#female')
-    var userGender = `{{user.userInfo.gender}}`
+    var userGender = `{{userInfo.userInfo.gender}}`
     if (userGender === 'male') { 
       maleGender.checked = true
     } 
@@ -209,7 +209,7 @@
           <th>
           </th>
         </tr>
-        {{#each order}}
+        {{#each orderInfo}}
         <tr>
           <td>
             {{this.customerInfo.name}}

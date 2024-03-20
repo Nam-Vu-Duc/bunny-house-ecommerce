@@ -8,28 +8,29 @@ const allOrdersRoute = require('./allOrdersRoute')
 const orderRoute = require('./orderRoute')
 const profileRoute = require('./profileRoute')
 const checkAdmin = require('../app/middleware/checkAdmin')
+const checkUser = require('../app/middleware/checkUser')
 const cookieParser = require('cookie-parser')
 
 function route(app) {
   app.use(cookieParser())
 
-  app.use('/home', homeRoute)
+  app.use('/home', checkUser, homeRoute)
 
   app.use('/authentication', authenticationRoute)
   
   app.use('/admin', checkAdmin, adminRoute)
   
-  app.use('/all-products', allProductsRoute)
+  app.use('/all-products', checkUser, allProductsRoute)
   
-  app.use('/product', productRoute)
+  app.use('/product',checkUser, productRoute)
 
-  app.use('/all-orders', allOrdersRoute)
+  app.use('/all-orders', checkUser, allOrdersRoute)
   
-  app.use('/order', orderRoute)
+  app.use('/order', checkUser, orderRoute)
  
-  app.use('/introduce', introduceRoute)
+  app.use('/introduce', checkUser, introduceRoute)
   
-  app.use('/profile', profileRoute)
+  app.use('/profile', checkUser, profileRoute)
   
 }
 module.exports = route
