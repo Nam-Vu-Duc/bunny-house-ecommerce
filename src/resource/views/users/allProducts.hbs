@@ -20,7 +20,7 @@
     {{#each newProduct}}
       <div class="product">
         <a href="/product/{{this.slug}}">
-          <img src="{{this.img}}" alt="">
+          <img src="{{this.img.path}}" alt="">
           <p id="product-old-price" style="display:none"><del>{{this.oldPrice}}đ </del></p>
           <p id="product-price">{{this.price}}đ</p>
           <p id="product-details">{{this.name}}</p>

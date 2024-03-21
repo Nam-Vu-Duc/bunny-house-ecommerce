@@ -4,11 +4,10 @@
   </div>
 
   <select class="filter">
-    <option value="">Lọc đơn hàng</option>
+    <option value="">Toàn bộ</option>
     <option value="preparing">Đang xử lý</option>
     <option value="delivering">Đang giao</option>
     <option value="done">Đã hoàn thành</option>
-    <option value="">Toàn bộ</option>
   </select>
 
   <div class="table">
@@ -51,7 +50,7 @@
             {{this.customerInfo.name}}
           </td>
           <td>
-            {{this.totalProductPrice}}
+            {{this.totalOrderPrice}} đ
           </td>
           <td>
             {{this.createdAt}}
@@ -103,4 +102,12 @@
   selectButton.onchange = function () {
     location = `/admin/all-orders?page={{currentPage}}&type=${this.value}`
   }
+
+  let selectButtonOptions = selectButton.querySelectorAll('option')
+
+  selectButtonOptions.forEach(option => {
+    if (option.value === `{{orderType}}`) {
+      option.setAttribute('selected', 'selected')
+    }
+  })
 </script>

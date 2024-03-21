@@ -12,7 +12,7 @@
     {{#each flashDealProduct}}
     <a href="/product/{{this.slug}}">
       <div class="product">
-        <img src="{{this.img}}" alt="" id="product-1">
+        <img src="{{this.img.path}}" alt="" id="product-1">
         <p id="product-old-price"><del>{{this.oldPrice}}đ </del></p>
         <p id="product-price">{{this.price}}đ</p>
         <p id="product-details">{{this.name}}</p>
@@ -32,7 +32,7 @@
     {{#each hotProduct}}
     <a href="/product/{{this.slug}}">
       <div class="product">
-        <img src="{{this.img}}" alt="" id="product-1">
+        <img src="{{this.img.path}}" alt="" id="product-1">
         <p id="product-price">{{this.price}}đ</p>
         <p id="product-details">{{this.name}}</p>
       </div>
@@ -51,7 +51,7 @@
     {{#each allProduct}}
     <a href="/product/{{this.slug}}">
       <div class="product">
-        <img src="{{this.img}}" alt="" id="product-1">
+        <img src="{{this.img.path}}" alt="" id="product-1">
         <p id="product-price">{{this.price}}đ</p>
         <p id="product-details">{{this.name}}</p>
       </div>

@@ -1,5 +1,5 @@
 .admin-home-container {
-  h1, h2 {
+  h1 {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,5 +66,14 @@
   .info-table > div {
     background-color: white;
     border-radius: 10px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .admin-home-container {
+    h1 { font-size: 25px;}
+    .info-table {
+      grid-template-columns: auto !important;
+    }
   }
 }

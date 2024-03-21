@@ -12,7 +12,7 @@
   <div class="all-products">
     {{#each product}}
       <div class="product">
-        <a href="{{this.img}}">
+        <a href="{{this.img.path}}">
           <img src="../uploads/{{this.avatar}}" alt="">
           <p id="product-price">{{this.price}}đ</p>
           <p id="product-details">{{this.name}}</p>

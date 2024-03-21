@@ -4,10 +4,9 @@
   </div>
 
   <select class="filter">
-    <option value="">Lọc Sản Phẩm</option>
+    <option value="">Toàn bộ</option>
     <option value="skincare">Skincare</option>
     <option value="makeup">Makeup</option>
-    <option value="">Toàn bộ</option>
   </select>
   
   <div class="table">
@@ -46,7 +45,7 @@
                 align-items: center
                 "
           >
-            <img src="{{this.img}}">
+            <img src="{{this.img.path}}">
             <p>{{this.name}}</p>
           </td>
           <td style="width: 10%;">{{this.categories}}</td>
@@ -102,10 +101,10 @@
   // pagination 
   var pagination = document.querySelector('span.pagination')
   var productLength = `{{productLength}}`
-  
+  var currentPage = 1
+
   // díplay all pages tag
   for (let i = 0; i < productLength; i += 10) {
-    var currentPage = 1
     var newPage = document.createElement('a')
     newPage.setAttribute('href', `/admin/all-products?page=${currentPage}&type={{productType}}`)
     newPage.innerText = `${currentPage}`
@@ -130,5 +129,13 @@
   selectButton.onchange = function () {
     location = `/admin/all-products?page={{currentPage}}&type=${this.value}`
   }
+
+  let selectButtonOptions = selectButton.querySelectorAll('option')
+
+  selectButtonOptions.forEach(option => {
+    if (option.value === `{{productType}}`) {
+      option.setAttribute('selected', 'selected')
+    }
+  })
   
 </script>

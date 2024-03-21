@@ -17,7 +17,10 @@ const product = new Schema({
   details      : { type: String, },
   hotsale      : { type: String, default: 'no' },
   newArrival   : { type: String, default: 'no' },
-  img          : { type: String, },
+  img          : { 
+    path       : String,
+    filename   : String,
+  },
   slug         : { type: String, slug: 'name', unique: true },
   deletedAt    : {type: Date, default: null }
 }, { timestamps: true })

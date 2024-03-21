@@ -2,6 +2,7 @@ const product = require('../models/productModel')
 const user = require('../models/userModel')
 const order = require('../models/orderModel')
 const cloudinary = require('cloudinary').v2
+const upload = require('../middleware/cloudinary');
 
 class adminController {
   async show(req, res, next) {
@@ -119,25 +120,27 @@ class adminController {
       .catch(next)
   }
 
-  productUpdated(req, res, next) {
-    // product.updateOne({ _id: req.params.id }, {
-    //   categories  : req.body.categories,
-    //   skincare    : req.body.skincare,
-    //   makeup      : req.body.makeup,
-    //   brand       : req.body.brand,
-    //   oldPrice    : req.body.oldPrice,
-    //   name        : req.body.name,
-    //   price       : req.body.price,
-    //   description : req.body.description,
-    //   details     : req.body.details,
-    //   hotsale     : req.body.hotsale,
-    //   newArrival  : req.body.newArrival,
-    //   img         : req.file.path
-    // })
-    //   .then(() => { 
-    //     res.redirect('/admin/all-products')})
-    //   .catch(next)
-    res.json(req.body)
+  productUpdated(req, res, next) {    
+    product.updateOne({ _id: req.params.id }, {
+      categories  : req.body.categories,
+      skincare    : req.body.skincare,
+      makeup      : req.body.makeup,
+      brand       : req.body.brand,
+      oldPrice    : req.body.oldPrice,
+      name        : req.body.name,
+      price       : req.body.price,
+      description : req.body.description,
+      details     : req.body.details,
+      hotsale     : req.body.hotsale,
+      newArrival  : req.body.newArrival,
+      img         : {
+        path      : req.file.path,
+        filename  : req.file.filename
+      }
+    })
+      .then(() => { 
+        res.redirect('/admin/all-products')})
+      .catch(next)
   }
 
   softDelete(req, res, next) {
@@ -147,13 +150,17 @@ class adminController {
   }
 
   async deleteProduct(req, res, next) {
-    product.findOne({ _id: req.params.id })
-      .then(product => {
-        cloudinary.uploader.destroy('https://res.cloudinary.com/bunny-store/image/upload/v1710733317/products/3695a2e6-00ae-4713-8017-0087ac3559ef_ek4oea.jpg')
+    const newProduct = await product.findOne({ _id: req.params.id })
+    const deleteImg = newProduct.img.filename
+    
+    await cloudinary.uploader.destroy(deleteImg)
+    const removeProduct = await product.deleteOne({ _id: req.params.id })
+
+    res.redirect('back')
+    // newProduct.deleteOne()
+    // res.redirect('back')
         // product.deleteOne()
         //   .then(() => res.redirect('back'))
-      })
-      .catch(next)
   }
 
   restore(req, res, next) {

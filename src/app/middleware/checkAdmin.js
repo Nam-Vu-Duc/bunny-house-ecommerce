@@ -6,14 +6,14 @@ module.exports = function checkAdmin(req, res, next) {
   
   // if not logged-in, deny access to admin page
   if (!token) {
-    return res.render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
+    return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
   } 
 
   // if logged-in as user, deny access to admin page
   user.findOne({ _id: role })
   .then(user => {
     if (user.loginInfo.role !== 'admin') {
-      return res.render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
+      return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
     }
     next()
   })

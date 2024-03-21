@@ -98,3 +98,16 @@
   }  
 }
 
+@media screen and (max-width: 700px) {
+  .admin-all-orders-container {
+    table {
+      td {
+        text-wrap: nowrap;
+      }
+      td:nth-child(2) {
+        display: none;
+      }
+    }
+  }
+}
+
