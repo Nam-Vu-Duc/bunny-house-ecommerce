@@ -1,8 +1,10 @@
+require('dotenv').config()
 const mongoose = require('mongoose')
 
 const connect = async () => {
   try {
-    await mongoose.connect('mongodb://127.0.0.1/bunnyStore-database');
+    const mongodb = process.env.MONGDO_DB
+    await mongoose.connect(mongodb);
     console.log('connect successfully')
   } catch (error) {
     console.log('connect failed')

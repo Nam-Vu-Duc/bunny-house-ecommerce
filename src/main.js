@@ -44,6 +44,13 @@ app.set('view options', { layout: 'other' });
 //route 
 route(app)
 
-app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}/home`)
-})
+if (process.env.BUILD_MODE === 'production') {
+  app.listen(port, () => {
+    console.log(`https://bunny-store.onrender.com`)
+  })
+} else {
+  app.listen(port, () => {
+    console.log(`App listening at http://localhost:${port}/home`)
+  })
+}
+
