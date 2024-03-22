@@ -15,7 +15,7 @@ const product = new Schema({
   price        : { type: Number, },
   description  : { type: String, },
   details      : { type: String, },
-  hotsale      : { type: String, default: 'no' },
+  status       : { type: String, default: 'no' },
   newArrival   : { type: String, default: 'no' },
   img          : { 
     path       : String,

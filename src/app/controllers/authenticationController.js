@@ -48,7 +48,8 @@ class loginController {
   }
 
   signUp(req, res, next) {
-    res.render('users/signUp', { title: 'Đăng Ký', layout: 'empty' })
+    const error = req.flash('error')
+    res.render('users/signUp', { title: 'Đăng Ký', layout: 'empty', message: error, error })
   }
 
   async creatingAccount(req, res, next) {
@@ -57,7 +58,8 @@ class loginController {
 
     const userExist = await user.findOne({ 'loginInfo.email': req.body.email });
     if (userExist) {
-      return res.status(422).json({ error: "Email already exists" });
+      req.flash('error', 'Email đã tồn tại')
+      return res.redirect('/authentication/sign-up')
     }
 
     let newUser = new user({

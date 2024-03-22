@@ -21,3 +21,11 @@
     span { width: 50%; font-size: larger};
   }
 }
+
+@media screen and (max-width: 700px) {
+  .introduce-container {
+    img {
+      float: left;
+    }
+  }
+}

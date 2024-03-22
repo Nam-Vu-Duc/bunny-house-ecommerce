@@ -1,6 +1,4 @@
 .admin-trash-products-container {
-  overflow-x: auto;
-
   .board-sidebar {
     width: 100%;
     display: flex;
@@ -18,7 +16,8 @@
   }
 
   .table {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    overflow-x: auto;
+    padding: 10px 0;
   }
 
   table, th, td {
@@ -28,7 +27,9 @@
   table {
     width: 100%;
     border-spacing: 0px 10px;
-    padding: 0px 10px;
+    padding: 0px 5px;
+    background-color: #F0F0F0;
+    border-radius: 10px;
   }
 
   thead {
@@ -36,21 +37,47 @@
     height: 50px;
     a { text-decoration: none }
     i { color: black }
+
+    td:first-child {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+
+    }
+    td:last-child {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
   }
 
   tbody {
     tr {
-      background-color:#F0F0F0;
+      background-color: white;
       height: 50px;
   
       td:first-child {
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
       }
+
+      td:nth-child(3) {
+        text-align: left;
+        gap: 5px;
+
+        p {
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 2; /* number of lines to show */
+                  /* line-clamp: 2;  */
+          -webkit-box-orient: vertical;
+        }
+      }
+
       td:last-child {
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
       }
+
+      a { text-decoration: none; color: black; font-weight: bold; }
     }
   
     tr:hover {
@@ -91,7 +118,7 @@
   .deletebtn {
     background-color: #f44336;
     color: black;
-    width: 25%;
+    width: fit-content;
   }
 
   /* Add padding and center-align text to the container */
@@ -131,29 +158,30 @@
     clear: both;
     display: table;
   }
+}
 
-  /* Change styles for cancel button and delete button on extra small screens */
-  @media screen and (max-width: 300px) {
-    .cancelbtn, .deletebtn {
-      width: 100%;
+@media screen and (max-width: 700px) {
+  /* .cancelbtn, .deletebtn {
+    width: 100%;
+  } */
+
+  .admin-trash-products-container { 
+    .board-title {
+      p { font-size: 25px;}
     }
-  }
 
-  .total {
-    border: 1px solid black;
-    max-width: 200px;
-    height: fit-content;
-    margin-top: 20px;
-
-
-    .total-title, .total-number {
-      max-width: 200px;
-      font-weight: bolder;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-block-start: 5px;
-      margin-block-end: 5px;
+    tbody, thead {
+      td:nth-child(1) { display: none;}
+      td:nth-child(2) {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+      td:nth-child(4) { display: none;}
+      td:nth-child(5) { display: none;}
     }
-  }
+
+    .modal-content {
+      width: 80% !important;
+    }
+  } 
 }

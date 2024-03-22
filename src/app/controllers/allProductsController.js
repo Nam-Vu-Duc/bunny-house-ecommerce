@@ -2,12 +2,12 @@ const product = require('../models/productModel')
 
 class allProductsController {
   showAllProducts(req, res, next) {
-    const currentPage = req.query.page || 1
+    const currentPage  = req.query.page || 1
     const itemsPerPage = 10
-    const skip = (currentPage - 1) * itemsPerPage
-    const type = req.params.slug
+    const skip         = (currentPage - 1) * itemsPerPage
+    const type         = req.params.slug
     const sortedColumn = req.query.column || ''
-    const sort = req.query.sort || ''
+    const sort         = req.query.sort || ''
 
     product.find({ deletedAt: null }).lean()
       .then(product => { 
@@ -16,25 +16,26 @@ class allProductsController {
           product.oldPrice = product.oldPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
         })
         let title = 'Toàn Bộ Sản Phẩm'
+
         if (type === 'flash-sale') {
-          product = product.filter(product => product.hotsale === 'flash-sale' )
-          title = 'Sản Phẩm Đang Flash Sale'
+          product = product.filter(product => product.status === 'flash-sale' )
+          title   = 'Sản Phẩm Đang Flash Sale'
         }
         if (type === 'hot') {
-          product = product.filter(product => product.hotsale === 'hot' )
-          title = 'Sản Phẩm Đang Hot'
+          product = product.filter(product => product.status === 'hot' )
+          title   = 'Sản Phẩm Đang Hot'
         }
         if (type === 'new-arrival') {
           product = product.filter(product => product.newArrival === 'yes' )
-          title = 'Sản Phẩm Mới Về'
+          title   = 'Sản Phẩm Mới Về'
         }
         if (type === 'skincare') {
           product = product.filter(product => product.skincare !== '' )
-          title = 'Sản Phẩm Skincare'
+          title   = 'Sản Phẩm Skincare'
         }
         if (type === 'makeup') {
           product = product.filter(product => product.makeup !== '' )
-          title = 'Sản Phẩm Makeup'
+          title   = 'Sản Phẩm Makeup'
         }
 
         if (sortedColumn === 'price' && sort === 'asc') {
@@ -69,7 +70,7 @@ class allProductsController {
         }
 
         const productLength = product.length
-        const newProduct = product.slice(skip, skip + itemsPerPage)
+        const newProduct    = product.slice(skip, skip + itemsPerPage)
 
         res.render('users/allProducts', { title: 'Dòng Skincare', newProduct, type, productLength, currentPage, sortedColumn, sort }) })
       .catch(next)

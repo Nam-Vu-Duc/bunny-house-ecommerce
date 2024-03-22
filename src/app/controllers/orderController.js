@@ -11,6 +11,7 @@ class orderController {
           });
           order.totalOrderPrice = order.totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
           order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
+          
           if (order.status === 'preparing') {
             order.status = 'Đang Xử Lý'
           } 

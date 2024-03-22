@@ -92,7 +92,7 @@
       display: flex;
       align-items: center;
       justify-content: start;
-      width: fit-content;
+      width: 90%;
       gap: 10px;
       padding: 5px 10px;
       margin-bottom: 5px;
@@ -170,6 +170,11 @@
 
     .details-box {
       width: 90% !important;
+
+      .quantity {
+        width: 100% !important;
+        justify-content: center !important;
+      }
 
       .button > div {
         width: 50% !important

@@ -1,6 +1,4 @@
 .admin-all-orders-container {
-  overflow-x: auto;
-
   .board-title {
     width: 100%;
     display: flex;
@@ -22,6 +20,11 @@
     padding: 5px;
   }
 
+  .table {
+    overflow-x: auto;
+    padding: 10px 0;
+  }
+
   table, th, td {
     text-align: center;
   }
@@ -29,7 +32,9 @@
   table {
     width: 100%;
     border-spacing: 0px 10px;
-    padding: 0px 10px;
+    padding: 0px 5px;
+    background-color: #F0F0F0;
+    border-radius: 10px;
   }
 
   thead {
@@ -37,11 +42,21 @@
     height: 50px;
     a { text-decoration: none }
     i { color: black }
+
+    td:first-child {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+
+    }
+    td:last-child {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
   }
 
   tbody {
     tr {
-      background-color:#F0F0F0;
+      background-color: white;
       height: 50px;
   
       td:first-child {
@@ -100,13 +115,14 @@
 
 @media screen and (max-width: 700px) {
   .admin-all-orders-container {
-    table {
-      td {
-        text-wrap: nowrap;
+    tbody, thead {
+      td:nth-child(1) { display: none;}
+      td:nth-child(2) { display: none;}
+      td:nth-child(3) {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
       }
-      td:nth-child(2) {
-        display: none;
-      }
+      td:nth-child(5) { display: none;}
     }
   }
 }

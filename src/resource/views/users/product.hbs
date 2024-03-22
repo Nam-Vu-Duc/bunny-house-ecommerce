@@ -71,7 +71,7 @@
   getQuantityDiv.style.visibility = 'hidden'
 
   // display out-of-order if true
-  if (`{{product.hotsale}}` === 'out-of-order') {
+  if (`{{product.status}}` === 'out-of-order') {
     getAddToCart.style.display = 'none'
     getBuyNow.style.display = 'none'
     getOutOfOrder.style.display = 'flex'

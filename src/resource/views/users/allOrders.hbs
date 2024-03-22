@@ -77,7 +77,7 @@
             <span>Techcombank</span>
             <span>Đặng Quỳnh Ly</span>
           </div>
-          <img src="../img/fc4c4fd10517a949f006.jpg" alt="">
+          <img src="https://res.cloudinary.com/bunny-store/image/upload/v1711070720/web-img/fc4c4fd10517a949f006_ndjvt6.png" alt="">
         </div>
       </div>
     </div>
@@ -185,7 +185,7 @@ function updateTableBody(totalOrderPrice) {
 
     // create product price element
     var newProductPrice = document.createElement('td')
-    newProductPrice.innerText = `${getProductInfo.productInfo[i].price} đ`
+    newProductPrice.innerText = `${getProductInfo.productInfo[i].price}đ`
 
     // create an input store the price value to submit the form
     var newProductPriceInput = document.createElement('input')
@@ -206,7 +206,7 @@ function updateTableBody(totalOrderPrice) {
     // create product total price element
     var newProductTotalPrice = document.createElement('td')
     var convertNewProductTotalPriceToString = ((getProductInfo.productInfo[i].price*1000) * getProductInfo.productInfo[i].quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') 
-    newProductTotalPrice.innerText = `${convertNewProductTotalPriceToString} đ`
+    newProductTotalPrice.innerText = `${convertNewProductTotalPriceToString}đ`
     
     // create an input store the total price value to submit the form
     var newProductTotalPriceInput = document.createElement('input')
@@ -261,7 +261,7 @@ function updateTableFooter(totalOrderPrice) {
   totalOrderPricesInput.setAttribute('name', 'totalOrderPrice')
   totalOrderPricesInput.setAttribute('value', totalOrderPrice.total)
   var convertTotalOrderPricesToString = totalOrderPrice.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') 
-  totalOrderPrices.innerText = `${convertTotalOrderPricesToString} đ`
+  totalOrderPrices.innerText = `${convertTotalOrderPricesToString}đ`
 
   // add each element to the total order row
   getTableFooter.appendChild(document.createElement('td'))

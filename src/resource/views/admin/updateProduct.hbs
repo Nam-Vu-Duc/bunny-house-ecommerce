@@ -113,8 +113,8 @@
     </div>
 
     <div class="form-group">
-      <label for="hotsale">Độ Hot</label>
-      <select name="hotsale">
+      <label for="status">Độ Hot</label>
+      <select name="status">
         <option value="no">Bình thường</option>
         <option value="flash-sale">Đang Flash Sale</option>
         <option value="hot">Đang hot</option>
@@ -146,7 +146,7 @@ var selectedValue = 'skincare'
 var skincareBox = document.querySelector('select[name="skincare"]').parentElement
 var makeUpBox = document.querySelector('select[name="makeup"]').parentElement
 var categoriesSelectOptions = document.querySelector('select[name="categories"]').querySelectorAll('option')
-var hotsaleSelectOptions = document.querySelector('select[name="hotsale"]').querySelectorAll('option')
+var statusSelectOptions = document.querySelector('select[name="status"]').querySelectorAll('option')
 var newArrivalSelectOptions = document.querySelector('select[name="newArrival"]').querySelectorAll('option')
 var productType = ''
 
@@ -157,9 +157,9 @@ categoriesSelectOptions.forEach(option => {
   }
 })
 
-// selected product hotsale
-hotsaleSelectOptions.forEach(option => {
-  if (option.value === `{{product.hotsale}}`) {
+// selected product status
+statusSelectOptions.forEach(option => {
+  if (option.value === `{{product.status}}`) {
     option.setAttribute('selected', 'selected')
   }
 })

@@ -6,26 +6,26 @@ const upload = require('../middleware/cloudinary');
 
 class adminController {
   async show(req, res, next) {
-    const orders = await order.find({ deletedAt: null }).lean()
+    const orders   = await order.find({ deletedAt: null }).lean()
     const products = await product.find({ deletedAt: null }).lean()
 
     // order info
-    const allOrders = orders.length
-    const preparingOrders = orders.filter(order => order.status === 'preparing').length
+    const allOrders        = orders.length
+    const preparingOrders  = orders.filter(order => order.status === 'preparing').length
     const deliveringOrders = orders.filter(order => order.status === 'delivering').length
-    const doneOrders = orders.filter(order => order.status === 'done').length
+    const doneOrders       = orders.filter(order => order.status === 'done').length
 
     // product info
-    const allProducts = products.length
-    const allBrands = [...new Set(products.map(product => product.brand))].length
+    const allProducts         = products.length
+    const allBrands           = [...new Set(products.map(product => product.brand))].length
     const allSkincareProducts = products.filter(product => product.categories === 'skincare').length
-    const allMakeupProducts = products.filter(product => product.categories === 'makeup').length
-    const deletedProducts = products.filter(product => product.deletedAt !== null).length
+    const allMakeupProducts   = products.filter(product => product.categories === 'makeup').length
+    const deletedProducts     = products.filter(product => product.deletedAt !== null).length
 
     // finance info
-    const totalRevenue = orders.filter(order => order.status === 'done').map(order => order.totalOrderPrice).reduce((sum, num) => sum + num, 0)
+    const totalRevenue           = orders.filter(order => order.status === 'done').map(order => order.totalOrderPrice).reduce((sum, num) => sum + num, 0)
     const totalRevenueToCurrency = totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-    const maxOrderValue = orders.filter(order => order.status === 'done').map(order => order.totalOrderPrice).reduce((max, num) => {
+    const maxOrderValue          = orders.filter(order => order.status === 'done').map(order => order.totalOrderPrice).reduce((max, num) => {
       return Math.max(max, num)
     })
     const maxOrderValueToCurrency = maxOrderValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -34,10 +34,10 @@ class adminController {
   }
 
   allOrders(req, res, next) {
-    const currentPage = req.query.page || 1
-    const orderType = req.query.type || ''
+    const currentPage  = req.query.page || 1
+    const orderType    = req.query.type || ''
     const itemsPerPage = 10;
-    const skip = (currentPage - 1) * itemsPerPage;
+    const skip         = (currentPage - 1) * itemsPerPage;
 
     order.find({ deletedAt: null }).lean()
       .then(order => {
@@ -86,7 +86,8 @@ class adminController {
   async productCreated(req, res, next) {
     let newProduct = new product(req.body)
     if (req.file) {
-      newProduct.img = req.file.path
+      newProduct.img.path = req.file.path
+      newProduct.img.filename = req.file.filename
     }
     await newProduct.save()
       .then(() => res.redirect('/admin/all-products'))
@@ -94,12 +95,12 @@ class adminController {
   }
 
   allProducts(req, res, next) {
-    const currentPage = req.query.page || 1
-    const productType = req.query.type || ''
+    const currentPage  = req.query.page || 1
+    const productType  = req.query.type || ''
     const itemsPerPage = 10;
-    const skip = (currentPage - 1) * itemsPerPage;
+    const skip         = (currentPage - 1) * itemsPerPage;
 
-    product.find({ deletedAt: null }).lean().sortable(req)
+    product.find({ deletedAt: null }).lean()
       .then(product => { 
         product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
         let newProduct = product
@@ -131,7 +132,7 @@ class adminController {
       price       : req.body.price,
       description : req.body.description,
       details     : req.body.details,
-      hotsale     : req.body.hotsale,
+      status      : req.body.status,
       newArrival  : req.body.newArrival,
       img         : {
         path      : req.file.path,
