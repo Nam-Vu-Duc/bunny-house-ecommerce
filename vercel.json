@@ -3,14 +3,12 @@
     { 
       "src": "/", 
       "dest": "/" 
-    },
+    }
+  ],
+  "rewrites": [
     {
-    "rewrites": [
-      {
-        "source": "/(.*)", 
-        "destination": "/"
-      }
-    ]
+      "source": "/(.*)", 
+      "destination": "/"
     }
   ]
 }
