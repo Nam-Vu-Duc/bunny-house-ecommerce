@@ -101,6 +101,7 @@ header {
     width: max-content;
     right: 20px;
     top: 60px;
+    z-index: 5;
 
     a {
       padding: 10px;
@@ -250,5 +251,13 @@ header {
     padding: 10px;
     width: 90%;
     background-color: #f8f6f6;
+  }
+
+  ul {
+    top: 72px !important;
+    
+    li {
+      width: 100% !important;
+    }
   }
 }

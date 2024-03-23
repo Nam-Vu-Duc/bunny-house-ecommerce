@@ -1,13 +1,6 @@
 .introduce-container {
-  h2, h5 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-
-    img {
-      width: 200px;
-    }
+  img {
+    width: 200px;
   }
 
   div {
@@ -15,17 +8,13 @@
     align-items: center;
     justify-content: space-around;
     padding: 10px 0;
+    gap: 10px;
+
+    font-size: larger;
 
     img { width: 30% };
-
-    span { width: 50%; font-size: larger};
   }
 }
 
 @media screen and (max-width: 700px) {
-  .introduce-container {
-    img {
-      float: left;
-    }
-  }
 }
