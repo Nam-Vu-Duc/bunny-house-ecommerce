@@ -16,8 +16,6 @@ class productController {
 
     relatedProducts = relatedProducts.filter(product => product._id.toString() !== newProduct._id.toString())
 
-    console.log(relatedProducts, newProduct)
-
     newProduct.price = newProduct.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     relatedProducts.forEach(product => {
       product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')

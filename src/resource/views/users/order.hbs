@@ -76,23 +76,19 @@
   <table>
     <thead>
       <tr>
-        <td style="width: 50%;">Sản Phẩm  </td>
-        <td style="width: 15%;">          </td>
-        <td style="width: 10%;">Đơn Giá   </td>
-        <td style="width: 10%;">Số Lượng  </td>
-        <td style="width: 10%;">Tổng Tiền </td>
-        <td style="width: 5% ;">          </td>
+        <td>Sản Phẩm  </td>
+        <td>Đơn Giá   </td>
+        <td>S/L  </td>
+        <td>Tổng      </td>
       </tr>
     </thead>
     <tbody>
       {{#each order.products}}
       <tr>
-        <td>{{this.name}}        </td>
-        <td></td>
-        <td style="text-align: center;">{{this.price}} đ        </td>
-        <td style="text-align: center;">{{this.quantity}}       </td>
-        <td style="text-align: center;">{{this.totalPrice}} đ   </td>
-        <td></td>
+        <td><p>{{this.name}}</p>        </td>
+        <td style="text-align: center;">{{this.price}}đ        </td>
+        <td style="text-align: center;">{{this.quantity}}      </td>
+        <td style="text-align: center;">{{this.totalPrice}}đ   </td>
       </tr>
       {{/each}}
     </tbody>

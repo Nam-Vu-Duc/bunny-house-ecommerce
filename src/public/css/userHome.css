@@ -43,7 +43,6 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
   overflow-x: scroll;
-  padding-right: 17px;
   box-sizing: content-box;
   scroll-behavior: smooth;
   align-items: center;

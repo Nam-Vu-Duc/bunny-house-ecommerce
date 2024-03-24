@@ -70,8 +70,11 @@
 }
 
 @media screen and (max-width: 700px) {
-  h1 {
-    font-size: 25px;
-    text-align: center;
+  .order-checking-container {
+    h1 {
+      font-size: 25px;
+      text-align: center;
+    }
   }
 }
+  
