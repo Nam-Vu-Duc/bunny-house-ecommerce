@@ -14,6 +14,8 @@ const cookieParser = require('cookie-parser')
 function route(app) {
   app.use(cookieParser())
 
+  app.use('/', checkUser, homeRoute)
+
   app.use('/home', checkUser, homeRoute)
 
   app.use('/authentication', authenticationRoute)
