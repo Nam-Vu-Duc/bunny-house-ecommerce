@@ -167,6 +167,23 @@ header {
       padding: 5px;
     }
 
+    span {
+      display: flex; 
+      justify-content: space-between;
+      align-items: center;
+      text-decoration: none;
+      color: black;
+      padding: 10px;
+      border-radius: 5px;
+      height: 40px;
+    }
+
+    span:hover {
+      color: red;
+      background-color: #FFDFDF;
+      i { color: red } 
+    }
+
     ul > li > ul {
       position: absolute;
       top: 0;
@@ -174,7 +191,6 @@ header {
       display: grid;
       justify-content: start;
       grid-template-columns: auto auto auto;
-      column-gap: 50px;
     }
 
     img {
@@ -243,6 +259,37 @@ header {
     padding-bottom: 5px;
     z-index: 3;
     /* display: none !important; */
+
+    ul {
+      top: 72px !important;
+      
+      li {
+        width: 100px !important;
+        height: fit-content !important;
+
+        span {
+          padding: 0 10px !important;
+        }
+        a {
+          padding: 0 !important;
+        }
+
+        ul {
+          top: 0 !important;
+          left: 110px !important;
+          grid-template-columns: auto auto !important;
+          column-gap: 10px;
+
+          li {
+            width: 100% !important;
+          }
+
+          img {
+            width: 20px !important;
+          }
+        }
+      }
+    }
   }
 
   .menu > div {
@@ -251,13 +298,5 @@ header {
     padding: 10px;
     width: 90%;
     background-color: #f8f6f6;
-  }
-
-  ul {
-    top: 72px !important;
-    
-    li {
-      width: 100% !important;
-    }
   }
 }

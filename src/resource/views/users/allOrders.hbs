@@ -100,43 +100,11 @@ var getNextButton = document.querySelector('button.next-button')
 var getSubmitButton = document.querySelector('button.submit-button')
 var getTableBody = document.querySelector('tbody')
 var getTableFooter = document.querySelector('tfoot')
+
 // define a total order price, store as an object to change initial value through each function
 var totalOrderPrice = {
   total: 0
 }
-
-// display each process for customer
-function displayProcess(
-  getContactInfo,
-  getPaymentMethod,
-  getNextButton,
-  getSubmitButton,
-) {
-    // set default display to 'none' on start
-    getContactInfo.style.display = 'none'
-    getPaymentMethod.style.display = 'none'
-    getSubmitButton.style.display = 'none'
-
-    getNextButton.onclick = function() {
-      if (getContactInfo.style.display === 'none') {
-        getContactInfo.style.display = 'grid'
-      } 
-      else {
-        getPaymentMethod.style.display = 'block'
-      }
-
-      if (getPaymentMethod.style.display === 'block') {
-        getNextButton.style.display = 'none'
-        getSubmitButton.style.display = 'block'
-      }
-    }
-  }
-displayProcess(
-  getContactInfo,
-  getPaymentMethod,
-  getNextButton,
-  getSubmitButton,
-)
 
 // create table body
 function updateTableBody(totalOrderPrice) {
@@ -224,7 +192,6 @@ function updateTableBody(totalOrderPrice) {
     totalOrderPrice.total += (getProductInfo.productInfo[i].price*1000) * getProductInfo.productInfo[i].quantity
 
     // add each element to the row
-    newProductRow.appendChild(newProductUserId)
     newProductRow.appendChild(newProductImage)
 
     newProductRow.appendChild(newProductName)
@@ -243,10 +210,47 @@ function updateTableBody(totalOrderPrice) {
 
     // add each row to the table
     getTableBody.appendChild(newProductRow)
+    getTableBody.appendChild(newProductUserId)
   }
   deleteCart(totalOrderPrice)
 }
 updateTableBody(totalOrderPrice)
+
+function preCheckAllProducts() {
+  var allCurrentProducts = getTableBody.querySelectorAll('tr').length
+  if (allCurrentProducts === 0) {
+    getNextButton.style.display = 'none'
+    var emptyCartNotice = document.createElement('td')
+    emptyCartNotice.setAttribute('colspan', '6')
+    emptyCartNotice.style.color = 'red'
+    emptyCartNotice.style.fontWeight = 'bolder'
+    emptyCartNotice.innerText = 'Giỏ hàng của bạn đang trống'
+    getTableBody.appendChild(emptyCartNotice)
+  }
+}
+preCheckAllProducts()
+
+// display each process for customer
+function displayProcess() {
+    // set default display to 'none' on start
+    getContactInfo.style.display = 'none'
+    getPaymentMethod.style.display = 'none'
+    getSubmitButton.style.display = 'none'
+
+    getNextButton.onclick = function() {
+      if (getContactInfo.style.display === 'none') {
+        getContactInfo.style.display = 'grid'
+      } else {
+        getPaymentMethod.style.display = 'block'
+      }
+
+      if (getPaymentMethod.style.display === 'block') {
+        getNextButton.style.display = 'none'
+        getSubmitButton.style.display = 'block'
+      }
+    }
+  }
+displayProcess()
 
 // create table footer
 function updateTableFooter(totalOrderPrice) {
@@ -270,7 +274,6 @@ function updateTableFooter(totalOrderPrice) {
   getTableFooter.appendChild(document.createElement('td'))
   getTableFooter.appendChild(totalOrderPricesInput)
   getTableFooter.appendChild(totalOrderPrices)
-  getTableFooter.appendChild(document.createElement('td'))
   getTableFooter.appendChild(document.createElement('td'))
 }
 updateTableFooter(totalOrderPrice)
@@ -297,6 +300,7 @@ function deleteCart(totalOrderPrice) {
       updateTableBody(totalOrderPrice)
       deleteCartItem(getTableFooter)
       updateTableFooter(totalOrderPrice)
+      preCheckAllProducts()
     }
   }
 }
