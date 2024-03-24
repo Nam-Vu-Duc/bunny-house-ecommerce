@@ -17,14 +17,6 @@ class homeController {
         res.render('users/home', { title: 'Cửa hàng mỹ phẩm BunnyStore' , flashDealProduct, hotProduct, allProduct, allBrands }) })
       .catch(next)
   }
-
-  showUser(req, res, next) {
-    user.findOne({ _id: req.params._id }).lean()
-      .then( user => {
-        res.render('users/home', user) 
-      })
-      .catch(next)
-  }
 }
 
 module.exports = new homeController
