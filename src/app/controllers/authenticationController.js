@@ -35,7 +35,7 @@ class loginController {
             if (user.loginInfo.role === 'admin') {
               res.redirect('/admin')
             } else {
-              res.redirect('/home')
+              res.redirect('/')
             }
           } else {
             // res.json({ message: 'password does not match' })
