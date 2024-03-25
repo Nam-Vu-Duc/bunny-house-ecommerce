@@ -18,7 +18,8 @@
       <div class="title">
         <h3>{{newProduct.brand}}</h3>
         <h1>{{newProduct.name}}</h1>
-        <h3>{{newProduct.price}}đ</h3>
+        <h4 id="product-old-price"><del>{{newProduct.oldPrice}}đ</del></h4>
+        <h3 id="product-price">{{newProduct.price}}đ</h3>
       </div>
       
       <div class="description">
@@ -63,6 +64,7 @@
       <a href="/product/{{this.slug}}">
         <div class="product">
           <img src="{{this.img.path}}" alt="" id="product-1">
+          <p id="product-old-price"><del>{{this.oldPrice}}đ </del></p>
           <p id="product-price">{{this.price}}đ</p>
           <p id="product-details">{{this.name}}</p>
         </div>
@@ -73,14 +75,14 @@
 </div>
 
 <script>
-  var getAddToCart = document.querySelector('div.add-to-cart')
-  var getBuyNow = document.querySelector('div.buy-now')
-  var getOutOfOrder = document.querySelector('div.out-of-order')
-  var addToCartText = getAddToCart.querySelector('p')
-  var getQuantityDiv = document.querySelector('div.quantity')
+  var getAddToCart        = document.querySelector('div.add-to-cart')
+  var getBuyNow           = document.querySelector('div.buy-now')
+  var getOutOfOrder       = document.querySelector('div.out-of-order')
+  var addToCartText       = getAddToCart.querySelector('p')
+  var getQuantityDiv      = document.querySelector('div.quantity')
   var getIncreaseQuantity = document.querySelector('i.fi-rr-add')
   var getDecreaseQuantity = document.querySelector('i.fi-rr-minus-circle')
-  var getQuantityValue = document.querySelector('div.quantity').querySelector('p')
+  var getQuantityValue    = document.querySelector('div.quantity').querySelector('p')
   
   // set default quantity value to 0 on first load and hidden the quantity div
   getQuantityValue.innerText = 0
@@ -94,7 +96,11 @@
   }
   
   // get obj from storage first, if not created, return {}
-  var myObjFromStorage = JSON.parse(localStorage.getItem('product_cart_count')) || {}
+  var myObjFromStorage = JSON.parse(localStorage.getItem('product_cart_count')) || {
+    localCounting: 0,
+    productInfo: []
+  }
+
   var myObj = {
     localCounting: myObjFromStorage.localCounting || 0,
     productInfo: myObjFromStorage.productInfo || []
@@ -102,11 +108,11 @@
   
   // set value to the myObj, stringify because localStorage only store string type
   localStorage.setItem('product_cart_count', JSON.stringify(myObj))
-  myObj.localCounting = myObjFromStorage.localCounting
-  myObj.productInfo = myObjFromStorage.productInfo
+  {{!-- myObj.localCounting = myObjFromStorage.localCounting
+  myObj.productInfo = myObjFromStorage.productInfo --}}
 
   // check if the item has already been added, return the button type to added
-  var listProductLength = myObj.productInfo.length
+  var listProductLength = typeof myObj.productInfo === 'undefined' ? 0 : myObj.productInfo.length
   for (let i = 0; i < listProductLength; ++i) {
     if (myObj.productInfo[i].slug === `{{newProduct.slug}}`) {
       // change button color to 'added button'
@@ -165,10 +171,10 @@
       
       // create new added product 
       var newProductInfo = {
-        slug: `{{newProduct.slug}}`,
-        name: `{{newProduct.name}}`,
-        price: `{{newProduct.price}}`,
-        image: `{{newProduct.img.path}}`,
+        slug  : `{{newProduct.slug}}`,
+        name  : `{{newProduct.name}}`,
+        price : `{{newProduct.price}}`,
+        image : `{{newProduct.img.path}}`,
         quantity: getQuantityValue.innerText
       };
 
@@ -207,10 +213,10 @@
       getQuantityDiv.style.visibility = 'visible'
 
       var newProductInfo = {
-        slug: `{{newProduct.slug}}`,
-        name: `{{newProduct.name}}`,
-        price: `{{newProduct.price}}`,
-        image: `{{newProduct.img.path}}`,
+        slug  : `{{newProduct.slug}}`,
+        name  : `{{newProduct.name}}`,
+        price : `{{newProduct.price}}`,
+        image : `{{newProduct.img.path}}`,
         quantity: getQuantityValue.innerText
       };
 

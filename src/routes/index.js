@@ -14,11 +14,11 @@ const cookieParser = require('cookie-parser')
 function route(app) {
   app.use(cookieParser())
 
+  app.use('/admin', checkAdmin, adminRoute)
+
   app.use('/', checkUser, homeRoute)
 
-  app.use('/authentication', authenticationRoute)
-  
-  app.use('/admin', checkAdmin, adminRoute)
+  app.use('/authentication' , authenticationRoute)
   
   app.use('/all-products', checkUser, allProductsRoute)
   

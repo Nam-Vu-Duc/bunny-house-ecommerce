@@ -6,8 +6,9 @@ const upload = require('../middleware/cloudinary');
 
 class adminController {
   async show(req, res, next) {
-    const orders   = await order.find({ deletedAt: null }).lean()
-    const products = await product.find({ deletedAt: null }).lean()
+    const orders        = await order.find({ deletedAt: null }).lean()
+    const products      = await product.find({ deletedAt: null }).lean()
+    const maxValueOrder = await order.find({ deletedAt: null }).sort({totalOrderPrice: -1}).limit(1)
 
     // order info
     const allOrders        = orders.length
@@ -23,14 +24,12 @@ class adminController {
     const deletedProducts     = products.filter(product => product.deletedAt !== null).length
 
     // finance info
-    const totalRevenue           = orders.filter(order => order.status === 'done').map(order => order.totalOrderPrice).reduce((sum, num) => sum + num, 0)
-    const totalRevenueToCurrency = totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-    const maxOrderValue          = orders.filter(order => order.status === 'done').map(order => order.totalOrderPrice).reduce((max, num) => {
-      return Math.max(max, num)
-    })
-    const maxOrderValueToCurrency = maxOrderValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    const totalRevenue            = orders.filter(order => order.status === 'done').map(order => order.totalOrderPrice).reduce((sum, num) => sum + num, 0)
+    const totalRevenueToCurrency  = totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    const maxValueOrderId         = maxValueOrder[0]._id.toString()
+    const maxValueOrderToCurrency = maxValueOrder[0].totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 
-    res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin', allOrders, preparingOrders, deliveringOrders, doneOrders, allProducts, allBrands, allSkincareProducts, allMakeupProducts, deletedProducts, totalRevenueToCurrency, maxOrderValueToCurrency })
+    res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin', allOrders, preparingOrders, deliveringOrders, doneOrders, allProducts, allBrands, allSkincareProducts, allMakeupProducts, deletedProducts, totalRevenueToCurrency, maxValueOrderId, maxValueOrderToCurrency })
   }
 
   allOrders(req, res, next) {

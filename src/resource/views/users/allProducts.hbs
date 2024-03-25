@@ -18,14 +18,14 @@
 
   <div class="all-products">
     {{#each newProduct}}
+    <a href="/product/{{this.slug}}">
       <div class="product">
-        <a href="/product/{{this.slug}}">
-          <img src="{{this.img.path}}" alt="">
-          <p id="product-old-price" style="display:none"><del>{{this.oldPrice}}đ </del></p>
-          <p id="product-price">{{this.price}}đ</p>
-          <p id="product-details">{{this.name}}</p>
-        </a>
+        <img src="{{this.img.path}}" alt="" id="product-1">
+        <p id="product-old-price"><del>{{this.oldPrice}}đ </del></p>
+        <p id="product-price">{{this.price}}đ</p>
+        <p id="product-details">{{this.name}}</p>
       </div>
+    </a>
     {{/each}}
   </div>
 
@@ -43,8 +43,6 @@
   switch (getSlug) {
     case 'flash-sale': 
       mainTitle.innerText = 'Toàn bộ sản phẩm đang sale'
-      var oldPrice = document.querySelectorAll('p#product-old-price')
-      oldPrice.forEach(oldPrice => oldPrice.style.display = '')
       break
     case 'hot': 
       mainTitle.innerText = 'Toàn bộ sản phẩm đang hot'
@@ -54,9 +52,6 @@
       break
     case 'xit-khoang': 
       mainTitle.innerText = 'Toàn bộ sản phẩm Xịt khoáng'
-      break
-    case 'mat-na': 
-      mainTitle.innerText = 'Toàn bộ sản phẩm Mặt nạ'
       break
     case 'mat-na': 
       mainTitle.innerText = 'Toàn bộ sản phẩm Mặt nạ'
@@ -244,13 +239,6 @@
   // díplay all pages tag
   for (let i = 0; i < productLength; i += 10) {
     var newPage = document.createElement('a')
-    {{!-- if (getSlug === 'skincare') {
-      newPage.setAttribute('href', `/all-products/skincare/${getSlug}?page=${currentPage}&column=${sortedColumn}&sort=${sort}`)
-    } else if (getSlug === 'makeup') {
-      newPage.setAttribute('href', `/all-products/makeup/${getSlug}?page=${currentPage}&column=${sortedColumn}&sort=${sort}`)
-    } else {
-      newPage.setAttribute('href', `/all-products/${getSlug}?page=${currentPage}&column=${sortedColumn}&sort=${sort}`)
-    } --}}
     newPage.setAttribute('href', `/all-products/${getSlug}?page=${currentPage}&column=${sortedColumn}&sort=${sort}`)
     newPage.innerText = `${currentPage}`
     pagination.appendChild(newPage)

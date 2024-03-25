@@ -2,12 +2,12 @@ const product = require('../models/productModel')
 
 class allProductsController {
   showAllProducts(req, res, next) {
-    const currentPage  = req.query.page || 1
+    const currentPage  = req.query.page   || 1
+    const sortedColumn = req.query.column || ''
+    const sort         = req.query.sort   || ''
+    const type         = req.params.slug
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
-    const type         = req.params.slug
-    const sortedColumn = req.query.column || ''
-    const sort         = req.query.sort || ''
 
     product.find({ deletedAt: null }).lean()
       .then(product => { 
@@ -52,35 +52,27 @@ class allProductsController {
   }
 
   showSkincare(req, res, next) {
-    const currentPage = req.query.page || 1
-    const itemsPerPage = 10
-    const skip = (currentPage - 1) * itemsPerPage
-    const sortedColumn = req.query.column || ''
-    const sort = req.query.sort || ''
-
     product.find({ deletedAt: null, skincare: req.params.slug }).lean()
       .then(product => { 
-        product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
-        const type = req.params.slug
+        product.forEach(product => {
+          product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+          product.oldPrice = product.oldPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        })        
+        const type       = req.params.slug
+        const newProduct = product
 
-        if (sortedColumn === 'price' && sort === 'asc') {
-          product = product.sort((a, b) => a.price - b.price)
-        } else if (sortedColumn === 'price' && sort === 'desc') {
-          product = product.sort((a, b) => b.price - a.price)
-        }
-
-        const productLength = product.length
-        const newProduct    = product.slice(skip, skip + itemsPerPage)
-
-        res.render('users/allProducts', { title: 'Dòng Skincare', newProduct, type, productLength, currentPage, sortedColumn, sort }) })
+        res.render('users/allProducts', { title: 'Dòng Skincare', newProduct, type }) })
       .catch(next)
   }
 
   showMakeUp(req, res, next) {
     product.find({ deletedAt: null, makeup: req.params.slug }).lean()
       .then(product => { 
-        product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
-        const type = req.params.slug
+        product.forEach(product => {
+          product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+          product.oldPrice = product.oldPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        })        
+        const type       = req.params.slug
         const newProduct = product
         
         res.render('users/allProducts', { title: 'Dòng Makeup', newProduct, type }) })

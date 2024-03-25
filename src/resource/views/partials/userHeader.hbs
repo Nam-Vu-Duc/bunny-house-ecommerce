@@ -189,9 +189,9 @@
   
   function updateCartCount() {
     var countObject = JSON.parse(localStorage.getItem('product_cart_count')) || {};
-      var countOrdersQuantity = countObject.localCounting || 0;
-      getOrdersQuantity.innerText = countOrdersQuantity
-    }
+    var countOrdersQuantity = countObject.localCounting || 0;
+    getOrdersQuantity.innerText = countOrdersQuantity
+  }
 
   document.addEventListener('cartUpdated', updateCartCount);
   updateCartCount()
@@ -310,6 +310,5 @@
       menu.style.display = 'none'
     }
   }
-  
-  
+
 </script>
