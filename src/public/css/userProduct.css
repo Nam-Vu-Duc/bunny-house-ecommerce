@@ -269,6 +269,14 @@
     .details-box {
       width: 90% !important;
 
+      h1 {
+        font-size: 25px !important;
+      }
+
+      h3 {
+        font-size: 20px !important;
+      }
+
       .quantity {
         width: 100% !important;
         justify-content: center !important;

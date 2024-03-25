@@ -256,9 +256,11 @@ displayProcess()
 function updateTableFooter(totalOrderPrice) {
   var getTableFooter = document.querySelector('tfoot')
   var totalOrderTitle = document.createElement('td')
+  totalOrderTitle.setAttribute('colspan', '4')
   totalOrderTitle.innerText = 'Tổng'
 
   var totalOrderPrices = document.createElement('td')
+  totalOrderPrices.setAttribute('colspan', '2')
 
   var totalOrderPricesInput = document.createElement('input')
   totalOrderPricesInput.setAttribute('type', 'hidden')
@@ -268,13 +270,9 @@ function updateTableFooter(totalOrderPrice) {
   totalOrderPrices.innerText = `${convertTotalOrderPricesToString}đ`
 
   // add each element to the total order row
-  getTableFooter.appendChild(document.createElement('td'))
   getTableFooter.appendChild(totalOrderTitle)
-  getTableFooter.appendChild(document.createElement('td'))
-  getTableFooter.appendChild(document.createElement('td'))
   getTableFooter.appendChild(totalOrderPricesInput)
   getTableFooter.appendChild(totalOrderPrices)
-  getTableFooter.appendChild(document.createElement('td'))
 }
 updateTableFooter(totalOrderPrice)
 
