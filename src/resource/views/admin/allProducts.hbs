@@ -127,7 +127,7 @@
   // filter button logic
   let selectButton = document.querySelector('select')
   selectButton.onchange = function () {
-    location = `/admin/all-products?page={{currentPage}}&type=${this.value}`
+    location = `/admin/all-products?page=1&type=${this.value}`
   }
 
   let selectButtonOptions = selectButton.querySelectorAll('option')

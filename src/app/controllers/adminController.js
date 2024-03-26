@@ -6,9 +6,10 @@ const upload = require('../middleware/cloudinary');
 
 class adminController {
   async show(req, res, next) {
-    const orders        = await order.find({ deletedAt: null }).lean()
-    const products      = await product.find({ deletedAt: null }).lean()
-    const maxValueOrder = await order.find({ deletedAt: null }).sort({totalOrderPrice: -1}).limit(1)
+    const orders          = await order.find({ deletedAt: null }).lean()
+    const products        = await product.find({ deletedAt: null }).lean()
+    const deletedProduct  = await product.find({ deletedAt: { $ne: null } }).lean()
+    const maxValueOrder   = await order.find({ deletedAt: null }).sort({totalOrderPrice: -1}).limit(1)
 
     // order info
     const allOrders        = orders.length
@@ -18,10 +19,10 @@ class adminController {
 
     // product info
     const allProducts         = products.length
+    const deletedProducts     = deletedProduct.length
     const allBrands           = [...new Set(products.map(product => product.brand))].length
     const allSkincareProducts = products.filter(product => product.categories === 'skincare').length
     const allMakeupProducts   = products.filter(product => product.categories === 'makeup').length
-    const deletedProducts     = products.filter(product => product.deletedAt !== null).length
 
     // finance info
     const totalRevenue            = orders.filter(order => order.status === 'done').map(order => order.totalOrderPrice).reduce((sum, num) => sum + num, 0)
