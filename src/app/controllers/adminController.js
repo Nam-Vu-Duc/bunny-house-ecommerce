@@ -13,22 +13,22 @@ class adminController {
 
     // order info
     const allOrders        = orders.length
-    const preparingOrders  = orders.filter(order => order.status === 'preparing').length
-    const deliveringOrders = orders.filter(order => order.status === 'delivering').length
-    const doneOrders       = orders.filter(order => order.status === 'done').length
+    const preparingOrders  = allOrders === 0 ? 0 : orders.filter(order => order.status === 'preparing').length 
+    const deliveringOrders = allOrders === 0 ? 0 : orders.filter(order => order.status === 'delivering').length
+    const doneOrders       = allOrders === 0 ? 0 : orders.filter(order => order.status === 'done').length
 
     // product info
     const allProducts         = products.length
-    const deletedProducts     = deletedProduct.length
-    const allBrands           = [...new Set(products.map(product => product.brand))].length
-    const allSkincareProducts = products.filter(product => product.categories === 'skincare').length
-    const allMakeupProducts   = products.filter(product => product.categories === 'makeup').length
+    const deletedProducts     = allProducts === 0 ? 0 : deletedProduct.length
+    const allBrands           = allProducts === 0 ? 0 : [...new Set(products.map(product => product.brand))].length
+    const allSkincareProducts = allProducts === 0 ? 0 : products.filter(product => product.categories === 'skincare').length
+    const allMakeupProducts   = allProducts === 0 ? 0 : products.filter(product => product.categories === 'makeup').length
 
     // finance info
     const totalRevenue            = orders.filter(order => order.status === 'done').map(order => order.totalOrderPrice).reduce((sum, num) => sum + num, 0)
     const totalRevenueToCurrency  = totalRevenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-    const maxValueOrderId         = maxValueOrder[0]._id.toString()
-    const maxValueOrderToCurrency = maxValueOrder[0].totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    const maxValueOrderId         = allOrders === 0 ? '' : maxValueOrder[0]._id.toString()
+    const maxValueOrderToCurrency = allOrders === 0 ? 0  : maxValueOrder[0].totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 
     res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin', allOrders, preparingOrders, deliveringOrders, doneOrders, allProducts, allBrands, allSkincareProducts, allMakeupProducts, deletedProducts, totalRevenueToCurrency, maxValueOrderId, maxValueOrderToCurrency })
   }
