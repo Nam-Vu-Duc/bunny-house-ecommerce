@@ -1,5 +1,7 @@
 <div class="admin-home-container">
-  <h1></h1>
+  <div class="board-title">
+    <p></p>
+  </div>
 
   <div class="info-table">  
     <div class="order-info">
@@ -107,9 +109,9 @@
 </div>
 
 <script>
-  var greetingLine = document.querySelector('h1')
+  var greetingLine = document.querySelector('div.board-title').querySelector('p')
   var date = new Date()
   var dateNow = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear()
-  greetingLine.innerText = `Doanh số bán hàng đến ngày ${dateNow}`
+  greetingLine.innerText = `Doanh thu ngày ${dateNow}`
 
 </script>

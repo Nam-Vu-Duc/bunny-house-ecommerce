@@ -192,10 +192,13 @@
 
     tbody, thead {
       td:nth-child(1) { display: none;}
-      td:nth-child(2) {
+      td:nth-child(2) { display: none;}
+      
+      td:nth-child(3) {
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
       }
+
       td:nth-child(4) { display: none;}
       td:nth-child(5) { display: none;}
     }
