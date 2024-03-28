@@ -1,17 +1,16 @@
 <div class="order-details-container">
   <form method="POST" action="/admin/order-updated/{{order._id}}?_method=PUT">
-    <table>
+    <table id="table-1">
       <thead>
         <tr>
           <td colspan="2">
             Thông tin chung
           </td>
-          <td></td>
         </tr>
       </thead>
       <tr>
         <td>
-          Mã Đơn Hàng
+          Mã Đơn
         </td>
         <td>
           {{order._id}}
@@ -19,7 +18,7 @@
       </tr>
       <tr>
         <td>
-          Ngày Đặt Hàng
+          Ngày Đặt
         </td>
         <td>
           {{order.createdAt}}
@@ -27,7 +26,7 @@
       </tr>
       <tr>
         <td>
-          Tên Khách Hàng
+          Khách Hàng
         </td>
         <td>
           {{order.customerInfo.name}}
@@ -35,7 +34,7 @@
       </tr>
       <tr>
         <td>
-          Số Điện Thoại
+          SĐT
         </td>
         <td>
           {{order.customerInfo.phone}}
@@ -43,7 +42,7 @@
       </tr>
       <tr>
         <td>
-          Địa Chỉ Nhận Hàng
+          Địa Chỉ
         </td>
         <td>
           {{order.customerInfo.address}}
@@ -62,46 +61,48 @@
           Tổng Tiền
         </td>
         <td>
-          {{order.totalOrderPrice}} đ
+          {{order.totalOrderPrice}}đ
         </td>
       </tr>
       <tr>
         <td>
-          Trạng thái đơn hàng
+          Trạng thái đơn
         </td>
         <td>
-          <input type="radio" id="preparing" name="status" value="preparing">
-          <label id="preparing" for="preparing">Đang Xử Lý</label>
+          <div>
+            <input type="radio" id="preparing" name="status" value="preparing">
+            <label id="preparing" for="preparing">Đang Xử Lý</label>
+          </div>
 
-          <input type="radio" id="delivering" name="status" value="delivering">
-          <label id="delivering" for="delivering">Đang Giao Hàng</label>
+          <div>
+            <input type="radio" id="delivering" name="status" value="delivering">
+            <label id="delivering" for="delivering">Đang Giao Hàng</label>
+          </div>
 
-          <input type="radio" id="done" name="status" value="done">
-          <label id="done" for="done">Hoàn Thành</label>
+          <div>
+            <input type="radio" id="done" name="status" value="done">
+            <label id="done" for="done">Hoàn Thành</label>
+          </div>
         </td>
       </tr>
     </table>
 
-    <table>
+    <table id="table-2">
       <thead>
         <tr>
-          <td style="width: 50%;">Sản Phẩm  </td>
-          <td style="width: 15%;">          </td>
-          <td style="width: 10%;">Đơn Giá   </td>
-          <td style="width: 10%;">Số Lượng  </td>
-          <td style="width: 10%;">Tổng Tiền </td>
-          <td style="width: 5% ;">          </td>
+          <td>Sản Phẩm  </td>
+          <td>Đơn Giá   </td>
+          <td>S/L       </td>
+          <td>Tổng      </td>
         </tr>
       </thead>
       <tbody>
         {{#each order.products}}
         <tr>
-          <td>{{this.name}}        </td>
-          <td></td>
-          <td style="text-align: center;">{{this.price}} đ        </td>
-          <td style="text-align: center;">{{this.quantity}}       </td>
-          <td style="text-align: center;">{{this.totalPrice}} đ   </td>
-          <td></td>
+          <td><p>{{this.name}}</p>                               </td>
+          <td style="text-align: center;">{{this.price}}đ        </td>
+          <td style="text-align: center;">{{this.quantity}}      </td>
+          <td style="text-align: center;">{{this.totalPrice}}đ   </td>
         </tr>
         {{/each}}
       </tbody>

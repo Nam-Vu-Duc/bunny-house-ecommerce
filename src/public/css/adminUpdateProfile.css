@@ -46,6 +46,7 @@
   img {
     max-width: 100px;
     aspect-ratio: 1 / 1;
+    border-radius: 50%;
   }
 
   label {
@@ -62,7 +63,7 @@
   }
 
   input {
-    text-align: center;
+    text-indent: 10px;
   }
 
   .submit-button {

@@ -1,6 +1,7 @@
 .flash-deal-board, .hot-products-board, .content-board {
   overflow: hidden;
-  padding-top: 20px;
+  margin-top: 20px;
+  padding: 10px;
 
   .title {
     display: flex; 
@@ -100,6 +101,15 @@
   }
 }
 
+.flash-deal-board {
+  background: linear-gradient(rgb(248, 62, 96), rgb(254, 80, 72));
+  border-radius: 10px;
+
+  i, a {
+    animation: bling 1s infinite
+  }
+}
+
 .famous-brand-board {
   overflow: hidden;
   padding-top: 20px;
@@ -175,6 +185,12 @@
     inset: 0;
     pointer-events: none;
   }
+}
+
+@keyframes bling {
+  0% {color: white;}
+  50% {color: yellow;}
+  100% {color: white;}
 }
 
 @keyframes loop {

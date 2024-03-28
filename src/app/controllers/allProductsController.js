@@ -81,8 +81,8 @@ class allProductsController {
 
   showAllBrands(req, res, next) {
     product.find({ deletedAt: null }).distinct("brand").lean()
-      .then(product => { 
-        res.render('users/allBrands', { title: 'Toàn bộ thương hiệu', product }) })
+      .then(brand => { 
+        res.render('users/allBrands', { title: 'Toàn bộ thương hiệu', brand }) })
       .catch(next)
   }
 
