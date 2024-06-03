@@ -11,7 +11,7 @@ const product = new Schema({
   makeup       : { type: String, }, 
   brand        : { type: String, },
   name         : { type: String, },
-  oldPrice     : { type: Number, default: ''},
+  oldPrice     : { type: Number, default: ''  },
   price        : { type: Number, },
   description  : { type: String, },
   details      : { type: String, },
