@@ -2,6 +2,10 @@
   overflow: hidden;
   margin-top: 20px;
   padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
   .title {
     display: flex; 
@@ -51,6 +55,7 @@
     display: grid;
     grid-template-columns: repeat(5, minmax(min(11.25rem, 100%), 1fr));
     scroll-snap-type: x mandatory;
+    max-width: 1300px;
     
     img { max-width: 100%; aspect-ratio: 1 / 1 };
   
