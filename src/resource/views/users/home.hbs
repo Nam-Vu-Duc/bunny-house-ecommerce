@@ -13,7 +13,7 @@
     <a href="/product/{{this.slug}}">
       <div class="product">
         <img src="{{this.img.path}}" alt="" id="product-1">
-        <p id="product-old-price"><del>{{this.oldPrice}}đ </del></p>
+        <del style="color: black;"><p id="product-old-price">{{this.oldPrice}}đ </p></del>
         <p id="product-price">{{this.price}}đ</p>
         <p id="product-details">{{this.name}}</p>
       </div>
@@ -79,4 +79,18 @@
     <div class="fade"></div>
   </div>
 </div>
+
+<script>
+  var allProductOldPrices = document.querySelectorAll('p#product-old-price')
+  var allProductPrices    = document.querySelectorAll('p#product-price')
+  
+  allProductOldPrices.forEach((price) => {
+    price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  })
+  
+  allProductPrices.forEach((price) => {
+    price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  })
+
+</script>
 
