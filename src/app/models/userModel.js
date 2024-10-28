@@ -1,10 +1,7 @@
 const mongoose = require('mongoose')
 const slug = require('mongoose-slug-updater');
-
 mongoose.plugin(slug)
-
 const Schema = mongoose.Schema
-
 const user = new Schema({
   loginInfo : {
     email    : { type: String, unique: true },
@@ -15,7 +12,7 @@ const user = new Schema({
     name     : { type: String, default: '' },
     phone    : { type: String, default: '' },
     gender   : { type: String, default: '' },
-    address  : { type: String, default: ''}
+    address  : { type: String, default: '' }
   },
   slug      : { type: String, slug: 'userInfo.name', unique: true },
 }, { timestamps: true })

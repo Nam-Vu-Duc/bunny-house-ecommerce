@@ -68,10 +68,10 @@
 
   <div class="brands">
     <div class="inner">
-      {{#each allBrands}}
+      {{#each brands}}
       <div class="brand">
-        <a href="/all-products/all-brands/{{this}}">
-          {{this}}
+        <a href="/all-products/all-brands/{{this.name}}">
+          {{this.name}}
         </a>
       </div>
       {{/each}}

@@ -1,10 +1,7 @@
 const mongoose = require('mongoose')
 const slug = require('mongoose-slug-updater');
-
 mongoose.plugin(slug)
-
 const Schema = mongoose.Schema
-
 const order = new Schema({
   products: [
     {

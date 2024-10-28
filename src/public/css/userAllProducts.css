@@ -1,6 +1,9 @@
 .user-all-products-container {
   width: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .title {
     display: flex; 
@@ -35,13 +38,20 @@
     transform-origin: bottom left;
   }
 
-  .sort {
+  .filter {
+    width: 100%;
+    max-width: 1300px;
+  }
+
+  .filter-btn {
     background-color: #FFDFDF;
     padding: 5px;
   }
 
   .all-category-skincare, .all-category-makeup {
     padding: 10px;
+    width: 100%;
+    max-width: 1300px;
 
     ul {
       padding-inline-start: 0;
