@@ -9,15 +9,15 @@
         <thead>
           <tr>
             <td colspan="3">
-              Thông tin đặt hàng
+              QUẢN LÝ ĐƠN HÀNG
             </td>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Tổng đơn hàng</td>
+            <td>Số lượng đơn hàng</td>
             <td>{{allOrders}}</td>
-            <td></td>
+            <td><a href="/admin/all-orders">Chi tiết</a></td>
           </tr>
           <tr>
             <td>Đơn hàng đang xử lý</td>
@@ -43,20 +43,20 @@
         <thead>
           <tr>
             <td colspan="3">
-              Thông tin sản phẩm
+              QUẢN LÝ SẢN PHẨM
             </td>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Tổng sản phẩm</td>
+            <td>Số lượng sản phẩm</td>
             <td>{{allProducts}}</td>
-            <td></td>
+            <td><a href="/admin/all-products/?page=&type=">Chi tiết</a></td>
           </tr>
           <tr>
-            <td>Tổng thương hiệu</td>
+            <td>Số lượng thương hiệu</td>
             <td>{{allBrands}}</td>
-            <td><a href="">Chi tiết</a></td>
+            <td><a href="/admin/all-brands/?page=&type=">Chi tiết</a></td>
           </tr>
           <tr>
             <td>Sản phẩm Skincare</td>
@@ -82,7 +82,7 @@
         <thead>
           <tr>
             <td colspan="3">
-              Thông tin doanh thu
+              QUẢN LÝ DOANH THU
             </td>
           </tr>
         </thead>
@@ -97,10 +97,53 @@
             <td>{{maxValueOrderToCurrency}}đ</td>
             <td><a href="/admin/all-orders/{{maxValueOrderId}}">Chi tiết</a></td>
           </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="customer-info">
+      <table>
+        <thead>
           <tr>
-            <td>Khách hàng mua nhiều nhất</td>
-            <td></td>
-            <td><a href="">Chi tiết</a></td>
+            <td colspan="3">
+              QUẢN LÝ KHÁCH HÀNG
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Số lượng khách hàng</td>
+            <td>{{allOrders}}</td>
+            <td><a href="/admin/all-customers">Chi tiết</a></td>
+          </tr>
+          <tr>
+            <td>Khách hàng có doanh thu cao nhất</td>
+            <td>{{preparingOrders}}</td>
+            <td><a href="/admin/all-orders/?page=1&type=preparing">Chi tiết</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="store-info">
+      <table>
+        <thead>
+          <tr>
+            <td colspan="3">
+              QUẢN LÝ CỬA HÀNG
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Số lượng cửa hàng</td>
+            <td>{{allOrders}}</td>
+            <td><a href="/admin/all-orders/?page=1&type=preparing">Chi tiết</a></td>
+          </tr>
+          <tr>
+            <td>Cửa hàng có doanh thu cao nhất</td>
+            <td>{{preparingOrders}}</td>
+            <td><a href="/admin/all-orders/?page=1&type=preparing">Chi tiết</a></td>
           </tr>
         </tbody>
       </table>

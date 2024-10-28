@@ -1,4 +1,4 @@
-.admin-all-products-container {
+.admin-all-customers-container {
   .filter-and-create {
     display: flex;
     align-items: center;
@@ -10,7 +10,7 @@
     padding: 5px;
   }
 
-  .create-product {
+  .create-customer {
     display: flex;
     align-items: center;
     justify-content: space-between;

@@ -6,6 +6,18 @@ const upload = require('../app/middleware/cloudinary');
 // home page
 router.get('/', adminController.show)
 
+// admin' customers page
+router.get('/all-customers', adminController.allCustomers)
+
+// admin' orders page
+router.get('/all-customers/:id', adminController.customerInfo)
+
+// admin' customer page
+router.get('/create/customer', adminController.createCustomer)
+
+// create customer api
+router.post('/customer/created', adminController.customerCreated)
+
 // admin' orders page
 router.get('/all-orders', adminController.allOrders)
 
@@ -15,31 +27,37 @@ router.get('/all-orders/:id', adminController.orderInfo)
 // update order api
 router.put('/order-updated/:id', adminController.orderUpdated)
 
-// create item page
-router.get('/create', adminController.createProduct)
+// admin' store page
+router.get('/all-stores', adminController.allStores)
 
-// create item api
-router.post('/created', upload.single('img'), adminController.productCreated)
+// admin' store page
+router.get('/all-brands', adminController.allStores)
 
-// all items page
+// create product page
+router.get('/create/product', adminController.createProduct)
+
+// create product api
+router.post('/product/created', upload.single('img'), adminController.productCreated)
+
+// all products page
 router.get('/all-products', adminController.allProducts)
 
-// update item page
+// update product page
 router.get('/updating/:id', adminController.updatingProduct)
 
-// update item api
+// update product api
 router.put('/updated/:id', upload.single('img'), adminController.productUpdated)
 
-// soft delete item api
+// soft delete product api
 router.delete('/soft-delete/:id', adminController.softDelete)
 
-// hard delete item api
+// hard delete product api
 router.delete('/delete/:id', adminController.deleteProduct)
 
-// restore item api
+// restore product api
 router.get('/restore/:id', adminController.restore)
 
-// deleted item page
+// deleted product page
 router.get('/trash', adminController.trash)
 
 // update profile page

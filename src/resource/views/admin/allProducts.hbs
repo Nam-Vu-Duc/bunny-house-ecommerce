@@ -3,12 +3,19 @@
     <p>Tổng sản phẩm: {{productLength}}</p>
   </div>
 
-  <select class="filter">
-    <option value="">Toàn bộ</option>
-    <option value="skincare">Skincare</option>
-    <option value="makeup">Makeup</option>
-  </select>
-  
+  <div class="filter-and-create">
+    <select class="filter">
+      <option value="">Toàn bộ</option>
+      <option value="skincare">Skincare</option>
+      <option value="makeup">Makeup</option>
+    </select>
+
+    <a href="/admin/create/product" class="create-product" id="create-product">
+      <i class="fi fi-br-layer-plus"></i>
+      <p>Thêm Sản Phẩm</p>
+    </a>
+  </div>
+
   <div class="table">
     <table>
       <thead>

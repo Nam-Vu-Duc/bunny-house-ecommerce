@@ -1,14 +1,10 @@
-.order-details-container {
+.customer-details-container {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 10px;
-
-  form {
-    width: 100%;
-  }
 
   table {
     width: 100%;

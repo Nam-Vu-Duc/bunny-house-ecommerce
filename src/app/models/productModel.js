@@ -6,15 +6,16 @@ mongoose.plugin(slug)
 const Schema = mongoose.Schema
 
 const product = new Schema({
-  categories   : { type: String, }, 
-  skincare     : { type: String, }, 
-  makeup       : { type: String, }, 
-  brand        : { type: String, },
-  name         : { type: String, },
+  categories   : { type: String }, 
+  skincare     : { type: String }, 
+  makeup       : { type: String }, 
+  brand        : { type: String },
+  name         : { type: String },
   oldPrice     : { type: Number, default: ''  },  
-  price        : { type: Number, },
-  description  : { type: String, },
-  details      : { type: String, },
+  price        : { type: Number },
+  quantity     : { type: Number },
+  description  : { type: String },
+  details      : { type: String },
   status       : { type: String, default: 'no' },
   newArrival   : { type: String, default: 'no' },
   img          : { 

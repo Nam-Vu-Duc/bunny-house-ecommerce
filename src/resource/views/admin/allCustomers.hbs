@@ -1,0 +1,113 @@
+<div class="admin-all-customers-container">  
+  <div class="board-title">
+    <p>Tổng Khách Hàng: {{customerLength}}</p>
+  </div>
+
+  <div class="filter-and-create">
+    <select class="filter">
+      <option value="">Toàn bộ</option>
+      <option value=""></option>
+      <option value=""></option>
+    </select>
+
+    <a href="/admin/create/customer" class="create-customer" id="create-customer">
+      <i class="fi fi-rr-user-add"></i>
+      <p>Thêm Khách hàng</p>
+    </a>
+  </div>
+
+  <div class="table">
+    <table style="width:100%">
+      <thead>
+        <tr>
+          <td>
+            STT
+          </td>
+          <td>
+            Mã Khách hàng
+          </td>
+          <td>
+            Tên Khách Hàng
+          </td>
+          <td>
+            Tổng Đơn hàng
+          </td>
+          <td>
+            Tổng doanh thu
+          </td>
+          <td>
+          </td>
+        </tr>
+      </thead>
+
+      <tbody>
+        {{#each customersWithOrders}}
+        <tr>
+          <td>
+            {{addIndex @index 1}}
+          </td>
+          <td>
+            {{this._id}}
+          </td>
+          <td>
+            {{this.userInfo.name}}
+          </td>
+          <td>
+            {{this.totalOrder}}
+          </td>
+          <td>
+            {{this.totalPrice}} VND
+          </td>
+          <td>
+            <a href="/admin/all-customers/{{this._id}}">Chi Tiết</a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <span class="pagination">
+  </span>
+</div>
+
+<script>
+  // pagination 
+  var pagination = document.querySelector('span.pagination')
+  var productLength = `{{orderLength}}`
+  var currentPage = 1
+
+  // díplay all pages tag
+  for (let i = 0; i < productLength; i += 10) {
+    var newPage = document.createElement('a')
+    newPage.setAttribute('href', `/admin/all-orders?page=${currentPage}&type={{orderType}}`)
+    newPage.innerText = `${currentPage}`
+    pagination.appendChild(newPage)
+    currentPage++
+  }
+
+  // Style the current selected page
+  var allPagesTag = pagination.querySelectorAll('a')
+  for (let i = 0; i < allPagesTag.length; ++i) {
+    if (allPagesTag[i].innerText === `{{currentPage}}`) {
+      allPagesTag[i].style.borderColor = '#D1A6A6'
+      allPagesTag[i].style.backgroundColor = '#D1A6A6'
+      allPagesTag[i].style.color = 'white'
+      allPagesTag[i].style.width = '25px'
+      allPagesTag[i].style.height = '25px'
+    }
+  }
+
+  {{!-- let selectButton = document.querySelector('select')
+  selectButton.onchange = function () {
+    location = `/admin/all-orders?page={{currentPage}}&type=${this.value}`
+  }
+
+  let selectButtonOptions = selectButton.querySelectorAll('option')
+
+  selectButtonOptions.forEach(option => {
+    if (option.value === `{{orderType}}`) {
+      option.setAttribute('selected', 'selected')
+    }
+  }) --}}
+</script>

@@ -1,0 +1,100 @@
+<div class="admin-all-orders-container">  
+  <div class="board-title">
+    <p>Tổng cửa hàng: {{totalStore}}</p>
+  </div>
+
+  <div class="table">
+    <table style="width:100%">
+      <thead>
+        <tr>
+          <td>
+            STT
+          </td>
+          <td>
+            Mã cửa hàng
+          </td>
+          <td>
+            Tên cửa hàng
+          </td>
+          <td>
+            Địa chỉ
+          </td>
+          <td>
+            Tổng doanh thu
+          </td>
+          <td>
+          </td>
+        </tr>
+      </thead>
+
+      <tbody>
+        {{#each store}}
+        <tr>
+          <td>
+            {{addIndex @index 1}}
+          </td>
+          <td>
+            {{this._id}}
+          </td>
+          <td>
+            {{this.name}}
+          </td>
+          <td>
+            {{this.address}}
+          </td>
+          <td>
+            {{this.totalPrice}}
+          </td>
+          <td>
+            <a href="/admin">Chi Tiết</a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <span class="pagination">
+  </span>
+</div>
+
+<script>
+  // pagination 
+  var pagination = document.querySelector('span.pagination')
+  var productLength = `{{orderLength}}`
+  var currentPage = 1
+
+  // díplay all pages tag
+  for (let i = 0; i < productLength; i += 10) {
+    var newPage = document.createElement('a')
+    newPage.setAttribute('href', `/admin/all-orders?page=${currentPage}&type={{orderType}}`)
+    newPage.innerText = `${currentPage}`
+    pagination.appendChild(newPage)
+    currentPage++
+  }
+
+  // Style the current selected page
+  var allPagesTag = pagination.querySelectorAll('a')
+  for (let i = 0; i < allPagesTag.length; ++i) {
+    if (allPagesTag[i].innerText === `{{currentPage}}`) {
+      allPagesTag[i].style.borderColor = '#D1A6A6'
+      allPagesTag[i].style.backgroundColor = '#D1A6A6'
+      allPagesTag[i].style.color = 'white'
+      allPagesTag[i].style.width = '25px'
+      allPagesTag[i].style.height = '25px'
+    }
+  }
+
+  let selectButton = document.querySelector('select')
+  selectButton.onchange = function () {
+    location = `/admin/all-orders?page={{currentPage}}&type=${this.value}`
+  }
+
+  let selectButtonOptions = selectButton.querySelectorAll('option')
+
+  selectButtonOptions.forEach(option => {
+    if (option.value === `{{orderType}}`) {
+      option.setAttribute('selected', 'selected')
+    }
+  })
+</script>

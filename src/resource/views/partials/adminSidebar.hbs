@@ -12,17 +12,25 @@
       <i class="fi fi-br-home"></i>
       <p>Trang chủ</p>
     </a>
+    <a href="/admin/all-customers" class="sidebar-button" id="customers">
+      <i class="fi fi-rr-users"></i>
+      <p>Khách hàng</p>
+    </a>
     <a href="/admin/all-orders" class="sidebar-button" id="orders">
       <i class="fi fi-rr-piggy-bank"></i>
       <p>Đơn Hàng</p>
     </a>
-    <a href="/admin/create" class="sidebar-button" id="create-product">
-      <i class="fi fi-br-layer-plus"></i>
-      <p>Thêm Sản Phẩm</p>
+    <a href="/admin/all-stores" class="sidebar-button" id="stores">
+      <i class="fi fi-rr-store-alt"></i>
+      <p>Cửa hàng</p>
     </a>
     <a href="/admin/all-products?page=1&type=" class="sidebar-button" id="total-products">
       <i class="fi fi-rr-box-open"></i>
-      <p>Tổng Sản Phẩm</p>
+      <p>Sản Phẩm</p>
+    </a>
+    <a href="/admin/all-brands" class="sidebar-button" id="total-brands">
+      <i class="fi fi-rr-box-open"></i>
+      <p>Đối tác</p>
     </a>
     <a href="/admin/trash" class="sidebar-button" id="trash">
       <i class="fi fi-br-trash"></i>
@@ -61,7 +69,7 @@
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
+    for(let i = 0; i < ca.length; i++) {
       let c = ca[i];
       while (c.charAt(0) == ' ') {
         c = c.substring(1);

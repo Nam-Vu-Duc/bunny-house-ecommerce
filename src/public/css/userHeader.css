@@ -20,8 +20,8 @@ header {
     justify-content: center;
 
     img {
-      max-width: 50px;
-      aspect-ratio: 1 / 1;
+      max-width: 200px;
+      /* aspect-ratio: 1 / 1; */
     }
   };
 
