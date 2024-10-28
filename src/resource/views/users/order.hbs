@@ -60,7 +60,7 @@
         Tổng Tiền
       </td>
       <td>
-        {{order.totalOrderPrice}} đ
+        {{order.totalOrderPrice}} VND
       </td>
     </tr>
     <tr>
@@ -86,9 +86,9 @@
       {{#each order.products}}
       <tr>
         <td><p>{{this.name}}</p>        </td>
-        <td style="text-align: center;">{{this.price}}đ        </td>
-        <td style="text-align: center;">{{this.quantity}}      </td>
-        <td style="text-align: center;">{{this.totalPrice}}đ   </td>
+        <td style="text-align: center;">{{this.price}} VND      </td>
+        <td style="text-align: center;">{{this.quantity}}       </td>
+        <td style="text-align: center;">{{this.totalPrice}} VND </td>
       </tr>
       {{/each}}
     </tbody>

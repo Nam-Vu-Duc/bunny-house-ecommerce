@@ -14,6 +14,7 @@ const product = new Schema({
   oldPrice     : { type: Number, default: ''  },  
   price        : { type: Number },
   quantity     : { type: Number },
+  guide        : { type: String },
   description  : { type: String },
   details      : { type: String },
   status       : { type: String, default: 'no' },

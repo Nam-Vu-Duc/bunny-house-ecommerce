@@ -1,16 +1,8 @@
 <div class="product-details-container">
   <div class="table">
     <div class="image-box">
-      {{!-- <div class="thumbnails">
-        <img src="" />
-        <img src="" />
-        <img src="" />
-        <img src="" />
-        <img src="" />
-      </div> --}}
-
       <div class="image">
-        <img src="{{newProduct.img.path}}" />
+        <img src="{{newProduct.img.path}}" alt="{{newProduct.name}}"/>
       </div>
     </div>
     
@@ -18,8 +10,9 @@
       <div class="title">
         <h3>{{newProduct.brand}}</h3>
         <h1>{{newProduct.name}}</h1>
-        <h4 id="product-old-price"><del>{{newProduct.oldPrice}}đ</del></h4>
-        <h3 id="product-price">{{newProduct.price}}đ</h3>
+        <h4 id="product-old-price"><del>{{newProduct.oldPrice}} VND</del></h4>
+        <h3 id="product-price">{{newProduct.price}} VND</h3>
+        <h4 id="product-quantity">Số lượng: {{newProduct.quantity}}</h4>
       </div>
       
       <div class="description">
@@ -50,22 +43,27 @@
   </div>
 
   <div class="more-details">
-    <h3>Thông tin sản phẩm</h3>
+    <h3>THÔNG TIN SẢN PHẨM</h3>
     <p>{{newProduct.details}}</p>
+  </div>
+  
+  <div class="more-details">
+    <h3>HƯỚNG DẪN SỬ DỤNG</h3>
+    <p>{{newProduct.guide}}</p>
   </div>
 
   <div class="related-products">
     <div class="title">
-      <a href="/all-products/{{newProduct.categories}}/{{newProductType}}" class="main-title"><b>Sản phẩm tương tự</b></a>
+      <a href="/all-products/{{newProduct.categories}}/{{newProductType}}" class="main-title"><b>SẢN PHẨM TƯƠNG ỨNG</b></a>
     </div>
 
     <div class="products">
       {{#each relatedProducts}}
       <a href="/product/{{this.slug}}">
         <div class="product">
-          <img src="{{this.img.path}}" alt="" id="product-1">
-          <p id="product-old-price"><del>{{this.oldPrice}}đ </del></p>
-          <p id="product-price">{{this.price}}đ</p>
+          <img src="{{this.img.path}}" alt="{{this.name}}" id="product-1">
+          <p id="product-old-price"><del>{{this.oldPrice}} VND </del></p>
+          <p id="product-price">{{this.price}} VND</p>
           <p id="product-details">{{this.name}}</p>
         </div>
       </a>
