@@ -6,23 +6,19 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
   .title {
     display: flex; 
     align-items: center; 
     justify-content: center;
     gap: 5px; 
     font-size: 32px;
-
     i { color: red;}
-  
     .main-title {
       display: inline-block;
       position: relative;
       color: red;
       text-decoration: none;
     }
-    
     .main-title::after {
       content: '';
       position: absolute;
@@ -35,13 +31,11 @@
       transform-origin: bottom right;
       transition: transform 0.25s ease-out;
     }
-    
     .main-title:hover::after {
       transform: scaleX(1);
       transform-origin: bottom left;
     }
   }
-
   .products {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
@@ -56,17 +50,13 @@
     grid-template-columns: repeat(5, minmax(min(11.25rem, 100%), 1fr));
     scroll-snap-type: x mandatory;
     max-width: 1300px;
-    
     img { max-width: 100%; aspect-ratio: 1 / 1 };
-  
     a, p { text-decoration: none; color: black};
-
     a {
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    
     .product {
       background-color: white; 
       max-width: 220px;
@@ -74,7 +64,6 @@
       scroll-snap-align: none start;
       border-radius: 10px;
     };
-    
     .product:hover {
       border: 1.5px solid red;
       border-radius: 10px;
@@ -83,7 +72,6 @@
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
   }
-  
   #product-price {
     background-color: #FFDFDF;
     padding: 5px;
@@ -91,7 +79,6 @@
     border-radius: 5px;
     font-weight: bolder;
   }
-  
   #product-details {
     display: flex; 
     height: 50px; 
@@ -100,44 +87,36 @@
     word-wrap: break-word;
     font-size: 14px;
   }
-  
   .products::-webkit-scrollbar {
     display: none;
   }
 }
-
 .flash-deal-board {
   background: linear-gradient(rgb(248, 62, 96), rgb(254, 80, 72));
   border-radius: 10px;
-
   i, a {
     animation: bling 1s infinite
   }
 }
-
 .famous-brand-board {
   overflow: hidden;
   padding-top: 20px;
   position: relative;
   margin: auto;
   justify-content: center;
-
   .title {
     display: flex; 
     align-items: center; 
     justify-content: center;
     gap: 5px; 
     font-size: 32px;
-
     i { color: red;}
-  
     .main-title {
       display: inline-block;
       position: relative;
       color: red;
       text-decoration: none;
     }
-    
     .main-title::after {
       content: '';
       position: absolute;
@@ -150,19 +129,16 @@
       transform-origin: bottom right;
       transition: transform 0.25s ease-out;
     }
-    
     .main-title:hover::after {
       transform: scaleX(1);
       transform-origin: bottom left;
     }
   }
-
   .brands {
     width: 100%;
     position: relative;
     overflow: hidden;
   }
-
   .inner {
     width: 100%;
     display: flex;
@@ -170,40 +146,34 @@
     gap: 5px;
     animation: loop 10s linear infinite;
   }
-
   .brand {
     display: flex;
     align-items: center;
     border-radius: 5px;
     padding: 10px;
     background-color: white;
-
     a { 
       text-decoration: none; 
       color: black;
       width: max-content;
     }
   }
-
   .fade {
     position: absolute;
     inset: 0;
     pointer-events: none;
   }
 }
-
 @keyframes bling {
   0% {color: white;}
   50% {color: yellow;}
   100% {color: white;}
 }
-
 @keyframes loop {
   0% { transform: translateX(0) }
 
   100% { transform: translateX(-50%) }
 }
-
 @media screen and (max-width: 700px) {
   .flash-deal-board, .hot-products-board, .content-board, .famous-brand-board {
     .title {

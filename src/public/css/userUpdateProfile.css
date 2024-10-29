@@ -2,26 +2,22 @@
   display: flex;
   padding: 20px;
   justify-content: space-around;
-
   .sidebar-menu {
     width: 20%;
     background-color: white;
     border-radius: 10px;
     padding: 10px 0;
-
     .avatar {
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 10px;
       flex-direction: column;
-
       img {
         max-width: 75px;
         aspect-ratio: 1 / 1;
       }
     }
-    
     .tag {
       ul {
         margin-block-start: 0;
@@ -33,26 +29,22 @@
         justify-content: center;
         flex-direction: column;
       };
-  
       li {
         width: 80%;
         padding: 10px;
         border-radius: 5px;
         cursor: pointer;
       }
-
       li:hover {
         background-color: #FFDFDF;
       }
     }
   }
-
   .content {
     width: 70%;
     background-color: white;
     border-radius: 10px;
     padding: 10px;
-
     p {
       background-color: #F0F0F0;
       height: fit-content;
@@ -65,12 +57,10 @@
       text-align: center;
       border-radius: 5px;
     }
-
     form {
       width: 100%;
       display: grid;
       grid-template-columns: auto auto;
-  
       .form-group {
         width: 80%;
         padding: 10px;
@@ -78,12 +68,10 @@
         flex-direction: column;
         gap: 5px;
       }
-    
       label {
         font-weight: bolder;
         text-transform: capitalize;
       }
-    
       input:not(input[type='radio']) {
         width: 100%;
         height: 40px;
@@ -92,13 +80,11 @@
         text-indent: 10px;
       }
     }
-
     .update-profile-button, .update-feedback-button {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-
       button {
         width: fit-content; 
         height: 30px;
@@ -108,20 +94,17 @@
         border-radius: 5px;
         cursor: pointer;
       };
-    
       button:hover {
         background-color: #D1A6A6;
         color: white;
         border: 1px solid white ;
       }
     }
-
     table {
       width: 100%;
       border-spacing: 0px 10px;
       padding: 0px 10px;
       text-align: center;
-
       th {
         background-color:#D1A6A6;
         height: 50px;
@@ -129,15 +112,12 @@
         a { text-decoration: none };
         i { color: black }
       }
-  
       tr {
         background-color:#F0F0F0;
         height: 50px;
-
         td {
           text-align: center;
         }
-  
         td:first-child {
           border-top-left-radius: 10px;
           border-bottom-left-radius: 10px;
@@ -146,30 +126,24 @@
           border-top-right-radius: 10px;
           border-bottom-right-radius: 10px;
         }
-
         a { text-decoration: none; color: black; font-weight: bolder;}
       }
-      
       tr:hover {
         filter: brightness(85%);
       }
     }
   }
 }
-
 @media screen and (max-width: 700px) {
   .user-update-profile-container {
     display: block;
-
     .sidebar-menu {
       width: 100% !important;
     }
-
     .content {
       width: 100% !important;
       padding: 0 0 10px 0 !important;
       margin-top: 10px;
-
       form {
         grid-template-columns: auto;
       }

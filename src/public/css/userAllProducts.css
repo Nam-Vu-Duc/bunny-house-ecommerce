@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
   .title {
     display: flex; 
     align-items: center; 
@@ -13,13 +12,11 @@
     font-size: 32px;
     color: red;
     margin-top: 10px;
-  
     .main-title {
       display: inline-block;
       position: relative;
     }
   }
-
   .main-title::after {
     content: '';
     position: absolute;
@@ -32,27 +29,22 @@
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
   }
-  
   .main-title:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
   }
-
   .filter {
     width: 100%;
     max-width: 1300px;
   }
-
   .filter-btn {
     background-color: #FFDFDF;
     padding: 5px;
   }
-
   .all-category-skincare, .all-category-makeup {
     padding: 10px;
     width: 100%;
     max-width: 1300px;
-
     ul {
       padding-inline-start: 0;
       list-style: none;
@@ -66,7 +58,6 @@
       grid-template-columns: repeat(6, minmax(min(175px, 100%), 1fr));
       scroll-snap-type: x mandatory;
     }
-
     li {
       border: 1px solid #D1A6A6;
       border-radius: 5px;
@@ -74,7 +65,6 @@
       background-color: white;
       scroll-snap-align: none start;
     }
-
     a {
       display: flex; 
       justify-content: space-between;
@@ -84,14 +74,12 @@
       padding: 5px;
       height: 100%;
     }
-
     img {
       width: 40px;
       aspect-ratio: 1/1;
       border-radius: 10px;
     }
   }
-
   .all-products {
     scroll-behavior: smooth;
     align-items: center;
@@ -105,17 +93,13 @@
     max-width: 1300px;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-    
     img { max-width: 100%; aspect-ratio: 1 / 1 };
-
     a, p { text-decoration: none; color: black};
-
     a {
       display: flex;
       align-items: center;
       justify-content: center;
     }
-
     .product {
       background-color: white; 
       max-width: 220px;
@@ -140,7 +124,6 @@
         font-size: 14px;
       }
     };
-    
     .product:hover {
       border: 1.5px solid red; 
       border-radius: 10px;
@@ -149,7 +132,6 @@
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
   }
-
   .pagination {
     display: flex; 
     align-items: center; 
@@ -168,12 +150,10 @@
     }
   }
 }
-
 @media screen and (max-width: 500px) {
   .title {
     font-size: 25px !important;
   }
-
   .all-category-skincare, .all-category-makeup {
     ul {
       -ms-overflow-style: none;  /* IE and Edge */
@@ -187,7 +167,6 @@
       scroll-snap-type: x mandatory;
     }
   }
-
   .all-products {
     grid-template-columns: repeat(2, minmax(min(11.25rem, 100%), 1fr)) !important;
   }

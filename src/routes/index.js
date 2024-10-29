@@ -16,6 +16,8 @@ function route(app) {
 
   app.use('/admin', checkAdmin, adminRoute)
 
+  app.use('/', checkUser, homeRoute)
+
   app.use('/home', checkUser, homeRoute)
 
   app.use('/authentication' , authenticationRoute)

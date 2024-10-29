@@ -7,24 +7,19 @@ header {
   top: 0;
   width: 100%;
   background-color: #FFDFDF;
-  /* background: transparent;
-  backdrop-filter: blur(10px); */
   z-index: 3;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
   .store-logo {
     padding: 0 10px;
     gap: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-
     img {
       max-width: 50px;
       aspect-ratio: 1 / 1;
     }
   };
-
   .menu {
     /* display: flex; */
     align-items: center;
@@ -33,36 +28,30 @@ header {
     height: 100%;
     padding-right: 20px;
   }
-
   .search-form {
     position: absolute;
     top: 70px;
     width: 100%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
     #search-input {
       height: 50px;
       width: 100%;
       border-style: none;
     }
-
     input {
       text-align: center;
     }
   }
-  
   .header-button {
     padding: 0 20px 0 20px; 
     display: flex;
     align-items: center;
     justify-content: center;
-
     .orders {
       text-decoration: none;
       position: relative;
       display: inline-block;
       padding-right: 10px;
-      
       .orders-quantity {
         position: absolute;
         top: -5px;
@@ -73,18 +62,15 @@ header {
         color: white;
       }
     }
-      
     a {
       text-decoration: none;
       color: black;
     }
-      
     i {
       font-size: 40px;
       cursor: pointer;
       padding: 10px;
     }
-      
     img {
       border-radius: 50%;
       width: 40px;
@@ -93,7 +79,6 @@ header {
       cursor: pointer;
     }
   }
-  
   .avatar-menu {
     position: absolute;
     background-color: white;
@@ -102,7 +87,6 @@ header {
     right: 20px;
     top: 60px;
     z-index: 5;
-
     a {
       padding: 10px;
       display: flex; 
@@ -114,14 +98,12 @@ header {
       margin-block-start: 0;
       margin-block-end: 0;
     };
-
     a:hover { 
       color: red;
       background-color: #FFDFDF;
       i { color: red } 
     }
   }
-
   .title, .dropdown-title {
     display: flex; 
     gap: 10px; 
@@ -129,7 +111,6 @@ header {
     padding: 0 15px 0;
     height: 100%;
     margin-top: 0;
-
     a, p {
       text-decoration: none;
       font-weight: bolder;
@@ -139,15 +120,12 @@ header {
       width: 100%;
     }
   }
-
   .title:hover, .dropdown-title:hover {
     background-color: #ffffff19;
   }
-  
   .dropdown {
     display: inline-block;
     height: 100%;
-  
     ul {
       display: none;
       position: absolute;
@@ -160,13 +138,11 @@ header {
       list-style: none;
       padding-inline-start: 0;
     };
-
     li {
       width: 200px;
       height: 60px;
       padding: 5px;
     }
-
     span {
       display: flex; 
       justify-content: space-between;
@@ -177,13 +153,11 @@ header {
       border-radius: 5px;
       height: 40px;
     }
-
     span:hover {
       color: red;
       background-color: #FFDFDF;
       i { color: red } 
     }
-
     ul > li > ul {
       position: absolute;
       top: 0;
@@ -192,13 +166,11 @@ header {
       justify-content: start;
       grid-template-columns: auto auto auto;
     }
-
     img {
       width: 40px;
       aspect-ratio: 1/1;
       border-radius: 50%;
     }
-
     a {
       display: flex; 
       justify-content: space-between;
@@ -209,23 +181,19 @@ header {
       border-radius: 5px;
       height: 40px;
     }
-
     a:hover { 
       color: red;
       background-color: #FFDFDF;
       i { color: red } 
     }
   }
-  
   .dropdown:hover {
     ul {
       display: grid;
     };
-
     ul > li > ul {
       display: none
     }
-
     li:hover {
       ul {
         display: grid
@@ -233,17 +201,14 @@ header {
     }
   };
 }
-
 @media screen and (max-width: 700px) {
   .responsive-menu {
     display: block !important;
     padding: 10px;
   }
-
   .avt-img {
     padding-right: 20px !important;
   }
-
   .menu {
     position: absolute !important;
     top: 70px;
@@ -258,32 +223,21 @@ header {
     padding-top: 5px;
     padding-bottom: 5px;
     z-index: 3;
-    /* display: none !important; */
-
     ul {
       top: 72px !important;
-      
       li {
         width: 100px !important;
         height: fit-content !important;
-
-        span {
-          padding: 0 10px !important;
-        }
-        a {
-          padding: 0 !important;
-        }
-
+        span { padding: 0 10px !important; }
+        a { padding: 0 !important; }
         ul {
           top: 0 !important;
           left: 110px !important;
           grid-template-columns: auto auto !important;
           column-gap: 10px;
-
           li {
             width: 100% !important;
           }
-
           img {
             width: 20px !important;
           }
@@ -291,7 +245,6 @@ header {
       }
     }
   }
-
   .menu > div {
     border-radius: 10px;
     width: 100%;

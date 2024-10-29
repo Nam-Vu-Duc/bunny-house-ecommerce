@@ -1,7 +1,6 @@
 .user-all-brands-container {
   width: 100%;
   overflow: hidden;
-
   .title {
     display: flex; 
     align-items: center; 
@@ -10,13 +9,11 @@
     font-size: 32px;
     color: red;
     margin-top: 10px;
-  
     .main-title {
       display: inline-block;
       position: relative;
     }
   }
-
   .main-title::after {
     content: '';
     position: absolute;
@@ -29,12 +26,10 @@
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
   }
-  
   .main-title:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
   }
-
   .all-brands {
     scroll-behavior: smooth;
     align-items: center;
@@ -48,7 +43,6 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
-
   .brand {
     width: 100%;
     background-color: white;
@@ -58,7 +52,6 @@
     justify-content: center;
     height: 100px;
   }
-
   a {
     display: flex;
     width: 100%;

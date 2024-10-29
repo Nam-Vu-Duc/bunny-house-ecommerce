@@ -89,9 +89,8 @@ class allProductsController {
   showBrand(req, res, next) {
     product.find({ deletedAt: null, brand: req.params.slug }).lean()
       .then(product => { 
-        const title = req.params.slug
         const newProduct = product
-        res.render('users/allProducts', { title: title, newProduct }) })
+        res.render('users/allProducts', { title: req.params.slug, newProduct }) })
       .catch(next)
   }
 }
