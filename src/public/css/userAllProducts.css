@@ -93,7 +93,7 @@
     max-width: 1300px;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-    img { max-width: 100%; aspect-ratio: 1 / 1 };
+    img { max-width: 100%; aspect-ratio: 1 / 1; };
     a, p { text-decoration: none; color: black};
     a {
       display: flex;
