@@ -146,10 +146,9 @@
     }
   }
   .related-products {
-    width: 100%;
+    width: 90%;
     overflow: hidden;
     padding-top: 20px;
-    max-width: 1300px;
     .title {
       display: flex; 
       align-items: center; 
@@ -181,11 +180,6 @@
       }
     }
     .products {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-      overflow-x: scroll;
-      padding-right: 17px;
-      box-sizing: content-box;
       scroll-behavior: smooth;
       align-items: center;
       gap: 10px;
@@ -194,6 +188,10 @@
       display: grid;
       grid-template-columns: repeat(5, minmax(min(11.25rem, 100%), 1fr));
       scroll-snap-type: x mandatory;
+      overflow-x: scroll;
+      max-width: 1300px;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
       img { max-width: 100%; aspect-ratio: 1 / 1 };
       a, p { text-decoration: none; color: black};
       .product {
