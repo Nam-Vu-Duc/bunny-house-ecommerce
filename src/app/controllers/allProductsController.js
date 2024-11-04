@@ -1,4 +1,5 @@
 const product = require('../models/productModel')
+const brand = require('../models/brandModel')
 
 class allProductsController {
   showAllProducts(req, res, next) {
@@ -80,7 +81,7 @@ class allProductsController {
   }
 
   showAllBrands(req, res, next) {
-    product.find({ deletedAt: null }).distinct("brand").lean()
+    brand.find().lean()
       .then(brand => { 
         res.render('users/allBrands', { title: 'Toàn bộ thương hiệu', brand }) })
       .catch(next)

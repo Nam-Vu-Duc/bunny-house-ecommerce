@@ -1,14 +1,17 @@
-const product = require('../models/productModel')
-const user = require('../models/userModel')
-const order = require('../models/orderModel')
-const store = require('../models/storeModel')
+const product    = require('../models/productModel')
+const user       = require('../models/userModel')
+const order      = require('../models/orderModel')
+const store      = require('../models/storeModel')
+const brand      = require('../models/brandModel')
+const employee   = require('../models/employeeModel')
 const cloudinary = require('cloudinary').v2
 
 class adminController {
   async show(req, res, next) {
     const orders          = await order.find({ deletedAt: null }).lean()
-    const products        = await product.find({ deletedAt: null }).lean()
-    const deletedProduct  = await product.find({ deletedAt: { $ne: null } }).lean()
+    const products        = await product.find().lean()
+    const brands          = await brand.find().lean()
+    const employees       = await employee.find().lean()
     const maxValueOrder   = await order.find({ deletedAt: null }).sort({totalOrderPrice: -1}).limit(1)
 
     // order info
@@ -19,8 +22,8 @@ class adminController {
 
     // product info
     const allProducts         = products.length
-    const deletedProducts     = allProducts === 0 ? 0 : deletedProduct.length
-    const allBrands           = allProducts === 0 ? 0 : [...new Set(products.map(product => product.brand))].length
+    const deletedProducts     = allProducts === 0 ? 0 : products.filter(order => order.deletedAt !== null).length
+    const allBrands           = brands.length
     const allSkincareProducts = allProducts === 0 ? 0 : products.filter(product => product.categories === 'skincare').length
     const allMakeupProducts   = allProducts === 0 ? 0 : products.filter(product => product.categories === 'makeup').length
 
@@ -30,7 +33,10 @@ class adminController {
     const maxValueOrderId         = allOrders === 0 ? '' : maxValueOrder[0]._id.toString()
     const maxValueOrderToCurrency = allOrders === 0 ? 0  : maxValueOrder[0].totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 
-    res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin', allOrders, preparingOrders, deliveringOrders, doneOrders, allProducts, allBrands, allSkincareProducts, allMakeupProducts, deletedProducts, totalRevenueToCurrency, maxValueOrderId, maxValueOrderToCurrency })
+    // employee info
+    const totalEmployee = employees.length
+
+    res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin', allOrders, preparingOrders, deliveringOrders, doneOrders, allProducts, allBrands, allSkincareProducts, allMakeupProducts, deletedProducts, totalRevenueToCurrency, maxValueOrderId, maxValueOrderToCurrency, totalEmployee })
   }
 
   async allCustomers(req, res, next) {

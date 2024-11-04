@@ -8,8 +8,8 @@
     {{#each brand}}
       <div class="brand">
         <img src="{{this.img.path}}" alt="{{this.name}}"/>
-        <a href="/all-products/all-brands/{{this}}">
-          {{this}}
+        <a href="/all-products/all-brands/{{this.name}}">
+          {{this.name}}
         </a>
       </div>
     {{/each}}

@@ -89,12 +89,12 @@
         <tbody>
           <tr>
             <td>Tổng doanh thu</td>
-            <td>{{totalRevenueToCurrency}}đ</td>
+            <td>{{totalRevenueToCurrency}} VND</td>
             <td></td>
           </tr>
           <tr>
             <td>Đơn có giá trị cao nhất</td>
-            <td>{{maxValueOrderToCurrency}}đ</td>
+            <td>{{maxValueOrderToCurrency}} VND</td>
             <td><a href="/admin/all-orders/{{maxValueOrderId}}">Chi tiết</a></td>
           </tr>
         </tbody>
@@ -138,18 +138,18 @@
           <tr>
             <td>Số lượng cửa hàng</td>
             <td>{{allOrders}}</td>
-            <td><a href="/admin/all-orders/?page=1&type=preparing">Chi tiết</a></td>
+            <td><a href="/admin/all-stores">Chi tiết</a></td>
           </tr>
           <tr>
             <td>Cửa hàng có doanh thu cao nhất</td>
             <td>{{preparingOrders}}</td>
-            <td><a href="/admin/all-orders/?page=1&type=preparing">Chi tiết</a></td>
+            <td><a href="/admin/stores">Chi tiết</a></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="customer-info">
+    <div class="employee-info">
       <table>
         <thead>
           <tr>
@@ -161,13 +161,13 @@
         <tbody>
           <tr>
             <td>Số lượng nhân sự</td>
-            <td>{{allOrders}}</td>
-            <td><a href="/admin/all-customers">Chi tiết</a></td>
+            <td>{{totalEmployee}}</td>
+            <td><a href="/admin/all-employees">Chi tiết</a></td>
           </tr>
           <tr>
             <td>Bảng lương</td>
             <td></td>
-            <td><a href="/admin/all-orders/?page=1&type=preparing">Chi tiết</a></td>
+            <td><a href="/admin/">Chi tiết</a></td>
           </tr>
         </tbody>
       </table>

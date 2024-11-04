@@ -2,7 +2,7 @@
   <div class="table">
     <div class="image-box">
       <div class="image">
-        <img src="{{newProduct.img.path}}" alt="{{newProduct.name}}"/>
+        <img src="{{newProduct.img.path}}" alt="{{newProduct.name}}"  />
       </div>
     </div>
     
@@ -61,7 +61,7 @@
       {{#each relatedProducts}}
       <a href="/product/{{this.slug}}">
         <div class="product">
-          <img src="{{this.img.path}}" alt="{{this.name}}" id="product-1">
+          <img src="{{this.img.path}}" alt="{{this.name}}" id="product-1" >
           <p id="product-old-price"><del>{{this.oldPrice}} VND </del></p>
           <p id="product-price">{{this.price}} VND</p>
           <p id="product-details">{{this.name}}</p>
@@ -81,6 +81,12 @@
   var getIncreaseQuantity = document.querySelector('i.fi-rr-add')
   var getDecreaseQuantity = document.querySelector('i.fi-rr-minus-circle')
   var getQuantityValue    = document.querySelector('div.quantity').querySelector('p')
+  const metaContent = `{{newProduct.details}}`.slice(0, 150) + '...'
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const metaDescription = document.querySelector("meta[name='description']");
+    metaDescription.setAttribute("content", metaContent);
+  });
   
   // set default quantity value to 0 on first load and hidden the quantity div
   getQuantityValue.innerText = 0
@@ -220,8 +226,6 @@
 
       myObj.productInfo.push(newProductInfo)
       localStorage.setItem('product_cart_count', JSON.stringify(myObj));
-    } else {
-
-    }
+    } else {}
   }
 </script>

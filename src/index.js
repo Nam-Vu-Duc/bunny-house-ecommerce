@@ -12,21 +12,14 @@ const Handlebars = require('handlebars')
 const port = process.env.PORT
 
 db.connect()
-
 app.use(express.static(path.join(__dirname, 'public')))
-
 app.use(express.urlencoded({
   extended: true
 }))
-
 app.use(express.json())
-
 app.use(morgan('combined'))
-
 app.use(methodOverride('_method'))
-
 app.use(sortMiddleware)
-
 app.engine('hbs', handlebars.engine({
   extname: '.hbs',
   defaultLayout: 'users',
@@ -34,14 +27,12 @@ app.engine('hbs', handlebars.engine({
     addIndex: (a, b) => a + b,
   }
 }))
-
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'resource', 'views'))
 app.set('view options', { layout: 'other' });
 
 //route 
 route(app)
-
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`)
 })

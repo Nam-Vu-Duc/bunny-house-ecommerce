@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-
 const introduceController = require('../app/controllers/introduceController')
 
 router.get('/', introduceController.show)
