@@ -16,6 +16,14 @@
         <del style="color: black;"><p id="product-old-price">{{this.oldPrice}} VND</p></del>
         <p id="product-price">{{this.price}} VND</p>
         <p id="product-details">{{this.name}}</p>
+        <p id="product-rate">
+          {{this.rate}}/5
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+        </p>
       </div>
     </a>
     {{/each}}
@@ -35,6 +43,14 @@
         <img src="{{this.img.path}}" alt="{{this.img.name}}" id="product-1">
         <p id="product-price">{{this.price}} VND</p>
         <p id="product-details">{{this.name}}</p>
+        <p id="product-rate">
+          {{this.rate}}/5
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+        </p>
       </div>
     </a>
     {{/each}}
@@ -54,6 +70,14 @@
         <img src="{{this.img.path}}" alt="{{this.img.name}}" id="product-1">
         <p id="product-price">{{this.price}} VND</p>
         <p id="product-details">{{this.name}}</p>
+        <p id="product-rate">
+          {{this.rate}}/5
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+        </p>
       </div>
     </a>
     {{/each}}
@@ -91,6 +115,5 @@
   allProductPrices.forEach((price) => {
     price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
   })
-
 </script>
 

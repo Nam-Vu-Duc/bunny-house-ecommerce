@@ -16,6 +16,7 @@ const product = new Schema({
   details      : { type: String },
   status       : { type: String, default: 'no' },
   newArrival   : { type: String, default: 'no' },
+  rate         : { type: Number },
   img          : { 
     path       : String,
     filename   : String,
