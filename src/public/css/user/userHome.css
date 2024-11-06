@@ -50,7 +50,7 @@
     grid-template-columns: repeat(5, minmax(min(11.25rem, 100%), 1fr));
     scroll-snap-type: x mandatory;
     max-width: 1300px;
-    img { max-width: 100%; aspect-ratio: 1 / 1 };
+    img { width: 220px; aspect-ratio: 1 / 1 };
     a, p { text-decoration: none; color: black};
     a {
       display: flex;

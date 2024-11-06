@@ -2,7 +2,7 @@
   <div class="table">
     <div class="image-box">
       <div class="image">
-        <img src="{{newProduct.img.path}}" alt="{{newProduct.name}}"  />
+        <img src="{{newProduct.img.path}}" alt="{{newProduct.name}}" loading="lazy"/>
       </div>
     </div>
     
@@ -69,7 +69,7 @@
       {{#each relatedProducts}}
       <a href="/product/{{this.slug}}">
         <div class="product">
-          <img src="{{this.img.path}}" alt="{{this.name}}" id="product-1" >
+          <img src="{{this.img.path}}" alt="{{this.name}}" id="product-1" loading="lazy">
           <p id="product-old-price"><del>{{this.oldPrice}} VND </del></p>
           <p id="product-price">{{this.price}} VND</p>
           <p id="product-details">{{this.name}}</p>
