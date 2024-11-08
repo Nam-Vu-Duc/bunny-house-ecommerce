@@ -11,8 +11,9 @@
     text-decoration: none;
     color: black;
     display: block;
-    width: fit-content;
+    width: 100%;
     min-width: 25px;
+    padding: 5px;
   }
 
   a:hover {
