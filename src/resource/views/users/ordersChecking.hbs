@@ -54,12 +54,7 @@
                     <tr>
                         <td>{{order.createdAt}}</td>
                         <td>{{order.customerInfo.name}}</td>
-                        <td>
-                            {{!-- <i class="fi fi-ss-person-dolly"></i>
-                            <i class="fi fi-bs-shipping-fast"></i>
-                            <i class="fi fi-ss-check-circle"></i> --}}
-                            {{order.status}}
-                        </td>
+                        <td>{{order.status}}</td>
                         <td><a href="/all-orders/{{order._id}}">Chi Tiết</td>
                     </tr>
                 </tbody>
@@ -72,5 +67,4 @@
         errorMessage.style.color = 'red'
         getOrderContainer.removeChild(orderProcess)
     }
-
 </script>

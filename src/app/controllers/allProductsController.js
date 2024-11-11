@@ -12,31 +12,17 @@ class allProductsController {
 
     product.find({ deletedAt: null }).lean()
       .then(product => { 
-        product.forEach(product => {
-          product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-          product.oldPrice = product.oldPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-        })
         let title = 'Toàn Bộ Sản Phẩm'
-
-        if (type === 'flash-sale') {
-          product = product.filter(product => product.status === 'flash-sale' )
-          title   = 'Sản Phẩm Đang Flash Sale'
-        }
-        if (type === 'hot') {
-          product = product.filter(product => product.status === 'hot' )
-          title   = 'Sản Phẩm Đang Hot'
-        }
-        if (type === 'new-arrival') {
-          product = product.filter(product => product.newArrival === 'yes' )
-          title   = 'Sản Phẩm Mới Về'
-        }
-        if (type === 'skincare') {
-          product = product.filter(product => product.skincare !== '' )
-          title   = 'Sản Phẩm Skincare'
-        }
-        if (type === 'makeup') {
-          product = product.filter(product => product.makeup !== '' )
-          title   = 'Sản Phẩm Makeup'
+        const filters = {
+          'flash-sale' : { filter: product => product.status     === 'flash-sale', title: 'Sản Phẩm Đang Flash Sale' },
+          'hot'        : { filter: product => product.status     === 'hot'       , title: 'Sản Phẩm Đang Hot'        },
+          'new-arrival': { filter: product => product.newArrival === 'yes'       , title: 'Sản Phẩm Mới Về'          },
+          'skincare'   : { filter: product => product.skincare   !== ''          , title: 'Sản Phẩm Skincare'        },
+          'makeup'     : { filter: product => product.makeup     !== ''          , title: 'Sản Phẩm Makeup'          }
+        };
+        if (type in filters) {
+          product = product.filter(filters[type].filter);
+          title = filters[type].title;
         }
 
         if (sortedColumn === 'price' && sort === 'asc') {
@@ -46,7 +32,7 @@ class allProductsController {
         }
 
         const productLength = product.length
-        const newProduct = product.slice(skip, skip + itemsPerPage)
+        const newProduct    = product.slice(skip, skip + itemsPerPage)
         
         res.render('users/allProducts', { title: title, newProduct, type, productLength, currentPage, sortedColumn, sort }) })
       .catch(next)
@@ -54,11 +40,7 @@ class allProductsController {
 
   showSkincare(req, res, next) {
     product.find({ deletedAt: null, skincare: req.params.slug }).lean()
-      .then(product => { 
-        product.forEach(product => {
-          product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-          product.oldPrice = product.oldPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-        })        
+      .then(product => {    
         const type       = req.params.slug
         const newProduct = product
 
@@ -68,11 +50,7 @@ class allProductsController {
 
   showMakeUp(req, res, next) {
     product.find({ deletedAt: null, makeup: req.params.slug }).lean()
-      .then(product => { 
-        product.forEach(product => {
-          product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-          product.oldPrice = product.oldPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-        })        
+      .then(product => {     
         const type       = req.params.slug
         const newProduct = product
         

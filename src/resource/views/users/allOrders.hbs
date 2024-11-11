@@ -153,7 +153,7 @@ function updateTableBody(totalOrderPrice) {
 
     // create product price element
     var newProductPrice = document.createElement('td')
-    newProductPrice.innerText = `${getProductInfo.productInfo[i].price} VND`
+    newProductPrice.innerText = `${getProductInfo.productInfo[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} VND`
 
     // create an input store the price value to submit the form
     var newProductPriceInput = document.createElement('input')
@@ -173,14 +173,14 @@ function updateTableBody(totalOrderPrice) {
 
     // create product total price element
     var newProductTotalPrice = document.createElement('td')
-    var convertNewProductTotalPriceToString = ((getProductInfo.productInfo[i].price*1000) * getProductInfo.productInfo[i].quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') 
+    var convertNewProductTotalPriceToString = (getProductInfo.productInfo[i].price * getProductInfo.productInfo[i].quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') 
     newProductTotalPrice.innerText = `${convertNewProductTotalPriceToString} VND`
     
     // create an input store the total price value to submit the form
     var newProductTotalPriceInput = document.createElement('input')
     newProductTotalPriceInput.setAttribute('type', 'hidden')
     newProductTotalPriceInput.setAttribute('name', 'productTotalPrice')
-    newProductTotalPriceInput.setAttribute('value', convertNewProductTotalPriceToString*1000)
+    newProductTotalPriceInput.setAttribute('value', convertNewProductTotalPriceToString)
 
     var newProductDelete = document.createElement('td')
     newProductDelete.setAttribute('class', 'delete-button')
@@ -189,7 +189,7 @@ function updateTableBody(totalOrderPrice) {
     `
 
     // calculate all product prices
-    totalOrderPrice.total += (getProductInfo.productInfo[i].price*1000) * getProductInfo.productInfo[i].quantity
+    totalOrderPrice.total += (getProductInfo.productInfo[i].price) * getProductInfo.productInfo[i].quantity
 
     // add each element to the row
     newProductRow.appendChild(newProductImage)
@@ -260,8 +260,6 @@ function updateTableFooter(totalOrderPrice) {
   totalOrderTitle.innerText = 'Tổng'
 
   var totalOrderPrices = document.createElement('td')
-  totalOrderPrices.setAttribute('colspan', '2')
-
   var totalOrderPricesInput = document.createElement('input')
   totalOrderPricesInput.setAttribute('type', 'hidden')
   totalOrderPricesInput.setAttribute('name', 'totalOrderPrice')
@@ -273,6 +271,7 @@ function updateTableFooter(totalOrderPrice) {
   getTableFooter.appendChild(totalOrderTitle)
   getTableFooter.appendChild(totalOrderPricesInput)
   getTableFooter.appendChild(totalOrderPrices)
+  getTableFooter.appendChild(document.createElement('td'))
 }
 updateTableFooter(totalOrderPrice)
 

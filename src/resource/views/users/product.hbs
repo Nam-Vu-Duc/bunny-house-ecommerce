@@ -18,8 +18,8 @@
         </h4>
         <h3>{{newProduct.brand}}</h3>
         <h1>{{newProduct.name}}</h1>
-        <h4 id="product-old-price"><del>{{newProduct.oldPrice}} VND</del></h4>
-        <h3 id="product-price">{{newProduct.price}} VND</h3>
+        <del><h4 id="product-old-price">{{newProduct.oldPrice}}</h4></del>
+        <h3 id="product-price">{{newProduct.price}}</h3>
         <h4 id="product-quantity">Số lượng: {{newProduct.quantity}}</h4>
       </div>
       
@@ -70,8 +70,8 @@
       <a href="/product/{{this.slug}}">
         <div class="product">
           <img src="{{this.img.path}}" alt="{{this.name}}" id="product-1" loading="lazy">
-          <p id="product-old-price"><del>{{this.oldPrice}} VND </del></p>
-          <p id="product-price">{{this.price}} VND</p>
+          <p id="product-old-price"><del>{{this.oldPrice}}</del></p>
+          <p id="product-price">{{this.price}}</p>
           <p id="product-details">{{this.name}}</p>
         </div>
       </a>
@@ -89,6 +89,11 @@
   var getIncreaseQuantity = document.querySelector('i.fi-rr-add')
   var getDecreaseQuantity = document.querySelector('i.fi-rr-minus-circle')
   var getQuantityValue    = document.querySelector('div.quantity').querySelector('p')
+  var productOldPrices    = document.querySelector('h4#product-old-price')
+  var productPrices       = document.querySelector('h3#product-price')
+  
+  productOldPrices.innerText = productOldPrices.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
+  productPrices.innerText = productPrices.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
   const metaContent = `{{newProduct.details}}`.slice(0, 150) + '...'
 
   document.addEventListener("DOMContentLoaded", function() {
@@ -120,8 +125,6 @@
   
   // set value to the myObj, stringify because localStorage only store string type
   localStorage.setItem('product_cart_count', JSON.stringify(myObj))
-  {{!-- myObj.localCounting = myObjFromStorage.localCounting
-  myObj.productInfo = myObjFromStorage.productInfo --}}
 
   // check if the item has already been added, return the button type to added
   var listProductLength = typeof myObj.productInfo === 'undefined' ? 0 : myObj.productInfo.length

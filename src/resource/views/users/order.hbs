@@ -2,74 +2,40 @@
    <table>
     <thead>
       <tr>
-        <td colspan="2">
-          Thông tin chung
-        </td>
+        <td colspan="2"> Thông tin chung </td>
       </tr>
     </thead>
     <tr>
-      <td>
-        Mã Đơn Hàng
-      </td>
-      <td>
-        {{order._id}}
-      </td>
+      <td> Mã Đơn Hàng </td>
+      <td> {{order._id}} </td>
     </tr>
     <tr>
-      <td>
-        Ngày Đặt Hàng
-      </td>
-      <td>
-        {{order.createdAt}}
-      </td>
+      <td> Ngày Đặt Hàng </td>
+      <td> {{order.createdAt}} </td>
     </tr>
     <tr>
-      <td>
-        Tên Khách Hàng
-      </td>
-      <td>
-        {{order.customerInfo.name}}
-      </td>
+      <td> Tên Khách Hàng </td>
+      <td> {{order.customerInfo.name}} </td>
     </tr>
     <tr>
-      <td>
-        Số Điện Thoại
-      </td>
-      <td>
-        {{order.customerInfo.phone}}
-      </td>
+      <td> Số Điện Thoại </td>
+      <td> {{order.customerInfo.phone}} </td>
     </tr>
     <tr>
-      <td>
-        Địa Chỉ Nhận Hàng
-      </td>
-      <td>
-        {{order.customerInfo.address}}
-      </td>
+      <td> Địa Chỉ Nhận Hàng </td>
+      <td> {{order.customerInfo.address}} </td>
     </tr>
     <tr>
-      <td>
-        Ghi Chú
-      </td>
-      <td>
-        {{order.customerInfo.note}}
-      </td>
+      <td> Ghi Chú </td>
+      <td> {{order.customerInfo.note}} </td>
     </tr>
     <tr>
-      <td>
-        Tổng Tiền
-      </td>
-      <td>
-        {{order.totalOrderPrice}} VND
-      </td>
+      <td> Tổng Tiền </td>
+      <td id="total-order-price"> {{order.totalOrderPrice}} </td>
     </tr>
     <tr>
-      <td>
-        Trạng Thái Đơn Hàng
-      </td>
-      <td>
-        {{order.status}}
-      </td>
+      <td> Trạng Thái Đơn Hàng </td>
+      <td> {{order.status}} </td>
     </tr>
    </table>
 
@@ -85,12 +51,22 @@
     <tbody>
       {{#each order.products}}
       <tr>
-        <td><p>{{this.name}}</p>                                </td>
-        <td style="text-align: center;">{{this.price}} VND      </td>
-        <td style="text-align: center;">{{this.quantity}}       </td>
-        <td style="text-align: center;">{{this.totalPrice}} VND </td>
+        <td><p>{{this.name}}</p>                            </td>
+        <td style="text-align: center;" id="product-price">{{this.price}}      </td>
+        <td style="text-align: center;">{{this.quantity}}   </td>
+        <td style="text-align: center;" id="total-product-price">{{this.totalPrice}} </td>
       </tr>
       {{/each}}
     </tbody>
   </table>
 </div>
+
+<script>
+  var totalOrderPrice   = document.querySelectorAll('td#total-order-price')
+  var productPrice      = document.querySelectorAll('td#product-price')
+  var totalProductPrice = document.querySelectorAll('td#total-product-price')
+  
+  totalOrderPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
+  productPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
+  totalProductPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
+</script>

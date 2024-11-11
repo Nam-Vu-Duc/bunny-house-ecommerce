@@ -114,11 +114,6 @@ class adminController {
 
     order.find({ deletedAt: null }).lean()
       .then(order => {
-        order.forEach(order => {
-          order.totalOrderPrice = order.totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-          order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
-        })
-
         let newOrder = order
         if (orderType !== '') {
           newOrder = newOrder.filter(order => order.status === orderType)
@@ -135,12 +130,6 @@ class adminController {
     order.findOne({ _id: req.params.id }).lean()
       .then(order => {
         const index = 'orders'
-        order.products.forEach(product => {
-          product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-          product.totalPrice = product.totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-        });
-        order.totalOrderPrice = order.totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-        order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
         res.render('admin/order', { title: `Đơn của ${order.customerInfo.name}`, layout: 'admin', order,index })
       })
       .catch(next)
@@ -162,7 +151,6 @@ class adminController {
 
     product.find({ deletedAt: null }).lean()
       .then(product => { 
-        product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
         let newProduct = product
         if (productType !== '') {
           newProduct = newProduct.filter(product => product.categories === productType)
@@ -244,10 +232,6 @@ class adminController {
     const removeProduct = await product.deleteOne({ _id: req.params.id })
 
     res.redirect('back')
-    // newProduct.deleteOne()
-    // res.redirect('back')
-        // product.deleteOne()
-        //   .then(() => res.redirect('back'))
   }
 
   restore(req, res, next) {
@@ -260,7 +244,6 @@ class adminController {
     const index = 'trash'
     product.find({ deletedAt: { $ne: null } }).lean()
       .then(product => { 
-        product.forEach(product => product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
         const totalDeletedProduct = product.length
         res.render('admin/trash', { title: 'Thùng rác', layout: 'admin', product, totalDeletedProduct, index })})
       .catch(next)

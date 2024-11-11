@@ -3,23 +3,14 @@ const order = require('../models/orderModel')
 
 class profileController {
   async updateProfile(req, res, next) {
-    const userInfo = await user.findOne({ _id: req.params.id }).lean()
+    const userInfo  = await user.findOne({ _id: req.params.id }).lean()
     const orderInfo = await order.find({ 'customerInfo.userId': req.params.id, deletedAt: null }).lean()
-    
-    orderInfo.forEach(order => {
-      order.totalOrderPrice = order.totalOrderPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-      order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
-      if (order.status === 'preparing') {
-        order.status = 'Đang Xử Lý'
-      } 
-      if (order.status === 'delivering') {
-        order.status = 'Đang Giao'
-      } 
-      if (order.status === 'done') {
-        order.status = 'Hoàn Thành'
-      } 
-    });
-
+    // orderInfo.forEach(order => {
+    // order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
+    //   if (order.status === 'preparing') order.status = 'Đang Xử Lý'
+    //   if (order.status === 'delivering') order.status = 'Đang Giao'
+    //   if (order.status === 'done') order.status = 'Hoàn Thành'
+    // });
     res.render('users/updateProfile', { title: 'Cập nhật thông tin', userInfo, orderInfo })
   }
 

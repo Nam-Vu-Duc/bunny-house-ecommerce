@@ -15,15 +15,6 @@ class productController {
     }
 
     relatedProducts = relatedProducts.filter(product => product._id.toString() !== newProduct._id.toString())
-
-    newProduct.oldPrice = newProduct.oldPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-    newProduct.price = newProduct.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-
-    relatedProducts.forEach(product => {
-      product.oldPrice = product.oldPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-      product.price = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-    })
-
     res.render('users/product', { title: newProduct.name , newProduct, relatedProducts, newProductType })
   }
 }
