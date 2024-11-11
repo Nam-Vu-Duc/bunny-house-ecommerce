@@ -89,12 +89,12 @@
         <tbody>
           <tr>
             <td>Tổng doanh thu</td>
-            <td>{{totalRevenueToCurrency}} VND</td>
+            <td class="totalRevenue">{{totalRevenue}}</td>
             <td></td>
           </tr>
           <tr>
             <td>Đơn có giá trị cao nhất</td>
-            <td>{{maxValueOrderToCurrency}} VND</td>
+            <td class="maxValueOrderNumber">{{maxValueOrderNumber}}</td>
             <td><a href="/admin/all-orders/{{maxValueOrderId}}">Chi tiết</a></td>
           </tr>
         </tbody>
@@ -181,4 +181,9 @@
   var dateNow = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear()
   greetingLine.innerText = `Thống kê ngày ${dateNow}`
 
+  var totalRevenue = document.querySelector('td.totalRevenue')
+  var maxValueOrderNumber = document.querySelector('td.maxValueOrderNumber')
+
+  totalRevenue.innerText = totalRevenue.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
+  maxValueOrderNumber.innerText = maxValueOrderNumber.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
 </script>

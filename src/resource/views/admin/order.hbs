@@ -113,9 +113,9 @@
 </div>
 
 <script>
-  var getPreparingButton = document.querySelector('label#preparing')
+  var getPreparingButton  = document.querySelector('label#preparing')
   var getDeliveringButton = document.querySelector('label#delivering')
-  var getDoneButton = document.querySelector('label#done')
+  var getDoneButton       = document.querySelector('label#done')
 
   if (`{{order.status}}` === 'preparing') {
     getPreparingButton.style.backgroundColor = 'white'

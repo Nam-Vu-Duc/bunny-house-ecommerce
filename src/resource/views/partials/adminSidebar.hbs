@@ -24,7 +24,7 @@
       <i class="fi fi-rr-store-alt"></i>
       <p>Cửa hàng</p>
     </a>
-    <a href="/admin/all-stores" class="sidebar-button" id="stores">
+    <a href="/admin/all-stores" class="sidebar-button" id="employees">
       <i class="fi fi-rr-users"></i>
       <p>Nhân sự</p>
     </a>
@@ -52,8 +52,29 @@
 </div>
 
 <script>
-  let currentTime = new Date().getHours()
-  let checkDay = ''
+  var currentTime = new Date().getHours()
+  var checkDay = ''
+  var homeButton          = document.querySelector('a#home-page')
+  var customersButton     = document.querySelector('a#customers')
+  var ordersButton        = document.querySelector('a#orders')
+  var storeButton         = document.querySelector('a#stores')
+  var employeesButton     = document.querySelector('a#employees')
+  var productsButton      = document.querySelector('a#total-products')
+  var brandsButton        = document.querySelector('a#total-brands')
+  var trashButton         = document.querySelector('a#trash')
+  var updateProfileButton = document.querySelector('a#update-profile')
+  var logOutButton        = document.querySelector('a#log-out')
+
+  var index = `{{index}}`
+  if (index === 'home'          ) homeButton.style.backgroundColor          = '#FFDFDF'
+  if (index === 'customers'     ) customersButton.style.backgroundColor     = '#FFDFDF'
+  if (index === 'orders'        ) ordersButton.style.backgroundColor        = '#FFDFDF'
+  if (index === 'stores'        ) storeButton.style.backgroundColor         = '#FFDFDF'
+  if (index === 'employees'     ) employeesButton.style.backgroundColor     = '#FFDFDF'
+  if (index === 'products'      ) productsButton.style.backgroundColor      = '#FFDFDF'
+  if (index === 'brands'        ) brandsButton.style.backgroundColor        = '#FFDFDF'
+  if (index === 'trash'         ) trashButton.style.backgroundColor         = '#FFDFDF'
+  if (index === 'update-profile') updateProfileButton.style.backgroundColor = '#FFDFDF'
 
   if (currentTime <= 9) {
     checkDay = 'buổi sáng'
@@ -65,16 +86,15 @@
     checkDay = 'buổi tối'
   }
 
-  let helloText = `Chúc bạn một ${checkDay} vui vẻ !!!`
+  var helloText = `Chúc bạn một ${checkDay} vui vẻ !!!`
   document.getElementById('welcome-text').innerHTML = helloText
 
-  // update-profile
   function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
-      let c = ca[i];
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
       while (c.charAt(0) == ' ') {
         c = c.substring(1);
       }
@@ -85,15 +105,12 @@
     return "";
   }
 
-  var updateProfileButton = document.querySelector('a#update-profile')
   var adminId = getCookie('user_id') 
   updateProfileButton.setAttribute('href', `/admin/update-profile/${adminId}`)
 
   // log-out
-  var logOutButton = document.querySelector('a#log-out')
   logOutButton.onclick = function() {
     document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
-
 </script>

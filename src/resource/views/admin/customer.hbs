@@ -51,8 +51,8 @@
       <td>
         Tổng doanh thu
       </td>
-      <td>
-        {{totalPrice}} VND
+      <td id="total-price">
+        {{totalPrice}}
       </td>
     </tr>
   </table>
@@ -70,10 +70,15 @@
     <tbody>
       {{#each orderInfo}}
       <tr>
-        <td><p>{{this._id}}</p>                                      </td>
-        <td style="text-align: center;">{{this.totalOrderPrice}} VND </td>
-        <td style="text-align: center;">{{this.paymentMethod}}       </td>
-        <td style="text-align: center;">{{this.status}}              </td>
+        <td><p>{{this._id}}</p>                                  </td>
+        <td 
+          style="text-align: center;" 
+          id="total-order-price"
+        >
+          {{this.totalOrderPrice}} 
+        </td>
+        <td style="text-align: center;">{{this.paymentMethod}}   </td>
+        <td style="text-align: center;">{{this.status}}          </td>
         <td style="text-align: center;">
           <a href="/admin/all-orders/{{this._id}}">Chi Tiết</a>            
         </td>
@@ -84,5 +89,10 @@
 </div>
 
 <script>
+  var totalPrice = document.querySelector('td#total-price')
+  var totalOrderPrice = document.querySelector('td#total-order-price')
+
+  totalPrice.innerText = totalPrice.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
+  totalOrderPrice.innerText = totalOrderPrice.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
   
 </script>
