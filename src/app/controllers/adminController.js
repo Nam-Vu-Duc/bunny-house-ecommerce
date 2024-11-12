@@ -8,10 +8,10 @@ const cloudinary = require('cloudinary').v2
 
 class adminController {
   async show(req, res, next) {
-    const index = 'home'
+    const index         = 'home'
     const orders        = await order.find({ deletedAt: null }).sort({totalOrderPrice: -1}).lean()
     const products      = await product.find().lean()
-    const brands        = await brand.find().lean()
+    // const brands        = await brand.find().lean()
     const employees     = await employee.find().lean()
     const maxValueOrder = orders[0]
 
@@ -28,7 +28,7 @@ class adminController {
 
     // product info
     const allProducts         = products.length
-    const allBrands           = brands.length
+    // const allBrands           = brands.length
     const { deletedProducts, allSkincareProducts, allMakeupProducts } = allProducts === 0 
     ? { deletedProducts: 0, allSkincareProducts: 0, allMakeupProducts: 0 }
     : products.reduce((acc, product) => {
@@ -46,7 +46,7 @@ class adminController {
     // employee info
     const totalEmployee = employees.length
 
-    res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin', allOrders, preparingOrders, deliveringOrders, doneOrders, allProducts, allBrands, allSkincareProducts, allMakeupProducts, deletedProducts, totalRevenue, maxValueOrderId, maxValueOrderNumber, totalEmployee, index })
+    res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin', allOrders, preparingOrders, deliveringOrders, doneOrders, allProducts, allSkincareProducts, allMakeupProducts, deletedProducts, totalRevenue, maxValueOrderId, maxValueOrderNumber, totalEmployee, index })
   }
 
   async allCustomers(req, res, next) {
@@ -164,7 +164,8 @@ class adminController {
   }
 
   createProduct(req, res, next) {
-    res.render('admin/createProduct', { title: 'Thêm sản phẩm mới', layout: 'admin' })
+    const index = 'products'
+    res.render('admin/createProduct', { title: 'Thêm sản phẩm mới', layout: 'admin', index })
   }
 
   async productCreated(req, res, next) {

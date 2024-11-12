@@ -2,58 +2,32 @@
   <table id="table-1">
     <thead>
       <tr>
-        <td colspan="2">
-          Thông tin khách hàng
-        </td>
+        <td colspan="2"> Thông tin khách hàng </td>
       </tr>
     </thead>
     <tr>
-      <td>
-        Mã Khách Hàng
-      </td>
-      <td>
-        {{customerInfo._id}}
-      </td>
+      <td> Mã Khách Hàng </td>
+      <td> {{customerInfo._id}} </td>
     </tr>
     <tr>
-      <td>
-        Email
-      </td>
-      <td>
-        {{customerInfo.loginInfo.email}}
-      </td>
+      <td> Email </td>
+      <td> {{customerInfo.loginInfo.email}} </td>
     </tr>
     <tr>
-      <td>
-        Tên Khách Hàng
-      </td>
-      <td>
-        {{customerInfo.userInfo.name}}
-      </td>
+      <td> Tên Khách Hàng </td>
+      <td> {{customerInfo.userInfo.name}} </td>
     </tr>
     <tr>
-      <td>
-        SĐT
-      </td>
-      <td>
-        {{customerInfo.userInfo.phone}}
-      </td>
+      <td> SĐT </td>
+      <td> {{customerInfo.userInfo.phone}} </td>
     </tr>
     <tr>
-      <td>
-        Địa Chỉ
-      </td>
-      <td>
-        {{customerInfo.userInfo.address}}
-      </td>
+      <td> Địa Chỉ </td>
+      <td> {{customerInfo.userInfo.address}} </td>
     </tr>
     <tr>
-      <td>
-        Tổng doanh thu
-      </td>
-      <td id="total-price">
-        {{totalPrice}}
-      </td>
+      <td> Tổng doanh thu </td>
+      <td id="total-price"> {{totalPrice}} </td>
     </tr>
   </table>
 
@@ -94,5 +68,4 @@
 
   totalPrice.innerText = totalPrice.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
   totalOrderPrice.innerText = totalOrderPrice.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
-  
 </script>

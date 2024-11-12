@@ -14,53 +14,26 @@
     <table style="width:100%">
       <thead>
         <tr>
-          <td>
-            ID
-          </td>
-          <td>
-            Mã Đơn Hàng
-          </td>
-          <td>
-            Tên Khách Hàng
-          </td>
-          <td>
-            Tổng Số Tiền
-          </td>
-          <td>
-            Ngày Đặt Hàng
-          </td>
-          <td>
-            Tình Trạng
-          </td>
-          <td>
-          </td>
+          <td> ID             </td>
+          <td> Mã Đơn Hàng    </td>
+          <td> Tên Khách Hàng </td>
+          <td> Tổng Số Tiền   </td>
+          <td> Ngày Đặt Hàng  </td>
+          <td> Tình Trạng     </td>
+          <td></td>
         </tr>
       </thead>
 
       <tbody>
         {{#each newOrder}}
         <tr>
-          <td>
-            {{addIndex @index 1}}
-          </td>
-          <td>
-            {{this._id}}
-          </td>
-          <td>
-            {{this.customerInfo.name}}
-          </td>
-          <td>
-            {{this.totalOrderPrice}} đ
-          </td>
-          <td>
-            {{this.createdAt}}
-          </td>
-          <td>
-            {{this.status}}
-          </td>
-          <td>
-            <a href="/admin/all-orders/{{this._id}}">Chi Tiết</a>
-          </td>
+          <td> {{addIndex @index 1}}      </td>
+          <td> {{this._id}}               </td>
+          <td> {{this.customerInfo.name}} </td>
+          <td id="total-order-price"> {{this.totalOrderPrice}}       </td>
+          <td> {{this.createdAt}}         </td>
+          <td> {{this.status}}            </td>
+          <td> <a href="/admin/all-orders/{{this._id}}">Chi Tiết</a> </td>
         </tr>
         {{/each}}
       </tbody>
@@ -73,11 +46,13 @@
 
 <script>
   // pagination 
-  var pagination = document.querySelector('span.pagination')
-  var productLength = `{{orderLength}}`
-  var currentPage = 1
+  var pagination      = document.querySelector('span.pagination')
+  var productLength   = `{{orderLength}}`
+  var currentPage     = 1
+  var totalOrderPrice = document.querySelectorAll('td#total-order-price')
+  totalOrderPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
 
-  // díplay all pages tag
+  // display all pages tag
   for (let i = 0; i < productLength; i += 10) {
     var newPage = document.createElement('a')
     newPage.setAttribute('href', `/admin/all-orders?page=${currentPage}&type={{orderType}}`)
