@@ -94,7 +94,7 @@
 .flash-deal-board {
   background: linear-gradient(rgb(248, 62, 96), rgb(254, 80, 72));
   border-radius: 10px;
-  i, a {
+  i.fi-sr-flame, a {
     animation: bling 1s infinite
   }
 }
