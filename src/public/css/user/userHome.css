@@ -178,7 +178,7 @@
   z-index: 5000;
   transition: 0.5s;
 }
-.preloader.unactive {
+.preloader.inactive {
   opacity: 0;
   pointer-events: none;
 }
