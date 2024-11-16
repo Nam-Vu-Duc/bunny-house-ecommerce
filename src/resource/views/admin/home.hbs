@@ -1,8 +1,4 @@
 <div class="admin-home-container">
-  <div class="board-title">
-    <p></p>
-  </div>
-
   <div class="info-table">  
     <div class="order-info">
       <table>
@@ -171,11 +167,6 @@
 </div>
 
 <script>
-  var greetingLine = document.querySelector('div.board-title').querySelector('p')
-  var date = new Date()
-  var dateNow = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear()
-  greetingLine.innerText = `Thống kê ngày ${dateNow}`
-
   var totalRevenue = document.querySelector('td.totalRevenue')
   var maxValueOrderNumber = document.querySelector('td.maxValueOrderNumber')
 
