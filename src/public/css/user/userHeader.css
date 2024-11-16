@@ -15,9 +15,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    img {
-      max-width: 50px;
-    }
+    img { width: 50px; }
   };
   .menu {
     /* display: flex; */
@@ -234,12 +232,8 @@ header {
           left: 110px !important;
           grid-template-columns: auto auto !important;
           column-gap: 10px;
-          li {
-            width: 100% !important;
-          }
-          img {
-            width: 20px !important;
-          }
+          li { width: 100% !important; }
+          img { width: 20px !important; }
         }
       }
     }
