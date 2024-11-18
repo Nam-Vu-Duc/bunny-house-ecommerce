@@ -25,11 +25,8 @@ class allProductsController {
           title = filters[type].title;
         }
 
-        if (sortedColumn === 'price' && sort === 'asc') {
-          product = product.sort((a, b) => a.price - b.price)
-        } else if (sortedColumn === 'price' && sort === 'desc') {
-          product = product.sort((a, b) => b.price - a.price)
-        }
+        if (sortedColumn === 'price' && sort === 'asc') product = product.sort((a, b) => a.price - b.price)
+        else if (sortedColumn === 'price' && sort === 'desc') product = product.sort((a, b) => b.price - a.price)
 
         const productLength = product.length
         product = product.slice(skip, skip + itemsPerPage)
@@ -50,7 +47,7 @@ class allProductsController {
   showMakeUp(req, res, next) {
     product.find({ deletedAt: null, makeup: req.params.slug }).lean()
       .then(product => {     
-        const type       = req.params.slug
+        const type = req.params.slug
         
         res.render('users/allProducts', { title: 'Dòng Makeup', product, type }) })
       .catch(next)
@@ -70,5 +67,4 @@ class allProductsController {
       .catch(next)
   }
 }
-
 module.exports = new allProductsController

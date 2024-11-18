@@ -16,12 +16,12 @@ class adminController {
         employee.find().lean(),
       ]);
   
-      const allOrders = orders.length;
+      const allOrders = orders.length
       const orderStats = orders.reduce(
         (acc, order) => {
-          if (order.status === 'preparing') acc.preparingOrders++;
-          if (order.status === 'delivering') acc.deliveringOrders++;
-          if (order.status === 'done') acc.doneOrders++;
+          if (order.status === 'preparing') acc.preparingOrders++
+          if (order.status === 'delivering') acc.deliveringOrders++
+          if (order.status === 'done') acc.doneOrders++
           return acc;
         },
         { preparingOrders: 0, deliveringOrders: 0, doneOrders: 0 }
@@ -30,22 +30,21 @@ class adminController {
       const allProducts = products.length;
       const productStats = products.reduce(
         (acc, product) => {
-          if (product.deletedAt !== null) acc.deletedProducts++;
-          if (product.categories === 'skincare') acc.allSkincareProducts++;
-          if (product.categories === 'makeup') acc.allMakeupProducts++;
+          if (product.deletedAt !== null) acc.deletedProducts++
+          if (product.categories === 'skincare') acc.allSkincareProducts++
+          if (product.categories === 'makeup') acc.allMakeupProducts++
           return acc;
         },
         { deletedProducts: 0, allSkincareProducts: 0, allMakeupProducts: 0 }
       );
   
       const totalRevenue = orders.reduce((sum, order) => {
-        return order.status === 'done' ? sum + order.totalOrderPrice : sum;
-      }, 0);
-      const maxValueOrder = orders[0] || { _id: '', totalOrderPrice: 0 };
-      const maxValueOrderId = maxValueOrder._id?.toString() || '';
-      const maxValueOrderNumber = maxValueOrder.totalOrderPrice.toString();
-  
-      const totalEmployee = employees.length;
+        return order.status === 'done' ? sum + order.totalOrderPrice : sum
+      }, 0)
+      const maxValueOrder = orders[0] || { _id: '', totalOrderPrice: 0 }
+      const maxValueOrderId = maxValueOrder._id?.toString() || ''
+      const maxValueOrderNumber = maxValueOrder.totalOrderPrice.toString()
+      const totalEmployee = employees.length
   
       res.render('admin/home', {
         title: 'Trang chủ admin',
@@ -67,25 +66,25 @@ class adminController {
 
   async allCustomers(req, res, next) {
     const index = 'customers'
-    const customers = await user.find({ deletedAt: null, 'loginInfo.role': 'user' }).lean();
-    const customerIds = customers.map(customer => customer._id.toString()); // Get all customer IDs
+    const customers = await user.find({ deletedAt: null, 'loginInfo.role': 'user' }).lean()
+    const customerIds = customers.map(customer => customer._id.toString()) // Get all customer IDs
 
     // Find all orders for the retrieved customers
-    const orders = await order.find({ 'customerInfo.userId': { $in: customerIds }, deletedAt: null }).lean();
+    const orders = await order.find({ 'customerInfo.userId': { $in: customerIds }, deletedAt: null }).lean()
 
     // Create a mapping of userId to orders
-    const ordersByCustomer = {};
+    const ordersByCustomer = {}
     orders.forEach(order => {
-      const userId = order.customerInfo.userId;
+      const userId = order.customerInfo.userId
       if (!ordersByCustomer[userId]) {
-        ordersByCustomer[userId] = [];
+        ordersByCustomer[userId] = []
       }
       ordersByCustomer[userId].push(order);
     });
 
     // Attach the orders to each customer
     const customersWithOrders = customers.map(customer => {
-      const customerOrders = ordersByCustomer[customer._id.toString()] || [];
+      const customerOrders = ordersByCustomer[customer._id.toString()] || []
       const totalPrice = customerOrders.reduce((total, order) => total + order.totalOrderPrice, 0)
       return {
         ...customer,
@@ -95,7 +94,7 @@ class adminController {
       };
     });
 
-    const customerLength = customersWithOrders.length;
+    const customerLength = customersWithOrders.length
     res.render('admin/allCustomers', { title: 'Danh sách khách hàng', layout: 'admin', customersWithOrders, customerLength,index });
   }
 
@@ -276,8 +275,6 @@ class adminController {
     })
       .then(() => res.redirect('back'))
       .catch(next)
-    // res.json(req.body)
   }
 }
-
 module.exports = new adminController

@@ -10,5 +10,4 @@ const brand = new Schema({
   }, 
   totalProduct : { type: Number },
 }, { timestamps: true })
-
 module.exports = mongoose.model('brand', brand);

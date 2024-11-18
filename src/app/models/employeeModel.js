@@ -17,5 +17,4 @@ const employee = new Schema({
   },
   slug      : { type: String, slug: 'userInfo.name', unique: true },
 }, { timestamps: true })
-
 module.exports = mongoose.model('employee', employee);

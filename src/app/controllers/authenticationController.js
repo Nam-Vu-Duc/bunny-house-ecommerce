@@ -32,11 +32,8 @@ class loginController {
 
             res.cookie('user_id', userId)
 
-            if (user.loginInfo.role === 'admin') {
-              res.redirect('/admin')
-            } else {
-              res.redirect('/')
-            }
+            if (user.loginInfo.role === 'admin') { res.redirect('/admin')} 
+            else { res.redirect('/') }
           } else {
             // res.json({ message: 'password does not match' })
             req.flash('error', 'Mật khẩu không đúng')
@@ -77,5 +74,4 @@ class loginController {
       .catch(next)
   }
 }
-
 module.exports = new loginController

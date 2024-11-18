@@ -7,5 +7,4 @@ const store = new Schema({
   address  : { type: String, default: '' },
   details  : { type: String, default: '' },
 }, { timestamps: true })
-
 module.exports = mongoose.model('store', store);

@@ -9,14 +9,12 @@ class productController {
     if (newProduct.skincare !== '') {
       newProductType = newProduct.skincare
       relatedProducts = await product.find({ skincare: newProductType }).lean().limit(5)
-    } else if (newProduct.makeup !== '') {
+    } else {
       newProductType = newProduct.makeup
       relatedProducts = await product.find({ makeup: newProductType }).lean().limit(5)
     }
-
     relatedProducts = relatedProducts.filter(product => product._id.toString() !== newProduct._id.toString())
     res.render('users/product', { title: newProduct.name , newProduct, relatedProducts, newProductType })
   }
 }
-
 module.exports = new productController

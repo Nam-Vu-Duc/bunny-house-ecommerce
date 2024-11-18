@@ -8,7 +8,6 @@ cloudinary.config({
   api_key     : process.env.API_KEY, 
   api_secret  : process.env.API_SECRET
 });
-
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
@@ -16,8 +15,5 @@ const storage = new CloudinaryStorage({
     // format: async (req, file) => 'png',
   },
 });
-
 const upload = multer({ storage: storage })
-
-  
 module.exports = upload

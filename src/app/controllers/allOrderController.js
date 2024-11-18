@@ -75,5 +75,4 @@ class orderController {
       .catch(next)
   }
 }
-
 module.exports = new orderController

@@ -23,5 +23,4 @@ const order = new Schema({
   status            : { type: String, default: 'preparing' },
   deletedAt         : {type: Date, default: null }
 }, { timestamps: true })
-
 module.exports = mongoose.model('order', order);

@@ -35,5 +35,4 @@ product.query.sortable = function (req) {
   }
   return this
 }
-
 module.exports = mongoose.model('product', product);
