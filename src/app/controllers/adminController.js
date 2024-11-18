@@ -8,46 +8,62 @@ const cloudinary = require('cloudinary').v2
 
 class adminController {
   async show(req, res, next) {
-    const index         = 'home'
-    const orders        = await order.find({ deletedAt: null }).sort({totalOrderPrice: -1}).lean()
-    const products      = await product.find().lean()
-    // const brands        = await brand.find().lean()
-    const employees     = await employee.find().lean()
-    const maxValueOrder = orders[0]
-
-    // order info
-    const allOrders        = orders.length
-    const { preparingOrders, deliveringOrders, doneOrders } = allOrders === 0 
-    ? { preparingOrders: 0, deliveringOrders: 0, doneOrders: 0 } 
-    : orders.reduce((acc, order) => {
-        if (order.status === 'preparing') acc.preparingOrders++;
-        else if (order.status === 'delivering') acc.deliveringOrders++;
-        else if (order.status === 'done') acc.doneOrders++;
-        return acc;
-      }, { preparingOrders: 0, deliveringOrders: 0, doneOrders: 0 });
-
-    // product info
-    const allProducts         = products.length
-    // const allBrands           = brands.length
-    const { deletedProducts, allSkincareProducts, allMakeupProducts } = allProducts === 0 
-    ? { deletedProducts: 0, allSkincareProducts: 0, allMakeupProducts: 0 }
-    : products.reduce((acc, product) => {
-        if (product.deletedAt !== null) acc.deletedProducts++;
-        if (product.categories === 'skincare') acc.allSkincareProducts++;
-        if (product.categories === 'makeup') acc.allMakeupProducts++;
-        return acc;
-      }, { deletedProducts: 0, allSkincareProducts: 0, allMakeupProducts: 0 });
-
-    // finance info
-    const totalRevenue        = orders.filter(order => order.status === 'done').map(order => order.totalOrderPrice).reduce((sum, num) => sum + num, 0)
-    const maxValueOrderId     = maxValueOrder._id.toString()
-    const maxValueOrderNumber = maxValueOrder.totalOrderPrice.toString()
-
-    // employee info
-    const totalEmployee = employees.length
-
-    res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin', allOrders, preparingOrders, deliveringOrders, doneOrders, allProducts, allSkincareProducts, allMakeupProducts, deletedProducts, totalRevenue, maxValueOrderId, maxValueOrderNumber, totalEmployee, index })
-  }
+    try {
+      const index = 'home';
+        const [orders, products, employees] = await Promise.all([
+        order.find({ deletedAt: null }).sort({ totalOrderPrice: -1 }).lean(),
+        product.find().lean(),
+        employee.find().lean(),
+      ]);
+  
+      const allOrders = orders.length;
+      const orderStats = orders.reduce(
+        (acc, order) => {
+          if (order.status === 'preparing') acc.preparingOrders++;
+          if (order.status === 'delivering') acc.deliveringOrders++;
+          if (order.status === 'done') acc.doneOrders++;
+          return acc;
+        },
+        { preparingOrders: 0, deliveringOrders: 0, doneOrders: 0 }
+      );
+  
+      const allProducts = products.length;
+      const productStats = products.reduce(
+        (acc, product) => {
+          if (product.deletedAt !== null) acc.deletedProducts++;
+          if (product.categories === 'skincare') acc.allSkincareProducts++;
+          if (product.categories === 'makeup') acc.allMakeupProducts++;
+          return acc;
+        },
+        { deletedProducts: 0, allSkincareProducts: 0, allMakeupProducts: 0 }
+      );
+  
+      const totalRevenue = orders.reduce((sum, order) => {
+        return order.status === 'done' ? sum + order.totalOrderPrice : sum;
+      }, 0);
+      const maxValueOrder = orders[0] || { _id: '', totalOrderPrice: 0 };
+      const maxValueOrderId = maxValueOrder._id?.toString() || '';
+      const maxValueOrderNumber = maxValueOrder.totalOrderPrice.toString();
+  
+      const totalEmployee = employees.length;
+  
+      res.render('admin/home', {
+        title: 'Trang chủ admin',
+        layout: 'admin',
+        index,
+        allOrders,
+        ...orderStats,
+        allProducts,
+        ...productStats,
+        totalRevenue,
+        maxValueOrderId,
+        maxValueOrderNumber,
+        totalEmployee,
+      });
+    } catch (error) {
+      next(error); // Forward errors to the global error handler
+    }
+  }  
 
   async allCustomers(req, res, next) {
     const index = 'customers'
@@ -114,14 +130,11 @@ class adminController {
 
     order.find({ deletedAt: null }).lean()
       .then(order => {
-        let newOrder = order
-        if (orderType !== '') {
-          newOrder = newOrder.filter(order => order.status === orderType)
-        }
-        const orderLength = newOrder.length
-        newOrder = newOrder.slice(skip, skip + itemsPerPage)
+        if (orderType !== '') order = order.filter(order => order.status === orderType)
+        order = order.slice(skip, skip + itemsPerPage)
+        const orderLength = order.length
 
-        res.render('admin/allOrders', { title: 'Danh sách đơn hàng', layout: 'admin', orderLength, newOrder, orderType, currentPage, index })
+        res.render('admin/allOrders', { title: 'Danh sách đơn hàng', layout: 'admin', orderLength, orderType, currentPage, index, order })
       })
       .catch(next)
   }
@@ -143,7 +156,7 @@ class adminController {
   }
 
   allProducts(req, res, next) {
-    const index = 'products'
+    const index        = 'products'
     const currentPage  = req.query.page || 1
     const productType  = req.query.type || ''
     const itemsPerPage = 10;
@@ -151,14 +164,11 @@ class adminController {
 
     product.find({ deletedAt: null }).lean()
       .then(product => { 
-        let newProduct = product
-        if (productType !== '') {
-          newProduct = newProduct.filter(product => product.categories === productType)
-        }
-        const productLength = newProduct.length
-        newProduct = newProduct.slice(skip, skip + itemsPerPage)
+        if (productType !== '') product = product.filter(product => product.categories === productType)
+        product = product.slice(skip, skip + itemsPerPage)
+        const productLength = product.length
 
-        res.render('admin/allProducts', { title: 'Toàn bộ sản phẩm', layout: 'admin', productLength, newProduct, productType, currentPage, index })
+        res.render('admin/allProducts', { title: 'Toàn bộ sản phẩm', layout: 'admin', productLength, product, productType, currentPage, index })
       })
       .catch(next)
   }

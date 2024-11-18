@@ -32,19 +32,18 @@ class allProductsController {
         }
 
         const productLength = product.length
-        const newProduct    = product.slice(skip, skip + itemsPerPage)
+        product = product.slice(skip, skip + itemsPerPage)
         
-        res.render('users/allProducts', { title: title, newProduct, type, productLength, currentPage, sortedColumn, sort }) })
+        res.render('users/allProducts', { title: title, product, type, productLength, currentPage, sortedColumn, sort }) })
       .catch(next)
   }
 
   showSkincare(req, res, next) {
     product.find({ deletedAt: null, skincare: req.params.slug }).lean()
       .then(product => {    
-        const type       = req.params.slug
-        const newProduct = product
+        const type = req.params.slug
 
-        res.render('users/allProducts', { title: 'Dòng Skincare', newProduct, type }) })
+        res.render('users/allProducts', { title: 'Dòng Skincare', product, type }) })
       .catch(next)
   }
 
@@ -52,9 +51,8 @@ class allProductsController {
     product.find({ deletedAt: null, makeup: req.params.slug }).lean()
       .then(product => {     
         const type       = req.params.slug
-        const newProduct = product
         
-        res.render('users/allProducts', { title: 'Dòng Makeup', newProduct, type }) })
+        res.render('users/allProducts', { title: 'Dòng Makeup', product, type }) })
       .catch(next)
   }
 
@@ -68,8 +66,7 @@ class allProductsController {
   showBrand(req, res, next) {
     product.find({ deletedAt: null, brand: req.params.slug }).lean()
       .then(product => { 
-        const newProduct = product
-        res.render('users/allProducts', { title: req.params.slug, newProduct }) })
+        res.render('users/allProducts', { title: req.params.slug, product }) })
       .catch(next)
   }
 }
