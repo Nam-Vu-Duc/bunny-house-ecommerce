@@ -15,8 +15,9 @@
     min-width: 25px;
     padding: 5px;
   }
-
-  a:hover {
-    text-decoration: underline;
+  a:hover { text-decoration: underline; }
+  .list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(min(175px, 100%), 1fr));
   }
 }
