@@ -8,60 +8,48 @@ const cloudinary = require('cloudinary').v2
 
 class adminController {
   async show(req, res, next) {
-    try {
-      const index = 'home';
-        const [orders, products, employees] = await Promise.all([
-        order.find({ deletedAt: null }).sort({ totalOrderPrice: -1 }).lean(),
-        product.find().lean(),
-        employee.find().lean(),
-      ]);
-  
-      const allOrders = orders.length
-      const orderStats = orders.reduce(
-        (acc, order) => {
-          if (order.status === 'preparing') acc.preparingOrders++
-          if (order.status === 'delivering') acc.deliveringOrders++
-          if (order.status === 'done') acc.doneOrders++
-          return acc;
-        },
-        { preparingOrders: 0, deliveringOrders: 0, doneOrders: 0 }
-      );
-  
-      const allProducts = products.length;
-      const productStats = products.reduce(
-        (acc, product) => {
-          if (product.deletedAt !== null) acc.deletedProducts++
-          if (product.categories === 'skincare') acc.allSkincareProducts++
-          if (product.categories === 'makeup') acc.allMakeupProducts++
-          return acc;
-        },
-        { deletedProducts: 0, allSkincareProducts: 0, allMakeupProducts: 0 }
-      );
-  
-      const totalRevenue = orders.reduce((sum, order) => {
-        return order.status === 'done' ? sum + order.totalOrderPrice : sum
-      }, 0)
-      const maxValueOrder = orders[0] || { _id: '', totalOrderPrice: 0 }
-      const maxValueOrderId = maxValueOrder._id?.toString() || ''
-      const maxValueOrderNumber = maxValueOrder.totalOrderPrice.toString()
-      const totalEmployee = employees.length
-  
-      res.render('admin/home', {
-        title: 'Trang chủ admin',
-        layout: 'admin',
-        index,
-        allOrders,
-        ...orderStats,
-        allProducts,
-        ...productStats,
-        totalRevenue,
-        maxValueOrderId,
-        maxValueOrderNumber,
-        totalEmployee,
-      });
-    } catch (error) {
-      next(error); // Forward errors to the global error handler
-    }
+    const index = 'home';
+      const [orders, products, employees, customers, stores] = await Promise.all([
+      order.find({ deletedAt: null }).sort({ totalOrderPrice: -1 }).lean(),
+      product.find().lean(),
+      employee.find().lean(),
+      user.find({ deletedAt: null, 'loginInfo.role': 'user' }).lean(),
+      store.find({}).lean()
+    ]);
+
+    const orderStats = orders.reduce(
+      (acc, order) => {
+        acc.orderLength++
+        if (order.status === 'preparing') acc.preparingOrders++
+        if (order.status === 'delivering') acc.deliveringOrders++
+        if (order.status === 'done') {
+          acc.doneOrders++  
+          acc.totalRevenue += order.totalOrderPrice
+        }
+        return acc;
+      },
+      { preparingOrders: 0, deliveringOrders: 0, doneOrders: 0, orderLength: 0, totalRevenue: 0 }
+    );
+
+    const productStats = products.reduce(
+      (acc, product) => {
+        acc.productLength++
+        if (product.deletedAt !== null) acc.deletedProducts++
+        if (product.categories === 'skincare') acc.allSkincareProducts++
+        if (product.categories === 'makeup') acc.allMakeupProducts++
+        return acc;
+      },
+      { deletedProducts: 0, allSkincareProducts: 0, allMakeupProducts: 0, productLength: 0 }
+    );
+
+    const maxValueOrder = orders[0] || { _id: '', totalOrderPrice: 0 }
+    const maxValueOrderId = maxValueOrder._id?.toString() || ''
+    const maxValueOrderNumber = maxValueOrder.totalOrderPrice
+    const employeeLength = employees.length
+    const customerLength = customers.length
+    const storeLength    = stores.length
+
+    res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin', index, ...orderStats, ...productStats, maxValueOrderId, maxValueOrderNumber, employeeLength, customerLength, storeLength});
   }  
 
   async allCustomers(req, res, next) {
@@ -76,9 +64,7 @@ class adminController {
     const ordersByCustomer = {}
     orders.forEach(order => {
       const userId = order.customerInfo.userId
-      if (!ordersByCustomer[userId]) {
-        ordersByCustomer[userId] = []
-      }
+      if (!ordersByCustomer[userId]) { ordersByCustomer[userId] = [] }
       ordersByCustomer[userId].push(order);
     });
 
@@ -129,9 +115,9 @@ class adminController {
 
     order.find({ deletedAt: null }).lean()
       .then(order => {
+        const orderLength = order.length
         if (orderType !== '') order = order.filter(order => order.status === orderType)
         order = order.slice(skip, skip + itemsPerPage)
-        const orderLength = order.length
 
         res.render('admin/allOrders', { title: 'Danh sách đơn hàng', layout: 'admin', orderLength, orderType, currentPage, index, order })
       })
@@ -163,9 +149,9 @@ class adminController {
 
     product.find({ deletedAt: null }).lean()
       .then(product => { 
+        const productLength = product.length
         if (productType !== '') product = product.filter(product => product.categories === productType)
         product = product.slice(skip, skip + itemsPerPage)
-        const productLength = product.length
 
         res.render('admin/allProducts', { title: 'Toàn bộ sản phẩm', layout: 'admin', productLength, product, productType, currentPage, index })
       })

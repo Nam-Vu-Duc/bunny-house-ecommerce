@@ -7,6 +7,15 @@
   position: fixed;
   background-color: #D1A6A6;
   transition: 0.1s ease-out;
+  overflow-y: scroll;
+  .resize-button{
+    margin-top: 10px;
+    width: 70px; 
+    height: 30px;
+    background-color: #D1A6A6;
+    border: none;
+    i {font-size: 30px}
+  }
   .admin-account{
     margin-top: 10px;
     background-color: #FFDFDF;
@@ -49,13 +58,21 @@
       background-color: #ffffff19;
     }
   }
+
+}
+.admin-sidebar-container.small {
+  width: 70px;
+  p { display: none }
+  .admin-button .sidebar-button {
+    padding-left: 0;
+    justify-content: center;
+    i { padding-left: 0 }
+  }
 }
 @media screen and (max-width: 700px) {
   .admin-sidebar-container {
     width: 70px;
-    p {
-      display: none;
-    }
+    p { display: none }
     .admin-button .sidebar-button {
       padding-left: 0;
       justify-content: center;

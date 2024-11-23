@@ -24,14 +24,10 @@
 </head>
 
 <style>
-  main {
-    margin-left: 200px;
-  }
+  main {margin-left: 200px}
 
   @media screen and (max-width: 700px) {
-    main {
-      margin-left: 70px;
-    }
+    main {margin-left: 70px;}
   }
 </style>
 
@@ -56,4 +52,19 @@
     const preloader = document.querySelector('div.preloader')
     preloader.classList.add('inactive')
   })
+
+  var resizeButton  = document.querySelector('button.resize-button')
+  var adminSidebar  = document.querySelector('div.admin-sidebar-container')
+  var main          = document.querySelector('main')
+
+  resizeButton.onclick = function() {
+    if (adminSidebar.className.includes('small')) {
+      adminSidebar.classList.remove('small')
+      main.style.marginLeft = '200px'
+    }
+    else {
+      adminSidebar.classList.add('small')
+      main.style.marginLeft = '70px'
+    }
+  }
 </script>
