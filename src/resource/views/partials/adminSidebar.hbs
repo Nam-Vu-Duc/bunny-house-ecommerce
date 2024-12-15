@@ -6,7 +6,6 @@
   <div class="admin-account">
     {{!-- <img src="https://res.cloudinary.com/bunny-store/image/upload/v1711070717/web-img/admin_xernxj.webp" alt="avatar" loading="lazy"/> --}}
     <div style="padding-left: 10px;">
-      <p>Xin chào Nam Vũ,</p>
       <p id="welcome-text"></p>
     </div>
   </div>
@@ -14,6 +13,7 @@
   <div class="admin-button">
     <a href="/admin" class="sidebar-button" id="home-page"><i class="fi fi-br-home"></i><p>Trang chủ</p></a>
     <a href="/admin/all-customers" class="sidebar-button" id="customers"><i class="fi fi-rr-users"></i><p>Khách hàng</p></a>
+    <a href="/admin/all-purchases" class="sidebar-button" id="purchases"><i class="fi fi-sr-file-import"></i><p>Nhập hàng</p></a>
     <a href="/admin/all-orders" class="sidebar-button" id="orders"><i class="fi fi-rr-piggy-bank"></i><p>Đơn Hàng</p></a>
     <a href="/admin/all-stores" class="sidebar-button" id="stores"><i class="fi fi-rr-store-alt"></i><p>Cửa hàng (Đang làm)</p></a>
     <a href="/admin/all-stores" class="sidebar-button" id="employees"><i class="fi fi-rr-users"></i><p>Nhân sự (Đang làm)</p></a>
@@ -30,6 +30,7 @@
   var checkDay = ''
   var homeButton          = document.querySelector('a#home-page')
   var customersButton     = document.querySelector('a#customers')
+  var purchaseButton      = document.querySelector('a#purchases')
   var ordersButton        = document.querySelector('a#orders')
   var storeButton         = document.querySelector('a#stores')
   var employeesButton     = document.querySelector('a#employees')
@@ -40,14 +41,15 @@
   var logOutButton        = document.querySelector('a#log-out')
   var index = `{{index}}`;
   const buttonMap = {
-    home: homeButton,
-    customers: customersButton,
-    orders: ordersButton,
-    stores: storeButton,
-    employees: employeesButton,
-    products: productsButton,
-    brands: brandsButton,
-    trash: trashButton,
+    home            : homeButton,
+    customers       : customersButton,
+    purchases       : purchaseButton,
+    orders          : ordersButton,
+    stores          : storeButton,
+    employees       : employeesButton,
+    products        : productsButton,
+    brands          : brandsButton,
+    trash           : trashButton,
     "update-profile": updateProfileButton,
   };
   if (buttonMap[index]) buttonMap[index].style.backgroundColor = '#FFDFDF';
@@ -57,7 +59,7 @@
   else if (currentTime <= 18) checkDay = 'buổi chiều'
   else    checkDay = 'buổi tối'
 
-  var helloText = `Chúc bạn một ${checkDay} vui vẻ !!!`
+  var helloText = `Xin chào Quỳnh Ly, Chúc bạn một ${checkDay} vui vẻ !!!`
   document.getElementById('welcome-text').innerHTML = helloText
 
   function getCookie(cname) {

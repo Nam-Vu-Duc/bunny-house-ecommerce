@@ -1,7 +1,7 @@
 <div class="admin-update-product-container">
   <form method="POST" action="/admin/updated/{{product._id}}?_method=PUT" enctype="multipart/form-data">
     <div class="form-title">
-      <p>Sửa sản phẩm</p>
+      <p>Thông tin sản phẩm</p>
     </div>
 
     <div class="form-group">
@@ -16,63 +16,29 @@
     <div class="form-group" style="display: none">
       <select name="skincare">
         <option value="">-- Skincare --</option>
-        <option value="xit-khoang">
-          Xịt Khoáng
-        </option>
-        <option value="mat-na">
-          Mặt Nạ
-        </option>
-        <option value="serum">
-          Serum
-        </option>
-        <option value="bha">
-          BHA
-        </option>
-        <option value="tay-da-chet">
-          Tẩy Da Chết
-        </option>
-        <option value="duong-da">
-          Dưỡng Da
-        </option>  
-        <option value="toner">
-          Toner
-        </option>
-        <option value="nuoc-tay-trang">
-          Nước Tẩy Trang
-        </option>
-        <option value="cham-mun">
-          Chấm Mụn
-        </option>
-        <option value="kem-duong-am">
-          Kem Dưỡng Ẩm
-        </option>
-        <option value="sua-rua-mat">
-          Sữa Rửa Mặt
-        </option>
+        <option value="xit-khoang">Xịt Khoáng</option>
+        <option value="mat-na">Mặt Nạ</option>
+        <option value="serum">Serum</option>
+        <option value="bha">BHA</option>
+        <option value="tay-da-chet">Tẩy Da Chết</option>
+        <option value="duong-da">Dưỡng Da</option>  
+        <option value="toner">Toner</option>
+        <option value="nuoc-tay-trang">Nước Tẩy Trang</option>
+        <option value="cham-mun">Chấm Mụn</option>
+        <option value="kem-duong-am">Kem Dưỡng Ẩm</option>
+        <option value="sua-rua-mat">Sữa Rửa Mặt</option>
       </select>
     </div>
 
     <div class="form-group" style="display: none">
       <select name="makeup">
         <option value="">-- Makeup --</option>
-        <option value="phan-ma">
-          Phấn Má
-        </option>
-        <option value="mascara">
-          Mascara
-        </option>
-        <option value="ke-mat">
-          Kẻ Mắt
-        </option>
-        <option value="kem-chong-nang">
-          Kem Chống Nắng
-        </option>
-        <option value="che-khuyet-diem">
-          Che Khuyết Điểm
-        </option>
-        <option value="son">
-          Son
-        </option>
+        <option value="phan-ma">Phấn Má</option>
+        <option value="mascara">Mascara</option>
+        <option value="ke-mat">Kẻ Mắt</option>
+        <option value="kem-chong-nang">Kem Chống Nắng</option>
+        <option value="che-khuyet-diem">Che Khuyết Điểm</option>
+        <option value="son">Son</option>
       </select>
     </div>
 
@@ -134,7 +100,7 @@
       <input type="file" name="img" id="img" value="{{product.img}}"/>
     </div>
     <div class="submit-button">
-      <button title="submit" type="submit">Hoàn thành</button>
+      <button title="submit" type="submit">Cập nhật sản phẩm</button>
     </div>
 
   </form>
@@ -142,13 +108,13 @@
 
 <script>
 
-var selectedValue = 'skincare'
-var skincareBox = document.querySelector('select[name="skincare"]').parentElement
-var makeUpBox = document.querySelector('select[name="makeup"]').parentElement
+var selectedValue           = 'skincare'
+var skincareBox             = document.querySelector('select[name="skincare"]').parentElement
+var makeUpBox               = document.querySelector('select[name="makeup"]').parentElement
 var categoriesSelectOptions = document.querySelector('select[name="categories"]').querySelectorAll('option')
-var statusSelectOptions = document.querySelector('select[name="status"]').querySelectorAll('option')
+var statusSelectOptions     = document.querySelector('select[name="status"]').querySelectorAll('option')
 var newArrivalSelectOptions = document.querySelector('select[name="newArrival"]').querySelectorAll('option')
-var productType = ''
+var productType             = ''
 
 // selected product category
 categoriesSelectOptions.forEach(option => {
@@ -202,5 +168,4 @@ if (productType === 'makeup') {
     }
   })
 }
-
 </script>

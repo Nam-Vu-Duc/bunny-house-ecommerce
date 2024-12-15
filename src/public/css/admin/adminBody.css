@@ -1,5 +1,6 @@
 @import url('https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
 @import url('https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css');
 
 body {
   background-color: #FFDFDF;
@@ -9,19 +10,10 @@ body {
   background-color: #2d3436;
   color: #D1A6A6;
 }
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: #FFDFDF; 
-}
-::-webkit-scrollbar-thumb {
-  background: #D1A6A6;
-  border-radius: 5px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #D1A6A6;
-}
+::-webkit-scrollbar {width: 10px;}
+::-webkit-scrollbar-track {background: #FFDFDF; }
+::-webkit-scrollbar-thumb {background: #D1A6A6;border-radius: 5px;}
+::-webkit-scrollbar-thumb:hover {background: #D1A6A6;}
 .preloader {
   position: fixed;
   width: 100%;

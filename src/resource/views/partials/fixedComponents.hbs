@@ -11,3 +11,70 @@
     </div> 
   </div>              
 </div>
+
+<div class="chat-icon">
+  <i class="fi fi-ss-beacon"></i>
+</div>
+
+<div class="chat-box">
+  <div class="chat-header">
+    <div class="icon">Admin</div>
+    <div class="minimize" style="cursor: pointer;"><i class="fi fi-br-window-minimize"></i></div>
+  </div>
+  <div class="chat-body" style="display: none">
+    <div class="chat-content">
+      <ul class="left">left</ul>
+      <ul class="right">right</ul>
+    </div>
+    
+    <form class="input" onsubmit="event.preventDefault()">
+      <input type="text" placeholder="Aa" class="input">
+      <div class="send-btn not-allowed">Gửi</div>
+    </form>
+  </div>
+  <div class="not-logged-in"><p>Please <a href="/authentication/sign-in">Log in</a> to chat</p></div>
+</div>
+
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script>
+<script>
+  {{!-- const socket = io("http://localhost:3000"); --}}
+  const minimize    = document.querySelector('div.minimize')
+  const chat        = document.querySelector('div.chat-icon')
+  const chatBox     = document.querySelector('div.chat-box')
+  const chatBody    = document.querySelector('div.chat-body')
+  const leftContent = document.querySelector('ul.left')
+  const rightContent= document.querySelector('ul.right')
+  const input       = document.querySelector('input.input')
+  const sendBtn     = document.querySelector('div.send-btn')
+  const notLoggedIn = document.querySelector('div.not-logged-in')
+  const isLoggedIn  = document.cookie
+  const userId      = isLoggedIn.split('user_id=')[1]
+  
+  if (isLoggedIn) chatBody.style.display = ''
+  chat.onclick = function() {chatBox.style.display === 'none' ? chatBox.style.display = '' : chatBox.style.display = 'none'}
+  minimize.onclick = function () {chatBox.style.display = 'none'}
+
+  sendBtn.onclick = function() {
+    const chat = document.createElement("li")
+    chat.textContent = input.value
+    if (input.value !== '') {
+      rightContent.appendChild(chat);
+      input.value = ''
+      sendBtn.classList.add('not-allowed')
+    }
+  }
+
+  input.addEventListener('input', function() {
+    if (input.value !== '') sendBtn.classList.remove('not-allowed') 
+    else sendBtn.classList.add('not-allowed')
+  })
+
+  input.addEventListener("keypress", function(event) {
+    if (event.key === "Enter" && input.value !== '') {
+      event.preventDefault();
+      sendBtn.click();
+      input.value = ''
+      sendBtn.classList.add('not-allowed')
+    }
+  })
+</script>

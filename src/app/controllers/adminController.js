@@ -49,7 +49,7 @@ class adminController {
     const customerLength = customers.length
     const storeLength    = stores.length
 
-    res.render('admin/home', { title: 'Trang chủ admin', layout: 'admin', index, ...orderStats, ...productStats, maxValueOrderId, maxValueOrderNumber, employeeLength, customerLength, storeLength});
+    res.render('admin/home', { title: 'Trang chủ', layout: 'admin', index, ...orderStats, ...productStats, maxValueOrderId, maxValueOrderNumber, employeeLength, customerLength, storeLength});
   }  
 
   async allCustomers(req, res, next) {
@@ -103,7 +103,19 @@ class adminController {
     const totalOrder = orderInfo.length
     const totalPrice = orderInfo.reduce((total, order) => total + order.totalOrderPrice, 0)
     
-    res.render('admin/customer', { title: `Thông tin khách hàng ${customerInfo.userInfo.name}`, layout: 'admin', customerInfo, orderInfo, totalOrder, totalPrice, index })
+    res.render('admin/customer', { title: customerInfo.userInfo.name, layout: 'admin', customerInfo, orderInfo, totalOrder, totalPrice, index })
+  }
+
+  async allPurchases(req, res, next) {
+    const index  = 'purchases'
+
+    res.render('admin/allPurchases', { title: 'Danh sách phiếu nhập', layout: 'admin', index })
+  }
+
+  async purchaseInfo(req, res, next) {
+    const index  = 'purchases'
+
+    res.render('admin/purchase', { title: 'Phiếu nhập', layout: 'admin', index })
   }
 
   allOrders(req, res, next) {
@@ -128,7 +140,7 @@ class adminController {
     order.findOne({ _id: req.params.id }).lean()
       .then(order => {
         const index = 'orders'
-        res.render('admin/order', { title: `Đơn của ${order.customerInfo.name}`, layout: 'admin', order,index })
+        res.render('admin/order', { title: `Đơn ${order.customerInfo.name}`, layout: 'admin', order,index })
       })
       .catch(next)
   }
@@ -153,7 +165,7 @@ class adminController {
         if (productType !== '') product = product.filter(product => product.categories === productType)
         product = product.slice(skip, skip + itemsPerPage)
 
-        res.render('admin/allProducts', { title: 'Toàn bộ sản phẩm', layout: 'admin', productLength, product, productType, currentPage, index })
+        res.render('admin/allProducts', { title: 'Danh sách sản phẩm', layout: 'admin', productLength, product, productType, currentPage, index })
       })
       .catch(next)
   }
@@ -174,12 +186,19 @@ class adminController {
       .catch(next)
   }
 
-  allStores(req, res, next) {
+  async allStores(req, res, next) {
+    const stores = await store.find({}).lean()
+    const index  = 'stores'
+    const totalStore = stores.length
+
+    res.render('admin/allStores', { title: 'Danh sách cửa hàng', layout: 'admin', stores, totalStore, index })
+  }
+
+  storeInfo(req, res, next) {
     const index = 'stores'
-    store.find({}).lean()
+    store.findOne({ _id: req.params.id }).lean()
       .then(store => { 
-        const totalStore = store.length
-        res.render('admin/allStores', { title: 'Toàn bộ cửa hàng', layout: 'admin', store, totalStore, index })
+        res.render('admin/store', { title: store.name, layout: 'admin', store, index })
       })
       .catch(next)
   }
@@ -187,7 +206,7 @@ class adminController {
   updatingProduct(req, res, next) {
     const index = 'products'
     product.findById(req.params.id).lean()
-      .then(product => { res.render('admin/updateProduct', { title: 'Sửa sản phẩm', layout: 'admin', product, index } )})
+      .then(product => { res.render('admin/updateProduct', { title: product.name, layout: 'admin', product, index } )})
       .catch(next)
   }
 
@@ -241,14 +260,14 @@ class adminController {
     product.find({ deletedAt: { $ne: null } }).lean()
       .then(product => { 
         const totalDeletedProduct = product.length
-        res.render('admin/trash', { title: 'Thùng rác', layout: 'admin', product, totalDeletedProduct, index })})
+        res.render('admin/trash', { title: 'Kho', layout: 'admin', product, totalDeletedProduct, index })})
       .catch(next)
   }
 
   updateProfile(req, res, next) {
     const index = 'update-profile'
     user.findById(req.params.id).lean()
-      .then(user => { res.render('admin/updateProfile', { title: 'Cập nhật thông tin cá nhân', layout: 'admin', user, index } )})
+      .then(user => { res.render('admin/updateProfile', { title: 'Thông tin cá nhân', layout: 'admin', user, index } )})
       .catch(next)
   }
 

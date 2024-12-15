@@ -11,7 +11,7 @@
           <thead>
             <tr>
               <td style="width: 15%;"></td>
-              <td style="width: 50%;" >Sản Phẩm</td>
+              <td style="width: 50%;">Sản Phẩm</td>
               <td style="width: 10%;">Đơn Giá</td>
               <td style="width: 10%;">Số Lượng</td>
               <td style="width: 10%;">Tổng Tiền</td>
@@ -118,11 +118,8 @@ function updateTableBody(totalOrderPrice) {
   newProductUserId.style.display = 'none'
 
   var userId = getCookie('user_id')
-  if (userId) {
-    newProductUserId.setAttribute('value', userId)
-  } else {
-    newProductUserId.setAttribute('value', 'guest')
-  }
+  if (userId) newProductUserId.setAttribute('value', userId)
+  else newProductUserId.setAttribute('value', 'guest')
 
   // create new row for new product have name, price, quantity and totalPrice
   for (let i = 0; i < productInfoLength; ++i) {
@@ -385,5 +382,4 @@ if (`{{successful}}` && `{{newOrderId}}`) {
   `
   document.body.appendChild(orderSuccessfullyMessage)
 }
-
 </script>

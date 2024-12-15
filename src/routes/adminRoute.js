@@ -4,15 +4,24 @@ const adminController = require('../app/controllers/adminController')
 const upload = require('../app/middleware/cloudinary');
 
 router.get('/', adminController.show)
+//customer
 router.get('/all-customers', adminController.allCustomers)
 router.get('/all-customers/:id', adminController.customerInfo)
 router.get('/create/customer', adminController.createCustomer)
 router.post('/customer/created', adminController.customerCreated)
+//purchase
+router.get('/all-purchases', adminController.allPurchases)
+router.get('/all-purchases/purchase/:id', adminController.purchaseInfo)
+//order
 router.get('/all-orders', adminController.allOrders)
 router.get('/all-orders/:id', adminController.orderInfo)
 router.put('/order-updated/:id', adminController.orderUpdated)
+//store
 router.get('/all-stores', adminController.allStores)
+router.get('/all-stores/store/:id', adminController.storeInfo)
+//brand
 router.get('/all-brands', adminController.allStores)
+//product
 router.get('/create/product', adminController.createProduct)
 router.post('/product/created', upload.single('img'), adminController.productCreated)
 router.get('/all-products', adminController.allProducts)
@@ -22,6 +31,7 @@ router.delete('/soft-delete/:id', adminController.softDelete)
 router.delete('/delete/:id', adminController.deleteProduct)
 router.get('/restore/:id', adminController.restore)
 router.get('/trash', adminController.trash)
+//profile
 router.get('/update-profile/:id', adminController.updateProfile)
 router.put('/profile-updated/:id', adminController.profileUpdated)
 

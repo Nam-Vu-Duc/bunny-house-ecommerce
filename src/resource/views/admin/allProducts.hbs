@@ -20,12 +20,13 @@
     <table>
       <thead>
         <tr>
-          <td> Id       </td>
-          <td> Hãng     </td>
-          <td> Tên      </td>
-          <td> Loại     </td>
-          <td> Giá      </td>
-          <td> Lựa chọn </td>
+          <td>Id      </td>
+          <td>Hãng    </td>
+          <td>Tên     </td>
+          <td>Loại    </td>
+          <td>Giá     </td>
+          <td>Số lượng</td>
+          <td>Thao tác</td>
         </tr>
       </thead>
 
@@ -45,9 +46,10 @@
           </td>  
           <td style="width: 10%;">{{this.categories}}</td>
           <td style="width: 10%;" id="product-price">{{this.price}}</td>
+          <td style="width: 10%;" id="product-quantity">{{this.quantity}}</td>
           <td style="width: 10%;">
-            <a href="/admin/updating/{{this._id}}" class="update-button"><button>Sửa</button></a>
-            <button id="{{this._id}}" onclick="reply_click(this.id)">Xoá</button> 
+            <a href="/admin/updating/{{this._id}}" class="update-button"><button>Chi tiết</button></a>
+            <button id="{{this._id}}" name="{{this.name}}" onclick="reply_click(this.id, this.name)">Xoá</button> 
           </td>
         </tr>
         {{/each}}
@@ -58,7 +60,7 @@
       <form class="modal-content">
         <div class="container">
           <p><strong>Xoá sản phẩm ?</strong></p>
-          <p>Bạn có muốn xoá sản phẩm {{this.name}} không</p>
+          <p id="confirm-message"></p>
           <div class="clearfix">
             <button id="delete-button" type="button" class="deletebtn">Xoá</button>
             <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
@@ -84,7 +86,10 @@
 
   productPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
 
-  function reply_click(clicked_id) {
+  function reply_click(clicked_id, clicked_name) {
+    const name = clicked_name
+    const message = document.querySelector('p#confirm-message')
+    message.innerText = `Bạn có muốn xoá sản phẩm ${name} không ?`
     document.getElementById('id01').style.display='block'
     courseId = clicked_id
   }
