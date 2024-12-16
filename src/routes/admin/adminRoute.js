@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const adminController = require('../app/controllers/adminController')
-const upload = require('../app/middleware/cloudinary');
+const adminController = require('../../app/controllers/admin/adminController')
+const upload = require('../../app/middleware/cloudinary');
 
+//home
 router.get('/', adminController.show)
 //customer
 router.get('/all-customers', adminController.allCustomers)
@@ -21,6 +22,9 @@ router.get('/all-stores', adminController.allStores)
 router.get('/all-stores/store/:id', adminController.storeInfo)
 //brand
 router.get('/all-brands', adminController.allStores)
+//employees
+router.get('/all-employees', adminController.allEmployees)
+router.get('/all-employees/employee/:id', adminController.employeeInfo)
 //product
 router.get('/create/product', adminController.createProduct)
 router.post('/product/created', upload.single('img'), adminController.productCreated)

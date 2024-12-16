@@ -1,4 +1,4 @@
-const order = require('../models/orderModel')
+const order = require('../../models/orderModel')
 
 class orderController {
   show(req, res, next) {

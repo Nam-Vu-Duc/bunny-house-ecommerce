@@ -1,5 +1,5 @@
-const product = require('../models/productModel')
-const brand = require('../models/brandModel')
+const product = require('../../models/productModel')
+const brand = require('../../models/brandModel')
 
 class homeController {
   async show(req, res, next) {

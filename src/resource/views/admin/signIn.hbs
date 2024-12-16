@@ -1,0 +1,129 @@
+<div class="sign-in-container">
+  <div class="sign-in-form">
+    <img src="https://res.cloudinary.com/bunny-store/image/upload/v1730102111/web-img/4_lnwzuk_jkpls2.jpg" alt="login_img" loading="lazy">
+    <div class="form-input">
+      <p class="form-title">Đăng nhập</p>
+      <form id="form-3" method="post" action="/authentication/checking-account">
+        <div class="form-group">
+          <input type="text" class="form-control" id="email" name="email" placeholder="Tài khoản">
+          <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+          <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu">
+          <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+          <p class="wrong-info">
+          </p> 
+          <p class="forgot-password">
+            Quên mật khẩu ?
+          </p> 
+        </div>
+
+        <div class="form-action">
+          <button title="submit" type="submit">Đăng nhập</button>
+        </div>
+        
+        <div class="form-group">
+          <div class="other-login-methods">
+            Đăng nhập bằng tài khoản khác
+          </div> 
+          <div class="other-login-methods-logo">
+            <i class="fi fi-brands-facebook"></i>
+            <i class="fi fi-brands-google"></i>
+          </div>
+        </div>
+
+        <div class="sign-up">
+          <p>Bạn chưa có tài khoản sao ?</p>
+          <a href="/authentication/sign-up"><p style="color: red; text-decoration:underline">Đăng kí ngay thôi</p></a>
+          <a href="/home"><p style="color: red; text-decoration:underline">Tiếp tục Shopping</p></a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>  
+// 
+var wrongInfo = document.querySelector('p.wrong-info')
+if (`{{error}}`) {
+  wrongInfo.innerText = `{{error}}`
+  wrongInfo.style.color = 'red'
+}
+
+// executing validate
+function validating(inputElement, rule, checkValidate, index) {
+  var errorMessage = rule.test(inputElement.value)
+  var errorElement = inputElement.parentElement.querySelector('.form-message')
+
+  if (errorMessage) {
+    errorElement.innerText = errorMessage
+    inputElement.parentElement.style.color = "red"
+    checkValidate[index] = false
+  } else {
+    errorElement.innerText = ''
+    inputElement.parentElement.style.color = "black"
+    checkValidate[index] = true
+  }
+}  
+
+// isRequiredString requires input must have string
+function isRequiredString(selector) {  
+  return {
+    selector: selector,
+    test: function (value) {
+      return value.trim() ? undefined : 'Chưa nhập mật khẩu'
+    }
+  }
+}
+
+// isEmail requires input must be an email 
+function isEmail(selector) {
+  return {
+    selector: selector,
+    test: function (value) {
+      var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+      return regex.test(value) ? undefined : 'Email nhập chưa đúng'
+    }
+  }
+}
+
+// validator function to validate input form from user
+function validator(options) {
+  var formElement = document.querySelector(options.form)
+  var checkValidate = Array(2).fill(false)
+
+  options.rules.forEach(function (rule, index) {
+    var inputElement = formElement.querySelector(rule.selector)
+    // input blur
+    inputElement.onblur = function () {
+      validating(inputElement, rule, checkValidate, index)
+    }
+  })
+
+  formElement.onsubmit = function (e) {
+    for (var i = 0; i < checkValidate.length; ++i) {
+      if(checkValidate[i] === false) {
+        e.preventDefault()
+        options.rules.forEach(function (rule, index) {
+          var inputElement = formElement.querySelector(rule.selector)
+          validating(inputElement, rule, checkValidate, index)
+        })
+        break
+      } 
+    }
+  }
+}
+
+validator({
+  form: '#form-3',
+  errorSelector: '.form-message',
+  rules: [
+    isEmail('#email'),
+    isRequiredString('#password'),
+  ]
+})
+</script>

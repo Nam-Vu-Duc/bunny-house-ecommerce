@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const allProductsController = require('../app/controllers/allProductsController')
+const allProductsController = require('../../app/controllers/user/allProductsController')
 
 router.get('/all-brands', allProductsController.showAllBrands)
 router.get('/all-brands/:slug', allProductsController.showBrand)

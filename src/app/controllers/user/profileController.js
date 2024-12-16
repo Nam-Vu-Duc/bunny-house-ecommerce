@@ -1,5 +1,5 @@
-const user = require('../models/userModel')
-const order = require('../models/orderModel')
+const user = require('../../models/userModel')
+const order = require('../../models/orderModel')
 
 class profileController {
   async updateProfile(req, res, next) {

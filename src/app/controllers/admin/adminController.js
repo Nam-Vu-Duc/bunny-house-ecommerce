@@ -1,15 +1,15 @@
-const product    = require('../models/productModel')
-const user       = require('../models/userModel')
-const order      = require('../models/orderModel')
-const store      = require('../models/storeModel')
-const brand      = require('../models/brandModel')
-const employee   = require('../models/employeeModel')
+const product    = require('../../models/productModel')
+const user       = require('../../models/userModel')
+const order      = require('../../models/orderModel')
+const store      = require('../../models/storeModel')
+const brand      = require('../../models/brandModel')
+const employee   = require('../../models/employeeModel')
 const cloudinary = require('cloudinary').v2
 
 class adminController {
   async show(req, res, next) {
     const index = 'home';
-      const [orders, products, employees, customers, stores] = await Promise.all([
+    const [orders, products, employees, customers, stores] = await Promise.all([
       order.find({ deletedAt: null }).sort({ totalOrderPrice: -1 }).lean(),
       product.find().lean(),
       employee.find().lean(),
@@ -125,7 +125,7 @@ class adminController {
     const itemsPerPage = 10;
     const skip         = (currentPage - 1) * itemsPerPage;
 
-    order.find({ deletedAt: null }).lean()
+    order.find({ deletedAt: null }).sort({'createdAt': -1}).lean()
       .then(order => {
         const orderLength = order.length
         if (orderType !== '') order = order.filter(order => order.status === orderType)
@@ -194,19 +194,36 @@ class adminController {
     res.render('admin/allStores', { title: 'Danh sách cửa hàng', layout: 'admin', stores, totalStore, index })
   }
 
-  storeInfo(req, res, next) {
+  async storeInfo(req, res, next) {
     const index = 'stores'
-    store.findOne({ _id: req.params.id }).lean()
-      .then(store => { 
-        res.render('admin/store', { title: store.name, layout: 'admin', store, index })
-      })
-      .catch(next)
+    const [storeInfo, employeesInfo] = await Promise.all([
+      store.findOne({ _id: req.params.id }).lean(),
+      employee.find({ 'userInfo.storeId': req.params.id }).lean(),
+    ]);
+
+    res.render('admin/store', { title: store.name, layout: 'admin', storeInfo, employeesInfo, index })
+  }
+
+  async allEmployees(req, res, next) {
+    const employees = await employee.find({}).lean()
+    const index  = 'employees'
+    const totalEmployees = employees.length
+
+    res.render('admin/allEmployees', { title: 'Danh sách nhân sự', layout: 'admin', employees, totalEmployees, index })
+  }
+
+  async employeeInfo(req, res, next) {
+    const index = 'employees'
+    const employeeInfo = employee.findOne({ _id: req.params.id }).lean()
+
+    console.log(employeeInfo)
+    res.render('admin/employee', { title: '', layout: 'admin', employeeInfo, index })
   }
 
   updatingProduct(req, res, next) {
     const index = 'products'
     product.findById(req.params.id).lean()
-      .then(product => { res.render('admin/updateProduct', { title: product.name, layout: 'admin', product, index } )})
+      .then(product => { res.render('admin/product', { title: product.name, layout: 'admin', product, index } )})
       .catch(next)
   }
 
@@ -267,7 +284,7 @@ class adminController {
   updateProfile(req, res, next) {
     const index = 'update-profile'
     user.findById(req.params.id).lean()
-      .then(user => { res.render('admin/updateProfile', { title: 'Thông tin cá nhân', layout: 'admin', user, index } )})
+      .then(user => { res.render('admin/profile', { title: 'Thông tin cá nhân', layout: 'admin', user, index } )})
       .catch(next)
   }
 

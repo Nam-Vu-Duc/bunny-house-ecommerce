@@ -39,12 +39,8 @@ app.set('views', path.join(__dirname, 'resource', 'views'))
 app.set('view options', { layout: 'other' });
 
 
-io.on('connection', (socket) => {
-  console.log('user connected')
-})
+io.on('connection', (socket) => {console.log('user connected')})
 
 //route 
 route(app)
-app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`)
-})
+app.listen(port, () => {console.log(`App listening at http://localhost:${port}`)})

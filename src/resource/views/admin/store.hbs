@@ -3,138 +3,45 @@
     <table id="table-1">
       <thead>
         <tr>
-          <td colspan="2"> Thông tin chung </td>
+          <td colspan="2"> THÔNG TIN CỬA HÀNG </td>
         </tr>
       </thead>
       <tr>
-        <td> Mã Đơn </td>
-        <td> {{store.name}} </td>
+        <td> ID Cửa hàng </td>
+        <td> {{storeInfo._id}} </td>
       </tr>
       <tr>
-        <td> Ngày Đặt </td>
-        <td> {{order.createdAt}} </td>
+        <td> Tên cửa hàng </td>
+        <td> {{storeInfo.name}} </td>
       </tr>
       <tr>
-        <td> Khách Hàng </td>
-        <td> {{order.customerInfo.name}} </td>
+        <td> Địa chỉ cửa hàng </td>
+        <td> {{storeInfo.address}} </td>
       </tr>
       <tr>
-        <td> SĐT </td>
-        <td> {{order.customerInfo.phone}} </td>
+        <td> Mô tả chi tiết </td>
+        <td> {{storeInfo.details}} </td>
       </tr>
       <tr>
-        <td> Địa Chỉ </td>
-        <td> {{order.customerInfo.address}} </td>
+        <td> Doanh thu cửa hàng </td>
+        <td class="revenue"> {{storeInfo.revenue}} </td>
       </tr>
       <tr>
-        <td> Ghi Chú </td>
-        <td> {{order.customerInfo.note}} </td>
-      </tr>
-      <tr>
-        <td> Tổng Tiền </td>
-        <td id="total-order-price"> {{order.totalOrderPrice}}đ </td>
-      </tr>
-      <tr>
-        <td> Trạng thái đơn </td>
+        <td> Danh sách nhân viên </td>
         <td>
-          <div>
-            <input type="radio" id="preparing" name="status" value="preparing">
-            <label id="preparing" for="preparing">Đang Xử Lý</label>
-          </div>
-
-          <div>
-            <input type="radio" id="delivering" name="status" value="delivering">
-            <label id="delivering" for="delivering">Đang Giao Hàng</label>
-          </div>
-
-          <div>
-            <input type="radio" id="done" name="status" value="done">
-            <label id="done" for="done">Hoàn Thành</label>
-          </div>
+          <ul>
+            {{#each employeesInfo}}
+            <li> {{this.userInfo.name}} </li>
+            {{/each}}
+          </ul>
         </td>
       </tr>
     </table>
-
-    <table id="table-2">
-      <thead>
-        <tr>
-          <td>Sản Phẩm  </td>
-          <td>Đơn Giá   </td>
-          <td>S/L       </td>
-          <td>Tổng      </td>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each order.products}}
-        <tr>
-          <td><p>{{this.name}}</p>                                                     </td>
-          <td style="text-align: center;" id="product-price">      {{this.price}}      </td>
-          <td style="text-align: center;">                         {{this.quantity}}   </td>
-          <td style="text-align: center;" id="total-product-price">{{this.totalPrice}} </td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-
     <button type="submit">Cập nhật</button>    
   </form>     
 </div>
 
 <script>
-  var getPreparingButton  = document.querySelector('label#preparing')
-  var getDeliveringButton = document.querySelector('label#delivering')
-  var getDoneButton       = document.querySelector('label#done')
-  var totalOrderPrice    = document.querySelectorAll('td#total-order-price')
-  var productPrice       = document.querySelectorAll('td#product-price')
-  var totalProductPrice  = document.querySelectorAll('td#total-product-price')
-  
-  totalOrderPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
-  productPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
-  totalProductPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
-
-  if (`{{order.status}}` === 'preparing') {
-    getPreparingButton.style.backgroundColor = 'white'
-    getPreparingButton.style.color = 'red'
-  }
-  if (`{{order.status}}` === 'delivering') {
-    getDeliveringButton.style.backgroundColor = 'white'
-    getDeliveringButton.style.color = 'red'
-  }
-  if (`{{order.status}}` === 'done') {
-    getDoneButton.style.backgroundColor = 'white'
-    getDoneButton.style.color = 'red'
-  }
-
-  getPreparingButton.onclick = function() {
-    getPreparingButton.style.backgroundColor = 'white'
-    getPreparingButton.style.color = 'red'
-
-    getDeliveringButton.style.backgroundColor = ''
-    getDeliveringButton.style.color = ''
-
-    getDoneButton.style.backgroundColor = ''
-    getDoneButton.style.color = ''
-  }
-
-  getDeliveringButton.onclick = function() {
-    getPreparingButton.style.backgroundColor = ''
-    getPreparingButton.style.color = ''
-
-    getDeliveringButton.style.backgroundColor = 'white'
-    getDeliveringButton.style.color = 'red'
-
-    getDoneButton.style.backgroundColor = ''
-    getDoneButton.style.color = ''
-  }
-
-  getDoneButton.onclick = function() {
-    getPreparingButton.style.backgroundColor = ''
-    getPreparingButton.style.color = ''
-
-    getDeliveringButton.style.backgroundColor = ''
-    getDeliveringButton.style.color = ''
-
-    getDoneButton.style.backgroundColor = 'white'
-    getDoneButton.style.color = 'red'
-  }
+  revenue = document.querySelector('td.revenue')
+  revenue.innerText = revenue.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
 </script>
