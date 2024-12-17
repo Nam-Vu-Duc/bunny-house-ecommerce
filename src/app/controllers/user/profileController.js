@@ -6,7 +6,7 @@ class profileController {
     const userInfo  = await user.findOne({ _id: req.params.id }).lean()
     const orderInfo = await order.find({ 'customerInfo.userId': req.params.id, deletedAt: null }).lean()
     // order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
-    res.render('users/updateProfile', { title: 'Cập nhật thông tin', userInfo, orderInfo })
+    res.render('users/profile', { title: 'Thông tin cá nhân', userInfo, orderInfo })
   }
 
   updatedProfile(req, res, next) {

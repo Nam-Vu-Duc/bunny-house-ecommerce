@@ -87,7 +87,7 @@
   }
 
   deleteButton.onclick = function () {
-    deleteForm.action = '/admin/delete/' + productId + '?_method=DELETE'
+    deleteForm.action = '/admin/all-products/product/delete/' + productId + '?_method=DELETE'
     deleteForm.submit()
   }
 
@@ -98,7 +98,7 @@
   }
 
   restoreButton.onclick = function () {
-    restoreForm.action = '/admin/restore/' + productId 
+    restoreForm.action = '/admin/all-products/product/restore/' + productId 
     restoreForm.submit()
   }
 </script>

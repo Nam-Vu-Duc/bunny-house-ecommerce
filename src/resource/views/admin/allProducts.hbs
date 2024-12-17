@@ -10,7 +10,7 @@
       <option value="makeup">Makeup</option>
     </select>
 
-    <a href="/admin/create/product" class="create-product" id="create-product">
+    <a href="/admin/all-products/product/create" class="create-product" id="create-product">
       <i class="fi fi-br-layer-plus"></i>
       <p>Thêm Sản Phẩm</p>
     </a>
@@ -48,7 +48,7 @@
           <td style="width: 10%;" id="product-price">{{this.price}}</td>
           <td style="width: 10%;" id="product-quantity">{{this.quantity}}</td>
           <td style="width: 10%;">
-            <a href="/admin/updating/{{this._id}}" class="update-button"><button>Chi tiết</button></a>
+            <a href="/admin/all-products/product/{{this._id}}" class="update-button"><button>Chi tiết</button></a>
             <button id="{{this._id}}" name="{{this.name}}" onclick="reply_click(this.id, this.name)">Xoá</button> 
           </td>
         </tr>
@@ -96,7 +96,7 @@
 
   // delete action
   deleteButton.onclick = function () {
-    deleteForm.action = '/admin/soft-delete/' + courseId + '?_method=DELETE'
+    deleteForm.action = '/admin/all-products/product/soft-delete/' + courseId + '?_method=DELETE'
     deleteForm.submit()
   }
 
