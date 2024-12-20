@@ -11,17 +11,18 @@
   </div>
   
   <div class="admin-button">
-    <a href="/admin" class="sidebar-button" id="home-page"><i class="fi fi-br-home"></i><p>Trang chủ</p></a>
+    <a href="/admin" class="sidebar-button" id="home-page"><i class="fi fi-rr-home"></i><p>Trang chủ</p></a>
     <a href="/admin/all-customers" class="sidebar-button" id="customers"><i class="fi fi-rr-users"></i><p>Khách hàng</p></a>
-    <a href="/admin/all-purchases" class="sidebar-button" id="purchases"><i class="fi fi-sr-file-import"></i><p>Nhập hàng</p></a>
+    <a href="/admin/all-chats" class="sidebar-button" id="chats"><i class="fi fi-rr-comment"></i></i><p>Chat</p></a>
+    <a href="/admin/all-purchases" class="sidebar-button" id="purchases"><i class="fi fi-rr-file-import"></i><p>Nhập hàng</p></a>
     <a href="/admin/all-orders" class="sidebar-button" id="orders"><i class="fi fi-rr-piggy-bank"></i><p>Đơn Hàng</p></a>
     <a href="/admin/all-stores" class="sidebar-button" id="stores"><i class="fi fi-rr-store-alt"></i><p>Cửa hàng</p></a>
     <a href="/admin/all-employees" class="sidebar-button" id="employees"><i class="fi fi-rr-users"></i><p>Nhân sự</p></a>
-    <a href="/admin/all-products?page=1&type=" class="sidebar-button" id="total-products"><i class="fi fi-rr-box-open"></i><p>Sản Phẩm</p></a>
-    <a href="/admin/all-brands" class="sidebar-button" id="total-brands"><i class="fi fi-rr-box-open"></i><p>Đối tác</p></a>
-    <a href="/admin/all-products/trash" class="sidebar-button" id="trash"><i class="fi fi-br-trash"></i><p>Kho</p></a>
-    <a class="sidebar-button" id="update-profile"><i class="fi fi-br-circle-user"></i><p>Thông Tin Cá Nhân</p></a>
-    <a href="/authentication/sign-in" class="sidebar-button" id="log-out"><i class="fi fi-br-exit"></i><p>Đăng Xuất</p></a>
+    <a href="/admin/all-products?page=1&type=" class="sidebar-button" id="products"><i class="fi fi-rr-box-open"></i><p>Sản Phẩm</p></a>
+    <a href="/admin/all-brands" class="sidebar-button" id="brands"><i class="fi fi-rr-box-open"></i><p>Đối tác</p></a>
+    <a href="/admin/all-products/trash" class="sidebar-button" id="trash"><i class="fi fi-rr-trash"></i><p>Kho</p></a>
+    <a class="sidebar-button" id="update-profile"><i class="fi fi-rr-circle-user"></i><p>Thông Tin Cá Nhân</p></a>
+    <a href="/authentication/sign-in" class="sidebar-button" id="log-out"><i class="fi fi-rr-exit"></i><p>Đăng Xuất</p></a>
   </div>
 </div>
 
@@ -30,12 +31,13 @@
   var checkDay = ''
   var homeButton          = document.querySelector('a#home-page')
   var customersButton     = document.querySelector('a#customers')
+  var chatsButton         = document.querySelector('a#chats')
   var purchaseButton      = document.querySelector('a#purchases')
   var ordersButton        = document.querySelector('a#orders')
   var storeButton         = document.querySelector('a#stores')
   var employeesButton     = document.querySelector('a#employees')
-  var productsButton      = document.querySelector('a#total-products')
-  var brandsButton        = document.querySelector('a#total-brands')
+  var productsButton      = document.querySelector('a#products')
+  var brandsButton        = document.querySelector('a#brands')
   var trashButton         = document.querySelector('a#trash')
   var updateProfileButton = document.querySelector('a#update-profile')
   var logOutButton        = document.querySelector('a#log-out')
@@ -43,6 +45,7 @@
   const buttonMap = {
     home            : homeButton,
     customers       : customersButton,
+    chats           : chatsButton,
     purchases       : purchaseButton,
     orders          : ordersButton,
     stores          : storeButton,

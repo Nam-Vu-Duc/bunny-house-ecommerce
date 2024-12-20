@@ -26,7 +26,7 @@ class allCustomersController {
         ...customer,
         orders: customerOrders, // Attach orders or empty array if no orders found
         totalOrder: customerOrders.length,
-        totalPrice: totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        totalPrice: totalPrice
       };
     });
 

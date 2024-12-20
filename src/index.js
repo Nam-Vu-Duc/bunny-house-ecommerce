@@ -9,14 +9,11 @@ const route = require('./routes')
 const db = require('./config/db')
 const sortMiddleware = require('./app/middleware/sortMiddleware')
 const Handlebars = require('handlebars')
-const http = require('http')
-const server = http.createServer(app)
-const { Server } = require("socket.io");
+const { createServer } = require("http")
+const { Server } = require('socket.io')
+const server = createServer(app)
 const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000", // Adjust this to your frontend domain for security
-    methods: ["GET", "POST"]
-  }
+  path: "/socket.io"
 })
 const port = process.env.PORT
 
@@ -38,9 +35,18 @@ app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'resource', 'views'))
 app.set('view options', { layout: 'other' });
 
-
-io.on('connection', (socket) => {console.log('user connected')})
+io.on('connection', (socket) => {
+  socket.on('chat message', (info) => {
+    const id = info.split(':')[0]
+    const msg = info.split(':')[1]
+    console.log(id, msg)
+    io.emit('chat message', id, msg);
+  });
+});
 
 //route 
 route(app)
-app.listen(port, () => {console.log(`App listening at http://localhost:${port}`)})
+server.listen(port, () => {
+  console.log(`App listening at http://localhost:${port}`);
+});
+// app.listen(port, () => {console.log(`App listening at http://localhost:${port}`)})

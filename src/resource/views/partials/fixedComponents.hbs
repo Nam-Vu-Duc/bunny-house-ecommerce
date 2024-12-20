@@ -13,68 +13,84 @@
 </div>
 
 <div class="chat-icon">
-  <i class="fi fi-ss-beacon"></i>
+  <i class="fi fi-sr-comment-quote"></i>
 </div>
 
 <div class="chat-box">
   <div class="chat-header">
-    <div class="icon">Admin</div>
+    <div class="icon">
+      <img src="https://res.cloudinary.com/bunny-store/image/upload/v1730102111/web-img/4_lnwzuk_jkpls2.webp" alt="loading">
+      <div>Đặng Quỳnh Ly</div>
+    </div>
     <div class="minimize" style="cursor: pointer;"><i class="fi fi-br-window-minimize"></i></div>
   </div>
   <div class="chat-body" style="display: none">
-    <div class="chat-content">
-      <ul class="left">left</ul>
-      <ul class="right">right</ul>
-    </div>
+    <ul class="chat-content">
+      <div class="left-content">
+        <img src="https://res.cloudinary.com/bunny-store/image/upload/v1730102111/web-img/4_lnwzuk_jkpls2.webp" alt="loading">
+        <li>Hi, em có thể hỗ trợ gì cho anh/chị không ạ</li>
+      </div>
+    </ul>
     
-    <form class="input" onsubmit="event.preventDefault()">
-      <input type="text" placeholder="Aa" class="input">
+    <form class="input-form">
+      <textarea name="input" id="input" class="input" placeholder="Aa"></textarea>
       <div class="send-btn not-allowed">Gửi</div>
     </form>
   </div>
   <div class="not-logged-in"><p>Please <a href="/authentication/sign-in">Log in</a> to chat</p></div>
 </div>
 
-<script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script>
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
 <script>
-  {{!-- const socket = io("http://localhost:3000"); --}}
+  const socket = io('http://localhost:3000', {
+    path: "/socket.io"
+  });
+
+  let counter = 0  
   const minimize    = document.querySelector('div.minimize')
   const chat        = document.querySelector('div.chat-icon')
   const chatBox     = document.querySelector('div.chat-box')
   const chatBody    = document.querySelector('div.chat-body')
-  const leftContent = document.querySelector('ul.left')
-  const rightContent= document.querySelector('ul.right')
-  const input       = document.querySelector('input.input')
+  const chatContent = document.querySelector('ul.chat-content')
+  const input       = document.querySelector('textarea.input')
   const sendBtn     = document.querySelector('div.send-btn')
   const notLoggedIn = document.querySelector('div.not-logged-in')
   const isLoggedIn  = document.cookie
   const userId      = isLoggedIn.split('user_id=')[1]
+  const form = document.querySelector('form.input-form')
   
   if (isLoggedIn) chatBody.style.display = ''
   chat.onclick = function() {chatBox.style.display === 'none' ? chatBox.style.display = '' : chatBox.style.display = 'none'}
   minimize.onclick = function () {chatBox.style.display = 'none'}
 
   sendBtn.onclick = function() {
-    const chat = document.createElement("li")
-    chat.textContent = input.value
-    if (input.value !== '') {
-      rightContent.appendChild(chat);
+    if (input.value.trim() !== '') {
+      socket.emit('chat message', `${userId}:${input.value}`);
       input.value = ''
       sendBtn.classList.add('not-allowed')
     }
   }
 
   input.addEventListener('input', function() {
-    if (input.value !== '') sendBtn.classList.remove('not-allowed') 
+    if (input.value.trim() !== '') sendBtn.classList.remove('not-allowed') 
     else sendBtn.classList.add('not-allowed')
   })
 
   input.addEventListener("keypress", function(event) {
-    if (event.key === "Enter" && input.value !== '') {
-      event.preventDefault();
+    if (event.key === "Enter" && input.value.trim() !== '') {
       sendBtn.click();
       input.value = ''
       sendBtn.classList.add('not-allowed')
     }
   })
+
+  socket.on('chat message', (id, msg) => {
+    console.log(`${id},${msg}`)
+    const chat = document.createElement('li');
+    chat.textContent = msg;
+    if (id.trim() === userId) {
+      chat.setAttribute('class', 'right-content')
+    }  
+      chatContent.appendChild(chat);
+  });
 </script>

@@ -20,21 +20,11 @@
     <table style="width:100%">
       <thead>
         <tr>
-          <td>
-            STT
-          </td>
-          <td>
-            Mã Khách hàng
-          </td>
-          <td>
-            Tên Khách Hàng
-          </td>
-          <td>
-            Tổng Đơn hàng
-          </td>
-          <td>
-            Tổng doanh thu
-          </td>
+          <td> STT            </td>
+          <td> Mã Khách hàng  </td>
+          <td> Tên Khách Hàng </td>
+          <td> Tổng Đơn hàng  </td>
+          <td> Tổng doanh thu </td>
           <td>
           </td>
         </tr>
@@ -43,29 +33,18 @@
       <tbody>
         {{#each customersWithOrders}}
         <tr>
-          <td>
-            {{addIndex @index 1}}
-          </td>
-          <td>
-            {{this._id}}
-          </td>
-          <td>
-            {{this.userInfo.name}}
-          </td>
-          <td>
-            {{this.totalOrder}}
-          </td>
-          <td>
-            {{this.totalPrice}} VND
-          </td>
-          <td>
-            <a href="/admin/all-customers/{{this._id}}">Chi Tiết</a>
-          </td>
+          <td>{{addIndex @index 1}}</td>
+          <td>{{this._id}}</td>
+          <td>{{this.userInfo.name}}</td>
+          <td>{{this.totalOrder}}</td>
+          <td class="total-price">{{this.totalPrice}}</td>
+          <td><a href="/admin/all-customers/{{this._id}}">Chi Tiết</a></td>
         </tr>
         {{/each}}
       </tbody>
     </table>
   </div>
+
 
   <span class="pagination">
   </span>
@@ -110,4 +89,7 @@
       option.setAttribute('selected', 'selected')
     }
   }) --}}
+
+  const totalPrice = document.querySelectorAll('td.total-price')
+  totalPrice.forEach(price => {price.innerText = price.innerText.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
 </script>
