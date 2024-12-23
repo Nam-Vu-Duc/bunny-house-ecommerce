@@ -117,7 +117,7 @@ function updateTableBody(totalOrderPrice) {
   newProductUserId.setAttribute('name', 'userId')
   newProductUserId.style.display = 'none'
 
-  var userId = getCookie('user_id')
+  var userId = `{{userId}}`
   if (userId) newProductUserId.setAttribute('value', userId)
   else newProductUserId.setAttribute('value', 'guest')
 

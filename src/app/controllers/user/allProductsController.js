@@ -3,6 +3,7 @@ const brand = require('../../models/brandModel')
 
 class allProductsController {
   showAllProducts(req, res, next) {
+    const isUser = req.isUser === true ? true : false
     const currentPage  = req.query.page   || 1
     const sortedColumn = req.query.column || ''
     const sort         = req.query.sort   || ''
@@ -31,39 +32,43 @@ class allProductsController {
         const productLength = product.length
         product = product.slice(skip, skip + itemsPerPage)
         
-        res.render('users/allProducts', { title: title, product, type, productLength, currentPage, sortedColumn, sort }) })
+        res.render('users/allProducts', { title: title, product, type, productLength, currentPage, sortedColumn, sort, isUser }) })
       .catch(next)
   }
 
   showSkincare(req, res, next) {
+    const isUser = req.isUser === true ? true : false
     product.find({ deletedAt: null, skincare: req.params.slug }).lean()
       .then(product => {    
         const type = req.params.slug
 
-        res.render('users/allProducts', { title: 'Dòng Skincare', product, type }) })
+        res.render('users/allProducts', { title: 'Dòng Skincare', product, type, isUser }) })
       .catch(next)
   }
 
   showMakeUp(req, res, next) {
+    const isUser = req.isUser === true ? true : false
     product.find({ deletedAt: null, makeup: req.params.slug }).lean()
       .then(product => {     
         const type = req.params.slug
         
-        res.render('users/allProducts', { title: 'Dòng Makeup', product, type }) })
+        res.render('users/allProducts', { title: 'Dòng Makeup', product, type, isUser }) })
       .catch(next)
   }
 
   showAllBrands(req, res, next) {
+    const isUser = req.isUser === true ? true : false
     brand.find().lean()
       .then(brand => { 
-        res.render('users/allBrands', { title: 'Toàn bộ thương hiệu', brand }) })
+        res.render('users/allBrands', { title: 'Toàn bộ thương hiệu', brand, isUser }) })
       .catch(next)
   }
 
   showBrand(req, res, next) {
+    const isUser = req.isUser === true ? true : false
     product.find({ deletedAt: null, brand: req.params.slug }).lean()
       .then(product => { 
-        res.render('users/allProducts', { title: req.params.slug, product }) })
+        res.render('users/allProducts', { title: req.params.slug, product, isUser }) })
       .catch(next)
   }
 }

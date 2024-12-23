@@ -2,30 +2,29 @@ const order = require('../../models/orderModel')
 
 class orderController {
   show(req, res, next) {
+    const isUser = req.isUser === true ? true : false
+    const userId = req.cookies.user_id ? req.cookies.user_id : null
     const successful = req.flash('successful')
     const newOrderId = req.flash('newOrderId')
-    res.render('users/allOrders', { title: 'Đơn hàng', successful, newOrderId })
+    res.render('users/allOrders', { title: 'Đơn hàng', successful, newOrderId, isUser, userId })
   }
 
-  showOrder(req, res, next) {
-    order.findOne({ _id: req.params.id }).lean()
-      .then(order => { 
-        // order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
-        res.render('users/order', { title: `Đơn của ${order.customerInfo.name}` , order }) })
-      .catch(next)
+  async showOrder(req, res, next) {
+    const isUser = req.isUser === true ? true : false
+    const orderInfo = await order.findOne({ _id: req.params.id }).lean()
+    // order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
+    res.render('users/order', { title: `Đơn của ${orderInfo.customerInfo.name}`, orderInfo, isUser })
   }
 
   ordersChecking(req, res, next) {
-    res.render('users/ordersChecking', { title: 'Kiểm Tra Đơn Hàng' })
+    const isUser = req.isUser === true ? true : false
+    res.render('users/ordersChecking', { title: 'Kiểm Tra Đơn Hàng', isUser })
   }
 
-  orderChecked(req, res, next) {
-    // if matched, then find it in db
-    order.findOne({ _id: req.params.id }).lean()
-    .then(order => {
-      res.render('users/ordersChecking', { title: 'Kiểm Tra Đơn Hàng', order })
-    })
-    .catch(next)
+  async orderChecked(req, res, next) {
+    const isUser = req.isUser === true ? true : false
+    const orderInfo = await order.findOne({ _id: req.params.id }).lean()
+    res.render('users/ordersChecking', { title: 'Kiểm Tra Đơn Hàng', orderInfo, isUser })
   }
 
   async createOrders(req, res, next) {
@@ -66,13 +65,9 @@ class orderController {
     });
 
     await newOrder.save()
-      .then(() => {
-        const newOrderId = newOrder._id
-        req.flash('newOrderId', newOrderId)
-        req.flash('successful', 'order successfully')
-        return res.redirect('/all-orders')
-      })
-      .catch(next)
+    req.flash('newOrderId', newOrder._id)
+    req.flash('successful', 'order successfully')
+    return res.redirect('/all-orders')
   }
 }
 module.exports = new orderController

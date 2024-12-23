@@ -1,4 +1,5 @@
 const brand = require('../../models/brandModel')
+const product = require('../../models/productModel')
 
 class allBrandsController {
   async allBrands(req, res, next) {
@@ -11,9 +12,10 @@ class allBrandsController {
 
   async brandInfo(req, res, next) {
     const index = 'brands'
-    const brandInfo = brand.findOne({ _id: req.params.id }).lean()
+    const brandInfo = await brand.findOne({ _id: req.params.id }).lean()
+    const productsInfo = await product.find({ brand: brandInfo.name }).lean()
 
-    res.render('admin/brand', { title: '', layout: 'admin', brandInfo, index })
+    res.render('admin/brand', { title: brandInfo.name, layout: 'admin', brandInfo, productsInfo, index })
   }
 }
 module.exports = new allBrandsController

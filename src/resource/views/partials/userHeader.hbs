@@ -153,41 +153,19 @@
   }
 
   document.addEventListener('click', function(event) {
-  if (!event.target.matches('.dropdown-avatar') &&
-      !event.target.closest('.dropdown-avatar') 
-    ) { 
-    getAvatarMenu.style.display = 'none'
-  }
-});
+    if (!event.target.matches('.dropdown-avatar') && !event.target.closest('.dropdown-avatar')) getAvatarMenu.style.display = 'none'
+  });
 
-  // update avatar logged-in or not logged-in
-  function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-  }
-
-  var token = getCookie('auth_token')
-  var user_id = getCookie('user_id')
-  if (token) {
+  var isUser = `{{isUser}}`
+  if (isUser) {
     var updateProfileButton = document.createElement('a')
     updateProfileButton.innerText = 'Thông tin cá nhân'
-    updateProfileButton.setAttribute('href', `/profile/${user_id}`)
+    updateProfileButton.setAttribute('href', `/profile`)
     getAvatarMenu.appendChild(updateProfileButton)
 
     var logOutButton = document.createElement('a')
     logOutButton.innerText = 'Đăng Xuất'
-    logOutButton.setAttribute('href', '/')
+    logOutButton.setAttribute('href', '/log-out')
     getAvatarMenu.appendChild(logOutButton)
   } 
   else {
@@ -195,14 +173,6 @@
     logInButton.innerText = 'Đăng nhập'
     logInButton.setAttribute('href', '/authentication/sign-in')
     getAvatarMenu.appendChild(logInButton)
-  }
-
-  // log-out and clear cookie
-  if (logOutButton) {
-    logOutButton.onclick = function() {
-      document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    }
   }
 
   // resposive menu

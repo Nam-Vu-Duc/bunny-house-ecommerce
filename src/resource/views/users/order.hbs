@@ -7,35 +7,35 @@
     </thead>
     <tr>
       <td> Mã Đơn Hàng </td>
-      <td> {{order._id}} </td>
+      <td> {{orderInfo._id}} </td>
     </tr>
     <tr>
       <td> Ngày Đặt Hàng </td>
-      <td> {{order.createdAt}} </td>
+      <td> {{orderInfo.createdAt}} </td>
     </tr>
     <tr>
       <td> Tên Khách Hàng </td>
-      <td> {{order.customerInfo.name}} </td>
+      <td> {{orderInfo.customerInfo.name}} </td>
     </tr>
     <tr>
       <td> Số Điện Thoại </td>
-      <td> {{order.customerInfo.phone}} </td>
+      <td> {{orderInfo.customerInfo.phone}} </td>
     </tr>
     <tr>
       <td> Địa Chỉ Nhận Hàng </td>
-      <td> {{order.customerInfo.address}} </td>
+      <td> {{orderInfo.customerInfo.address}} </td>
     </tr>
     <tr>
       <td> Ghi Chú </td>
-      <td> {{order.customerInfo.note}} </td>
+      <td> {{orderInfo.customerInfo.note}} </td>
     </tr>
     <tr>
       <td> Tổng Tiền </td>
-      <td id="total-order-price"> {{order.totalOrderPrice}} </td>
+      <td id="total-order-price"> {{orderInfo.totalOrderPrice}} </td>
     </tr>
     <tr>
       <td> Trạng Thái Đơn Hàng </td>
-      <td> {{order.status}} </td>
+      <td> {{orderInfo.status}} </td>
     </tr>
    </table>
 
@@ -49,7 +49,7 @@
       </tr>
     </thead>
     <tbody>
-      {{#each order.products}}
+      {{#each orderInfo.products}}
       <tr>
         <td><p>{{this.name}}</p>                            </td>
         <td style="text-align: center;" id="product-price">{{this.price}}      </td>

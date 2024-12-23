@@ -8,8 +8,7 @@ router.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-}));
-
+}))
 router.use(flash())
 router.get('/', allOrderController.show)
 router.get('/checking', allOrderController.ordersChecking)

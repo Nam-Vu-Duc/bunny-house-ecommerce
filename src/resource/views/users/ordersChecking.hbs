@@ -37,7 +37,7 @@
     }
 
     // if found user's order, display their order info 
-    if (`{{order}}`) {
+    if (`{{orderInfo}}`) {
         var orderProcess = document.createElement('div')
         orderProcess.setAttribute('class', 'order-process')
         orderProcess.innerHTML = `
@@ -52,10 +52,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{order.createdAt}}</td>
-                        <td>{{order.customerInfo.name}}</td>
-                        <td>{{order.status}}</td>
-                        <td><a href="/all-orders/{{order._id}}">Chi Tiết</td>
+                        <td>{{orderInfo.createdAt}}</td>
+                        <td>{{orderInfo.customerInfo.name}}</td>
+                        <td>{{orderInfo.status}}</td>
+                        <td><a href="/all-orders/order/{{orderInfo._id}}">Chi Tiết</td>
                     </tr>
                 </tbody>
             </table>            

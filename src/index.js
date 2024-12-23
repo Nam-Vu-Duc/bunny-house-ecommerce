@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
+const cookieParser = require('cookie-parser')
 const handlebars = require('express-handlebars')
 const path = require('path')
 const methodOverride = require('method-override')
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(morgan('combined'))
+app.use(cookieParser())
 app.use(methodOverride('_method'))
 app.use(sortMiddleware)
 app.engine('hbs', handlebars.engine({
@@ -33,16 +35,21 @@ app.engine('hbs', handlebars.engine({
 }))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'resource', 'views'))
-app.set('view options', { layout: 'other' });
+app.set('view options', { layout: 'other' })
+
 
 io.on('connection', (socket) => {
-  socket.on('chat message', (info) => {
-    const id = info.split(':')[0]
-    const msg = info.split(':')[1]
-    console.log(id, msg)
-    io.emit('chat message', id, msg);
-  });
-});
+  socket.on('joinRoom', (room) => {
+    socket.join(room)
+  })
+
+  socket.on('privateMessage', ({ room, message }) => {
+    console.log(room, message)
+    const id = message.split(':')[0]
+    const msg = message.split(':')[1]
+    io.to(room).emit('chat message', id, msg)
+  })
+})
 
 //route 
 route(app)

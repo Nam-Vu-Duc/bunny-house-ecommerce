@@ -1,0 +1,64 @@
+<div class="order-details-container">
+  <form method="POST" action="/admin/all-orders/order-updated/{{order._id}}?_method=PUT">
+    <table id="table-1">
+      <thead>
+        <tr>
+          <td colspan="2"> Thông tin chung </td>
+        </tr>
+      </thead>
+      <tr>
+        <td> Mã thương hiệu </td>
+        <td> {{brandInfo._id}} </td>
+      </tr>
+      <tr>
+        <td> Tên thương hiệu </td>
+        <td> {{brandInfo.name}} </td>
+      </tr>
+      <tr>
+        <td> Số lượng sản phẩm </td>
+        <td> {{brandInfo.totalProduct}} </td>
+      </tr>
+      <tr>
+        <td> Tổng doanh thu </td>
+        <td id="total-revenue"> {{brandInfo.totalRevenue}} </td>
+      </tr>
+      <tr>
+        <td> Mô tả chi tiết </td>
+        <td> {{brandInfo.description}} </td>
+      </tr>
+    </table>
+
+    <table id="table-2">
+      <thead>
+        <tr>
+          <td> STT          </td>
+          <td> Tên Sản Phẩm </td>
+          <td> Đơn Giá      </td>
+          <td> S/L          </td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each productsInfo}}
+        <tr>
+          <td>{{addIndex @index 1}}</td>
+          <td><p>{{this.name}}</p>                                                     </td>
+          <td style="text-align: center;" id="product-price">      {{this.price}}      </td>
+          <td style="text-align: center;">                         {{this.quantity}}   </td>
+          <td><a href="/admin/all-products/product/{{this._id}}">Chi Tiết</a>          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <button type="submit">Cập nhật</button>    
+  </form>     
+</div>
+
+<script>
+  var totalRevenue       = document.querySelectorAll('td#total-revenue')
+  var productPrice       = document.querySelectorAll('td#product-price')
+  
+  totalRevenue.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
+  productPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
+</script>

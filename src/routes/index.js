@@ -18,6 +18,7 @@ const introduceRoute = require('./user/introduceRoute')
 const authenticationRoute = require('./auth/authenticationRoute')
 const allOrdersRoute = require('./user/allOrdersRoute')
 const profileRoute = require('./user/profileRoute')
+const logOutRoute = require('./user/logOutRoute')
 const checkAdmin = require('../app/middleware/checkAdmin')
 const checkUser = require('../app/middleware/checkUser')
 const cookieParser = require('cookie-parser')
@@ -45,5 +46,6 @@ function route(app) {
   app.use('/all-orders', checkUser, allOrdersRoute)
   app.use('/introduce', checkUser, introduceRoute)
   app.use('/profile', checkUser, profileRoute)
+  app.use('/log-out', checkUser, logOutRoute)
 }
 module.exports = route

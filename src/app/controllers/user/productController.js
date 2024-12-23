@@ -2,6 +2,7 @@ const product = require('../../models/productModel')
 
 class productController {
   async show(req, res, next) {
+    const isUser = req.isUser === true ? true : false
     const newProduct = await product.findOne({ slug: req.params.slug }).lean()
     let newProductType = ''
     let relatedProducts 
@@ -14,7 +15,7 @@ class productController {
       relatedProducts = await product.find({ makeup: newProductType }).lean().limit(5)
     }
     relatedProducts = relatedProducts.filter(product => product._id.toString() !== newProduct._id.toString())
-    res.render('users/product', { title: newProduct.name , newProduct, relatedProducts, newProductType })
+    res.render('users/product', { title: newProduct.name , newProduct, relatedProducts, newProductType, isUser })
   }
 }
 module.exports = new productController

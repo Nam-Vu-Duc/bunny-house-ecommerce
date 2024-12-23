@@ -16,7 +16,7 @@
   <i class="fi fi-sr-comment-quote"></i>
 </div>
 
-<div class="chat-box">
+<div class="chat-box" style="display: none">
   <div class="chat-header">
     <div class="icon">
       <img src="https://res.cloudinary.com/bunny-store/image/upload/v1730102111/web-img/4_lnwzuk_jkpls2.webp" alt="loading">
@@ -45,8 +45,6 @@
   const socket = io('http://localhost:3000', {
     path: "/socket.io"
   });
-
-  let counter = 0  
   const minimize    = document.querySelector('div.minimize')
   const chat        = document.querySelector('div.chat-icon')
   const chatBox     = document.querySelector('div.chat-box')
@@ -55,17 +53,27 @@
   const input       = document.querySelector('textarea.input')
   const sendBtn     = document.querySelector('div.send-btn')
   const notLoggedIn = document.querySelector('div.not-logged-in')
-  const isLoggedIn  = document.cookie
-  const userId      = isLoggedIn.split('user_id=')[1]
+  const isLoggedIn  = `{{isUser}}`
+  const userId      = `{{userId}}`
   const form = document.querySelector('form.input-form')
   
   if (isLoggedIn) chatBody.style.display = ''
   chat.onclick = function() {chatBox.style.display === 'none' ? chatBox.style.display = '' : chatBox.style.display = 'none'}
   minimize.onclick = function () {chatBox.style.display = 'none'}
 
+  if (userId === '65eddb9e7abb421b88771b35') {
+    socket.emit('joinRoom', '67682d1ef5b2b2e80b0f439c')
+  } else {
+    socket.emit('joinRoom', 'guest')
+  }
+  if (`{{sync_chat}}`) {
+    const chatData = fetch()
+  }
+    
   sendBtn.onclick = function() {
     if (input.value.trim() !== '') {
-      socket.emit('chat message', `${userId}:${input.value}`);
+      socket.emit('privateMessage', { room: '12345', message: `${userId}:${input.value}` })
+      {{!-- socket.emit('chat message', `${userId}:${input.value}`); --}}
       input.value = ''
       sendBtn.classList.add('not-allowed')
     }
@@ -93,4 +101,5 @@
     }  
       chatContent.appendChild(chat);
   });
+
 </script>
