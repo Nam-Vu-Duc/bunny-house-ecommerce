@@ -156,8 +156,7 @@
     if (!event.target.matches('.dropdown-avatar') && !event.target.closest('.dropdown-avatar')) getAvatarMenu.style.display = 'none'
   });
 
-  var isUser = `{{isUser}}`
-  if (isUser) {
+  if (`{{isUser}}` === 'true') {
     var updateProfileButton = document.createElement('a')
     updateProfileButton.innerText = 'Thông tin cá nhân'
     updateProfileButton.setAttribute('href', `/profile`)

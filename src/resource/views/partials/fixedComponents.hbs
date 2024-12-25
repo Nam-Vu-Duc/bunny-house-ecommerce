@@ -53,11 +53,10 @@
   const input       = document.querySelector('textarea.input')
   const sendBtn     = document.querySelector('div.send-btn')
   const notLoggedIn = document.querySelector('div.not-logged-in')
-  const isLoggedIn  = `{{isUser}}`
   const userId      = `{{userId}}`
   const form = document.querySelector('form.input-form')
   
-  if (isLoggedIn) chatBody.style.display = ''
+  if (`{{isUser}}` === 'true') chatBody.style.display = ''
   chat.onclick = function() {chatBox.style.display === 'none' ? chatBox.style.display = '' : chatBox.style.display = 'none'}
   minimize.onclick = function () {chatBox.style.display = 'none'}
 
