@@ -1,18 +1,18 @@
 <div class="admin-update-profile-container">
   <div class="form-title">
-    <p>Sửa Thông Tin Cá Nhân</p>
+    <p>Thông Tin Cá Nhân</p>
   </div>
 
-  <form class="admin-update-form" method="POST" action="/admin/profile/profile-updated/{{user._id}}?_method=PUT">
+  <form class="admin-update-form" method="POST" action="/admin/profile/profile-updated/{{userInfo._id}}?_method=PUT">
 
     <div class="form-group">
-      <label for="name">Tên Quản Trị Viên</label>
+      <label for="name">Tên nhân viên</label>
       <input 
         type="text" 
         class="form-control" 
         id="name" 
         name="name" 
-        value="{{user.userInfo.name}}"
+        value="{{userInfo.userInfo.name}}"
       >
     </div>
 
@@ -34,7 +34,7 @@
         class="form-control" 
         id="phone" 
         name="phone" 
-        value="{{user.userInfo.phone}}"
+        value="{{userInfo.userInfo.phone}}"
       >
     </div>
 
@@ -45,7 +45,7 @@
         class="form-control" 
         id="address" 
         name="address" 
-        value="{{user.userInfo.address}}"
+        value="{{userInfo.userInfo.address}}"
       >
     </div>
   </form>
@@ -66,12 +66,7 @@
   // auto checked gender input
   var maleGender = document.querySelector('input#male')
   var femaleGender = document.querySelector('input#female')
-  var userGender = `{{user.userInfo.gender}}`
-  if (userGender === 'male') { 
-    maleGender.checked = true
-  } 
-  if (userGender === 'female') { 
-    femaleGender.checked = true
-  } 
-
+  var userGender = `{{userInfo.userInfo.gender}}`
+  if (userGender === 'male') maleGender.checked = true
+  if (userGender === 'female') femaleGender.checked = true
 </script>

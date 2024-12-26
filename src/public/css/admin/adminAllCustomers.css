@@ -83,11 +83,6 @@
     tr:hover {
       filter: brightness(80%);
     }
-    img {
-      border-radius: 10px;
-      width: 40px;
-      aspect-ratio: 1/1;
-    }
   }
   button {
     width: fit-content; 
@@ -100,45 +95,6 @@
   };
   button:hover {
     filter: brightness(80%);
-  }
-  .cancelbtn {
-    background-color: #ccc;
-    color: black;
-    width: 25%;
-  }
-  .deletebtn {
-    background-color: #f44336;
-    color: black;
-    width: 25%;
-  }
-  .container {
-    padding: 16px;
-    text-align: center;
-  }
-  .modal {
-    display: none; 
-    position: fixed; 
-    z-index: 2;
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-  .modal-content {
-    background-color: #fefefe;
-    border: 1px solid #888;
-    width: 50%; 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%)
-  }
-  .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
   }
   .pagination {
     display: flex; 
@@ -158,7 +114,7 @@
   }    
 }
 @media screen and (max-width: 700px) {
-  .admin-all-products-container { 
+  .admin-all-customers-container { 
     .board-title {
       p { font-size: 25px;}
     }
@@ -171,9 +127,6 @@
       }
       td:nth-child(4) { display: none;}
       td:nth-child(5) { display: none;}
-    }
-    .modal-content {
-      width: 80% !important;
     }
   } 
 }

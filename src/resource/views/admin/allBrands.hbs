@@ -9,18 +9,24 @@
       <option value=""></option>
       <option value=""></option>
     </select>
+
+    <a href="/admin/all-brands/brand/create" class="create-brands" id="create-brands">
+      <i class="fi fi-br-layer-plus"></i>
+      <p>Thêm thương hiệu</p>
+    </a>
   </div>
 
   <div class="table">
-    <table style="width:100%">
+    <table>
       <thead>
         <tr>
-          <td> STT             </td>
-          <td> Mã Thương hiệu  </td>
-          <td> Tên Thương Hiệu </td>
-          <td> Tổng Sản phẩm   </td>
-          <td> Tổng doanh thu  </td>
-          <td> </td>
+          <td style="width:  5%">STT             </td>
+          <td style="width: 20%">Mã Thương hiệu  </td>
+          <td style="width: 15%">Tên Thương Hiệu </td>
+          <td style="width: 15%">Tổng Sản Phẩm   </td>
+          <td style="width: 15%">Tổng Lượng Bán  </td>
+          <td style="width: 25%">Tổng Doanh Thu  </td>
+          <td style="width:  5%"></td>
         </tr>
       </thead>
 
@@ -40,8 +46,9 @@
             <p>{{this.name}}</p>
           </td> 
           <td>{{this.totalProduct}}</td>
+          <td>{{this.totalProduct}}</td>
           <td class="total-revenue">{{this.totalRevenue}}</td>
-          <td><a href="/admin/all-brands/brand/{{this._id}}">Chi Tiết</a></td>
+          <td><a href="/admin/all-brands/brand/{{this._id}}"><button>Chi Tiết</button></a></td>
         </tr>
         {{/each}}
       </tbody>

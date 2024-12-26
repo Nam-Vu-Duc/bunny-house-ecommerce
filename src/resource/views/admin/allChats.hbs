@@ -1,42 +1,21 @@
-<div class="admin-all-customers-container">  
-  <div class="board-title">
-    <p>Tổng Đoạn Chat: {{totalChat}}</p>
-  </div>
-
-  <div class="filter-and-create">
-    <select class="filter">
-      <option value="">Toàn bộ</option>
-      <option value=""></option>
-      <option value=""></option>
-    </select>
-  </div>
-
+<div class="admin-all-chats-container">  
   <div class="table">
-    <table style="width:100%">
+    <table>
       <thead>
         <tr>
-          <td> STT            </td>
-          <td> Mã Khách hàng  </td>
-          <td> Tên Khách Hàng </td>
-          <td></td>
+          <td>Tên Khách Hàng</td>
         </tr>
       </thead>
 
       <tbody>
         {{#each chats}}
         <tr>
-          <td>{{addIndex @index 1}}</td>
-          <td>{{this.userId}}</td>
-          <td>{{this.userInfo.userInfo.name}}</td>
-          <td><a href="/admin/all-chats/chat/{{this._id}}">Chi Tiết</a></td>
+          <td><a href="/admin/all-chats/chat/{{this._id}}">{{this.userInfo.userInfo.name}}</a></td>
         </tr>
         {{/each}}
       </tbody>
     </table>
   </div>
-
-  <span class="pagination">
-  </span>
 </div>
 
 <script>

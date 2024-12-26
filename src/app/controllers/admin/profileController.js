@@ -1,22 +1,21 @@
-const user = require('../../models/userModel')
+const emp = require('../../models/employeeModel')
 
 class profileController {
-  updateProfile(req, res, next) {
+  async updateProfile(req, res, next) {
     const index = 'update-profile'
-    user.findById(req.params.id).lean()
-      .then(user => { res.render('admin/profile', { title: 'Thông tin cá nhân', layout: 'admin', user, index } )})
-      .catch(next)
+    const userId = req.cookies.user_id
+    const userInfo = await emp.findOne({ _id: userId }).lean()
+    res.render('admin/profile', { title: 'Thông tin cá nhân', layout: 'admin', userInfo, index } )
   }
 
-  profileUpdated(req, res, next) {
-    user.updateOne({ _id: req.params.id}, {
+  async profileUpdated(req, res, next) {
+    await emp.updateOne({ _id: req.params.id}, {
       'userInfo.name'   : req.body.name,
       'userInfo.phone'  : req.body.phone,
       'userInfo.gender' : req.body.gender,
       'userInfo.address': req.body.address,
     })
-      .then(() => res.redirect('back'))
-      .catch(next)
+    res.redirect('back')
   }
 }
 module.exports = new profileController

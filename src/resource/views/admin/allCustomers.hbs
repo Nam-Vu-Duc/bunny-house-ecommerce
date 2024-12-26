@@ -12,7 +12,7 @@
 
     <a href="/admin/all-customers/customer/create" class="create-customer" id="create-customer">
       <i class="fi fi-rr-user-add"></i>
-      <p>Thêm Khách hàng</p>
+      <p>Thêm Khách Hàng</p>
     </a>
   </div>
 
@@ -20,12 +20,13 @@
     <table style="width:100%">
       <thead>
         <tr>
-          <td> STT            </td>
-          <td> Mã Khách hàng  </td>
-          <td> Tên Khách Hàng </td>
-          <td> Tổng Đơn hàng  </td>
-          <td> Tổng doanh thu </td>
-          <td>
+          <td style="width: 5% ;"> STT            </td>
+          <td style="width: 15%;"> Mã Khách hàng  </td>
+          <td style="width: 15%;"> Tên Khách Hàng </td>
+          <td style="width: 25%;"> Địa chỉ        </td>
+          <td style="width: 10%;"> Tổng Đơn hàng  </td>
+          <td style="width: 25%;"> Tổng doanh thu </td>
+          <td style="width: 5%;">
           </td>
         </tr>
       </thead>
@@ -36,9 +37,10 @@
           <td>{{addIndex @index 1}}</td>
           <td>{{this._id}}</td>
           <td>{{this.userInfo.name}}</td>
+          <td>{{this.userInfo.address}}</td>
           <td>{{this.totalOrder}}</td>
           <td class="total-price">{{this.totalPrice}}</td>
-          <td><a href="/admin/all-customers/{{this._id}}">Chi Tiết</a></td>
+          <td><a href="/admin/all-customers/{{this._id}}"><button>Chi Tiết</button></a></td>
         </tr>
         {{/each}}
       </tbody>

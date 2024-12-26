@@ -3,37 +3,44 @@
     <p>Tổng Đơn Hàng: {{orderLength}}</p>
   </div>
 
-  <select class="filter">
-    <option value="">Toàn bộ</option>
-    <option value="preparing">Đang xử lý</option>
-    <option value="delivering">Đang giao</option>
-    <option value="done">Đã hoàn thành</option>
-  </select>
+  <div class="filter-and-create">
+    <select class="filter">
+      <option value="">Toàn bộ</option>
+      <option value="preparing">Đang xử lý</option>
+      <option value="delivering">Đang giao</option>
+      <option value="done">Đã hoàn thành</option>
+    </select>
+
+    <a href="/admin/all-orders/order/create" class="create-orders" id="create-orders">
+      <i class="fi fi-rr-user-add"></i>
+      <p>Thêm Đơn Hàng</p>
+    </a>
+  </div>
 
   <div class="table">
-    <table style="width:100%">
+    <table>
       <thead>
         <tr>
-          <td> ID             </td>
-          <td> Mã Đơn Hàng    </td>
-          <td> Tên Khách Hàng </td>
-          <td> Tổng Số Tiền   </td>
-          <td> Ngày Đặt Hàng  </td>
-          <td> Tình Trạng     </td>
-          <td></td>
+          <td style="width: 5%"> STT            </td>
+          <td style="width:15%"> Mã Đơn Hàng    </td>
+          <td style="width:15%"> Tên Khách Hàng </td>
+          <td style="width:25%"> Tổng Số Tiền   </td>
+          <td style="width:25%"> Ngày Đặt Hàng  </td>
+          <td style="width:10%"> Tình Trạng     </td>
+          <td style="width: 5%"></td>
         </tr>
       </thead>
 
       <tbody>
         {{#each order}}
         <tr>
-          <td> {{addIndex @index 1}}      </td>
-          <td> {{this._id}}               </td>
-          <td> {{this.customerInfo.name}} </td>
-          <td id="total-order-price"> {{this.totalOrderPrice}}       </td>
-          <td> {{this.createdAt}}         </td>
-          <td> {{this.status}}            </td>
-          <td> <a href="/admin/all-orders/{{this._id}}">Chi Tiết</a> </td>
+          <td>{{addIndex @index 1}}      </td>
+          <td>{{this._id}}               </td>
+          <td>{{this.customerInfo.name}} </td>
+          <td id="total-order-price">{{this.totalOrderPrice}}       </td>
+          <td>{{this.createdAt}}         </td>
+          <td>{{this.status}}            </td>
+          <td><a href="/admin/all-orders/{{this._id}}"><button>Chi Tiết</button></a></td>
         </tr>
         {{/each}}
       </tbody>

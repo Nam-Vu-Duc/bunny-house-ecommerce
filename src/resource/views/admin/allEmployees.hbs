@@ -1,6 +1,6 @@
-<div class="admin-all-products-container">  
+<div class="admin-all-employees-container">  
   <div class="board-title">
-    <p>Tổng nhân sự: {{productLength}}</p>
+    <p>Tổng nhân sự: {{totalEmployees}}</p>
   </div>
 
   <div class="filter-and-create">
@@ -10,9 +10,9 @@
       <option value="makeup">Makeup</option>
     </select>
 
-    <a href="/admin/create/product" class="create-product" id="create-product">
+    <a href="/admin/all-employees/employee/create" class="create-employees" id="create-employees">
       <i class="fi fi-br-layer-plus"></i>
-      <p>Thêm nhân sự</p>
+      <p>Thêm nhân viên</p>
     </a>
   </div>
 
@@ -20,61 +20,37 @@
     <table>
       <thead>
         <tr>
-          <td>Id      </td>
-          <td>Hãng    </td>
-          <td>Tên     </td>
-          <td>Loại    </td>
-          <td>Giá     </td>
-          <td>Số lượng</td>
-          <td>Thao tác</td>
+          <td style="width:  5%">STT           </td>
+          <td style="width: 15%">Mã nhân viên  </td>
+          <td style="width: 20%">Tên nhân viên </td>
+          <td style="width: 10%">Email         </td>
+          <td style="width: 15%">Địa chỉ       </td>
+          <td style="width: 15%">Chức vụ       </td>
+          <td style="width: 15%">Cửa hàng      </td>
+          <td style="width:  5%"></td>
         </tr>
       </thead>
 
       <tbody>
-        {{#each product}}
+        {{#each employees}}
         <tr>
-          <td style="width: 10%;">{{addIndex @index 1}}</td>
-          <td style="width: 20%;">{{this.brand}}</td>
-          <td style="
-                display: flex; 
-                justify-content: start;
-                align-items: center
-                "
-          >
-            <img src="{{this.img.path}}" alt="{{this.name}}" loading="lazy" loading="lazy"> 
-            <p>{{this.name}}</p>
-          </td>  
-          <td style="width: 10%;">{{this.categories}}</td>
-          <td style="width: 10%;" id="product-price">{{this.price}}</td>
-          <td style="width: 10%;" id="product-quantity">{{this.quantity}}</td>
-          <td style="width: 10%;">
-            <a href="/admin/updating/{{this._id}}" class="update-button"><button>Chi tiết</button></a>
-            <button id="{{this._id}}" name="{{this.name}}" onclick="reply_click(this.id, this.name)">Xoá</button> 
-          </td>
+          <td>{{addIndex @index 1}}</td>
+          <td>{{this._id}}</td>
+          <td>{{this.userInfo.name}}</td>
+          <td>{{this.loginInfo.email}}</td>
+          <td>{{this.userInfo.address}}</td>
+          <td>{{this.loginInfo.role}}</td>
+          <td>{{this.userInfo.storeId}}</td>
+          <td><a href="/admin/all-employees/employee/{{this._id}}"><button>Chi Tiết</button></a></td>
         </tr>
         {{/each}}
       </tbody>
     </table>
-
-    <div id="id01" class="modal">
-      <form class="modal-content">
-        <div class="container">
-          <p><strong>Xoá sản phẩm ?</strong></p>
-          <p id="confirm-message"></p>
-          <div class="clearfix">
-            <button id="delete-button" type="button" class="deletebtn">Xoá</button>
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
-          </div>
-        </div>
-      </form>
-    </div>
   </div>
 
   <span class="pagination">
   </span>
 </div>
-
-<form name="delete-form" method="post"></form>
 
 <script>
   // display delete confirmation box

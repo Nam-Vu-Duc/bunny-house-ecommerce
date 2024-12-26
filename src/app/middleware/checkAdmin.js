@@ -11,6 +11,6 @@ module.exports = function checkAdmin(req, res, next) {
       })
       .catch(next)
   } else {
-    next()
+    return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
   }
 }

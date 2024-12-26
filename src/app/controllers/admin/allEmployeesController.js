@@ -11,10 +11,9 @@ class allEmployeesController {
 
   async employeeInfo(req, res, next) {
     const index = 'employees'
-    const employeeInfo = employee.findOne({ _id: req.params.id }).lean()
+    const employeeInfo = await employee.findOne({ _id: req.params.id }).lean()
 
-    console.log(employeeInfo)
-    res.render('admin/employee', { title: '', layout: 'admin', employeeInfo, index })
+    res.render('admin/employee', { title: employeeInfo.userInfo.name, layout: 'admin', employeeInfo, index })
   }
 }
 module.exports = new allEmployeesController

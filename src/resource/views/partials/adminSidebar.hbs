@@ -15,14 +15,14 @@
     <a href="/admin/all-customers" class="sidebar-button" id="customers"><i class="fi fi-rr-users"></i><p>Khách hàng</p></a>
     <a href="/admin/all-chats" class="sidebar-button" id="chats"><i class="fi fi-rr-comment"></i></i><p>Chat</p></a>
     <a href="/admin/all-purchases" class="sidebar-button" id="purchases"><i class="fi fi-rr-file-import"></i><p>Nhập hàng</p></a>
-    <a href="/admin/all-orders" class="sidebar-button" id="orders"><i class="fi fi-rr-piggy-bank"></i><p>Đơn Hàng</p></a>
+    <a href="/admin/all-orders" class="sidebar-button" id="orders"><i class="fi fi-rr-piggy-bank"></i><p>Xuất Hàng</p></a>
     <a href="/admin/all-stores" class="sidebar-button" id="stores"><i class="fi fi-rr-store-alt"></i><p>Cửa hàng</p></a>
-    <a href="/admin/all-employees" class="sidebar-button" id="employees"><i class="fi fi-rr-users"></i><p>Nhân sự</p></a>
     <a href="/admin/all-products?page=1&type=" class="sidebar-button" id="products"><i class="fi fi-rr-box-open"></i><p>Sản Phẩm</p></a>
+    <a href="/admin/all-employees" class="sidebar-button" id="employees"><i class="fi fi-rr-users"></i><p>Nhân sự</p></a>
     <a href="/admin/all-brands" class="sidebar-button" id="brands"><i class="fi fi-rr-supplier"></i></i></i><p>Đối tác</p></a>
     <a href="/admin/all-products/trash" class="sidebar-button" id="trash"><i class="fi fi-rr-trash"></i><p>Kho</p></a>
-    <a class="sidebar-button" id="update-profile"><i class="fi fi-rr-circle-user"></i><p>Thông Tin Cá Nhân</p></a>
-    <a href="/authentication/sign-in" class="sidebar-button" id="log-out"><i class="fi fi-rr-exit"></i><p>Đăng Xuất</p></a>
+    <a href="/admin/profile" class="sidebar-button" id="update-profile"><i class="fi fi-rr-circle-user"></i><p>Thông Tin Cá Nhân</p></a>
+    <a href="/admin/log-out" class="sidebar-button" id="log-out"><i class="fi fi-rr-exit"></i><p>Đăng Xuất</p></a>
   </div>
 </div>
 
@@ -64,25 +64,4 @@
 
   var helloText = `Xin chào Quỳnh Ly, Chúc bạn một ${checkDay} vui vẻ !!!`
   document.getElementById('welcome-text').innerHTML = helloText
-
-  function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') { c = c.substring(1) }
-      if (c.indexOf(name) == 0) {return c.substring(name.length, c.length)}
-    }
-    return "";
-  }
-
-  var adminId = getCookie('user_id') 
-  updateProfileButton.setAttribute('href', `/admin/profile/${adminId}`)
-
-  // log-out
-  logOutButton.onclick = function() {
-    document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  }
 </script>

@@ -3,8 +3,21 @@
     <p>Tổng cửa hàng: {{totalStore}}</p>
   </div>
 
+  <div class="filter-and-create">
+    <select class="filter">
+      <option value="">Toàn bộ</option>
+      <option value=""></option>
+      <option value=""></option>
+    </select>
+
+    <a href="/admin/all-stores/store/create" class="create-stores" id="create-stores">
+      <i class="fi fi-rr-user-add"></i>
+      <p>Thêm Cửa Hàng</p>
+    </a>
+  </div>
+
   <div class="table">
-    <table style="width:100%">
+    <table>
       <thead>
         <tr>
           <td> STT            </td>
@@ -26,7 +39,7 @@
           <td>{{this.address}}</td>
           <td class="revenue">{{this.revenue}}</td>
           <td>
-            <a href="/admin/all-stores/store/{{this._id}}">Chi Tiết</a>
+            <a href="/admin/all-stores/store/{{this._id}}"><button>Chi Tiết</button></a>
           </td>
         </tr>
         {{/each}}

@@ -9,6 +9,7 @@ const adminAllProductsRoute = require('./admin/allProductsRoute')
 const adminAllPurchasesRoute = require('./admin/allPurchasesRoute')
 const adminAllStoresRoute = require('./admin/allStoresRoute')
 const adminProfileRoute = require('./admin/profileRoute')
+const adminLogOutRoute = require('./admin/logOutRoute')
 
 // user
 const homeRoute = require('./user/homeRoute')
@@ -37,6 +38,7 @@ function route(app) {
   app.use('/admin/all-purchases', checkAdmin, adminAllPurchasesRoute)
   app.use('/admin/all-stores', checkAdmin, adminAllStoresRoute)
   app.use('/admin/profile', checkAdmin, adminProfileRoute)
+  app.use('/admin/log-out', checkAdmin, adminLogOutRoute)
 
   // user
   app.use('/', checkUser, homeRoute)

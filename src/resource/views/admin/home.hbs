@@ -1,18 +1,61 @@
 <div class="admin-home-container">
   <div class="info-table">  
+    <div class="customer-info">
+      <table>
+        <thead>
+          <tr>
+            <td colspan="3">
+              QUẢN LÝ KHÁCH HÀNG
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Số lượng khách hàng</td>
+            <td>{{totalCustomer}}</td>
+            <td><a href="/admin/all-customers">Chi tiết</a></td>
+          </tr>
+          <tr>
+            <td>Khách hàng có doanh thu cao nhất</td>
+            <td>{{preparingOrders}}</td>
+            <td><a href="/admin/all-orders/?page=1&type=preparing">Chi tiết</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="purchase-info">
+      <table>
+        <thead>
+          <tr>
+            <td colspan="3">
+              QUẢN LÝ NHẬP HÀNG
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="order-info">
       <table>
         <thead>
           <tr>
             <td colspan="3">
-              QUẢN LÝ ĐƠN HÀNG
+              QUẢN LÝ XUẤT HÀNG
             </td>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>Số lượng đơn hàng</td>
-            <td>{{orderLength}}</td>
+            <td>{{totalOrder}}</td>
             <td><a href="/admin/all-orders">Chi tiết</a></td>
           </tr>
           <tr>
@@ -34,6 +77,30 @@
       </table>
     </div>
 
+    <div class="store-info">
+      <table>
+        <thead>
+          <tr>
+            <td colspan="3">
+              QUẢN LÝ CỬA HÀNG
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Số lượng cửa hàng</td>
+            <td>{{totalStore}}</td>
+            <td><a href="/admin/all-stores">Chi tiết</a></td>
+          </tr>
+          <tr>
+            <td>Cửa hàng có doanh thu cao nhất</td>
+            <td>{{preparingOrders}}</td>
+            <td><a href="/admin/stores">Chi tiết</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="product-info">
       <table>
         <thead>
@@ -46,7 +113,7 @@
         <tbody>
           <tr>
             <td>Số lượng sản phẩm</td>
-            <td>{{productLength}}</td>
+            <td>{{totalProduct}}</td>
             <td><a href="/admin/all-products/?page=&type=">Chi tiết</a></td>
           </tr>
           <tr>
@@ -68,7 +135,7 @@
       </table>
     </div>
 
-    <div class="finance-info">
+    {{!-- <div class="finance-info">
       <table>
         <thead>
           <tr>
@@ -90,55 +157,7 @@
           </tr>
         </tbody>
       </table>
-    </div>
-
-    <div class="customer-info">
-      <table>
-        <thead>
-          <tr>
-            <td colspan="3">
-              QUẢN LÝ KHÁCH HÀNG
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Số lượng khách hàng</td>
-            <td>{{customerLength}}</td>
-            <td><a href="/admin/all-customers">Chi tiết</a></td>
-          </tr>
-          <tr>
-            <td>Khách hàng có doanh thu cao nhất</td>
-            <td>{{preparingOrders}}</td>
-            <td><a href="/admin/all-orders/?page=1&type=preparing">Chi tiết</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="store-info">
-      <table>
-        <thead>
-          <tr>
-            <td colspan="3">
-              QUẢN LÝ CỬA HÀNG
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Số lượng cửa hàng</td>
-            <td>{{storeLength}}</td>
-            <td><a href="/admin/all-stores">Chi tiết</a></td>
-          </tr>
-          <tr>
-            <td>Cửa hàng có doanh thu cao nhất</td>
-            <td>{{preparingOrders}}</td>
-            <td><a href="/admin/stores">Chi tiết</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    </div> --}}
 
     <div class="employee-info">
       <table>
@@ -152,13 +171,32 @@
         <tbody>
           <tr>
             <td>Số lượng nhân sự</td>
-            <td>{{employeeLength}}</td>
+            <td>{{totalEmployee}}</td>
             <td><a href="/admin/all-employees">Chi tiết</a></td>
           </tr>
           <tr>
             <td>Bảng lương</td>
             <td></td>
             <td><a href="/admin/">Chi tiết</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="brand-info">
+      <table>
+        <thead>
+          <tr>
+            <td colspan="3">
+              QUẢN LÝ ĐỐI TÁC
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Số lượng đối tác</td>
+            <td>{{totalBrand}}</td>
+            <td><a href="/admin/all-brands">Chi tiết</a></td>
           </tr>
         </tbody>
       </table>
