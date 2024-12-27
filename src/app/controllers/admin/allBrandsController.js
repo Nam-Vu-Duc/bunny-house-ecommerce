@@ -6,7 +6,6 @@ class allBrandsController {
     const brands = await brand.find({}).lean()
     const index  = 'brands'
     const totalBrand = brands.length
-
     res.render('admin/allBrands', { title: 'Danh sách cửa hàng', layout: 'admin', brands, totalBrand, index })
   }
 
@@ -14,8 +13,19 @@ class allBrandsController {
     const index = 'brands'
     const brandInfo = await brand.findOne({ _id: req.params.id }).lean()
     const productsInfo = await product.find({ brand: brandInfo.name }).lean()
+    res.render('admin/detailBrand', { title: brandInfo.name, layout: 'admin', brandInfo, productsInfo, index })
+  }
 
-    res.render('admin/brand', { title: brandInfo.name, layout: 'admin', brandInfo, productsInfo, index })
+  async brandUpdate(req, res, next) {
+
+  }
+
+  async brandCreate(req, res, next) {
+
+  }
+
+  async brandCreated(req, res, next) {
+
   }
 }
 module.exports = new allBrandsController

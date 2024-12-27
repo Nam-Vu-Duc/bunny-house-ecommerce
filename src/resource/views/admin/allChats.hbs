@@ -1,63 +1,32 @@
 <div class="admin-all-chats-container">  
-  <div class="table">
-    <table>
-      <thead>
-        <tr>
-          <td>Tên Khách Hàng</td>
-        </tr>
-      </thead>
+  <div class="chat-sidebar">
+    <div class="chat-header">Chats</div>
+    <input class="chat-search" placeholder="Tìm kiếm đoạn chat"></input>
+    <div class="chat-list">
+      {{#each chats}}
+        <div class="item">
+          <div class="name">{{this.userInfo.userInfo.name}}</div>
+          <div class="last-message">abcd</div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
 
-      <tbody>
-        {{#each chats}}
-        <tr>
-          <td><a href="/admin/all-chats/chat/{{this._id}}">{{this.userInfo.userInfo.name}}</a></td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
+  <div class="chat-body">
+    <ul class="chat-content">
+      <div class="left-content">
+        <img src="https://res.cloudinary.com/bunny-store/image/upload/v1730102111/web-img/4_lnwzuk_jkpls2.webp" alt="loading">
+        <li>Hi, em có thể hỗ trợ gì cho anh/chị không ạ</li>
+      </div>
+    </ul>
+    
+    <form class="input-form">
+      <textarea name="input" id="input" class="input" placeholder="Aa"></textarea>
+      <div class="send-btn not-allowed">Gửi</div>
+    </form>
   </div>
 </div>
 
 <script>
-  // pagination 
-  var pagination = document.querySelector('span.pagination')
-  var productLength = `{{orderLength}}`
-  var currentPage = 1
 
-  // díplay all pages tag
-  for (let i = 0; i < productLength; i += 10) {
-    var newPage = document.createElement('a')
-    newPage.setAttribute('href', `/admin/all-orders?page=${currentPage}&type={{orderType}}`)
-    newPage.innerText = `${currentPage}`
-    pagination.appendChild(newPage)
-    currentPage++
-  }
-
-  // Style the current selected page
-  var allPagesTag = pagination.querySelectorAll('a')
-  for (let i = 0; i < allPagesTag.length; ++i) {
-    if (allPagesTag[i].innerText === `{{currentPage}}`) {
-      allPagesTag[i].style.borderColor = '#D1A6A6'
-      allPagesTag[i].style.backgroundColor = '#D1A6A6'
-      allPagesTag[i].style.color = 'white'
-      allPagesTag[i].style.width = '25px'
-      allPagesTag[i].style.height = '25px'
-    }
-  }
-
-  {{!-- let selectButton = document.querySelector('select')
-  selectButton.onchange = function () {
-    location = `/admin/all-orders?page={{currentPage}}&type=${this.value}`
-  }
-
-  let selectButtonOptions = selectButton.querySelectorAll('option')
-
-  selectButtonOptions.forEach(option => {
-    if (option.value === `{{orderType}}`) {
-      option.setAttribute('selected', 'selected')
-    }
-  }) --}}
-
-  const totalPrice = document.querySelectorAll('td.total-price')
-  totalPrice.forEach(price => {price.innerText = price.innerText.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
 </script>

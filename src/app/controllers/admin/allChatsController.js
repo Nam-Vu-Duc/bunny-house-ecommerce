@@ -1,4 +1,3 @@
-const brand = require('../../models/brandModel')
 const chat = require('../../models/chatModel')
 
 class allChatsController {
@@ -28,13 +27,6 @@ class allChatsController {
     const totalChat = chats.length
 
     res.render('admin/allChats', { title: 'Danh sách chat', layout: 'admin', chats, totalChat, index })
-  }
-
-  async chatInfo(req, res, next) {
-    const index = 'chats'
-    const chatInfo = chat.findOne({ _id: req.params.id }).lean()
-
-    res.render('admin/chat', { title: 'Chat', layout: 'admin', chatInfo, index })
   }
 }
 module.exports = new allChatsController

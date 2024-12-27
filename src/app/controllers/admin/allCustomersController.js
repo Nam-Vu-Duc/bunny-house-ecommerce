@@ -34,6 +34,20 @@ class allCustomersController {
     res.render('admin/allCustomers', { title: 'Danh sách khách hàng', layout: 'admin', customersWithOrders, customerLength,index });
   }
 
+  async customerInfo(req, res, next) {
+    const index = 'customers'
+    const customerInfo = await user.findOne({ _id: req.params.id }).lean()
+    const orderInfo = await order.find({ 'customerInfo.userId': req.params.id, deletedAt: null }).lean()
+    const totalOrder = orderInfo.length
+    const totalPrice = orderInfo.reduce((total, order) => total + order.totalOrderPrice, 0)
+    
+    res.render('admin/detailCustomer', { title: customerInfo.userInfo.name, layout: 'admin', customerInfo, orderInfo, totalOrder, totalPrice, index })
+  }
+
+  async customerUpdate(req, res, next) {
+    
+  }
+
   createCustomer(req, res, next) {
     res.render('admin/createCustomer', { title: 'Thêm khách hàng mới', layout: 'admin' })
   }
@@ -44,16 +58,6 @@ class allCustomersController {
     await newCustomer.save()
       .then(() => res.redirect('/admin/all-customers'))
       .catch(next)
-  }
-
-  async customerInfo(req, res, next) {
-    const index = 'customers'
-    const customerInfo = await user.findOne({ _id: req.params.id }).lean()
-    const orderInfo = await order.find({ 'customerInfo.userId': req.params.id, deletedAt: null }).lean()
-    const totalOrder = orderInfo.length
-    const totalPrice = orderInfo.reduce((total, order) => total + order.totalOrderPrice, 0)
-    
-    res.render('admin/customer', { title: customerInfo.userInfo.name, layout: 'admin', customerInfo, orderInfo, totalOrder, totalPrice, index })
   }
 }
 module.exports = new allCustomersController

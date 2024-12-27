@@ -39,7 +39,7 @@ class allProductsController {
   updatingProduct(req, res, next) {
     const index = 'products'
     product.findById(req.params.id).lean()
-      .then(product => { res.render('admin/product', { title: product.name, layout: 'admin', product, index } )})
+      .then(product => { res.render('admin/detailProduct', { title: product.name, layout: 'admin', product, index } )})
       .catch(next)
   }
   

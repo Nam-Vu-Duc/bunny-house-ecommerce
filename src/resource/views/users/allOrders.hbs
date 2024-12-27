@@ -156,7 +156,7 @@ function updateTableBody(totalOrderPrice) {
     var newProductPriceInput = document.createElement('input')
     newProductPriceInput.setAttribute('type', 'hidden')
     newProductPriceInput.setAttribute('name', 'productPrice')
-    newProductPriceInput.setAttribute('value', getProductInfo.productInfo[i].price*1000)
+    newProductPriceInput.setAttribute('value', getProductInfo.productInfo[i].price)
 
     // create product quantity element
     var newProductQuantity = document.createElement('td')
@@ -177,7 +177,7 @@ function updateTableBody(totalOrderPrice) {
     var newProductTotalPriceInput = document.createElement('input')
     newProductTotalPriceInput.setAttribute('type', 'hidden')
     newProductTotalPriceInput.setAttribute('name', 'productTotalPrice')
-    newProductTotalPriceInput.setAttribute('value', convertNewProductTotalPriceToString)
+    newProductTotalPriceInput.setAttribute('value', getProductInfo.productInfo[i].price * getProductInfo.productInfo[i].quantity)
 
     var newProductDelete = document.createElement('td')
     newProductDelete.setAttribute('class', 'delete-button')

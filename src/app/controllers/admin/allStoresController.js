@@ -17,7 +17,19 @@ class allStoresController {
       employee.find({ 'userInfo.storeId': req.params.id }).lean(),
     ]);
 
-    res.render('admin/store', { title: store.name, layout: 'admin', storeInfo, employeesInfo, index })
+    res.render('admin/detailStore', { title: store.name, layout: 'admin', storeInfo, employeesInfo, index })
+  }
+
+  async storeUpdate(req, res, next) {
+    
+  }
+
+  async storeCreate(req, res, next) {
+    
+  }
+
+  async storeCreated(req, res, next) {
+    
   }
 }
 module.exports = new allStoresController

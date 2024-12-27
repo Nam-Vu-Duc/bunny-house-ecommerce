@@ -23,16 +23,24 @@ class allOrdersController {
     order.findOne({ _id: req.params.id }).lean()
       .then(order => {
         const index = 'orders'
-        res.render('admin/order', { title: `Đơn ${order.customerInfo.name}`, layout: 'admin', order,index })
+        res.render('admin/detailOrder', { title: `Đơn ${order.customerInfo.name}`, layout: 'admin', order,index })
       })
       .catch(next)
   }
 
-  orderUpdated(req, res, next) {
+  orderUpdate(req, res, next) {
     order.updateOne({ _id: req.params.id }, { status: req.body.status })
       .then(() => { 
-        res.redirect('/admin/all-orders')})
+        res.redirect('back')})
       .catch(next)
+  }
+
+  orderCreate(req, res, next) {
+
+  }
+
+  orderCreated(req, res, next) {
+
   }
 }
 module.exports = new allOrdersController

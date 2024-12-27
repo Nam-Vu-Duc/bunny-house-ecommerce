@@ -10,7 +10,19 @@ class adminController {
   async purchaseInfo(req, res, next) {
     const index  = 'purchases'
 
-    res.render('admin/purchase', { title: 'Phiếu nhập', layout: 'admin', index })
+    res.render('admin/detailPurchase', { title: 'Phiếu nhập', layout: 'admin', index })
+  }
+
+  async purchaseUpdate(req, res, next) {
+
+  }
+
+  async purchaseCreate(req, res, next) {
+
+  }
+
+  async purchaseCreated(req, res, next) {
+
   }
 }
 module.exports = new adminController

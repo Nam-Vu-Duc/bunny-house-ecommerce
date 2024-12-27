@@ -38,7 +38,7 @@ class loginController {
 
   signUp(req, res, next) {
     const error = req.flash('error')
-    res.render('admin/signUp', { title: 'Tạo tài khoản nhân viên', layout: 'empty', message: error, error })
+    res.render('admin/createEmployee', { title: 'Tạo tài khoản nhân viên', layout: 'empty', message: error, error })
   }
 
   async creatingAccount(req, res, next) {
