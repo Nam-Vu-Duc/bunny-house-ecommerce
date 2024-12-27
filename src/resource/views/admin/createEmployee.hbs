@@ -1,0 +1,146 @@
+<div class="admin-create-employee-container">
+  <form id="form-1" method="post" action="/admin/all-employees/employee/created" enctype="multipart/form-data">
+    <div class="form-title">
+      <p>Thêm nhân viên mới</p>
+    </div>
+
+    <div class="form-group">
+      <select name="categories">
+        <option value="">-- Chọn Dòng Sản Phẩm --</option>
+        <option value="skincare">Skincare</option>
+        <option value="makeup">Makeup</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <input type="text" class="form-control" id="brand" name="brand" placeholder="Hãng Sản Phẩm">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <input type="text" class="form-control" id="name" name="name" placeholder="Tên Sản phẩm">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <input type="text" class="form-control" id="oldPrice" name="oldPrice" placeholder="Giá Cũ Sản Phẩm">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <input type="text" class="form-control" id="price" name="price" placeholder="Giá Mới Sản Phẩm">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <input type="text" class="form-control" id="description" name="description" placeholder="Giới Thiệu Sản Phẩm">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <input type="text" class="form-control" id="details" name="details" placeholder="Chi tiết Sản Phẩm">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="submit-button">
+      <button title="submit" type="submit">Đăng</button>
+    </div>
+  </form>
+</div>
+
+<script>  
+// executing validate
+function validating(inputElement, rule, checkValidate, index) {
+  var errorMessage = rule.test(inputElement.value)
+  var errorElement = inputElement.parentElement.querySelector('.form-message')
+
+  if (errorMessage) {
+    errorElement.innerText = errorMessage
+    inputElement.style.border = '2px solid red'
+    inputElement.parentElement.style.color = 'red'
+    checkValidate[index] = false
+  } else {
+    errorElement.innerText = ''
+    inputElement.style.border = 'none'
+    inputElement.parentElement.style.color = 'black'
+    checkValidate[index] = true
+  }
+}  
+
+// isRequiredString requires input must have string
+function isRequiredString(selector) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return value.trim() ? undefined : 'Chưa Nhập Kìa =((('
+    }
+  }
+}
+
+// isRequiredNumber requires input must have number
+function isRequiredNumber(selector) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return value > 0 ? undefined : 'Chưa Nhập Tiền Kìa =((('
+    }
+  }
+}
+
+// validator function to validate input form from user
+function validator(options) {
+  var formElement = document.querySelector(options.form)
+  var checkValidate = Array(5).fill(false)
+
+  options.rules.forEach(function (rule, index) {
+    var inputElement = formElement.querySelector(rule.selector)
+    // input blur
+    inputElement.onblur = function () {
+      validating(inputElement, rule, checkValidate, index)
+    }
+  })
+
+  formElement.onsubmit = function (e) {
+    for (var i = 0; i < checkValidate.length; ++i) {
+      if(checkValidate[i] === false) {
+        e.preventDefault()
+        options.rules.forEach(function (rule, index) {
+          var inputElement = formElement.querySelector(rule.selector)
+          validating(inputElement, rule, checkValidate, index)
+        })
+        break
+      }
+    }
+  }
+}
+
+validator({
+  form: '#form-1',
+  errorSelector: '.form-message',
+  rules: [
+    isRequiredString('#brand'),
+    isRequiredString('#name'),
+    isRequiredNumber('#price'),
+    isRequiredString('#description'),
+    isRequiredString('#details'),
+  ]
+})
+
+// skincare and makeup visibility
+var selectBox = document.querySelector('select[name="categories"]')
+var selectedValue = ''
+var skincareBox = document.querySelector('select[name="skincare"]').parentElement
+var makeUpBox = document.querySelector('select[name="makeup"]').parentElement
+
+selectBox.onchange = function() {
+  selectedValue = selectBox.options[selectBox.selectedIndex].value;
+  if (selectedValue === 'skincare') {
+    skincareBox.style.display = 'block'
+    makeUpBox.style.display = 'none'
+  }
+  if (selectedValue === 'makeup') {
+    skincareBox.style.display = 'none'
+    makeUpBox.style.display = 'block'
+  }
+}
+</script>

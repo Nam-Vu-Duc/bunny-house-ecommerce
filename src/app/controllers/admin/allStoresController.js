@@ -25,7 +25,8 @@ class allStoresController {
   }
 
   async storeCreate(req, res, next) {
-    
+    const index = 'stores'
+    res.render('admin/createStore', { title: 'Thêm cửa hàng mới', layout: 'admin', index })
   }
 
   async storeCreated(req, res, next) {

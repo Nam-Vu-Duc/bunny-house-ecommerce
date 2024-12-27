@@ -21,7 +21,8 @@ class allEmployeesController {
   }
 
   async employeeCreate(req, res, next) {
-    
+    const index = 'employees'
+    res.render('admin/createEmployee', { title: 'Thêm nhân viên mới', layout: 'admin', index })
   }
 
   async employeeCreated(req, res, next) {

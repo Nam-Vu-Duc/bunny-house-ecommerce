@@ -21,7 +21,8 @@ class allBrandsController {
   }
 
   async brandCreate(req, res, next) {
-
+    const index = 'brands'
+    res.render('admin/createBrand', { title: 'Thêm thương hiệu mới', layout: 'admin', index })
   }
 
   async brandCreated(req, res, next) {

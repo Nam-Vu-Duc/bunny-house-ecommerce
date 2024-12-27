@@ -49,7 +49,8 @@ class allCustomersController {
   }
 
   createCustomer(req, res, next) {
-    res.render('admin/createCustomer', { title: 'Thêm khách hàng mới', layout: 'admin' })
+    const index = 'customers'
+    res.render('admin/createCustomer', { title: 'Thêm khách hàng mới', layout: 'admin', index })
   }
 
   async customerCreated(req, res, next) {

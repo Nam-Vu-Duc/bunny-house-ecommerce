@@ -36,7 +36,8 @@ class allOrdersController {
   }
 
   orderCreate(req, res, next) {
-
+    const index = 'orders'
+    res.render('admin/createOrder', { title: 'Thêm đơn hàng mới', layout: 'admin', index })
   }
 
   orderCreated(req, res, next) {
