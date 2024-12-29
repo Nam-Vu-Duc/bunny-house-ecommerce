@@ -5,40 +5,49 @@
     </div>
 
     <div class="form-group">
-      <select name="categories">
-        <option value="">-- Chọn Dòng Sản Phẩm --</option>
-        <option value="skincare">Skincare</option>
-        <option value="makeup">Makeup</option>
+      <select name="position">
+        <option value="">-- Vị trí --</option>
+        <option value="employee">Nhân viên</option>
+        <option value="admin">Quản trị viên</option>
       </select>
     </div>
 
     <div class="form-group">
-      <input type="text" class="form-control" id="brand" name="brand" placeholder="Hãng Sản Phẩm">
+      <select name="store">
+        <option value="">-- Cửa hàng làm việc --</option>
+        {{#each stores}}
+          <option value="{{this._id}}">{{this.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <input type="text" class="form-control" id="name" name="name" placeholder="Họ Tên">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <input type="text" class="form-control" id="name" name="name" placeholder="Tên Sản phẩm">
+      <input type="text" class="form-control" id="email" name="email" placeholder="Email">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <input type="text" class="form-control" id="oldPrice" name="oldPrice" placeholder="Giá Cũ Sản Phẩm">
+      <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <input type="text" class="form-control" id="price" name="price" placeholder="Giá Mới Sản Phẩm">
+      <input type="text" class="form-control" id="address" name="address" placeholder="Địa chỉ">
       <span class="form-message"></span>
     </div>
 
     <div class="form-group">
-      <input type="text" class="form-control" id="description" name="description" placeholder="Giới Thiệu Sản Phẩm">
-      <span class="form-message"></span>
+      <input type="password" class="form-control" id="password" name="password" placeholder="Mật Khẩu">
+      <span class="form-message"></span> 
     </div>
 
     <div class="form-group">
-      <input type="text" class="form-control" id="details" name="details" placeholder="Chi tiết Sản Phẩm">
+      <input type="password" class="form-control" id="password-confirm" name="password-confirm" placeholder="Xác Nhận Mật Khẩu">
       <span class="form-message"></span>
     </div>
 
@@ -77,12 +86,22 @@ function isRequiredString(selector) {
   }
 }
 
-// isRequiredNumber requires input must have number
-function isRequiredNumber(selector) {
+function isEmail(selector) {
   return {
     selector: selector,
     test: function (value) {
-      return value > 0 ? undefined : 'Chưa Nhập Tiền Kìa =((('
+      var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+      return regex.test(value) ? undefined : 'Nhập Đúng Email Vô =((('
+    }
+  }
+}
+
+// isConfirmPassword requires reEnter password must be the same as the initial 
+function isConfirmPassword(selector, getPasswordValue) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return (value === getPasswordValue() && value !== '') ? undefined : "Mật Khẩu Chưa Trùng Rồi"
     }
   }
 }
@@ -90,7 +109,7 @@ function isRequiredNumber(selector) {
 // validator function to validate input form from user
 function validator(options) {
   var formElement = document.querySelector(options.form)
-  var checkValidate = Array(5).fill(false)
+  var checkValidate = Array(6).fill(false)
 
   options.rules.forEach(function (rule, index) {
     var inputElement = formElement.querySelector(rule.selector)
@@ -118,29 +137,14 @@ validator({
   form: '#form-1',
   errorSelector: '.form-message',
   rules: [
-    isRequiredString('#brand'),
     isRequiredString('#name'),
-    isRequiredNumber('#price'),
-    isRequiredString('#description'),
-    isRequiredString('#details'),
+    isEmail('#email'),
+    isRequiredString('#phone'),
+    isRequiredString('#address'),
+    isRequiredString('#password'),
+    isConfirmPassword('#password-confirm', function() {
+      return document.querySelector('#form-1 #password').value
+    })
   ]
 })
-
-// skincare and makeup visibility
-var selectBox = document.querySelector('select[name="categories"]')
-var selectedValue = ''
-var skincareBox = document.querySelector('select[name="skincare"]').parentElement
-var makeUpBox = document.querySelector('select[name="makeup"]').parentElement
-
-selectBox.onchange = function() {
-  selectedValue = selectBox.options[selectBox.selectedIndex].value;
-  if (selectedValue === 'skincare') {
-    skincareBox.style.display = 'block'
-    makeUpBox.style.display = 'none'
-  }
-  if (selectedValue === 'makeup') {
-    skincareBox.style.display = 'none'
-    makeUpBox.style.display = 'block'
-  }
-}
 </script>

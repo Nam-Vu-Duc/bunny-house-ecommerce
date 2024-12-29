@@ -16,11 +16,7 @@
     // when submit, the form will push the input value from user to the URL for backend
     getSubmitButton.onclick = function () {
         var orderCode = getOrderCheckingForm.querySelector('input').value
-        
-        // mongoDB objectId regex
         var regex = /^[a-f\d]{24}$/i
-
-        // check code input from user
         if (regex.test(orderCode)) {
             // if matched, submit form and pass value to URL for backend
             getOrderCheckingForm.setAttribute('method', 'get')
@@ -36,7 +32,6 @@
         }
     }
 
-    // if found user's order, display their order info 
     if (`{{orderInfo}}`) {
         var orderProcess = document.createElement('div')
         orderProcess.setAttribute('class', 'order-process')
@@ -52,7 +47,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{orderInfo.createdAt}}</td>
+                        <td>{{formatDate orderInfo.createdAt}}</td>
                         <td>{{orderInfo.customerInfo.name}}</td>
                         <td>{{orderInfo.status}}</td>
                         <td><a href="/all-orders/order/{{orderInfo._id}}">Chi Tiết</td>

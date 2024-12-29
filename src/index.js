@@ -10,6 +10,7 @@ const route = require('./routes')
 const db = require('./config/db')
 const sortMiddleware = require('./app/middleware/sortMiddleware')
 const Handlebars = require('handlebars')
+const { format } = require('date-fns')
 const { createServer } = require("http")
 const { Server } = require('socket.io')
 const server = createServer(app)
@@ -31,12 +32,15 @@ app.engine('hbs', handlebars.engine({
   defaultLayout: 'users',
   helpers: {
     addIndex: (a, b) => a + b,
+    isEqual: (a, b) => a === b,
+    limit: (a, b) => a.slice(0, b),
+    checkStatus: (a, b, c) => a.filter(a => a.status === b).slice(0, c),
+    formatDate: (a) => format(new Date(a), 'dd/MM/yyyy')
   }
 }))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'resource', 'views'))
 app.set('view options', { layout: 'other' })
-
 
 io.on('connection', (socket) => {
   socket.on('joinRoom', (room) => {

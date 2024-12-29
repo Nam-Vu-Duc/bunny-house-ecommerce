@@ -14,6 +14,10 @@
             <i class="fi fi-rr-piggy-bank"></i>
             <span>Thông tin đơn hàng</span>
           </li>
+          <li class="rate-orders">
+            <i class="fi fi-rr-piggy-bank"></i>
+            <span>Đánh giá đơn hàng</span>
+          </li>
           <li class="feedback">
             <i class="fi fi-rr-feedback-alt"></i>
             <Span>Góp ý</Span>
@@ -30,78 +34,12 @@
 <script>
   var profileButton     = document.querySelector('li.profile')
   var ordersButton      = document.querySelector('li.orders')
+  var rateButton        = document.querySelector('li.rate-orders')
   var feedbackButton    = document.querySelector('li.feedback')
   var contentContainer  = document.querySelector('div.content')
 
   // display profile update on first loaded page
-  if (contentContainer.innerText === '') {
-    contentContainer.innerHTML = `
-      <p>
-        Thông Tin Cá Nhân
-      </p>
-
-      <form class="update-profile" method="POST" action="/profile/updated/{{userInfo._id}}?_method=PUT">
-        <div class="form-group">
-          <label for="name">Tên Khách Hàng</label>
-          <input 
-            type="text" 
-            class="form-control" 
-            id="name" 
-            name="name" 
-            value="{{userInfo.userInfo.name}}"
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="gender">Giới tính</label>
-          <div>
-            <input type="radio" id="male" name="gender" value="male">
-            <label for="cash">Nam</label>
-            
-            <input type="radio" id="female" name="gender" value="female">
-            <label for="cashless">Nữ</label>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="phone">Số điện thoại</label>
-          <input 
-            type="text" 
-            class="form-control" 
-            id="phone" 
-            name="phone" 
-            value="{{userInfo.userInfo.phone}}"
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="address">Địa chỉ nhận hàng</label>
-          <input 
-            type="text" 
-            class="form-control" 
-            id="address" 
-            name="address" 
-            value="{{userInfo.userInfo.address}}"
-          >
-        </div>
-      </form> 
-
-      <div class="update-profile-button">
-        <button type="submit">Cập Nhật</button>
-      </div>
-    `
-  }
-
-  // auto checked gender input
-  var maleGender = document.querySelector('input#male')
-  var femaleGender = document.querySelector('input#female')
-  var userGender = `{{userInfo.userInfo.gender}}`
-  if (userGender === 'male') { 
-    maleGender.checked = true
-  } 
-  if (userGender === 'female') { 
-    femaleGender.checked = true
-  } 
+  if (contentContainer.innerText === '') showProfile()
 
   // submit update profile form
   var updateProfileForm = document.querySelector('form.update-profile')
@@ -111,11 +49,14 @@
     updateProfileForm.submit()
   }
 
-  profileButton.onclick = function() {
+  profileButton.onclick = showProfile
+  ordersButton.onclick = showOrders
+  rateButton.onclick = showRateOrders
+  feedbackButton.onclick = showFeedback
+
+  function showProfile() {
     contentContainer.innerHTML = `
-      <p>
-        Thông Tin Cá Nhân
-      </p>
+      <p>Thông Tin Cá Nhân</p>
 
       <form class="update-profile" method="POST" action="/profile/updated/{{userInfo._id}}?_method=PUT">
         <div class="form-group">
@@ -169,13 +110,8 @@
     `
     var maleGender = document.querySelector('input#male')
     var femaleGender = document.querySelector('input#female')
-    var userGender = `{{userInfo.userInfo.gender}}`
-    if (userGender === 'male') { 
-      maleGender.checked = true
-    } 
-    if (userGender === 'female') { 
-      femaleGender.checked = true
-    } 
+    if (`{{userInfo.userInfo.gender}}` === 'male') maleGender.checked = true
+    if (`{{userInfo.userInfo.gender}}` === 'female') femaleGender.checked = true
 
     // submit update profile form
     var updateProfileForm = document.querySelector('form.update-profile')
@@ -185,58 +121,66 @@
       updateProfileForm.submit()
     }
   }
-
-  ordersButton.onclick = function() {
+  function showOrders() {
     contentContainer.innerHTML = `
-      <p>
-        Thông Tin Đơn Hàng
-      </p>
+      <p>Thông Tin Đơn Hàng</p>
 
       <table style="width:100%">
         <tr>
-          <th>
-            Người Nhận
-          </th>
-          <th>
-            Tổng Tiền
-          </th>
-          <th>
-            Ngày
-          </th>
-          <th>
-            Tình Trạng
-          </th>
-          <th>
-          </th>
+          <th>Người Nhận</th>
+          <th>Tổng Tiền</th>
+          <th>Ngày</th>
+          <th>Tình Trạng</th>
+          <th></th>
         </tr>
         {{#each orderInfo}}
-        <tr>
-          <td>
-            {{this.customerInfo.name}}
-          </td>
-          <td>
-            {{this.totalOrderPrice}} VND
-          </td>
-          <td>
-            {{this.createdAt}}
-          </td>
-          <td>
-            {{this.status}}
-          </td>
-          <td>
-            <a href="/all-orders/order/{{this._id}}">Chi Tiết</a>
-          </td>
-        </tr>
+          {{#if (isEqual this.status 'done')}}
+          {{^}}
+            <tr>
+              <td>{{this.customerInfo.name}}</td>
+              <td class="total-price">{{this.totalOrderPrice}}</td>
+              <td>{{formatDate this.createdAt}}</td>
+              <td>{{this.status}}</td>
+              <td><a href="/all-orders/order/{{this._id}}">Chi Tiết</a></td>
+            </tr>
+          {{/if}}
         {{/each}}
       </table>
     `
+    var totalPrice = document.querySelectorAll('td.total-price')
+    totalPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
   }
-
-  feedbackButton.onclick = function() {
+  function showRateOrders() {
     contentContainer.innerHTML = `
-      <p>
-        Góp ý
-      </p>
+      <p>Đánh giá Đơn Hàng</p>
+
+      <table style="width:100%">
+        <tr>
+          <th>Người Nhận</th>
+          <th>Tổng Tiền</th>
+          <th>Ngày</th>
+          <th>Tình Trạng</th>
+          <th></th>
+        </tr>
+        {{#each orderInfo}}
+          {{#if (isEqual this.status 'done')}}
+            <tr>
+              <td>{{this.customerInfo.name}}</td>
+              <td class="total-price">{{this.totalOrderPrice}}</td>
+              <td>{{formatDate this.createdAt}}</td>
+              <td>{{this.status}}</td>
+              <td><a href="/all-orders/order/{{this._id}}">Chi Tiết</a></td>
+            </tr>
+          {{/if}}
+        {{/each}}
+      </table>
+    `
+    var totalPrice = document.querySelectorAll('td.total-price')
+    totalPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
+  }
+  function showFeedback() {
+    contentContainer.innerHTML = `
+      <p>Góp ý</p>
       <form class="update-feedback" method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
         <div class="form-group">
           <label for="phone">Bạn có góp ý gì cho mình thì điền vô đây nha</label>
@@ -253,8 +197,7 @@
         <button type="submit">Cập Nhật</button>
       </div>
     `
+    var updateFeedbackForm = document.querySelector('form.update-feedback')
+    var updateFeedbackButton = document.querySelector('div.update-feedback-button').querySelector('button')
   }
-
-  {{!-- var updateFeedbackForm = document.querySelector('form.update-feedback')
-  var updateFeedbackButton = document.querySelector('div.update-feedback-button').querySelector('button') --}}
 </script>

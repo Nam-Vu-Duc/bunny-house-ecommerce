@@ -24,8 +24,8 @@ class loginController {
       if (result) {
         const payload = { email: getUser.email }; // Payload with only essential data
         const token = jwt.sign(payload, 'YOUR_STRONG_SECRET', { expiresIn: '15m' });
-        const userId = getUser._id.toString()
-        const chatId = getChat._id.toString()
+        const userId = getUser ? getUser._id.toString() : ''
+        const chatId = getChat ? getChat._id.toString() : ''
 
         res.cookie('auth_token', token, {
           httpOnly: true,

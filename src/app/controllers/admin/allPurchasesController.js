@@ -19,7 +19,8 @@ class adminController {
 
   async purchaseCreate(req, res, next) {
     const index = 'purchases'
-    res.render('admin/createPurchase', { title: 'Thêm đơn nhập mới', layout: 'admin', index })
+    const products = await product.find({deletedAt: null}).lean()
+    res.render('admin/createPurchase', { title: 'Thêm đơn nhập mới', layout: 'admin', index, products })
   }
 
   async purchaseCreated(req, res, next) {

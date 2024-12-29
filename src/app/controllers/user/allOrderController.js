@@ -1,6 +1,6 @@
 const order = require('../../models/orderModel')
 
-class orderController {
+class allOrderController {
   show(req, res, next) {
     const isUser = req.isUser === true ? true : false
     const userId = req.cookies.user_id ? req.cookies.user_id : null
@@ -9,10 +9,9 @@ class orderController {
     res.render('users/allOrders', { title: 'Đơn hàng', successful, newOrderId, isUser, userId })
   }
 
-  async showOrder(req, res, next) {
+  async orderInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
     const orderInfo = await order.findOne({ _id: req.params.id }).lean()
-    // order.createdAt = order.createdAt.getDate() + '/' + (order.createdAt.getMonth()+1) + '/' + order.createdAt.getFullYear()
     res.render('users/order', { title: `Đơn của ${orderInfo.customerInfo.name}`, orderInfo, isUser })
   }
 
@@ -70,4 +69,4 @@ class orderController {
     return res.redirect('/all-orders')
   }
 }
-module.exports = new orderController
+module.exports = new allOrderController

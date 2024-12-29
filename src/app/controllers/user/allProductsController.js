@@ -1,8 +1,7 @@
 const product = require('../../models/productModel')
-const brand = require('../../models/brandModel')
 
 class allProductsController {
-  showAllProducts(req, res, next) {
+  async showAllProducts(req, res, next) {
     const isUser = req.isUser === true ? true : false
     const currentPage  = req.query.page   || 1
     const sortedColumn = req.query.column || ''
@@ -12,7 +11,7 @@ class allProductsController {
     const skip         = (currentPage - 1) * itemsPerPage
 
     product.find({ deletedAt: null }).lean()
-      .then(product => { 
+      .then(products => { 
         let title = 'Toàn Bộ Sản Phẩm'
         const filters = {
           'flash-sale' : { filter: product => product.status     === 'flash-sale', title: 'Sản Phẩm Đang Flash Sale' },
@@ -22,54 +21,51 @@ class allProductsController {
           'makeup'     : { filter: product => product.makeup     !== ''          , title: 'Sản Phẩm Makeup'          }
         };
         if (type in filters) {
-          product = product.filter(filters[type].filter);
+          products = products.filter(filters[type].filter);
           title = filters[type].title;
         }
 
-        if (sortedColumn === 'price' && sort === 'asc') product = product.sort((a, b) => a.price - b.price)
-        else if (sortedColumn === 'price' && sort === 'desc') product = product.sort((a, b) => b.price - a.price)
+        if (sortedColumn === 'price' && sort === 'asc') products = products.sort((a, b) => a.price - b.price)
+        else if (sortedColumn === 'price' && sort === 'desc') products = products.sort((a, b) => b.price - a.price)
 
-        const productLength = product.length
-        product = product.slice(skip, skip + itemsPerPage)
+        const productLength = products.length
+        products = products.slice(skip, skip + itemsPerPage)
         
-        res.render('users/allProducts', { title: title, product, type, productLength, currentPage, sortedColumn, sort, isUser }) })
+        res.render('users/allProducts', { title: title, products, type, productLength, currentPage, sortedColumn, sort, isUser }) })
       .catch(next)
   }
 
-  showSkincare(req, res, next) {
+  async showAllSkincare(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    product.find({ deletedAt: null, skincare: req.params.slug }).lean()
-      .then(product => {    
-        const type = req.params.slug
+    const type = req.params.slug
+    const products = await product.find({ deletedAt: null, skincare: type }).lean()
 
-        res.render('users/allProducts', { title: 'Dòng Skincare', product, type, isUser }) })
-      .catch(next)
+    res.render('users/allProducts', { title: 'Dòng Skincare', products, type, isUser })
   }
 
-  showMakeUp(req, res, next) {
+  async showAllMakeUp(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    product.find({ deletedAt: null, makeup: req.params.slug }).lean()
-      .then(product => {     
-        const type = req.params.slug
-        
-        res.render('users/allProducts', { title: 'Dòng Makeup', product, type, isUser }) })
-      .catch(next)
+    const type = req.params.slug
+    const products = await product.find({ deletedAt: null, skincare: type }).lean()
+  
+    res.render('users/allProducts', { title: 'Dòng Makeup', products, type, isUser }) 
   }
 
-  showAllBrands(req, res, next) {
+  async productInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    brand.find().lean()
-      .then(brand => { 
-        res.render('users/allBrands', { title: 'Toàn bộ thương hiệu', brand, isUser }) })
-      .catch(next)
-  }
+    const newProduct = await product.findOne({ slug: req.params.slug }).lean()
+    let newProductType = ''
+    let relatedProducts 
 
-  showBrand(req, res, next) {
-    const isUser = req.isUser === true ? true : false
-    product.find({ deletedAt: null, brand: req.params.slug }).lean()
-      .then(product => { 
-        res.render('users/allProducts', { title: req.params.slug, product, isUser }) })
-      .catch(next)
+    if (newProduct.skincare !== '') {
+      newProductType = newProduct.skincare
+      relatedProducts = await product.find({ skincare: newProductType }).lean().limit(5)
+    } else {
+      newProductType = newProduct.makeup
+      relatedProducts = await product.find({ makeup: newProductType }).lean().limit(5)
+    }
+    relatedProducts = relatedProducts.filter(product => product._id.toString() !== newProduct._id.toString())
+    res.render('users/product', { title: newProduct.name , newProduct, relatedProducts, newProductType, isUser })
   }
 }
 module.exports = new allProductsController

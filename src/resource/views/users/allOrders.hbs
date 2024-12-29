@@ -137,7 +137,7 @@ function updateTableBody(totalOrderPrice) {
 
     // create a tag. Link to the product details page when user want to change the cart
     var newProductAnchorTag = document.createElement('a')
-    newProductAnchorTag.setAttribute('href', `/product/${getProductInfo.productInfo[i].slug}`)
+    newProductAnchorTag.setAttribute('href', `/all-products/product/${getProductInfo.productInfo[i].slug}`)
     newProductAnchorTag.innerText = getProductInfo.productInfo[i].name
     newProductAnchorTag.style.paddingLeft = '5px'
     newProductName.appendChild(newProductAnchorTag)

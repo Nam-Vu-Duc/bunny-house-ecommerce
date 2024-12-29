@@ -1,4 +1,5 @@
 const employee = require('../../models/employeeModel')
+const store = require('../../models/storeModel')
 
 class allEmployeesController {
   async allEmployees(req, res, next) {
@@ -22,7 +23,8 @@ class allEmployeesController {
 
   async employeeCreate(req, res, next) {
     const index = 'employees'
-    res.render('admin/createEmployee', { title: 'Thêm nhân viên mới', layout: 'admin', index })
+    const stores = await store.find().lean()
+    res.render('admin/createEmployee', { title: 'Thêm nhân viên mới', layout: 'admin', index, stores })
   }
 
   async employeeCreated(req, res, next) {

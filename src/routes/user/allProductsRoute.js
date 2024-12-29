@@ -2,11 +2,10 @@ const express = require('express')
 const router = express.Router()
 const allProductsController = require('../../app/controllers/user/allProductsController')
 
-router.get('/all-brands', allProductsController.showAllBrands)
-router.get('/all-brands/:slug', allProductsController.showBrand)
 router.get('/', allProductsController.showAllProducts)
 router.get('/:slug', allProductsController.showAllProducts)
-router.get('/skincare/:slug', allProductsController.showSkincare)
-router.get('/makeup/:slug', allProductsController.showMakeUp)
+router.get('/skincare/:slug', allProductsController.showAllSkincare)
+router.get('/makeup/:slug', allProductsController.showAllMakeUp)
+router.get('/product/:slug', allProductsController.productInfo)
 
 module.exports = router

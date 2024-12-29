@@ -13,8 +13,8 @@ const adminLogOutRoute = require('./admin/logOutRoute')
 
 // user
 const homeRoute = require('./user/homeRoute')
-const productRoute = require('./user/productRoute')
 const allProductsRoute = require('./user/allProductsRoute')
+const allBrandsRoute = require('./user/allBrandsRoute')
 const introduceRoute = require('./user/introduceRoute')
 const authenticationRoute = require('./auth/authenticationRoute')
 const empAuthenticationRoute = require('./auth/empAuthenticationRoute')
@@ -47,7 +47,7 @@ function route(app) {
   app.use('/authentication', authenticationRoute)
   app.use('/emp/authentication', empAuthenticationRoute)
   app.use('/all-products', checkUser, allProductsRoute)
-  app.use('/product',checkUser, productRoute)
+  app.use('/all-brands', checkUser, allBrandsRoute)
   app.use('/all-orders', checkUser, allOrdersRoute)
   app.use('/introduce', checkUser, introduceRoute)
   app.use('/profile', checkUser, profileRoute)
