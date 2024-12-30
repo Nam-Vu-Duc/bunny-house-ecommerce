@@ -1,0 +1,55 @@
+<div class="brand-details-container">
+  <div class="table">
+    <div class="image-box">
+      <div class="image">
+        <img src="{{brandInfo.img.path}}" alt="{{brandInfo.name}}" loading="lazy"/>
+      </div>
+    </div>
+    
+    <div class="details-box">
+      <div class="title"><h1>{{brandInfo.name}}</h1></div>
+      <div class="description"><p>{{brandInfo.description}}</p></div>
+    </div>
+  </div>
+
+  <div class="more-details">
+    <h3>THÔNG TIN THƯƠNG HIỆU</h3>
+    <p>{{brandInfo.details}}</p>
+  </div>
+
+  <div class="related-products">
+    <div class="title">
+      <a href="/all-products/{{brandInfo.categories}}/{{brandInfoType}}" class="main-title"><b>SẢN PHẨM<b></a>
+    </div>
+
+    <div class="products">
+      {{#each products}}
+      <a href="/all-products/product/{{this.slug}}">
+        <div class="product">
+          <img src="{{this.img.path}}" alt="{{this.name}}" id="product-1" loading="lazy">
+          <del><h4 id="product-old-price">{{this.oldPrice}}</h4></del>
+          <h3 id="product-price">{{this.price}}</h3>
+          <p id="product-details">{{this.name}}</p>
+        </div>
+      </a>
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+<script>
+  const metaContent = `{{brandInfo.details}}`.slice(0, 150) + '...'
+  const productOldPrices = document.querySelectorAll('h4#product-old-price')
+  const productPrices = document.querySelectorAll('h3#product-price')
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const metaDescription = document.querySelector("meta[name='description']");
+    metaDescription.setAttribute("content", metaContent);
+  })
+  productOldPrices.forEach((item) => {
+    item.innerText = item.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'  
+  })
+  productPrices.forEach((item) => {
+    item.innerText = item.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
+  })
+</script>

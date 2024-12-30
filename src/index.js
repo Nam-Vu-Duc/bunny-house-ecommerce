@@ -35,7 +35,8 @@ app.engine('hbs', handlebars.engine({
     isEqual: (a, b) => a === b,
     limit: (a, b) => a.slice(0, b),
     checkStatus: (a, b, c) => a.filter(a => a.status === b).slice(0, c),
-    formatDate: (a) => format(new Date(a), 'dd/MM/yyyy')
+    formatStatus: (a) => a === 'preparing' ? 'Đang chuẩn bị' : '',
+    formatDate: (a) => a ? format(new Date(a), 'dd/MM/yyyy') : ''
   }
 }))
 app.set('view engine', 'hbs')

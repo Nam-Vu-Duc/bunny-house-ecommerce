@@ -101,12 +101,11 @@
   async function getChatData() {
     try {
       const response = await fetch(`/api/chat/${userId}`)
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`)
-      }
+      if (!response.ok) throw new Error(`Response status: ${response.status}`)
+
       const json = await response.json();
       const messages = json.data
-      console.log(messages);
+
       messages.forEach((message) => {
         const chat = document.createElement('li')
         chat.textContent = message.content 
@@ -118,11 +117,5 @@
     }
   }
 
-  {{!-- if (`{{sync_chat}}`) {
-    getChatData()
-  } --}}
-
-  getChatData()
-
-
+  if (`{{sync_chat}}`) getChatData()
 </script>

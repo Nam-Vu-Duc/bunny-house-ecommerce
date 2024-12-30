@@ -5,6 +5,7 @@ module.exports = function checkAdmin(req, res, next) {
   if (userId) {
     user.findOne({ _id: userId })
       .then(user => {
+        if (!user) return res.render('partials/denyAdminAccess', { title: 'Warning', layout: 'empty' })
         if (user.loginInfo.role !== 'user') return res.render('partials/denyAdminAccess', { title: 'Warning', layout: 'empty' })
         req.isUser = true
         next()

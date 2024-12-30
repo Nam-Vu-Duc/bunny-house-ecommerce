@@ -31,7 +31,7 @@ class loginController {
         res.redirect('/admin')
       } else {
         req.flash('error', 'Mật khẩu không đúng')
-        return res.redirect('/authentication/sign-in')
+        return res.redirect('/emp/authentication/sign-in')
       }
     })
   }

@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     secure: true,
   })
   // req.flash('success', 'Logged out successfully')
-  res.redirect('/authentication/sign-in');
+  res.redirect('/emp/authentication/sign-in');
 })
 
 module.exports = router

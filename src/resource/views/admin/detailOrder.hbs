@@ -12,7 +12,7 @@
       </tr>
       <tr>
         <td> Ngày Đặt </td>
-        <td> {{order.createdAt}} </td>
+        <td> {{formatDate order.createdAt}} </td>
       </tr>
       <tr>
         <td> Khách Hàng </td>
@@ -41,12 +41,10 @@
             <input type="radio" id="preparing" name="status" value="preparing">
             <label id="preparing" for="preparing">Đang Xử Lý</label>
           </div>
-
           <div>
             <input type="radio" id="delivering" name="status" value="delivering">
             <label id="delivering" for="delivering">Đang Giao Hàng</label>
           </div>
-
           <div>
             <input type="radio" id="done" name="status" value="done">
             <label id="done" for="done">Hoàn Thành</label>

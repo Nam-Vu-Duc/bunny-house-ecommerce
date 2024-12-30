@@ -46,7 +46,7 @@ class allProductsController {
   async showAllMakeUp(req, res, next) {
     const isUser = req.isUser === true ? true : false
     const type = req.params.slug
-    const products = await product.find({ deletedAt: null, skincare: type }).lean()
+    const products = await product.find({ deletedAt: null, makeup: type }).lean()
   
     res.render('users/allProducts', { title: 'Dòng Makeup', products, type, isUser }) 
   }
@@ -65,7 +65,7 @@ class allProductsController {
       relatedProducts = await product.find({ makeup: newProductType }).lean().limit(5)
     }
     relatedProducts = relatedProducts.filter(product => product._id.toString() !== newProduct._id.toString())
-    res.render('users/product', { title: newProduct.name , newProduct, relatedProducts, newProductType, isUser })
+    res.render('users/detailProduct', { title: newProduct.name , newProduct, relatedProducts, newProductType, isUser })
   }
 }
 module.exports = new allProductsController

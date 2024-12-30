@@ -1,9 +1,7 @@
 <div class="order-container">
    <table>
     <thead>
-      <tr>
-        <td colspan="2"> Thông tin chung </td>
-      </tr>
+      <tr><td colspan="2"> Thông tin chung </td></tr>
     </thead>
     <tr>
       <td> Mã Đơn Hàng </td>
@@ -11,7 +9,7 @@
     </tr>
     <tr>
       <td> Ngày Đặt Hàng </td>
-      <td> {{orderInfo.createdAt}} </td>
+      <td> {{formatDate orderInfo.createdAt}} </td>
     </tr>
     <tr>
       <td> Tên Khách Hàng </td>

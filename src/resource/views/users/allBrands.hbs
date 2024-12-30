@@ -5,9 +5,9 @@
   </div>
   
   <div class="all-brands">
-    {{#each brand}}
+    {{#each brands}}
       <div class="brand">
-        <a href="/all-products/all-brands/{{this.name}}">
+        <a href="/all-brands/brand/{{this._id}}">
           <img src="{{this.img.path}}" alt="{{this.name}}" loading="lazy"/>
           {{this.name}}
         </a>
