@@ -6,7 +6,7 @@
   
   <div class="all-brands">
     {{#each brands}}
-      <div class="brand">
+      <div class="brand" data-tippy-content="{{this.name}}">
         <a href="/all-brands/brand/{{this._id}}">
           <img src="{{this.img.path}}" alt="{{this.name}}" loading="lazy"/>
           {{this.name}}

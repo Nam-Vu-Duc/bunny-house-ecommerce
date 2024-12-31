@@ -14,7 +14,7 @@
             {{this.name}}
           </p>  
           <p style="width: 10%;">{{this.categories}}</p>
-          <p style="width: 10%;" id="product-price">{{this.price}}</p>
+          <p style="width: 10%; text-align:right" id="product-price">{{this.price}}</p>
         </div>
       {{/each}}
     </div>
@@ -44,6 +44,9 @@
 </div>
 
 <script>  
+  const productPrice = Array.from(document.querySelectorAll('p#product-price'))
+  productPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
+
   const input = document.querySelector('input')
   const product = Array.from(document.querySelectorAll('div.product')) 
   const productName = Array.from(document.querySelectorAll('p.product-name')).map((item) => {
@@ -54,6 +57,7 @@
       .replace(/Đ/g, 'D')             // Replace 'Đ' with 'D'
       .toLowerCase();                 // Convert to lowercase
   })
+  const tbody = document.querySelector('tbody')
   input.addEventListener('input', function() {
     const value = input.value
     console.log(value)
@@ -69,4 +73,30 @@
       product[index].style.display = 'none'
     })
   })
+  product.forEach((item,index) => {
+    item.onclick = function() {
+      const name = productName[index]
+      const price = productPrice[index].innerText
+      const newRow = document.createElement('tr')
+      const prdName = document.createElement('td')
+      const prdPrice = document.createElement('td')
+      const test1 = document.createElement('td')
+      const test2 = document.createElement('td')
+      const test3 = document.createElement('td')
+      const test4 = document.createElement('td')
+
+      prdName.append(name)
+      prdPrice.append(price)
+
+      newRow.appendChild(test1)
+      newRow.appendChild(prdName)
+      newRow.appendChild(prdPrice)
+      newRow.appendChild(test2)
+      newRow.appendChild(test3)
+      newRow.appendChild(test4)
+
+      tbody.appendChild(newRow)
+    }
+  })
+
 </script>
