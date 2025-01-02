@@ -1,12 +1,17 @@
 const order = require('../../models/orderModel')
+const user = require('../../models/userModel')
+const product = require('../../models/productModel')
+const mongoose = require('mongoose')
 
 class allOrderController {
-  show(req, res, next) {
+  async show(req, res, next) {
     const isUser = req.isUser === true ? true : false
     const userId = req.cookies.user_id ? req.cookies.user_id : null
     const successful = req.flash('successful')
     const newOrderId = req.flash('newOrderId')
-    res.render('users/allOrders', { title: 'Đơn hàng', successful, newOrderId, isUser, userId })
+    let userInfo = []
+    if(userId) userInfo = await user.findOne({ _id: userId }).lean()
+    res.render('users/allOrders', { title: 'Đơn hàng', successful, newOrderId, isUser, userId, userInfo })
   }
 
   async orderInfo(req, res, next) {
@@ -67,6 +72,13 @@ class allOrderController {
     req.flash('newOrderId', newOrder._id)
     req.flash('successful', 'order successfully')
     return res.redirect('/all-orders')
+  }
+
+  async rateOrder(req, res, next) {
+    const isUser = req.isUser === true ? true : false
+    const orderInfo = await order.findOne({ _id: req.params.id }).lean()
+
+    res.render('users/detailRateOrder', { title: 'Đánh giá đơn hàng', isUser, orderInfo })
   }
 }
 module.exports = new allOrderController

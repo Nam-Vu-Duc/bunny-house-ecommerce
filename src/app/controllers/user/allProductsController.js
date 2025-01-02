@@ -1,4 +1,5 @@
 const product = require('../../models/productModel')
+const comment = require('../../models/commentModel')
 
 class allProductsController {
   async showAllProducts(req, res, next) {
@@ -54,8 +55,10 @@ class allProductsController {
   async productInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
     const newProduct = await product.findOne({ slug: req.params.slug }).lean()
+    const comments = await comment.find({ productId: newProduct._id }).lean()
     let newProductType = ''
     let relatedProducts 
+    console.log(comments)
 
     if (newProduct.skincare !== '') {
       newProductType = newProduct.skincare
@@ -65,7 +68,7 @@ class allProductsController {
       relatedProducts = await product.find({ makeup: newProductType }).lean().limit(5)
     }
     relatedProducts = relatedProducts.filter(product => product._id.toString() !== newProduct._id.toString())
-    res.render('users/detailProduct', { title: newProduct.name , newProduct, relatedProducts, newProductType, isUser })
+    res.render('users/detailProduct', { title: newProduct.name , isUser, newProduct, relatedProducts, newProductType, comments })
   }
 }
 module.exports = new allProductsController

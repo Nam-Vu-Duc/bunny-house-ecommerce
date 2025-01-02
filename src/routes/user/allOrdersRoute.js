@@ -15,5 +15,6 @@ router.get('/checking', allOrderController.ordersChecking)
 router.get('/checking/:id', allOrderController.orderChecked)
 router.post('/create-orders', allOrderController.createOrders)
 router.get('/order/:id', allOrderController.orderInfo)
+router.get('/order/rate/:id', allOrderController.rateOrder)
 
 module.exports = router

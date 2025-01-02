@@ -44,7 +44,7 @@ body {
   animation: 1s reloader infinite linear;
 }
 .tippy-tooltip.bunny-theme {
-  background-color: #FFDFDF;
+  background-color: white;
   color: black;
 }
 .tippy-tooltip.tomato-theme[data-placement^='top'] .tippy-arrow {border-top-color: #FFDFDF;}

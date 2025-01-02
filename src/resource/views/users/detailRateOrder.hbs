@@ -1,0 +1,25 @@
+<div class="detail-rate-order-container">
+  <form id="form-1" method="post" action="/all-orders/order/rate/rated" enctype="multipart/form-data">
+  <table>
+    <thead>
+      <tr>
+        <td>Sản Phẩm </td>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orderInfo.products}}
+      <tr>
+        <td>
+          <p>{{this.name}}</p>
+          <input type="text" placeholder="Nhập đánh giá của bạn" name="rate">
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+  <button>Gửi</button>
+</div>
+
+<script>
+</script>

@@ -127,11 +127,11 @@
 
       <table style="width:100%">
         <tr>
-          <th>Người Nhận</th>
-          <th>Tổng Tiền</th>
-          <th>Ngày</th>
-          <th>Tình Trạng</th>
-          <th></th>
+          <th style="width: 25%">Người Nhận</th>
+          <th style="width: 25%">Tổng Tiền</th>
+          <th style="width: 20%">Ngày</th>
+          <th style="width: 15%">Tình Trạng</th>
+          <th style="width: 15%">Chi tiết</th>
         </tr>
         {{#each orderInfo}}
           {{#if (isEqual this.status 'done')}}
@@ -160,16 +160,16 @@
           <th>Tổng Tiền</th>
           <th>Ngày</th>
           <th>Tình Trạng</th>
-          <th></th>
+          <th>Đánh giá</th>
         </tr>
         {{#each orderInfo}}
           {{#if (isEqual this.status 'done')}}
             <tr>
-              <td>{{this.customerInfo.name}}</td>
-              <td class="total-price">{{this.totalOrderPrice}}</td>
-              <td>{{formatDate this.createdAt}}</td>
-              <td>{{this.status}}</td>
-              <td><a href="/all-orders/order/{{this._id}}">Chi Tiết</a></td>
+              <td style="width: 25%">{{this.customerInfo.name}}</td>
+              <td style="width: 25%" class="total-price">{{this.totalOrderPrice}}</td>
+              <td style="width: 20%">{{formatDate this.createdAt}}</td>
+              <td style="width: 15%">{{this.status}}</td>
+              <td style="width: 15%"><a href="/all-orders/order/rate/{{this._id}}">Đánh giá</a></td>
             </tr>
           {{/if}}
         {{/each}}

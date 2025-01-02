@@ -1,4 +1,4 @@
-<div class="product-details-container">
+<div class="detail-product-container">
   <div class="table">
     <div class="image-box">
       <div class="image">
@@ -49,6 +49,19 @@
   <div class="more-details">
     <h3>HƯỚNG DẪN SỬ DỤNG</h3>
     <p>{{newProduct.guide}}</p>
+  </div>
+
+  <div class="more-details">
+    <h3>Đánh giá</h3>
+    <div class="comment-list">
+      {{#each comments}}
+        <div class="comment">
+          <p>user{{this.senderId}}</p>
+          <p>{{formatDate this.createdAt}}</p>
+          <p>{{this.content}}</p>
+        </div>
+      {{/each}}
+    </div>
   </div>
 
   <div class="related-products">
