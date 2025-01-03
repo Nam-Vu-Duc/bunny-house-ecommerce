@@ -1,5 +1,5 @@
 <div class="brand-details-container">
-  <form method="POST" action="/admin/all-orders/order-updated/{{order._id}}?_method=PUT">
+  <form id="form-2" method="POST" action="/admin/all-brands/brand/updated/{{brandInfo._id}}?_method=PUT">
     <table id="table-1">
       <thead>
         <tr>
@@ -51,8 +51,10 @@
       </tbody>
     </table>
 
-    <button type="submit">Cập nhật</button>    
-  </form>     
+    <div class="submit-button">
+      <button title="submit" type="submit">Cập nhật</button>
+    </div>
+  </form>
 </div>
 
 <script>

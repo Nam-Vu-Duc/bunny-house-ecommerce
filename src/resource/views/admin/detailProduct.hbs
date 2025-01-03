@@ -1,5 +1,5 @@
 <div class="product-details-container">
-  <form method="POST" action="/admin/all-products/product/updated/{{product._id}}?_method=PUT" enctype="multipart/form-data">
+  <form id="form-2" method="POST" action="/admin/all-products/product/updated/{{product._id}}?_method=PUT" enctype="multipart/form-data">
     <div class="form-title">
       <p>THÔNG TIN SẢN PHẨM</p>
     </div>
@@ -100,9 +100,8 @@
       <input type="file" name="img" id="img" value="{{product.img}}"/>
     </div>
     <div class="submit-button">
-      <button title="submit" type="submit">Cập nhật sản phẩm</button>
+      <button title="submit" type="submit">Cập nhật</button>
     </div>
-
   </form>
 </div>
 

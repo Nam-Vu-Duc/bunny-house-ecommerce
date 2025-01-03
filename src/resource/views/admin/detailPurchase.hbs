@@ -1,65 +1,71 @@
 <div class="purchase-details-container">
-  <table id="table-1">
-    <thead>
+  <form id="form-2" method="POST" action="/admin/all-purchases/purchase/updated/{{purchaseInfo._id}}?_method=PUT">
+    <table id="table-1">
+      <thead>
+        <tr>
+          <td colspan="2"> THÔNG TIN ĐƠN NHẬP </td>
+        </tr>
+      </thead>
       <tr>
-        <td colspan="2"> THÔNG TIN ĐƠN NHẬP </td>
+        <td> Mã Khách Hàng </td>
+        <td> {{customerInfo._id}} </td>
       </tr>
-    </thead>
-    <tr>
-      <td> Mã Khách Hàng </td>
-      <td> {{customerInfo._id}} </td>
-    </tr>
-    <tr>
-      <td> Email </td>
-      <td> {{customerInfo.loginInfo.email}} </td>
-    </tr>
-    <tr>
-      <td> Tên Khách Hàng </td>
-      <td> {{customerInfo.userInfo.name}} </td>
-    </tr>
-    <tr>
-      <td> SĐT </td>
-      <td> {{customerInfo.userInfo.phone}} </td>
-    </tr>
-    <tr>
-      <td> Địa Chỉ </td>
-      <td> {{customerInfo.userInfo.address}} </td>
-    </tr>
-    <tr>
-      <td> Tổng doanh thu </td>
-      <td id="total-price"> {{totalPrice}} </td>
-    </tr>
-  </table>
+      <tr>
+        <td> Email </td>
+        <td> {{customerInfo.loginInfo.email}} </td>
+      </tr>
+      <tr>
+        <td> Tên Khách Hàng </td>
+        <td> {{customerInfo.userInfo.name}} </td>
+      </tr>
+      <tr>
+        <td> SĐT </td>
+        <td> {{customerInfo.userInfo.phone}} </td>
+      </tr>
+      <tr>
+        <td> Địa Chỉ </td>
+        <td> {{customerInfo.userInfo.address}} </td>
+      </tr>
+      <tr>
+        <td> Tổng doanh thu </td>
+        <td id="total-price"> {{totalPrice}} </td>
+      </tr>
+    </table>
 
-  <table id="table-2">
-    <thead>
-      <tr>
-        <td>Mã đơn                 </td>
-        <td>Tổng tiền              </td>
-        <td>Phương thức thanh toán </td>
-        <td>Tình trạng             </td>
-        <td>Tình trạng             </td>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each orderInfo}}
-      <tr>
-        <td><p>{{this._id}}</p>                                  </td>
-        <td 
-          style="text-align: center;" 
-          id="total-order-price"
-        >
-          {{this.totalOrderPrice}} 
-        </td>
-        <td style="text-align: center;">{{this.paymentMethod}}   </td>
-        <td style="text-align: center;">{{this.status}}          </td>
-        <td style="text-align: center;">
-          <a href="/admin/all-orders/order/{{this._id}}">Chi Tiết</a>            
-        </td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
+    <table id="table-2">
+      <thead>
+        <tr>
+          <td>Mã đơn                 </td>
+          <td>Tổng tiền              </td>
+          <td>Phương thức thanh toán </td>
+          <td>Tình trạng             </td>
+          <td>Tình trạng             </td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orderInfo}}
+        <tr>
+          <td><p>{{this._id}}</p>                                  </td>
+          <td 
+            style="text-align: center;" 
+            id="total-order-price"
+          >
+            {{this.totalOrderPrice}} 
+          </td>
+          <td style="text-align: center;">{{this.paymentMethod}}   </td>
+          <td style="text-align: center;">{{this.status}}          </td>
+          <td style="text-align: center;">
+            <a href="/admin/all-orders/order/{{this._id}}">Chi Tiết</a>            
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <div class="submit-button">
+      <button title="submit" type="submit">Cập nhật</button>
+    </div>
+  </form>
 </div>
 
 <script>

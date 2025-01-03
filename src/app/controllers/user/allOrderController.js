@@ -80,5 +80,12 @@ class allOrderController {
 
     res.render('users/detailRateOrder', { title: 'Đánh giá đơn hàng', isUser, orderInfo })
   }
+  
+  async orderRated(req, res, next) {
+    const senderId = req.cookies.userId
+    const { name, rate } = req.body
+    console.log(name, rate)
+    res.json(req.body)
+  }
 }
 module.exports = new allOrderController
