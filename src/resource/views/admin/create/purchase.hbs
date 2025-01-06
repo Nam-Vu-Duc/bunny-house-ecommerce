@@ -1,0 +1,49 @@
+<div class="admin-create-purchase-container">
+  <form id="form-1" method="post" action="/admin/all-purchases/purchase/created" enctype="multipart/form-data">
+    <div class="form-title"><p>Thêm đơn nhập mới</p></div> 
+    <input type="text" placeholder="Nhập tên sản phẩm">
+    <div class="products-match">
+      {{#each products}}
+        <div class="product" style="display: none;">
+          <p style="width: 15%">{{this.brand}}</p>
+          <p 
+            style="width: 65%; display:flex; align-items:center; justify-content:start; gap:5px"
+            class="product-name"
+          >
+            <img src="{{this.img.path}}" alt="{{this.name}}" loading="lazy" loading="lazy"> 
+            {{this.name}}
+          </p>  
+          <p style="width: 10%;">{{this.categories}}</p>
+          <p style="width: 10%; text-align:right" id="product-price">{{this.price}}</p>
+        </div>
+      {{/each}}
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <td style="width:  5%;">STT</td>
+          <td style="width: 50%;">Sản Phẩm</td>
+          <td style="width: 15%;">Đơn Giá</td>
+          <td style="width: 10%;">Số Lượng</td>
+          <td style="width: 15%;">Tổng Tiền</td>
+          <td style="width: 5%;"></td>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+      <tfoot>
+        <td colspan="4">Tổng</td>
+        <td>100000</td>
+        <td></td>
+      </tfoot>
+    </table>  
+
+    <div class="submit-button">
+      <button title="submit" type="submit">Hoàn thành</button>
+    </div>
+  </form>
+</div>
+
+<script src="/js/checkInput.js" defer></script>
+<script src="/js/admin/create/purchase.js" defer></script>

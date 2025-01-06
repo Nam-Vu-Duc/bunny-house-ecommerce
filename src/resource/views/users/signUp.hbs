@@ -3,7 +3,7 @@
     <img src="https://res.cloudinary.com/bunny-store/image/upload/v1730102111/web-img/4_lnwzuk_jkpls2.jpg" alt="signup_img">
     <div class="form-input" loading="lazy">
       <p class="form-title">Đăng ký</p>
-      <form id="form-2" method="post" action="/authentication/creating-account">
+      <form id="form-1" method="post" action="/authentication/creating-account">
         <div class="form-group">
           <input type="text" class="form-control" id="name" name="name" placeholder="Họ Tên">
           <span class="form-message"></span>
@@ -25,8 +25,7 @@
         </div>
 
         <div class="form-group">
-          <p class="wrong-info">
-          </p> 
+          <p class="wrong-info"></p> 
         </div>
 
         <div class="form-action">
@@ -41,101 +40,10 @@
       </form>
     </div>
   </div>
-  
 </div>
 
-<script>
-var wrongInfo = document.querySelector('p.wrong-info')
-if (`{{error}}`) {
-  wrongInfo.innerText = `{{error}}`
-  wrongInfo.style.color = 'red'
-}
-
-// executing validate
-function validating(inputElement, rule, checkValidate, index) {
-    var errorMessage = rule.test(inputElement.value)
-    var errorElement = inputElement.parentElement.querySelector('.form-message')
-
-    if (errorMessage) {
-      errorElement.innerText = errorMessage
-      inputElement.parentElement.style.color = "red"
-      checkValidate[index] = false
-    } else {
-      errorElement.innerText = ''
-      inputElement.parentElement.style.color = "black"
-      checkValidate[index] = true
-    }
-  }  
-
-// isRequiredString requires input must have string
-function isRequiredString(selector) {
-  return {
-    selector: selector,
-    test: function (value) {
-      return value.trim() ? undefined : 'Quên Chưa Nhập Kìa =((('
-    }
-  }
-}
-
-// isEmail requires input must be an email 
-function isEmail(selector) {
-  return {
-    selector: selector,
-    test: function (value) {
-      var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-      return regex.test(value) ? undefined : 'Nhập Đúng Email Vô =((('
-    }
-  }
-}
-
-// isConfirmPassword requires reEnter password must be the same as the initial 
-function isConfirmPassword(selector, getPasswordValue) {
-  return {
-    selector: selector,
-    test: function (value) {
-      return (value === getPasswordValue() && value !== '') ? undefined : "Mật Khẩu Chưa Trùng Rồi"
-    }
-  }
-}
-
-// validator function to validate input form from user
-function validator(options) {
-  var formElement = document.querySelector(options.form)
-  var checkValidate = Array(4).fill(false)
-
-  options.rules.forEach(function (rule, index) {
-    var inputElement = formElement.querySelector(rule.selector)
-    // input blur
-    inputElement.onblur = function () {
-      validating(inputElement, rule, checkValidate, index)
-    }
-  })
-
-  formElement.onsubmit = function (e) {
-    for (var i = 0; i < checkValidate.length; ++i) {
-      if(checkValidate[i] === false) {
-        e.preventDefault()
-        options.rules.forEach(function (rule, index) {
-          var inputElement = formElement.querySelector(rule.selector)
-          validating(inputElement, rule, checkValidate, index)
-        })
-        break
-      }
-    }
-  }
-}
-
-validator({
-  form: '#form-2',
-  errorSelector: '.form-message',
-  rules: [
-    isRequiredString('#name'),
-    isEmail('#email'),
-    isRequiredString('#password'),
-    isConfirmPassword('#password-confirm', function() {
-      return document.querySelector('#form-2 #password').value
-    })
-  ]
-})
-
+<script defer>
+  var error = `{{error}}`
 </script>
+<script src="/js/checkInput.js" defer></script>
+<script src="/js/user/signUp.js" defer></script>

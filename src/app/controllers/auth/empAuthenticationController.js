@@ -35,35 +35,5 @@ class loginController {
       }
     })
   }
-
-  signUp(req, res, next) {
-    const error = req.flash('error')
-    res.render('admin/createEmployee', { title: 'Tạo tài khoản nhân viên', layout: 'empty', message: error, error })
-  }
-
-  async creatingAccount(req, res, next) {
-    const empExist = await emp.findOne({ 'loginInfo.email': req.body.email })
-    if (empExist) {
-      req.flash('error', 'Email đã tồn tại')
-      return res.redirect('/authentication/sign-up')
-    }
-
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(req.body.password, salt)
-
-    let newEmp = new emp({
-      loginInfo: {
-        email: req.body.email,
-        password: hashedPassword,
-        role: 'employee'
-      },
-      userInfo: {
-        name: req.body.name,
-      }
-    })
-    const savedUser = await newEmp.save()
-
-    res.redirect('/emp/authentication/sign-in')
-  }
 }
 module.exports = new loginController

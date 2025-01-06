@@ -1,0 +1,47 @@
+<div class="store-details-container">
+  <form id="form-2" method="POST" action="/admin/all-stores/store/updated/{{storeInfo._id}}?_method=PUT">
+    <table id="table-1">
+      <thead>
+        <tr>
+          <td colspan="2"> THÔNG TIN CỬA HÀNG </td>
+        </tr>
+      </thead>
+      <tr>
+        <td> ID Cửa hàng </td>
+        <td> {{storeInfo._id}} </td>
+      </tr>
+      <tr>
+        <td> Tên cửa hàng </td>
+        <td> {{storeInfo.name}} </td>
+      </tr>
+      <tr>
+        <td> Địa chỉ cửa hàng </td>
+        <td> {{storeInfo.address}} </td>
+      </tr>
+      <tr>
+        <td> Mô tả chi tiết </td>
+        <td> {{storeInfo.details}} </td>
+      </tr>
+      <tr>
+        <td> Doanh thu cửa hàng </td>
+        <td class="revenue"> {{storeInfo.revenue}} </td>
+      </tr>
+      <tr>
+        <td> Danh sách nhân viên </td>
+        <td>
+          <ul>
+            {{#each employeesInfo}}
+            <li> {{this.userInfo.name}} </li>
+            {{/each}}
+          </ul>
+        </td>
+      </tr>
+    </table>
+
+    <div class="submit-button">
+      <button title="submit" type="submit">Cập nhật</button>
+    </div>
+  </form>
+</div>
+
+<script src="/js/admin/detail/store.js" defer></script>

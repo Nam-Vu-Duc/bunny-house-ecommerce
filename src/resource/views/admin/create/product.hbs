@@ -1,0 +1,110 @@
+<div class="admin-create-product-container">
+  <form id="form-1" method="post" action="/admin/all-products/product/created" enctype="multipart/form-data">
+    <div class="form-title">
+      <p>Thêm sản phẩm mới</p>
+    </div>
+
+    <div class="form-group">
+      <select name="categories">
+        <option value="">-- Chọn dòng Sản Phẩm --</option>
+        <option value="skincare">Skincare</option>
+        <option value="makeup">Makeup</option>
+      </select>
+    </div>
+
+    <div class="form-group" style="display: none;">
+      <select name="skincare">
+        <option value="">-- Skincare --</option>
+        <option value="xit-khoang">Xịt Khoáng</option>
+        <option value="mat-na">Mặt Nạ</option>
+        <option value="serum">Serum</option>
+        <option value="bha">BHA</option>
+        <option value="tay-da-chet">Tẩy Da Chết</option>
+        <option value="duong-da">Dưỡng Da</option>  
+        <option value="toner">Toner</option>
+        <option value="nuoc-tay-trang">Nước Tẩy Trang</option>
+        <option value="cham-mun">Chấm Mụn</option>
+        <option value="kem-duong-am">Kem Dưỡng Ẩm</option>
+        <option value="sua-rua-mat">Sữa Rửa Mặt</option>
+      </select>
+    </div>
+
+    <div class="form-group" style="display: none;">
+      <select name="makeup">
+        <option value="">-- Makeup --</option>
+        <option value="phan-ma">Phấn Má</option>
+        <option value="mascara">Mascara</option>
+        <option value="ke-mat">Kẻ Mắt</option>
+        <option value="kem-chong-nang">Kem Chống Nắng</option>
+        <option value="che-khuyet-diem">Che Khuyết Điểm</option>
+        <option value="son">Son</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="brand">Hãng sản phẩm</label>
+      <input type="text" class="form-control" id="brand" name="brand" placeholder="VD: PRETTYSKIN">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Tên sản phẩm</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="VD: TINH CHẤT PHỤC HỒI, DƯỠNG TRẮNG HYDRA B5 MAX SERUM PRETTYSKIN">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="oldPrice">Giá sản phẩm (cũ)</label>
+      <input type="text" class="form-control" id="oldPrice" name="oldPrice" placeholder="VD: 1.000.000">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Giá sản phẩm (mới)</label>
+      <input type="text" class="form-control" id="price" name="price" placeholder="VD: 250.000">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Mô tả sản phẩm</label>
+      <input type="text" class="form-control" id="description" name="description" placeholder="VD: TINH CHẤT PHỤC HỒI, DƯỠNG TRẮNG HYDRA B5 MAX SERUM PRETTYSKIN">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="details">Chi tiết sản phẩm</label>
+      <input type="text" class="form-control" id="details" name="details" placeholder="VD: Dưỡng ẩm chuyên sâu với axit Hyaluronic: Axit Hyaluronic giúp bổ sung độ ẩm...">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <select name="status">
+        <option value="no">-- Tình Trạng Sản Phẩm --</option>
+        <option value="no">Bình thường</option>
+        <option value="flash-sale">Đang Flash Sale</option>
+        <option value="hot">Đang hot</option>
+        <option value="out-of-order">Hết Hàng</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <select name="newArrival">
+        <option value="no">-- Hàng Mới Về --</option>
+        <option value="no">Không</option>
+        <option value="yes">Chuẩn luôn, mới về</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Ảnh Sản Phẩm</label>
+      <input type="file" name="img" id="img"/>
+    </div>
+
+    <div class="submit-button">
+      <button title="submit" type="submit">Hoàn thành</button>
+    </div>
+  </form>
+</div>
+
+<script src="/js/checkInput.js" defer></script>
+<script src="/js/admin/create/product.js" defer></script>

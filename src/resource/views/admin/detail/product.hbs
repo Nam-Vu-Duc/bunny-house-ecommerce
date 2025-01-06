@@ -1,0 +1,152 @@
+<div class="product-details-container">
+  <form id="form-2" method="POST" action="/admin/all-products/product/updated/{{product._id}}?_method=PUT" enctype="multipart/form-data">
+    {{!-- <div class="form-title">
+      <p>THÔNG TIN SẢN PHẨM</p>
+    </div>
+
+    <div class="form-group">
+      <label for="categories">Loại Sản Phẩm</label>
+      <select name="categories">
+        <option value="">-- Chọn --</option>
+        <option value="skincare">Skincare</option>
+        <option value="makeup">Makeup</option>
+      </select>
+    </div>
+    
+    <div class="form-group" style="display: none">
+      <select name="skincare">
+        <option value="">-- Skincare --</option>
+        <option value="xit-khoang">Xịt Khoáng</option>
+        <option value="mat-na">Mặt Nạ</option>
+        <option value="serum">Serum</option>
+        <option value="bha">BHA</option>
+        <option value="tay-da-chet">Tẩy Da Chết</option>
+        <option value="duong-da">Dưỡng Da</option>  
+        <option value="toner">Toner</option>
+        <option value="nuoc-tay-trang">Nước Tẩy Trang</option>
+        <option value="cham-mun">Chấm Mụn</option>
+        <option value="kem-duong-am">Kem Dưỡng Ẩm</option>
+        <option value="sua-rua-mat">Sữa Rửa Mặt</option>
+      </select>
+    </div>
+
+    <div class="form-group" style="display: none">
+      <select name="makeup">
+        <option value="">-- Makeup --</option>
+        <option value="phan-ma">Phấn Má</option>
+        <option value="mascara">Mascara</option>
+        <option value="ke-mat">Kẻ Mắt</option>
+        <option value="kem-chong-nang">Kem Chống Nắng</option>
+        <option value="che-khuyet-diem">Che Khuyết Điểm</option>
+        <option value="son">Son</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="brand">Hãng</label>
+      <input type="text" class="form-control" id="brand" value="{{product.brand}}" name="brand" >
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Tên</label>
+      <input type="text" class="form-control" id="name" value="{{product.name}}" name="name">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Giá cũ</label>
+      <input type="text" class="form-control" id="price" value="{{product.oldPrice}}" name="oldPrice">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Giá mới</label>
+      <input type="text" class="form-control" id="price" value="{{product.price}}" name="price">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Mô tả</label>
+      <input type="text" class="form-control" id="description" value="{{product.description}}" name="description">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="details">Chi tiết</label>
+      <input type="text" class="form-control" id="details" value="{{product.details}}" name="details">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Độ Hot</label>
+      <select name="status">
+        <option value="no">Bình thường</option>
+        <option value="flash-sale">Đang Flash Sale</option>
+        <option value="hot">Đang hot</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="newArrival">Độ Mới</label>
+      <select name="newArrival">
+        <option value="no">Ra lâu rồi</option>
+        <option value="yes">Chuẩn luôn</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="details">Ảnh</label>
+      <input type="file" name="img" id="img" value="{{product.img}}"/>
+    </div> --}}
+
+    <table id="table-1">
+      <thead>
+        <tr>
+          <td colspan="2">THÔNG TIN SẢN PHẨM</td>
+        </tr>
+      </thead>
+      <tr>
+        <td> Loại Sản Phẩm </td>
+        <td> {{customerInfo._id}} </td>
+      </tr>
+      <tr>
+        <td> Hãng </td>
+        <td> {{product.brand}} </td>
+      </tr>
+      <tr>
+        <td> Tên </td>
+        <td> {{product.name}} </td>
+      </tr>
+      <tr>
+        <td> Giá cũ </td>
+        <td id="old-price"> {{product.oldPrice}} </td>
+      </tr>
+      <tr>
+        <td> Giá mới </td>
+        <td id="new-price"> {{product.price}} </td>
+      </tr>
+      <tr>
+        <td> Mô tả </td>
+        <td> {{product.description}} </td>
+      </tr>
+      <tr>
+        <td> Chi tiết </td>
+        <td> {{product.details}} </td>
+      </tr>
+    </table>
+
+    <div class="submit-button">
+      <button title="submit" type="submit">Cập nhật</button>
+    </div> 
+  </form>
+</div>
+
+<script defer>
+  var productCategories  = `{{product.categories}}`
+  var productStatus      = `{{product.status}}`
+  var productNewArrival  = `{{product.newArrival}}`
+  var productSkincare    = `{{product.skincare}}`
+  var productMakeup      = `{{product.makeup}}`
+</script>
+<script src="/js/admin/detail/product.js" defer></script>

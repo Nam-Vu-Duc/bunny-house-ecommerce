@@ -8,6 +8,7 @@
 @import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
 
 /* all pages */
+main {margin-left: 200px}
 body {
   background-color: #FFDFDF;
   font-family: 'Roboto', sans-serif;
@@ -298,4 +299,7 @@ select:focus {
 
 @keyframes reloader {
   to { transform: rotate(360deg); }
+}
+@media screen and (max-width: 700px) {
+  main {margin-left: 70px;}
 }

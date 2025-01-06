@@ -12,7 +12,5 @@ router.use(session({
 router.use(flash())
 router.get('/sign-in', empAuthenticationController.signIn )
 router.post('/checking-account', empAuthenticationController.checkingAccount )
-router.get('/sign-up', empAuthenticationController.signUp )
-router.post('/creating-account',  empAuthenticationController.creatingAccount )
 
 module.exports = router

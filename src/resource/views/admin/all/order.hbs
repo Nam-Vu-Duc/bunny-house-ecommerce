@@ -1,0 +1,53 @@
+<div class="admin-all-orders-container">  
+  <div class="board-title">
+    <p>Tổng Đơn Hàng: {{orderLength}}</p>
+  </div>
+
+  <div class="filter-and-create">
+    <select class="filter">
+      <option value="">Toàn bộ</option>
+      <option value="preparing">Đang xử lý</option>
+      <option value="delivering">Đang giao</option>
+      <option value="done">Đã hoàn thành</option>
+    </select>
+
+    <a href="/admin/all-orders/order/create" class="create-btn" id="create-btn">
+      <i class="fi fi-rr-user-add"></i>
+      <p>Thêm Đơn Hàng</p>
+    </a>
+  </div>
+
+  <div class="table">
+    <table class="all-items">
+      <thead>
+        <tr>
+          <td style="width:  5%">STT           </td>
+          <td style="width: 15%">Mã Đơn Hàng   </td>
+          <td style="width: 15%">Tên Khách Hàng</td>
+          <td style="width: 25%">Tổng Số Tiền  </td>
+          <td style="width: 25%">Ngày Đặt Hàng </td>
+          <td style="width:  5%">Tình Trạng    </td>
+          <td style="width: 10%">Chi tiết      </td>
+        </tr>
+      </thead>
+
+      <tbody>
+        {{#each order}}
+        <tr>
+          <td>{{addIndex @index 1}}      </td>
+          <td>{{this._id}}               </td>
+          <td>{{this.customerInfo.name}} </td>
+          <td id="total-order-price">{{this.totalOrderPrice}}       </td>
+          <td>{{formatDate this.createdAt}}         </td>
+          <td>{{this.status}}            </td>
+          <td><a href="/admin/all-orders/order/{{this._id}}"><button>Xem</button></a></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <span class="pagination"></span>
+</div>
+
+<script src="/js/admin/all/order.js" defer></script>

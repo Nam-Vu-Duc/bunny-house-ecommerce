@@ -1,0 +1,60 @@
+<div class="brand-details-container">
+  <form id="form-2" method="POST" action="/admin/all-brands/brand/updated/{{brandInfo._id}}?_method=PUT">
+    <table id="table-1">
+      <thead>
+        <tr>
+          <td colspan="2"> THÔNG TIN THƯƠNG HIỆU </td>
+        </tr>
+      </thead>
+      <tr>
+        <td> Mã thương hiệu </td>
+        <td> {{brandInfo._id}} </td>
+      </tr>
+      <tr>
+        <td> Tên thương hiệu </td>
+        <td> {{brandInfo.name}} </td>
+      </tr>
+      <tr>
+        <td> Số lượng sản phẩm </td>
+        <td> {{brandInfo.totalProduct}} </td>
+      </tr>
+      <tr>
+        <td> Tổng doanh thu </td>
+        <td id="total-revenue"> {{brandInfo.totalRevenue}} </td>
+      </tr>
+      <tr>
+        <td> Mô tả chi tiết </td>
+        <td> {{brandInfo.description}} </td>
+      </tr>
+    </table>
+
+    <table id="table-2">
+      <thead>
+        <tr>
+          <td> STT          </td>
+          <td> Tên Sản Phẩm </td>
+          <td> Đơn Giá      </td>
+          <td> S/L          </td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each productsInfo}}
+        <tr>
+          <td>{{addIndex @index 1}}</td>
+          <td><p>{{this.name}}</p>                                                     </td>
+          <td style="text-align: center;" id="product-price">      {{this.price}}      </td>
+          <td style="text-align: center;">                         {{this.quantity}}   </td>
+          <td><a href="/admin/all-products/product/{{this._id}}">Chi Tiết</a>          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <div class="submit-button">
+      <button title="submit" type="submit">Cập nhật</button>
+    </div>
+  </form>
+</div>
+
+<script src="/js/admin/detail/brand.js" defer></script>
