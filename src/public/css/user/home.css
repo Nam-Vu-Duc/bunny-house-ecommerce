@@ -173,8 +173,6 @@
 }
 @media screen and (max-width: 700px) {
   .flash-deal-board, .hot-products-board, .content-board, .famous-brand-board {
-    .title {
-      font-size: 20px !important;
-    }
+    .title {font-size: 20px !important}
   }
 }

@@ -2,61 +2,60 @@
   <form id="form-2" method="POST" action="/admin/all-customers/customer/updated/{{customerInfo._id}}?_method=PUT">
     <table id="table-1">
       <thead>
-        <tr>
-          <td colspan="2"> THÔNG TIN KHÁCH HÀNG </td>
-        </tr>
+        <tr><td colspan="2">THÔNG TIN KHÁCH HÀNG</td></tr>
       </thead>
       <tr>
-        <td> Mã Khách Hàng </td>
-        <td> {{customerInfo._id}} </td>
+        <td>Mã Khách Hàng </td>
+        <td>{{customerInfo._id}} </td>
       </tr>
       <tr>
-        <td> Email </td>
-        <td> {{customerInfo.loginInfo.email}} </td>
+        <td>Email</td>
+        <td>{{customerInfo.loginInfo.email}}</td>
       </tr>
       <tr>
-        <td> Tên Khách Hàng </td>
-        <td> {{customerInfo.userInfo.name}} </td>
+        <td>Tên Khách Hàng</td>
+        <td>{{customerInfo.userInfo.name}}</td>
       </tr>
       <tr>
-        <td> SĐT </td>
-        <td> {{customerInfo.userInfo.phone}} </td>
+        <td>SĐT</td>
+        <td>{{customerInfo.userInfo.phone}}</td>
       </tr>
       <tr>
-        <td> Địa Chỉ </td>
-        <td> {{customerInfo.userInfo.address}} </td>
+        <td>Địa Chỉ</td>
+        <td>{{customerInfo.userInfo.address}}</td>
       </tr>
       <tr>
-        <td> Tổng doanh thu </td>
-        <td id="total-price"> {{totalPrice}} </td>
+        <td>Tổng doanh thu</td>
+        <td id="total-price">{{totalPrice}}</td>
       </tr>
     </table>
 
     <table id="table-2">
       <thead>
+        <tr><td colspan="5">DANH SÁCH ĐƠN HÀNG</td></tr>
+      </thead>
+      <thead>
         <tr>
-          <td>Mã đơn                 </td>
-          <td>Tổng tiền              </td>
-          <td>Phương thức thanh toán </td>
-          <td>Tình trạng             </td>
-          <td>Tình trạng             </td>
+          <td style="width: 5%">STT                   </td>
+          <td style="width: 35%">Tổng tiền             </td>
+          <td style="width: 25%">Phương thức thanh toán</td>
+          <td style="width: 25%">Tình trạng            </td>
+          <td style="width: 10%">Chi tiết              </td>
         </tr>
       </thead>
       <tbody>
         {{#each orderInfo}}
         <tr>
-          <td><p>{{this._id}}</p>                                  </td>
+          <td style="text-align: center">{{addIndex @index 1}}</td>
           <td 
             style="text-align: center;" 
             id="total-order-price"
           >
             {{this.totalOrderPrice}} 
           </td>
-          <td style="text-align: center;">{{this.paymentMethod}}   </td>
-          <td style="text-align: center;">{{this.status}}          </td>
-          <td style="text-align: center;">
-            <a href="/admin/all-orders/order/{{this._id}}">Chi Tiết</a>            
-          </td>
+          <td style="text-align: center;">{{this.paymentMethod}}</td>
+          <td style="text-align: center;">{{this.status}}</td>
+          <td style="text-align: center;"><a href="/admin/all-orders/order/{{this._id}}">Xem</a></td>
         </tr>
         {{/each}}
       </tbody>
@@ -69,10 +68,3 @@
 </div>
 
 <script src="/js/admin/detail/customer.js" defer></script>
-<script>
-  var totalPrice = document.querySelector('td#total-price')
-  var totalOrderPrice = document.querySelector('td#total-order-price')
-
-  totalPrice.innerText = totalPrice.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
-  totalOrderPrice.innerText = totalOrderPrice.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
-</script>

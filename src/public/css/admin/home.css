@@ -1,81 +1,37 @@
 .admin-home-container {
-  .board-title {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100px;
-    p {
-      font-size: 30px;
-      text-transform: uppercase;
-      font-weight: bolder;
-      border: 2px solid #D1A6A6;
-      padding: 20px;
-    }
-  }
-  .info-table {
+  div.info-table {
     gap: 10px;
     display: grid;
     grid-template-columns: 50% 50%;
-    table {
-      width: 100%;
-      border-spacing: 0px 10px;
-      padding: 0px 10px;
-    }
-    thead {
-      text-align: center;
-      background-color:#D1A6A6;
-      height: 50px;
-      font-weight: bolder;
-      td {
-        border-radius: 5px;
-      }
-    }
+    td {border-radius: 5px}
     tbody {
       tr {
         height: 50px;
         td {
           padding: 10px;
           text-align: center;
-          a { text-decoration: none; color: black;}
         }
         td:first-child {
+          width: 50%;
           border: 1px solid #D1A6A6;
           border-radius: 10px;
         }
         td:nth-child(2) {
           font-size: x-large;
-        }
-        td:last-child {
-          border-top-right-radius: 10px;
-          border-bottom-right-radius: 10px;
-        }
-        td:first-child {
-          width: 50%;
-        }
-        td:nth-child(2) {
           width: 30%;
           color: #D1A6A6;
           font-weight: bolder;
         }
       }
-      tr:hover {
-        filter: brightness(80%);
-      }
     }
   }
-  .info-table > div {
+  div.info-table > div {
     background-color: white;
     border-radius: 10px;
   }
 }
 @media screen and (max-width: 700px) {
   .admin-home-container {
-    .board-title {
-      p { font-size: 20px;}
-    }
-    .info-table {
-      grid-template-columns: auto !important;
-    }
+    .info-table {grid-template-columns: auto !important}
   }
 }

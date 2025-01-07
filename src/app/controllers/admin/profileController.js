@@ -2,10 +2,10 @@ const emp = require('../../models/employeeModel')
 
 class profileController {
   async updateProfile(req, res, next) {
-    const index = 'update-profile'
+    const index = 'profile'
     const userId = req.cookies.user_id
     const userInfo = await emp.findOne({ _id: userId }).lean()
-    res.render('admin/profile', { title: 'Thông tin cá nhân', layout: 'admin', userInfo, index } )
+    res.render('admin/detail/profile', { title: 'Thông tin cá nhân', layout: 'admin', userInfo, index } )
   }
 
   async profileUpdated(req, res, next) {

@@ -43,14 +43,6 @@ body {
   border-radius: 50%;
   animation: 1s reloader infinite linear;
 }
-.tippy-tooltip.bunny-theme {
-  background-color: white;
-  color: black;
-}
-.tippy-tooltip.tomato-theme[data-placement^='top'] .tippy-arrow {border-top-color: #FFDFDF}
-.tippy-tooltip.tomato-theme[data-placement^='bottom'] .tippy-arrow {border-bottom-color: #FFDFDF}
-.tippy-tooltip.tomato-theme[data-placement^='left'] .tippy-arrow {border-left-color: #FFDFDF}
-.tippy-tooltip.tomato-theme[data-placement^='right'] .tippy-arrow {border-right-color: #FFDFDF}
 input {
   font-family: 'Roboto', sans-serif;
   text-indent: 10px;
@@ -60,7 +52,7 @@ input {
 input:focus {
   outline: 1.5px solid #D1A6A6
 }
-.button {
+div.button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,6 +71,55 @@ input:focus {
     background-color: #D1A6A6;
     color: white;
     border: 1px solid white ;
+  }
+}
+table {
+  width: 100%;
+  border-spacing: 0px 10px;
+  padding: 0px 5px;
+  border-radius: 10px;
+  thead {
+    background-color: #D1A6A6;
+    height: 50px;
+    font-weight: bolder;
+    text-align: center;
+    text-transform:capitalize;
+  }
+  tbody {
+    td {
+      height: fit-content;
+      border-bottom: 1px solid black;
+      padding: 10px;
+      input {display: none}
+    }
+    a {
+      width: fit-content; 
+      height: 30px;
+      background-color: white;
+      color: #D1A6A6;
+      border: 1px solid #D1A6A6;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 5px;
+    }
+    a:hover {
+      background-color: #D1A6A6;
+      color: white;
+    }
+    img {
+      border-radius: 10px;
+      width: 40px;
+      aspect-ratio: 1/1;
+    }
+  }
+  td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 }
 @keyframes reloader {

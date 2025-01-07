@@ -16,28 +16,6 @@
     font-weight: bolder;
     height: 50px;
   }
-  table {
-    width: 70%;
-    border-spacing: 0px 10px;
-    padding: 0px 10px;
-    thead {
-      background-color: #D1A6A6;
-      height: 50px;
-      font-weight: bolder;
-      text-align: center;
-      width: fit-content;
-    }
-    tbody {
-      td {
-        height: 50px;
-        border-bottom: 1px solid black;
-        padding: 5px 0;
-        p {
-          margin-block-end: 1em;
-        }
-      }
-    }
-  }
 }
 @media screen and (max-width: 700px) {
   table {

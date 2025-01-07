@@ -16,7 +16,6 @@ class allStoresController {
       store.findOne({ _id: req.params.id }).lean(),
       employee.find({ 'userInfo.storeId': req.params.id }).lean(),
     ]);
-
     res.render('admin/detail/store', { title: store.name, layout: 'admin', storeInfo, employeesInfo, index })
   }
 

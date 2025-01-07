@@ -3,36 +3,36 @@
     <table id="table-1">
       <thead>
         <tr>
-          <td colspan="2"> THÔNG TIN ĐƠN HÀNG </td>
+          <td colspan="2">THÔNG TIN ĐƠN HÀNG</td>
         </tr>
       </thead>
       <tr>
-        <td> Mã Đơn </td>
-        <td> {{order._id}} </td>
+        <td>Mã Đơn</td>
+        <td>{{order._id}}</td>
       </tr>
       <tr>
-        <td> Ngày Đặt </td>
-        <td> {{formatDate order.createdAt}} </td>
+        <td>Ngày Đặt</td>
+        <td>{{formatDate order.createdAt}}</td>
       </tr>
       <tr>
-        <td> Khách Hàng </td>
-        <td> {{order.customerInfo.name}} </td>
+        <td>Khách Hàng</td>
+        <td>{{order.customerInfo.name}}</td>
       </tr>
       <tr>
-        <td> SĐT </td>
-        <td> {{order.customerInfo.phone}} </td>
+        <td>SĐT</td>
+        <td>{{order.customerInfo.phone}}</td>
       </tr>
       <tr>
-        <td> Địa Chỉ </td>
-        <td> {{order.customerInfo.address}} </td>
+        <td>Địa Chỉ</td>
+        <td>{{order.customerInfo.address}}</td>
       </tr>
       <tr>
-        <td> Ghi Chú </td>
-        <td> {{order.customerInfo.note}} </td>
+        <td>Ghi Chú</td>
+        <td>{{order.customerInfo.note}}</td>
       </tr>
       <tr>
-        <td> Tổng Tiền </td>
-        <td id="total-order-price"> {{order.totalOrderPrice}}đ </td>
+        <td>Tổng Tiền</td>
+        <td id="total-order-price">{{order.totalOrderPrice}}</td>
       </tr>
       <tr>
         <td> Trạng thái đơn </td>
@@ -52,28 +52,6 @@
         </td>
       </tr>
     </table>
-
-    <table id="table-2">
-      <thead>
-        <tr>
-          <td>Sản Phẩm  </td>
-          <td>Đơn Giá   </td>
-          <td>S/L       </td>
-          <td>Tổng      </td>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each order.products}}
-        <tr>
-          <td><p>{{this.name}}</p>                                                     </td>
-          <td style="text-align: center;" id="product-price">      {{this.price}}      </td>
-          <td style="text-align: center;">                         {{this.quantity}}   </td>
-          <td style="text-align: center;" id="total-product-price">{{this.totalPrice}} </td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-
     <div class="submit-button">
       <button title="submit" type="submit">Cập nhật</button>
     </div>

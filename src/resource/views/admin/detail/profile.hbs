@@ -1,6 +1,6 @@
-<div class="admin-update-profile-container">
-  <form class="admin-update-form" method="POST" action="/admin/profile/updated/{{userInfo._id}}?_method=PUT">
-    <div class="form-title">
+<div class="profile-details-container">
+  <form id="form-2" method="POST" action="/admin/profile/updated/{{userInfo._id}}?_method=PUT">
+    {{!-- <div class="form-title">
       <p>Thông Tin Cá Nhân</p>
     </div>
 
@@ -46,26 +46,38 @@
         name="address" 
         value="{{userInfo.userInfo.address}}"
       >
-    </div>
-  
+    </div> --}}
+
+    <table id="table-1">
+      <thead>
+        <tr>
+          <td colspan="2">THÔNG TIN CÁ NHÂN</td>
+        </tr>
+      </thead>
+      <tr>
+        <td>Tên nhân viên</td>
+        <td>{{userInfo.userInfo.name}}</td>
+      </tr>
+      <tr>
+        <td>Giới tính</td>
+        <td>{{userInfo.userInfo.gender}}</td>
+      </tr>
+      <tr>
+        <td>Số điện thoại</td>
+        <td>{{userInfo.userInfo.phone}}</td>
+      </tr>
+      <tr>
+        <td>Địa Chỉ Nhà</td>
+        <td>{{userInfo.userInfo.address}}</td>
+      </tr>
+    </table>
     <div class="submit-button">
       <button type="submit">Cập Nhật</button>
     </div>  
   </form>
 </div>   
 
-<script>
-  var getSubmitButton = document.querySelector('div.submit-button').querySelector('button')
-  var getSubmitForm = document.querySelector('form.admin-update-form')
-
-  getSubmitButton.onclick = function() {
-    getSubmitForm.submit()
-  }
-
-  // auto checked gender input
-  var maleGender = document.querySelector('input#male')
-  var femaleGender = document.querySelector('input#female')
+<script defer>
   var userGender = `{{userInfo.userInfo.gender}}`
-  if (userGender === 'male') maleGender.checked = true
-  if (userGender === 'female') femaleGender.checked = true
 </script>
+<script src="/js/admin/profile.js" defer></script>  
