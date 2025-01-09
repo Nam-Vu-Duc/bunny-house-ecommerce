@@ -60,6 +60,7 @@
   }
 
 }
+.admin-sidebar-container::-webkit-scrollbar {display: none}
 .admin-sidebar-container.small {
   width: 70px;
   p { display: none }

@@ -2,11 +2,6 @@
 var mainTitle           = document.querySelector('div.main-title').querySelector('b')
 var getSkincareCategory = document.querySelector('div.all-category-skincare')
 var getMakeupCategory   = document.querySelector('div.all-category-makeup')
-var allProductOldPrices = document.querySelectorAll('p#product-old-price')
-var allProductPrices    = document.querySelectorAll('p#product-price')
-
-allProductOldPrices.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
-allProductPrices.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
 
 switch (getSlug) {
   case 'flash-sale': 

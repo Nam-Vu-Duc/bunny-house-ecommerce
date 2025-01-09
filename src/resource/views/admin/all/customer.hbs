@@ -1,6 +1,6 @@
 <div class="admin-all-customers-container">  
   <div class="board-title">
-    <p>Tổng Khách Hàng: {{customerLength}}</p>
+    <p>Tổng Khách Hàng: {{totalCustomer}}</p>
   </div>
 
   <div class="filter-and-create">
@@ -38,7 +38,7 @@
           <td>{{this.userInfo.name}}</td>
           <td>{{this.userInfo.address}}</td>
           <td>{{this.totalOrder}}</td>
-          <td class="total-price">{{this.totalPrice}}</td>
+          <td class="total-price">{{formatNumber this.totalPrice}}</td>
           <td><a href="/admin/all-customers/customer/{{this._id}}">Xem</a></td>
         </tr>
         {{/each}}

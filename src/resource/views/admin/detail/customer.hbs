@@ -26,7 +26,7 @@
       </tr>
       <tr>
         <td>Tổng doanh thu</td>
-        <td id="total-price">{{totalPrice}}</td>
+        <td id="total-price">{{formatNumber totalPrice}}</td>
       </tr>
     </table>
 
@@ -36,7 +36,7 @@
       </thead>
       <thead>
         <tr>
-          <td style="width: 5%">STT                   </td>
+          <td style="width: 5%">STT                    </td>
           <td style="width: 35%">Tổng tiền             </td>
           <td style="width: 25%">Phương thức thanh toán</td>
           <td style="width: 25%">Tình trạng            </td>
@@ -51,7 +51,7 @@
             style="text-align: center;" 
             id="total-order-price"
           >
-            {{this.totalOrderPrice}} 
+            {{formatNumber this.totalOrderPrice}} 
           </td>
           <td style="text-align: center;">{{this.paymentMethod}}</td>
           <td style="text-align: center;">{{this.status}}</td>

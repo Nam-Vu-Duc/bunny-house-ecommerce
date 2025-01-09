@@ -5,11 +5,7 @@ var selectedValue           = 'skincare'
 // var statusSelectOptions     = document.querySelector('select[name="status"]').querySelectorAll('option')
 // var newArrivalSelectOptions = document.querySelector('select[name="newArrival"]').querySelectorAll('option')
 var productType             = ''
-var oldPrice                = document.querySelector('td#old-price')
-var newPrice                = document.querySelector('td#new-price')
 
-oldPrice.innerText = oldPrice.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
-newPrice.innerText = newPrice.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'
 // selected product category
 categoriesSelectOptions.forEach(option => {
   if (option.value === productCategories) {

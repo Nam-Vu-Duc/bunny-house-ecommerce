@@ -18,7 +18,7 @@
       </tr>
       <tr>
         <td>Tổng doanh thu </td>
-        <td id="total-revenue">{{brandInfo.totalRevenue}}</td>
+        <td id="total-revenue">{{formatNumber brandInfo.totalRevenue}}</td>
       </tr>
       <tr>
         <td>Mô tả chi tiết</td>
@@ -44,7 +44,7 @@
         <tr>
           <td>{{addIndex @index 1}}</td>
           <td><p>{{this.name}}</p></td>
-          <td id="product-price">{{this.price}}</td>
+          <td id="product-price">{{formatNumber this.price}}</td>
           <td>{{this.quantity}}</td>
           <td><a href="/admin/all-products/product/{{this._id}}">Xem</a></td>
         </tr>

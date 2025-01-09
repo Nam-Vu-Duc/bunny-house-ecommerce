@@ -123,12 +123,12 @@
         <tbody>
           <tr>
             <td>Tổng doanh thu</td>
-            <td class="totalRevenue">{{totalRevenue}}</td>
+            <td class="totalRevenue">{{formatNumber totalRevenue}}</td>
             <td></td>
           </tr>
           <tr>
             <td>Đơn có giá trị cao nhất</td>
-            <td class="maxValueOrderNumber">{{maxValueOrderNumber}}</td>
+            <td class="maxValueOrderNumber">{{formatNumber maxValueOrderNumber}}</td>
             <td><a href="/admin/all-orders/{{maxValueOrderId}}">Chi tiết</a></td>
           </tr>
         </tbody>

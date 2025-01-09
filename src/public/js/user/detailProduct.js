@@ -6,13 +6,8 @@ var getQuantityDiv      = document.querySelector('div.quantity')
 var getIncreaseQuantity = document.querySelector('i.fi-rr-add')
 var getDecreaseQuantity = document.querySelector('i.fi-rr-minus-circle')
 var getQuantityValue    = document.querySelector('div.quantity').querySelector('p')
-var productOldPrices    = document.querySelectorAll('h4#product-old-price')
-var productPrices       = document.querySelectorAll('h3#product-price')
 var metaContent         = productDetails.slice(0, 150) + '...'
 var metaDescription     = document.querySelector("meta[name='description']");
-
-productOldPrices.forEach((item) => {item.innerText = item.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
-productPrices.forEach((item) => {item.innerText = item.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
 
 document.addEventListener("DOMContentLoaded", function() {metaDescription.setAttribute("content", metaContent);})
 

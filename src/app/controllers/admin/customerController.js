@@ -30,8 +30,8 @@ class allCustomersController {
       };
     });
 
-    const customerLength = customersWithOrders.length
-    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin', customersWithOrders, customerLength,index });
+    const totalCustomer = customersWithOrders.length
+    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin', customersWithOrders, totalCustomer, index });
   }
 
   async customerInfo(req, res, next) {

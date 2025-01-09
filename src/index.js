@@ -37,6 +37,8 @@ app.engine('hbs', handlebars.engine({
     checkStatus: (a, b, c) => a.filter(a => a.status === b).slice(0, c),
     formatStatus: (a) => a === 'preparing' ? 'Đang chuẩn bị' : '',
     formatDate: (a) => a ? format(new Date(a), 'dd/MM/yyyy') : '',
+    formatNumber: (a) => a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND',
+    getLength: (a) => a.length,
     getIndexed: (a, b, c) => a[b]
   }
 }))
@@ -61,5 +63,4 @@ io.on('connection', (socket) => {
 route(app)
 server.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
-});
-// app.listen(port, () => {console.log(`App listening at http://localhost:${port}`)})
+})

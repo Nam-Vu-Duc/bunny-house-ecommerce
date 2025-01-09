@@ -32,7 +32,7 @@
             <p>{{this.name}}</p>
           </td>
           <td>{{this.categories}}</td>
-          <td id="product-price">{{this.price}}</td>
+          <td id="product-price">{{formatNumber this.price}}</td>
           <td id="product-quantity">{{this.quantity}}</td>
           <td>
             <button id="{{this._id}}" onclick="clickToRestore(this.id)">Khôi Phục</button>

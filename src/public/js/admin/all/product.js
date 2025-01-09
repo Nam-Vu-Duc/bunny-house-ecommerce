@@ -5,8 +5,6 @@ var deleteButton = document.getElementById('delete-button')
 var formButton   = document.getElementsByClassName('form-button')
 var productPrice = document.querySelectorAll('td#product-price')
 
-productPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
-
 function reply_click(clicked_id, clicked_name) {
   const name = clicked_name
   const message = document.querySelector('p#confirm-message')

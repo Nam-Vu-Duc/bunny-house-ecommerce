@@ -45,7 +45,7 @@
             <p>{{this.name}}</p>
           </td>  
           <td>{{this.categories}}</td>
-          <td id="product-price">{{this.price}}</td>
+          <td id="product-price">{{formatNumber this.price}}</td>
           <td id="product-quantity">{{this.quantity}}</td>
           <td>
             <a href="/admin/all-products/product/{{this._id}}" class="update-button">Xem</a>

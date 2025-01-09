@@ -34,12 +34,12 @@
       <tbody>
         {{#each order}}
         <tr>
-          <td>{{addIndex @index 1}}      </td>
-          <td>{{this._id}}               </td>
-          <td>{{this.customerInfo.name}} </td>
-          <td id="total-order-price">{{this.totalOrderPrice}}       </td>
-          <td>{{formatDate this.createdAt}}         </td>
-          <td>{{this.status}}            </td>
+          <td>{{addIndex @index 1}}</td>
+          <td>{{this._id}}</td>
+          <td>{{this.customerInfo.name}}</td>
+          <td id="total-order-price">{{formatNumber this.totalOrderPrice}}</td>
+          <td>{{formatDate this.createdAt}}</td>
+          <td>{{this.status}}</td>
           <td><a href="/admin/all-orders/order/{{this._id}}">Xem</a></td>
         </tr>
         {{/each}}

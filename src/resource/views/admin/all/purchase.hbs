@@ -1,6 +1,6 @@
 <div class="admin-all-purchases-container">  
   <div class="board-title">
-    <p>Tổng đơn nhập: {{customerLength}}</p>
+    <p>Tổng đơn nhập: {{totalPurchase}}</p>
   </div>
 
   <div class="filter-and-create">
@@ -21,25 +21,23 @@
       <thead>
         <tr>
           <td style="width:  5%">STT          </td>
-          <td style="width: 15%">Mã đơn nhập  </td>
-          <td style="width: 15%">Tên đơn nhập </td>
+          <td style="width: 20%">Mã đơn nhập  </td>
           <td style="width: 25%">Ngày nhập    </td>
-          <td style="width: 10%">Tổng sản phẩm</td>
-          <td style="width: 20%">Tổng chi phí </td>
+          <td style="width: 15%">Tổng sản phẩm</td>
+          <td style="width: 25%">Tổng chi phí </td>
           <td style="width: 10%">Chi tiết     </td>
           </td>
         </tr>
       </thead>
 
       <tbody>
-        {{#each customersWithOrders}}
+        {{#each purchases}}
         <tr>
           <td>{{addIndex @index 1}}</td>
           <td>{{this._id}}</td>
-          <td>{{this.userInfo.name}}</td>
-          <td>{{this.userInfo.address}}</td>
-          <td>{{this.totalOrder}}</td>
-          <td class="total-price">{{this.totalPrice}}</td>
+          <td>{{formatDate this.purchaseDate}}</td>
+          <td>2</td>
+          <td>{{formatNumber this.totalPurchasePrice}}</td>
           <td><a href="/admin/all-purchases/purchase/{{this._id}}">Xem</a></td>
         </tr>
         {{/each}}
@@ -47,9 +45,11 @@
     </table>
   </div>
 
-
   <span class="pagination">
   </span>
 </div>
 
+<script>
+  var successful = '{{successful}}'
+</script>
 <script src="/js/admin/all/purchase.js" defer></script>

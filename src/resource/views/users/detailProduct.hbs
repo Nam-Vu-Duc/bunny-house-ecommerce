@@ -18,8 +18,8 @@
         </h4>
         <h3>{{newProduct.brand}}</h3>
         <h1>{{newProduct.name}}</h1>
-        <del><h4 id="product-old-price">{{newProduct.oldPrice}}</h4></del>
-        <h3 id="product-price">{{newProduct.price}}</h3>
+        <del><h4 id="product-old-price">{{formatNumber newProduct.oldPrice}}</h4></del>
+        <h3 id="product-price">{{formatNumber newProduct.price}}</h3>
         <h4 id="product-quantity">Số lượng: {{newProduct.quantity}}</h4>
       </div>
       
@@ -74,8 +74,8 @@
       <a href="/all-products/product/{{this.slug}}">
         <div class="product">
           <img src="{{this.img.path}}" alt="{{this.name}}" id="product-1" loading="lazy">
-          <del><h4 id="product-old-price">{{this.oldPrice}}</h4></del>
-          <h3 id="product-price">{{this.price}}</h3>
+          <del><h4 id="product-old-price">{{formatNumber this.oldPrice}}</h4></del>
+          <h3 id="product-price">{{formatNumber this.price}}</h3>
           <p id="product-details">{{this.name}}</p>
         </div>
       </a>
