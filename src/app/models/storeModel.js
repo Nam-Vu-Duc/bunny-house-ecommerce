@@ -6,5 +6,6 @@ const store = new Schema({
   name     : { type: String, default: '' },
   address  : { type: String, default: '' },
   details  : { type: String, default: '' },
+  revenue  : { type: Number, default: 0 },
 }, { timestamps: true })
 module.exports = mongoose.model('store', store);

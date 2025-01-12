@@ -1,22 +1,20 @@
 const order = require('../../models/orderModel')
 
 class allOrdersController {
-  allOrders(req, res, next) {
+  async allOrders(req, res, next) {
     const index = 'orders'
+    const successful = req.flash('successful')
+
     const currentPage  = req.query.page || 1
     const orderType    = req.query.type || ''
     const itemsPerPage = 10;
     const skip         = (currentPage - 1) * itemsPerPage;
 
-    order.find({ deletedAt: null }).sort({'createdAt': -1}).lean()
-      .then(order => {
-        const orderLength = order.length
-        if (orderType !== '') order = order.filter(order => order.status === orderType)
-        order = order.slice(skip, skip + itemsPerPage)
+    let orders = await order.find({ deletedAt: null }).sort({'createdAt': -1}).lean()
+    if (orderType !== '') orders = orders.filter(order => order.status === orderType)
+    orders = orders.slice(skip, skip + itemsPerPage)
 
-        res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin', orderLength, orderType, currentPage, index, order })
-      })
-      .catch(next)
+    res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin', index, successful, orders, orderType, currentPage })
   }
 
   orderInfo(req, res, next) {

@@ -7,6 +7,7 @@ var purchaseButton      = document.querySelector('a#purchases')
 var ordersButton        = document.querySelector('a#orders')
 var storeButton         = document.querySelector('a#stores')
 var employeesButton     = document.querySelector('a#employees')
+var suppliersButton     = document.querySelector('a#suppliers')
 var productsButton      = document.querySelector('a#products')
 var brandsButton        = document.querySelector('a#brands')
 var trashButton         = document.querySelector('a#trash')
@@ -20,6 +21,7 @@ const buttonMap = {
   orders          : ordersButton,
   stores          : storeButton,
   employees       : employeesButton,
+  suppliers       : suppliersButton,
   products        : productsButton,
   brands          : brandsButton,
   trash           : trashButton,

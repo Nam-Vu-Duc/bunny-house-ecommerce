@@ -109,7 +109,7 @@ function showOrders() {
               <td>{{this.customerInfo.name}}</td>
               <td class="total-price">{{this.totalOrderPrice}}</td>
               <td>{{formatDate this.createdAt}}</td>
-              <td>{{this.status}}</td>
+              <td>{{formatStatus this.status}}</td>
               <td><a href="/all-orders/order/{{this._id}}">Chi Tiết</a></td>
             </tr>
           {{/if}}
@@ -141,7 +141,7 @@ function showRateOrders() {
               <td style="width: 25%">{{this.customerInfo.name}}</td>
               <td style="width: 25%" class="total-price">{{this.totalOrderPrice}}</td>
               <td style="width: 20%">{{formatDate this.createdAt}}</td>
-              <td style="width: 15%">{{this.status}}</td>
+              <td style="width: 15%">{{formatStatus this.status}}</td>
               <td style="width: 15%"><a href="/all-orders/order/rate/{{this._id}}">Đánh giá</a></td>
             </tr>
           {{/if}}

@@ -2,9 +2,7 @@
   <form id="form-2" method="POST" action="/admin/all-orders/order/updated/{{order._id}}?_method=PUT">
     <table id="table-1">
       <thead>
-        <tr>
-          <td colspan="2">THÔNG TIN ĐƠN HÀNG</td>
-        </tr>
+        <tr><td colspan="2">THÔNG TIN ĐƠN HÀNG</td></tr>
       </thead>
       <tr>
         <td>Mã Đơn</td>
@@ -32,7 +30,7 @@
       </tr>
       <tr>
         <td>Tổng Tiền</td>
-        <td id="total-order-price">{{formatNumber order.totalOrderPrice}}</td>
+        <td>{{formatNumber order.totalOrderPrice}}</td>
       </tr>
       <tr>
         <td> Trạng thái đơn </td>
@@ -52,9 +50,32 @@
         </td>
       </tr>
     </table>
-    <div class="submit-button">
-      <button title="submit" type="submit">Cập nhật</button>
-    </div>
+
+    <table id="table-2">
+      <thead>
+        <tr><td colspan="4">CHI TIẾT ĐƠN HÀNG</td></tr>
+      </thead>
+      <thead>
+        <tr>
+          <td>STT</td>
+          <td>Tên Sản Phẩm</td>
+          <td>Số Lượng</td>
+          <td>Giá</td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each order.products}}
+        <tr>
+          <td>{{addIndex @index 1 }}</td>
+          <td>{{this.name}}</td>
+          <td>{{this.quantity}}</td>
+          <td>{{formatNumber this.price}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    
+    <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>
   </form>     
 </div>
 

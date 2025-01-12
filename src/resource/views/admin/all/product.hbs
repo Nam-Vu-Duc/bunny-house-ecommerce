@@ -1,6 +1,6 @@
 <div class="admin-all-products-container">  
   <div class="board-title">
-    <p>Tổng sản phẩm: {{productLength}}</p>
+    <p>Tổng sản phẩm: {{totalProduct}}</p>
   </div>
 
   <div class="filter-and-create">
@@ -31,7 +31,7 @@
       </thead>
 
       <tbody>
-        {{#each product}}
+        {{#each products}}
         <tr>
           <td>{{addIndex @index 1}}</td>
           <td>{{this.brand}}</td>
@@ -45,8 +45,8 @@
             <p>{{this.name}}</p>
           </td>  
           <td>{{this.categories}}</td>
-          <td id="product-price">{{formatNumber this.price}}</td>
-          <td id="product-quantity">{{this.quantity}}</td>
+          <td>{{formatNumber this.price}}</td>
+          <td>{{this.quantity}}</td>
           <td>
             <a href="/admin/all-products/product/{{this._id}}" class="update-button">Xem</a>
             <button id="{{this._id}}" name="{{this.name}}" onclick="reply_click(this.id, this.name)">Xoá</button> 
@@ -70,14 +70,13 @@
     </div>
   </div>
 
-  <span class="pagination">
-  </span>
+  <span class="pagination"></span>
 </div>
 
 <form style="display: none;" name="delete-form" method="post"></form>
 
 <script defer>
-  var productLength = `{{productLength}}`
+  var productLength = `{{totalProduct}}`
   var currentPage   = `{{currentPage}}`
   var productType   = `{{productType}}`
 </script>

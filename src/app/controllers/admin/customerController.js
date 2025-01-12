@@ -1,13 +1,15 @@
 const user = require('../../models/userModel')
+const chat = require('../../models/chatModel')
 const order = require('../../models/orderModel')
+const bcrypt = require('bcryptjs')
 
 class allCustomersController {
   async allCustomers(req, res, next) {
     const index = 'customers'
+    const successful = req.flash('successful')
+
     const customers = await user.find({ deletedAt: null, 'loginInfo.role': 'user' }).lean()
     const customerIds = customers.map(customer => customer._id.toString()) // Get all customer IDs
-
-    // Find all orders for the retrieved customers
     const orders = await order.find({ 'customerInfo.userId': { $in: customerIds }, deletedAt: null }).lean()
 
     // Create a mapping of userId to orders
@@ -15,8 +17,8 @@ class allCustomersController {
     orders.forEach(order => {
       const userId = order.customerInfo.userId
       if (!ordersByCustomer[userId]) { ordersByCustomer[userId] = [] }
-      ordersByCustomer[userId].push(order);
-    });
+      ordersByCustomer[userId].push(order)
+    })
 
     // Attach the orders to each customer
     const customersWithOrders = customers.map(customer => {
@@ -27,11 +29,11 @@ class allCustomersController {
         orders: customerOrders, // Attach orders or empty array if no orders found
         totalOrder: customerOrders.length,
         totalPrice: totalPrice
-      };
-    });
-
+      }
+    })
     const totalCustomer = customersWithOrders.length
-    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin', customersWithOrders, totalCustomer, index });
+
+    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin', index, customersWithOrders, totalCustomer, successful });
   }
 
   async customerInfo(req, res, next) {
@@ -41,7 +43,7 @@ class allCustomersController {
     const totalOrder = orderInfo.length
     const totalPrice = orderInfo.reduce((total, order) => total + order.totalOrderPrice, 0)
     
-    res.render('admin/detail/customer', { title: customerInfo.userInfo.name, layout: 'admin', customerInfo, orderInfo, totalOrder, totalPrice, index })
+    res.render('admin/detail/customer', { title: customerInfo.userInfo.name, layout: 'admin', index, customerInfo, orderInfo, totalOrder, totalPrice })
   }
 
   async customerUpdate(req, res, next) {
@@ -50,15 +52,42 @@ class allCustomersController {
 
   createCustomer(req, res, next) {
     const index = 'customers'
-    res.render('admin/create/customer', { title: 'Thêm khách hàng mới', layout: 'admin', index })
+    const error = req.flash('error')
+    
+    res.render('admin/create/customer', { title: 'Thêm khách hàng mới', layout: 'admin', index, error })
   }
 
   async customerCreated(req, res, next) {
-    let newCustomer = new user(req.body)
+    const userExist = await user.findOne({ 'loginInfo.email': req.body.email })
+    if (userExist) {
+      req.flash('error', 'Email đã tồn tại')
+      return res.redirect('/admin/all-customers/customer/create')
+    }
 
-    await newCustomer.save()
-      .then(() => res.redirect('/admin/all-customers'))
-      .catch(next)
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(req.body.password, salt)
+
+    const newUser = new user({
+      loginInfo: {
+        email: req.body.email,
+        password: hashedPassword,
+        role: 'user'
+      },
+      userInfo: {
+        name: req.body.name,
+        phone: req.body.phone,
+        address: req.body.address
+      }
+    })
+    const savedUser = await newUser.save()
+
+    const newChat = new chat({
+      adminId: '65eddca37abb421b88771b3f',
+      userId: savedUser._id
+    })
+    await newChat.save()
+    req.flash('successful', 'create successful')
+    res.redirect('/admin/all-customers')
   }
 }
 module.exports = new allCustomersController

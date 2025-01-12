@@ -3,17 +3,21 @@ const product = require('../../models/productModel')
 
 class allBrandsController {
   async allBrands(req, res, next) {
-    const brands = await brand.find({}).lean()
     const index  = 'brands'
+    const successful = req.flash('successful')
+
+    const brands = await brand.find({}).lean()
     const totalBrand = brands.length
-    res.render('admin/all/brand', { title: 'Danh sách cửa hàng', layout: 'admin', brands, totalBrand, index })
+
+    res.render('admin/all/brand', { title: 'Danh sách cửa hàng', layout: 'admin', index, successful, brands, totalBrand })
   }
 
   async brandInfo(req, res, next) {
     const index = 'brands'
     const brandInfo = await brand.findOne({ _id: req.params.id }).lean()
     const productsInfo = await product.find({ brand: brandInfo.name }).lean()
-    res.render('admin/detail/brand', { title: brandInfo.name, layout: 'admin', brandInfo, productsInfo, index })
+
+    res.render('admin/detail/brand', { title: brandInfo.name, layout: 'admin', index, brandInfo, productsInfo })
   }
 
   async brandUpdate(req, res, next) {
@@ -22,6 +26,7 @@ class allBrandsController {
 
   async brandCreate(req, res, next) {
     const index = 'brands'
+    
     res.render('admin/create/brand', { title: 'Thêm thương hiệu mới', layout: 'admin', index })
   }
 

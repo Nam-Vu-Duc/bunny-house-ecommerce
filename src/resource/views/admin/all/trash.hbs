@@ -4,15 +4,14 @@
   </div>
 
   <div class="table">
-    <table>
+    <table class="all-items">
       <thead>
         <tr>
           <td style="width:  5%">STT     </td>
           <td style="width: 15%">Hãng    </td>
           <td style="width: 30%">Tên     </td>
-          <td style="width: 10%">Loại    </td>
-          <td style="width: 20%">Giá     </td>
-          <td style="width: 10%">Số lượng</td>
+          <td style="width: 15%">Loại    </td>
+          <td style="width: 25%">Giá     </td>
           <td style="width: 10%">Thao tác</td>
         </tr>
       </thead>
@@ -24,7 +23,7 @@
           <td>{{this.brand}}</td>
           <td style="
                 display: flex; 
-                justify-content: start;
+                justify-content: center;
                 align-items: center
                 "
           >
@@ -32,8 +31,7 @@
             <p>{{this.name}}</p>
           </td>
           <td>{{this.categories}}</td>
-          <td id="product-price">{{formatNumber this.price}}</td>
-          <td id="product-quantity">{{this.quantity}}</td>
+          <td>{{formatNumber this.price}}</td>
           <td>
             <button id="{{this._id}}" onclick="clickToRestore(this.id)">Khôi Phục</button>
             <button id="{{this._id}}" onclick="clickToDelete(this.id)">Xoá</button>
@@ -72,36 +70,4 @@
 <form style="display: none" name="delete-form" method="post"></form>
 <form style="display: none" name="restore-form" method="get"></form>
 
-<script src="/js/admin/all/brand.js" defer></script>
-<script>
-  // delete button
-  var productId;
-  var deleteForm    = document.forms['delete-form']
-  var restoreForm   = document.forms['restore-form']
-  var deleteButton  = document.getElementById('delete-button')
-  var restoreButton = document.getElementById('restore-button')
-  var productPrice  = document.querySelectorAll('td#product-price')
-
-  productPrice.forEach((price) => {price.innerText = price.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VND'})
-
-  function clickToDelete(clicked_id) {
-    document.getElementById('id01').style.display='block'
-    productId = clicked_id
-  }
-
-  deleteButton.onclick = function () {
-    deleteForm.action = '/admin/all-products/product/delete/' + productId + '?_method=DELETE'
-    deleteForm.submit()
-  }
-
-  //restore button
-  function clickToRestore(clicked_id) {
-    document.getElementById('id00').style.display='block'
-    productId = clicked_id
-  }
-
-  restoreButton.onclick = function () {
-    restoreForm.action = '/admin/all-products/product/restore/' + productId 
-    restoreForm.submit()
-  }
-</script>
+<script src="/js/admin/all/trash.js" defer></script>

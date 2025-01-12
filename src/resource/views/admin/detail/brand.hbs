@@ -18,7 +18,7 @@
       </tr>
       <tr>
         <td>Tổng doanh thu </td>
-        <td id="total-revenue">{{formatNumber brandInfo.totalRevenue}}</td>
+        <td>{{formatNumber brandInfo.totalRevenue}}</td>
       </tr>
       <tr>
         <td>Mô tả chi tiết</td>
@@ -43,8 +43,8 @@
         {{#each productsInfo}}
         <tr>
           <td>{{addIndex @index 1}}</td>
-          <td><p>{{this.name}}</p></td>
-          <td id="product-price">{{formatNumber this.price}}</td>
+          <td>{{this.name}}</td>
+          <td>{{formatNumber this.price}}</td>
           <td>{{this.quantity}}</td>
           <td><a href="/admin/all-products/product/{{this._id}}">Xem</a></td>
         </tr>
@@ -52,9 +52,7 @@
       </tbody>
     </table>
 
-    <div class="submit-button">
-      <button title="submit" type="submit">Cập nhật</button>
-    </div>
+    <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>
   </form>
 </div>
 

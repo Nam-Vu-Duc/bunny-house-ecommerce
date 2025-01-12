@@ -1,7 +1,15 @@
 const express = require('express')
 const router = express.Router()
+const flash = require('connect-flash')
+const session = require('express-session')
 const brandController = require('../../app/controllers/admin/brandController')
 
+router.use(session({ 
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+}))
+router.use(flash())
 router.get('/', brandController.allBrands)
 
 router.get('/brand/create', brandController.brandCreate)

@@ -1,11 +1,12 @@
 <div class="admin-create-employee-container">
-  <form id="form-1" method="post" action="/admin/all-employees/employee/created" enctype="multipart/form-data">
+  <form id="form-1" method="post" action="/admin/all-employees/employee/created">
     <div class="form-title">
       <p>Thêm nhân sự mới</p>
     </div>
 
     <div class="form-group">
-      <select name="position">
+      <label></label>
+      <select name="role">
         <option value="">-- Chọn vị trí --</option>
         <option value="employee">Nhân viên</option>
         <option value="admin">Quản trị viên</option>
@@ -13,7 +14,8 @@
     </div>
 
     <div class="form-group">
-      <select name="store">
+      <label></label>
+      <select name="storeId">
         <option value="">-- Chọn cửa hàng làm việc --</option>
         {{#each stores}}
           <option value="{{this._id}}">{{this.name}}</option>

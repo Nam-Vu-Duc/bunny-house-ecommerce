@@ -35,11 +35,16 @@ app.engine('hbs', handlebars.engine({
     isEqual: (a, b) => a === b,
     limit: (a, b) => a.slice(0, b),
     checkStatus: (a, b, c) => a.filter(a => a.status === b).slice(0, c),
-    formatStatus: (a) => a === 'preparing' ? 'Đang chuẩn bị' : '',
+    formatStatus: (a) => {
+      if(a === 'preparing') return 'Đang chuẩn bị đơn hàng'
+      if(a === 'delivering') return 'Đang giao đơn hàng'
+      if(a === 'done') return 'Hoàn thành đơn hàng'
+      if(a === 'cancel') return 'Huỷ đơn hàng'
+    },
     formatDate: (a) => a ? format(new Date(a), 'dd/MM/yyyy') : '',
-    formatNumber: (a) => a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND',
+    formatNumber: (a) => a ? a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND' : '0 VND',
     getLength: (a) => a.length,
-    getIndexed: (a, b, c) => a[b]
+    getIndexed: (a, b, c) => a[b],
   }
 }))
 app.set('view engine', 'hbs')

@@ -1,4 +1,4 @@
-var input                 = document.querySelector('input[type="text"]')
+var input                 = document.querySelector('input[type="text"][id="product-search"]')
 var tbody                 = document.querySelector('tbody')
 var tfoot                 = document.querySelector('tfoot')
 var product               = Array.from(document.querySelectorAll('div.product')) 

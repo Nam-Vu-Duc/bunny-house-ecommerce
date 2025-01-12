@@ -26,7 +26,7 @@ class allChatsController {
     ])
     const totalChat = chats.length
 
-    res.render('admin/all/chat', { title: 'Danh sách chat', layout: 'admin', chats, totalChat, index })
+    res.render('admin/all/chat', { title: 'Danh sách chat', layout: 'admin', index, chats, totalChat })
   }
 }
 module.exports = new allChatsController

@@ -2,38 +2,63 @@
   <form id="form-2" method="POST" action="/admin/all-purchases/purchase/updated/{{purchaseInfo._id}}?_method=PUT">
     <table id="table-1">
       <thead>
-        <tr>
-          <td colspan="2">THÔNG TIN ĐƠN NHẬP</td>
-        </tr>
+        <tr><td colspan="2">THÔNG TIN ĐƠN NHẬP</td></tr>
       </thead>
       <tr>
-        <td> Mã Khách Hàng </td>
-        <td> {{customerInfo._id}} </td>
+        <td>Mã Đơn</td>
+        <td>{{purchaseInfo._id}}</td>
       </tr>
       <tr>
-        <td> Email </td>
-        <td> {{customerInfo.loginInfo.email}} </td>
+        <td>Ngày Nhập</td>
+        <td>{{formatDate purchaseInfo.purchaseDate}}</td>
       </tr>
       <tr>
-        <td> Tên Khách Hàng </td>
-        <td> {{customerInfo.userInfo.name}} </td>
+        <td>NCC</td>
+        <td>{{purchaseInfo.supplierInfo.name}}</td>
       </tr>
       <tr>
-        <td> SĐT </td>
-        <td> {{customerInfo.userInfo.phone}} </td>
+        <td>SĐT</td>
+        <td>{{purchaseInfo.supplierInfo.phone}}</td>
       </tr>
       <tr>
-        <td> Địa Chỉ </td>
-        <td> {{customerInfo.userInfo.address}} </td>
+        <td>Địa Chỉ</td>
+        <td>{{purchaseInfo.supplierInfo.address}}</td>
       </tr>
       <tr>
-        <td> Tổng doanh thu </td>
-        <td id="total-price"> {{totalPrice}} </td>
+        <td>Ghi Chú</td>
+        <td>{{purchaseInfo.supplierInfo.note}}</td>
+      </tr>
+      <tr>
+        <td>Tổng Tiền</td>
+        <td>{{formatNumber purchaseInfo.totalPurchasePrice}}</td>
       </tr>
     </table>
-    <div class="submit-button">
-      <button title="submit" type="submit">Cập nhật</button>
-    </div>
+
+    <table id="table-2">
+      <thead>
+        <tr><td colspan="4">SẢN PHẨM</td></tr>
+      </thead>
+      <thead>
+        <tr>
+          <td>STT</td>
+          <td>Tên Sản Phẩm</td>
+          <td>S/L Nhập</td>
+          <td>Giá</td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each productInfoWithQuantity}}
+          <tr>
+            <td>{{addIndex @index 1 }}</td>
+            <td>{{this.product.name}}</td>
+            <td>{{this.purchaseQuantity}}</td>
+            <td>{{formatNumber this.product.purchasePrice}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>
   </form>
 </div>
 

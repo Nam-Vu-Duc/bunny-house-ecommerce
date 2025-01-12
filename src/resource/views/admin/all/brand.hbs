@@ -32,24 +32,18 @@
 
       <tbody>
         {{#each brands}}
-        <tr>
-          <td>{{addIndex @index 1}}</td>
-          <td>{{this._id}}</td>
-          <td style="
-                display: flex; 
-                justify-content: start;
-                align-items: center;
-                gap: 5px
-                "
-          >
-            <img src="{{this.img.path}}" alt="{{this.name}}" loading="lazy" loading="lazy"> 
-            <p>{{this.name}}</p>
-          </td> 
-          <td>{{this.totalProduct}}</td>
-          <td>{{this.totalProduct}}</td>
-          <td class="total-revenue">{{formatNumber this.totalRevenue}}</td>
-          <td><a href="/admin/all-brands/brand/{{this._id}}">Xem</a></td>
-        </tr>
+          <tr>
+            <td>{{addIndex @index 1}}</td>
+            <td>{{this._id}}</td>
+            <td style="display: flex; justify-content: start;align-items: center;gap: 5px">
+              <img src="{{this.img.path}}" alt="{{this.name}}" loading="lazy" loading="lazy"> 
+              <p>{{this.name}}</p>
+            </td> 
+            <td>{{this.totalProduct}}</td>
+            <td>{{this.totalProduct}}</td>
+            <td>{{formatNumber this.totalRevenue}}</td>
+            <td><a href="/admin/all-brands/brand/{{this._id}}">Xem</a></td>
+          </tr>
         {{/each}}
       </tbody>
     </table>

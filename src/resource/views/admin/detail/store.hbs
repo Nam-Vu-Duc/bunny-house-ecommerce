@@ -2,9 +2,7 @@
   <form id="form-2" method="POST" action="/admin/all-stores/store/updated/{{storeInfo._id}}?_method=PUT">
     <table id="table-1">
       <thead>
-        <tr>
-          <td colspan="2">THÔNG TIN CỬA HÀNG</td>
-        </tr>
+        <tr><td colspan="2">THÔNG TIN CỬA HÀNG</td></tr>
       </thead>
       <tr>
         <td>ID Cửa hàng</td>
@@ -24,7 +22,7 @@
       </tr>
       <tr>
         <td>Doanh thu cửa hàng</td>
-        <td class="revenue">{{formatNumber storeInfo.revenue}}</td>
+        <td>{{formatNumber storeInfo.revenue}}</td>
       </tr>
     </table>
 
@@ -43,18 +41,16 @@
       <tbody>
         {{#each employeesInfo}}
         <tr>
-          <td><p>{{this._id}}</p></td>
-          <td style="text-align: center;">{{this.userInfo.name}}</td>
-          <td style="text-align: center;">{{this.loginInfo.role}}</td>
-          <td style="text-align: center;"><a href="/admin/all-employees/employee/{{this._id}}">Xem</a></td>
+          <td>{{this._id}}</td>
+          <td>{{this.userInfo.name}}</td>
+          <td>{{this.loginInfo.role}}</td>
+          <td><a href="/admin/all-employees/employee/{{this._id}}">Xem</a></td>
         </tr>
         {{/each}}
       </tbody>
     </table>
 
-    <div class="submit-button">
-      <button title="submit" type="submit">Cập nhật</button>
-    </div>
+    <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>
   </form>
 </div>
 

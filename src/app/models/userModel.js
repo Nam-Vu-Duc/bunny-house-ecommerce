@@ -14,6 +14,7 @@ const user = new Schema({
     gender   : { type: String, default: '' },
     address  : { type: String, default: '' }
   },
+  revenue   : { type: Number, default: 0 },
   slug      : { type: String, slug: 'userInfo.name', unique: true },
 }, { timestamps: true })
 module.exports = mongoose.model('user', user);

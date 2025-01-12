@@ -1,18 +1,29 @@
 const product = require('../../models/productModel')
 const purchase = require('../../models/purchaseModel')
+const supplier = require('../../models/supplierModel')
 
 class adminController {
   async allPurchases(req, res, next) {
     const index  = 'purchases'
     const successful = req.flash('successful')
-    const purchases = await purchase.find({deletedAt: null}).lean()
+
+    const purchases = await purchase.find({deletedAt: null}).sort({ purchaseDate: -1 }).lean()
     const totalPurchase = purchases.length
+
     res.render('admin/all/purchase', { title: 'Danh sách phiếu nhập', layout: 'admin', index, purchases, successful, totalPurchase })
   }
 
   async purchaseInfo(req, res, next) {
     const index  = 'purchases'
-    res.render('admin/detail/purchase', { title: 'Phiếu nhập', layout: 'admin', index })
+    const purchaseInfo = await purchase.findOne({ _id: req.params.id }).lean()
+    const productId = purchaseInfo.products.map(product => product.id)
+    const productInfo = await product.find({ _id: { $in: productId }, deletedAt: null }).lean()
+    const productInfoWithQuantity = productInfo.map(product => {
+      const quantity = purchaseInfo.products.find(p => p.id == product._id).quantity
+      return { product: product, purchaseQuantity: quantity }
+    })
+
+    res.render('admin/detail/purchase', { title: 'Phiếu nhập', layout: 'admin', index, purchaseInfo, productInfoWithQuantity })
   }
 
   async purchaseUpdate(req, res, next) {
@@ -21,13 +32,19 @@ class adminController {
 
   async purchaseCreate(req, res, next) {
     const index = 'purchases'
-    const products = await product.find({deletedAt: null}).lean()
-    res.render('admin/create/purchase', { title: 'Thêm đơn nhập mới', layout: 'admin', index, products })
+    const [products, suppliers] = await Promise.all([
+      product.find({deletedAt: null}).lean(),
+      supplier.find().lean()
+    ])
+
+    res.render('admin/create/purchase', { title: 'Thêm đơn nhập mới', layout: 'admin', index, products, suppliers })
   }
 
   async purchaseCreated(req, res, next) {
     let { 
       purchaseDate, 
+      supplierId,
+      note,
       productId, 
       productQuantity,
       totalPurchasePrice
@@ -44,6 +61,8 @@ class adminController {
         id        : productId[index],
         quantity  : productQuantity[index],
       })),
+      supplierId: supplierId,
+      note: note,
       purchaseDate: purchaseDate,
       totalPurchasePrice: totalPurchasePrice
     });

@@ -3,11 +3,13 @@ const employee = require('../../models/employeeModel')
 
 class allStoresController {
   async allStores(req, res, next) {
-    const stores = await store.find({}).lean()
     const index  = 'stores'
+    const successful = req.flash('successful')
+
+    const stores = await store.find({}).lean()
     const totalStore = stores.length
 
-    res.render('admin/all/store', { title: 'Danh sách cửa hàng', layout: 'admin', stores, totalStore, index })
+    res.render('admin/all/store', { title: 'Danh sách cửa hàng', layout: 'admin', index, stores, totalStore, successful })
   }
 
   async storeInfo(req, res, next) {
@@ -16,7 +18,7 @@ class allStoresController {
       store.findOne({ _id: req.params.id }).lean(),
       employee.find({ 'userInfo.storeId': req.params.id }).lean(),
     ]);
-    res.render('admin/detail/store', { title: store.name, layout: 'admin', storeInfo, employeesInfo, index })
+    res.render('admin/detail/store', { title: storeInfo.name, layout: 'admin', index, storeInfo, employeesInfo })
   }
 
   async storeUpdate(req, res, next) {
@@ -25,11 +27,16 @@ class allStoresController {
 
   async storeCreate(req, res, next) {
     const index = 'stores'
+    
     res.render('admin/create/store', { title: 'Thêm cửa hàng mới', layout: 'admin', index })
   }
 
   async storeCreated(req, res, next) {
-    
+    const newStore = new store(req.body)
+
+    await newStore.save()
+    req.flash('successful', 'purchase successfully')
+    res.redirect('/admin/all-stores')
   }
 }
 module.exports = new allStoresController

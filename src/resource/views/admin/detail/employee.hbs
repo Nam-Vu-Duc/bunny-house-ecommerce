@@ -2,38 +2,39 @@
   <form id="form-2" method="POST" action="/admin/all-employees/employee/updated/{{employeeInfo._id}}?_method=PUT">
     <table id="table-1">
       <thead>
-        <tr>
-          <td colspan="2">THÔNG TIN NHÂN VIÊN</td>
-        </tr>
+        <tr><td colspan="2">THÔNG TIN NHÂN VIÊN</td></tr>
       </thead>
       <tr>
-        <td>Mã Khách Hàng</td>
-        <td>{{customerInfo._id}}</td>
+        <td>Mã Nhân Viên</td>
+        <td>{{employeeInfo._id}}</td>
+      </tr>
+      <tr>
+        <td>Tên Nhân Viên</td>
+        <td>{{employeeInfo.userInfo.name}}</td>
       </tr>
       <tr>
         <td>Email</td>
-        <td>{{customerInfo.loginInfo.email}}</td>
-      </tr>
-      <tr>
-        <td>Tên Khách Hàng</td>
-        <td>{{customerInfo.userInfo.name}}</td>
+        <td>{{employeeInfo.loginInfo.email}}</td>
       </tr>
       <tr>
         <td>SĐT</td>
-        <td>{{customerInfo.userInfo.phone}}</td>
+        <td>{{employeeInfo.userInfo.phone}}</td>
       </tr>
       <tr>
         <td>Địa Chỉ</td>
-        <td>{{customerInfo.userInfo.address}}</td>
+        <td>{{employeeInfo.userInfo.address}}</td>
       </tr>
       <tr>
-        <td>Tổng doanh thu</td>
-        <td id="total-price">{{formatNumber totalPrice}}</td>
+        <td>Giới tính</td>
+        <td>{{employeeInfo.userInfo.gender}}</td>
+      </tr>
+      <tr>
+        <td>Cửa hàng làm việc</td>
+        <td>{{employeeInfo.userInfo.storeId}}</td>
       </tr>
     </table>
-    <div class="submit-button">
-      <button title="submit" type="submit">Cập nhật</button>
-    </div>
+    
+    <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>
   </form>
 </div>
 

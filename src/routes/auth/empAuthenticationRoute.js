@@ -1,7 +1,7 @@
 const express = require('express')
+const router = express.Router()
 const flash = require('connect-flash');
 const session = require('express-session')
-const router = express.Router()
 const empAuthenticationController = require('../../app/controllers/auth/empAuthenticationController')
 
 router.use(session({ 

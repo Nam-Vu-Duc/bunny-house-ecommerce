@@ -2,22 +2,21 @@ const product = require('../../models/productModel')
 const cloudinary = require('cloudinary').v2
 
 class allProductsController {
-  allProducts(req, res, next) {
+  async allProducts(req, res, next) {
     const index        = 'products'
+    const successful = req.flash('successful')
+    
     const currentPage  = req.query.page || 1
     const productType  = req.query.type || ''
     const itemsPerPage = 10;
     const skip         = (currentPage - 1) * itemsPerPage;
 
-    product.find({ deletedAt: null }).lean()
-      .then(product => { 
-        const productLength = product.length
-        if (productType !== '') product = product.filter(product => product.categories === productType)
-        product = product.slice(skip, skip + itemsPerPage)
+    let products = await product.find({ deletedAt: null }).sort({ createdAt: -1, name: 1 }).lean()
+    const totalProduct = products.length
+    if (productType !== '') products = products.filter(product => product.categories === productType)
+    products = products.slice(skip, skip + itemsPerPage)
 
-        res.render('admin/all/product', { title: 'Danh sách sản phẩm', layout: 'admin', productLength, product, productType, currentPage, index })
-      })
-      .catch(next)
+    res.render('admin/all/product', { title: 'Danh sách sản phẩm', layout: 'admin', index, successful, totalProduct, products, productType, currentPage })
   }
 
   createProduct(req, res, next) {
@@ -32,7 +31,10 @@ class allProductsController {
       newProduct.img.filename = req.file.filename
     }
     await newProduct.save()
-      .then(() => res.redirect('/admin/all-products'))
+      .then(() => {
+        req.flash('successful', 'purchase successfully')
+        res.redirect('/admin/all-products')
+      })
       .catch(next)
   }
 
@@ -68,7 +70,10 @@ class allProductsController {
 
   softDelete(req, res, next) {
     product.updateOne({ _id: req.params.id}, { deletedAt: Date.now() })
-      .then(() => res.redirect('back'))
+      .then(() => {
+        req.flash('successful', 'delete successful')
+        res.redirect('/admin/all-products')
+      })
       .catch(next)
   }
 
@@ -79,7 +84,7 @@ class allProductsController {
     await cloudinary.uploader.destroy(deleteImg)
     const removeProduct = await product.deleteOne({ _id: req.params.id })
 
-    res.redirect('back')
+    res.redirect('/admin/all-products')
   }
 
   restore(req, res, next) {
@@ -90,10 +95,11 @@ class allProductsController {
 
   trash(req, res, next) {
     const index = 'trash'
+    const successful = req.flash('successful')
     product.find({ deletedAt: { $ne: null } }).lean()
       .then(product => { 
         const totalDeletedProduct = product.length
-        res.render('admin/all/trash', { title: 'Kho', layout: 'admin', product, totalDeletedProduct, index })})
+        res.render('admin/all/trash', { title: 'Kho', layout: 'admin', index, successful, product, totalDeletedProduct })})
       .catch(next)
   }
 }

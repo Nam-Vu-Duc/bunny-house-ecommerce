@@ -5,16 +5,16 @@
         <tr><td colspan="2">THÔNG TIN KHÁCH HÀNG</td></tr>
       </thead>
       <tr>
-        <td>Mã Khách Hàng </td>
-        <td>{{customerInfo._id}} </td>
-      </tr>
-      <tr>
-        <td>Email</td>
-        <td>{{customerInfo.loginInfo.email}}</td>
+        <td>Mã Khách Hàng</td>
+        <td>{{customerInfo._id}}</td>
       </tr>
       <tr>
         <td>Tên Khách Hàng</td>
         <td>{{customerInfo.userInfo.name}}</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>{{customerInfo.loginInfo.email}}</td>
       </tr>
       <tr>
         <td>SĐT</td>
@@ -25,8 +25,12 @@
         <td>{{customerInfo.userInfo.address}}</td>
       </tr>
       <tr>
+        <td>Giới tính</td>
+        <td>{{customerInfo.userInfo.gender}}</td>
+      </tr>
+      <tr>
         <td>Tổng doanh thu</td>
-        <td id="total-price">{{formatNumber totalPrice}}</td>
+        <td>{{formatNumber totalPrice}}</td>
       </tr>
     </table>
 
@@ -36,7 +40,7 @@
       </thead>
       <thead>
         <tr>
-          <td style="width: 5%">STT                    </td>
+          <td style="width:  5%">STT                   </td>
           <td style="width: 35%">Tổng tiền             </td>
           <td style="width: 25%">Phương thức thanh toán</td>
           <td style="width: 25%">Tình trạng            </td>
@@ -46,24 +50,17 @@
       <tbody>
         {{#each orderInfo}}
         <tr>
-          <td style="text-align: center">{{addIndex @index 1}}</td>
-          <td 
-            style="text-align: center;" 
-            id="total-order-price"
-          >
-            {{formatNumber this.totalOrderPrice}} 
-          </td>
-          <td style="text-align: center;">{{this.paymentMethod}}</td>
-          <td style="text-align: center;">{{this.status}}</td>
-          <td style="text-align: center;"><a href="/admin/all-orders/order/{{this._id}}">Xem</a></td>
+          <td>{{addIndex @index 1}}</td>
+          <td>{{formatNumber this.totalOrderPrice}}</td>
+          <td>{{this.paymentMethod}}</td>
+          <td>{{formatStatus this.status}}</td>
+          <td><a href="/admin/all-orders/order/{{this._id}}">Xem</a></td>
         </tr>
         {{/each}}
       </tbody>
     </table>
 
-    <div class="submit-button">
-      <button title="submit" type="submit">Cập nhật</button>
-    </div>
+    <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>
   </form>
 </div>
 

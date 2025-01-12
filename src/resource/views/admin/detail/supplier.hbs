@@ -1,0 +1,61 @@
+<div class="customer-details-container">
+  <form id="form-2" method="POST" action="/admin/all-suppliers/supplier/updated/{{supplierInfo._id}}?_method=PUT">
+    <table id="table-1">
+      <thead>
+        <tr><td colspan="2">THÔNG TIN NHÀ CUNG CẤP</td></tr>
+      </thead>
+      <tr>
+        <td>Mã Nhà Cung Cấp</td>
+        <td>{{supplierInfo._id}}</td>
+      </tr>
+      <tr>
+        <td>Tên Nhà Cung Cấp</td>
+        <td>{{supplierInfo.name}}</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>{{supplierInfo.email}}</td>
+      </tr>
+      <tr>
+        <td>SĐT</td>
+        <td>{{supplierInfo.phone}}</td>
+      </tr>
+      <tr>
+        <td>Địa Chỉ</td>
+        <td>{{supplierInfo.address}}</td>
+      </tr>
+      <tr>
+        <td>Tổng chi phí</td>
+        <td>{{formatNumber totalCost}}</td>
+      </tr>
+    </table>
+
+    <table id="table-2">
+      <thead>
+        <tr><td colspan="5">DANH SÁCH ĐƠN NHẬP</td></tr>
+      </thead>
+      <thead>
+        <tr>
+          <td style="width:  5%">STT       </td>
+          <td style="width: 35%">Tổng tiền </td>
+          <td style="width: 25%">Ngày nhập </td>
+          <td style="width: 10%">Chi tiết  </td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each purchaseInfo}}
+          <tr>
+            <td>{{addIndex @index 1}}</td>
+            <td>{{formatNumber this.totalPurchasePrice}}</td>
+            <td>{{formatDate this.purchaseDate}}</td>
+            <td><a href="/admin/all-suppliers/supplier/{{this._id}}">Xem</a></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>
+  </form>
+</div>
+
+<script src="/js/admin/detail/supplier.js" defer></script>
