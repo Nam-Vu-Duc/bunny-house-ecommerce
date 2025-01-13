@@ -33,6 +33,7 @@ class allOrderController {
 
   async createOrders(req, res, next) {
     let { 
+      productId,
       productName, 
       productPrice, 
       productQuantity,  
@@ -52,6 +53,7 @@ class allOrderController {
 
     const newOrder = new order({
       products: productName.map((product, index) => ({
+        id        : productId[index],   
         name      : productName[index],
         price     : productPrice[index],
         quantity  : productQuantity[index],
@@ -66,7 +68,7 @@ class allOrderController {
       },
       totalOrderPrice: totalOrderPrice,
       paymentMethod: paymentMethod
-    });
+    })
 
     await newOrder.save()
     req.flash('newOrderId', newOrder._id)

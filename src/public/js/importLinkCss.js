@@ -4,6 +4,5 @@ function importLinkCss(cssFile) {
   link.href = cssFile
   link.media = 'print'
   link.onload = function() {link.media = 'all'}
-  console.log('hello')
   document.head.appendChild(link)
 }

@@ -71,7 +71,7 @@
 
     <div class="products">
       {{#each relatedProducts}}
-      <a href="/all-products/product/{{this.slug}}">
+      <a href="/all-products/product/{{this._id}}">
         <div class="product">
           <img src="{{this.img.path}}" alt="{{this.name}}" id="product-1" loading="lazy">
           <del><h4 id="product-old-price">{{formatNumber this.oldPrice}}</h4></del>
@@ -85,12 +85,12 @@
 </div>
 
 <script defer>
-  var productDetails  = `{{newProduct.details}}`
-  var productStatus   = `{{newProduct.status}}`
-  var productSlug     = `{{newProduct.slug}}`
-  var productName     = `{{newProduct.name}}`
-  var productPrice    = `{{newProduct.price}}`
-  var productImage    = `{{newProduct.img.path}}`
+  var productDetails = `{{newProduct.details}}`
+  var productStatus  = `{{newProduct.status}}`
+  var productId      = `{{newProduct._id}}`
+  var productName    = `{{newProduct.name}}`
+  var productPrice   = `{{newProduct.price}}`
+  var productImage   = `{{newProduct.img.path}}`
 </script>
 <script src="/js/importLinkCss.js" defer></script>
 <script src="/js/user/detailProduct.js" defer></script>

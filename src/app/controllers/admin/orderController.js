@@ -1,4 +1,6 @@
 const order = require('../../models/orderModel')
+const user = require('../../models/userModel')
+const product = require('../../models/productModel')
 
 class allOrdersController {
   async allOrders(req, res, next) {
@@ -29,20 +31,55 @@ class allOrdersController {
       .catch(next)
   }
 
-  orderUpdate(req, res, next) {
-    order.updateOne({ _id: req.params.id }, { status: req.body.status })
-      .then(() => { 
-        res.redirect('back')})
-      .catch(next)
+  async orderUpdate(req, res, next) {
+    await order.updateOne({ _id: req.params.id }, { status: req.body.status })
+    res.redirect('back')
   }
 
-  orderCreate(req, res, next) {
+  async orderCreate(req, res, next) {
     const index = 'orders'
-    res.render('admin/create/order', { title: 'Thêm đơn hàng mới', layout: 'admin', index })
+    const [users, products] = await Promise.all([
+      user.find({}).lean(),
+      product.find({ deletedAt: null }).lean()
+    ]) 
+  
+    res.render('admin/create/order', { title: 'Thêm đơn hàng mới', layout: 'admin', index, users, products })
   }
 
-  orderCreated(req, res, next) {
+  async orderCreated(req, res, next) {
+    let { 
+      orderDate, 
+      userId,
+      note,
+      productId, 
+      productName,
+      productPrice,
+      productQuantity,
+      totalOrderPrice
+    } = req.body
 
+    // if the req.body has only 1 record, convert 1 record to array
+    if(!Array.isArray(productId)) {
+      productId       = [productId]
+      productQuantity = [productQuantity]
+    }
+
+    const newOrder = new order({
+      products: productId.map((product, index) => ({
+        id        : productId[index],
+        name      : productName[index],
+        price     : productPrice[index],
+        quantity  : productQuantity[index], 
+      })),
+      userId: userId,
+      note: note,
+      createdAt: orderDate,
+      totalOrderPrice: totalOrderPrice
+    });
+
+    await newOrder.save()
+    req.flash('successful', 'order successfully')
+    return res.redirect('/admin/all-purchases')
   }
 }
 module.exports = new allOrdersController

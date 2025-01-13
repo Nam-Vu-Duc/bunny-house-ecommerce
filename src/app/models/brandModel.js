@@ -3,11 +3,11 @@ const slug = require('mongoose-slug-updater');
 mongoose.plugin(slug)
 const Schema = mongoose.Schema
 const brand = new Schema({
-  name         : { type: String }, 
+  name         : { type: String, default: '' }, 
   img          : { 
     path       : String,
     filename   : String,
   }, 
-  totalProduct : { type: Number },
+  totalProduct : { type: Number, default: 0 },
 }, { timestamps: true })
 module.exports = mongoose.model('brand', brand);

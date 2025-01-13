@@ -3,8 +3,8 @@ const slug = require('mongoose-slug-updater');
 mongoose.plugin(slug)
 const Schema = mongoose.Schema
 const message = new Schema({
-  chatId   : { type: String }, 
-  senderId : { type: String }, 
-  content  : { type: String }, 
+  chatId   : { type: String, default: '' }, 
+  senderId : { type: String, default: '' }, 
+  content  : { type: String, default: '' }, 
 }, { timestamps: true })
 module.exports = mongoose.model('message', message);

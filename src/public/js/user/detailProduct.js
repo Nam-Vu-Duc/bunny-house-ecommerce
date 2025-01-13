@@ -41,7 +41,7 @@ localStorage.setItem('product_cart_count', JSON.stringify(myObj))
 // check if the item has already been added, return the button type to added
 var listProductLength = typeof myObj.productInfo === 'undefined' ? 0 : myObj.productInfo.length
 for (let i = 0; i < listProductLength; ++i) {
-  if (myObj.productInfo[i].slug === productSlug) {
+  if (myObj.productInfo[i].id === productId) {
     // change button color to 'added button'
     getAddToCart.style.backgroundColor = '#D1A6A6'
     addToCartText.style.color = 'white'
@@ -59,7 +59,7 @@ getIncreaseQuantity.onclick = function () {
   getQuantityValue.innerText++
   listProductLength = myObj.productInfo.length
   for (let i = 0; i < listProductLength; ++i) {
-    if (myObj.productInfo[i].slug === productSlug) {
+    if (myObj.productInfo[i].id === productId) {
       // store the quantity on page to localStorage
       myObj.productInfo[i].quantity = getQuantityValue.innerText
       localStorage.setItem('product_cart_count', JSON.stringify(myObj));
@@ -70,7 +70,7 @@ getIncreaseQuantity.onclick = function () {
 // decrease quantity onclick and min = 1
 getDecreaseQuantity.onclick = function () {
   for (let i = 0; i < listProductLength; ++i) {
-    if (myObj.productInfo[i].slug === productSlug) {
+    if (myObj.productInfo[i].id === productId) {
       if (getQuantityValue.innerText === '1') {
         getQuantityValue.innerText = 1
         myObj.productInfo[i].quantity = 1
@@ -98,10 +98,10 @@ getAddToCart.onclick = function () {
     
     // create new added product 
     var newProductInfo = {
-      slug  : productSlug,
-      name  : productName,
-      price : productPrice,
-      image : productImage,
+      id      : productId,
+      name    : productName,
+      price   : productPrice,
+      image   : productImage,
       quantity: getQuantityValue.innerText
     };
 
@@ -121,7 +121,7 @@ getAddToCart.onclick = function () {
     // remove the product from the localStorage
     listProductLength = myObj.productInfo.length
     for (let i = 0; i < listProductLength; i++) {
-      if (myObj.productInfo[i].slug === productSlug) {
+      if (myObj.productInfo[i].id === productId) {
         myObj.productInfo.splice(i, 1)
         break
       }
@@ -140,10 +140,10 @@ getBuyNow.onclick = function () {
     getQuantityDiv.style.visibility = 'visible'
 
     var newProductInfo = {
-      slug  : productSlug,
-      name  : productName,
-      price : productPrice,
-      image : productImage,
+      id      : productId,
+      name    : productName,
+      price   : productPrice,
+      image   : productImage,
       quantity: getQuantityValue.innerText
     };
 

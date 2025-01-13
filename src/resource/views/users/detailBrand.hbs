@@ -24,7 +24,7 @@
 
     <div class="products">
       {{#each products}}
-      <a href="/all-products/product/{{this.slug}}">
+      <a href="/all-products/product/{{this._id}}">
         <div class="product">
           <img src="{{this.img.path}}" alt="{{this.name}}" id="product-1" loading="lazy">
           <del><h4 id="product-old-price">{{formatNumber this.oldPrice}}</h4></del>

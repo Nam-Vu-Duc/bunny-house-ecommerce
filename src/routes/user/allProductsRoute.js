@@ -6,6 +6,6 @@ router.get('/', allProductsController.showAllProducts)
 router.get('/:slug', allProductsController.showAllProducts)
 router.get('/skincare/:slug', allProductsController.showAllSkincare)
 router.get('/makeup/:slug', allProductsController.showAllMakeUp)
-router.get('/product/:slug', allProductsController.productInfo)
+router.get('/product/:id', allProductsController.productInfo)
 
 module.exports = router

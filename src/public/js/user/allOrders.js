@@ -44,11 +44,17 @@ function updateTableBody(totalOrderPrice) {
 
     // create a tag. Link to the product details page when user want to change the cart
     var newProductAnchorTag = document.createElement('a')
-    newProductAnchorTag.setAttribute('href', `/all-products/product/${getProductInfo.productInfo[i].slug}`)
+    newProductAnchorTag.setAttribute('href', `/all-products/product/${getProductInfo.productInfo[i].id}`)
     newProductAnchorTag.innerText = getProductInfo.productInfo[i].name
     newProductAnchorTag.style.paddingLeft = '5px'
     newProductName.appendChild(newProductAnchorTag)
 
+    // create an input store the name value to submit the form
+    var newProductIdInput = document.createElement('input')
+    newProductIdInput.setAttribute('type', 'hidden')
+    newProductIdInput.setAttribute('name', 'productId')
+    newProductIdInput.setAttribute('value', getProductInfo.productInfo[i].id)
+    
     // create an input store the name value to submit the form
     var newProductNameInput = document.createElement('input')
     newProductNameInput.setAttribute('type', 'hidden')
@@ -97,6 +103,8 @@ function updateTableBody(totalOrderPrice) {
 
     // add each element to the row
     newProductRow.appendChild(newProductImage)
+
+    newProductRow.appendChild(newProductIdInput)
 
     newProductRow.appendChild(newProductName)
     newProductRow.appendChild(newProductNameInput)

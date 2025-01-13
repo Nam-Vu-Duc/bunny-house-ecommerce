@@ -29,7 +29,7 @@
     </tr>
     <tr>
       <td> Tổng Tiền </td>
-      <td id="total-order-price"> {{formatNumber orderInfo.totalOrderPrice}} </td>
+      <td> {{formatNumber orderInfo.totalOrderPrice}} </td>
     </tr>
     <tr>
       <td> Trạng Thái Đơn Hàng </td>
@@ -50,9 +50,9 @@
       {{#each orderInfo.products}}
       <tr>
         <td><p>{{this.name}}</p></td>
-        <td style="text-align: center;" id="product-price">{{formatNumber this.price}}</td>
-        <td style="text-align: center;">{{this.quantity}}</td>
-        <td style="text-align: center;" id="total-product-price">{{formatNumber this.totalPrice}}</td>
+        <td style="text-align: center">{{formatNumber this.price}}</td>
+        <td style="text-align: center">{{this.quantity}}</td>
+        <td style="text-align: center">{{formatNumber this.totalPrice}}</td>
       </tr>
       {{/each}}
     </tbody>

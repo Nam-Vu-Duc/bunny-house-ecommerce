@@ -4,16 +4,16 @@
       <p>Thêm đơn hàng mới</p>
     </div>
     <div class="form-group">
-      <label for="purchaseDate">Ngày nhập *</label>
-      <input type="date" id="purchaseDate" name="purchaseDate" required>
+      <label for="orderDate">Ngày bán *</label>
+      <input type="date" id="orderDate" name="orderDate" required>
       <span class="form-message"></span>
     </div>
     <div class="form-group">
-      <label for="name">Chọn nhà cung cấp</label>
-      <select name="supplierId" id="supplierId" required>
-        <option value="" selected disabled>-- Nhà cung cấp --</option>
-        {{#each suppliers}}
-          <option value="{{this._id}}">{{this.name}} {{this.phone}}</option>
+      <label for="name">Chọn khách hàng</label>
+      <select name="userId" id="userId" required>
+        <option value="" selected disabled>-- Khách hàng --</option>
+        {{#each users}}
+          <option value="{{this._id}}">{{this.userInfo.name}}, {{this.userInfo.address}}</option>
         {{/each}}
       </select>
     </div>
@@ -40,7 +40,7 @@
             {{this.name}}
           </p>  
           <p style="width: 10%;">{{this.categories}}</p>
-          <p style="width: 10%; text-align:right" id="product-price">{{this.purchasePrice}}</p>
+          <p style="width: 10%; text-align:right" id="product-price">{{this.price}}</p>
         </div>
       {{/each}}
     </div>
@@ -68,9 +68,7 @@
       </tfoot>
     </table>  
 
-    <div class="submit-button">
-      <button title="submit" type="submit">Hoàn thành</button>
-    </div>
+    <div class="submit-button"><button title="submit" type="submit">Hoàn thành</button></div>
   </form>
 </div>
 

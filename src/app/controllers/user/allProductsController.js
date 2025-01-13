@@ -54,11 +54,10 @@ class allProductsController {
 
   async productInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const newProduct = await product.findOne({ slug: req.params.slug }).lean()
+    const newProduct = await product.findOne({ _id: req.params.id }).lean()
     const comments = await comment.find({ productId: newProduct._id }).lean()
     let newProductType = ''
     let relatedProducts 
-    console.log(comments)
 
     if (newProduct.skincare !== '') {
       newProductType = newProduct.skincare
