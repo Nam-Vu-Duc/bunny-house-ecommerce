@@ -15,7 +15,14 @@ class homeController {
       user.find({ deletedAt: null, 'loginInfo.role': 'user' }).lean(),
       store.find({}).lean(),
       brand.find({}).lean()
-    ]);
+    ])
+
+    const [totalEmployee, totalCustomer, totalStore, totalBrand] = await Promise.all([
+      employee.countDocuments(),
+      user.countDocuments(),
+      store.countDocuments(),
+      brand.countDocuments()
+    ])
 
     const orderStats = orders.reduce(
       (acc, order) => {
@@ -45,10 +52,6 @@ class homeController {
     const maxValueOrder = orders[0] || { _id: '', totalOrderPrice: 0 }
     const maxValueOrderId = maxValueOrder._id?.toString() || ''
     const maxValueOrderNumber = maxValueOrder.totalOrderPrice
-    const totalEmployee = employees.length
-    const totalCustomer = customers.length
-    const totalStore    = stores.length
-    const totalBrand    = brands.length
 
     res.render('admin/home', { title: 'Trang chủ', layout: 'admin', index, ...orderStats, ...productStats, maxValueOrderId, maxValueOrderNumber, totalEmployee, totalCustomer, totalStore, totalBrand});
   }

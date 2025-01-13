@@ -7,10 +7,16 @@ class adminController {
     const index  = 'purchases'
     const successful = req.flash('successful')
 
-    const purchases = await purchase.find({deletedAt: null}).sort({ purchaseDate: -1 }).lean()
-    const totalPurchase = purchases.length
+    const currentPage  = req.query.page || 1
+    const itemsPerPage = 10;
+    const skip         = (currentPage - 1) * itemsPerPage
 
-    res.render('admin/all/purchase', { title: 'Danh sách phiếu nhập', layout: 'admin', index, purchases, successful, totalPurchase })
+    const [purchases, totalPurchase] = await Promise.all([
+      purchase.find({deletedAt: null}).sort({ purchaseDate: -1 }).skip(skip).limit(itemsPerPage).lean(),
+      purchase.find({deletedAt: null}).countDocuments()
+    ])
+
+    res.render('admin/all/purchase', { title: 'Danh sách phiếu nhập', layout: 'admin', index, successful, purchases, totalPurchase, currentPage })
   }
 
   async purchaseInfo(req, res, next) {

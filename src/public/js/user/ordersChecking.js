@@ -3,6 +3,8 @@ var getSubmitButton        = getOrderCheckingForm.querySelector('button')
 var getOrderContainer      = document.querySelector('div.order-checking-container')
 var errorMessage           = document.querySelector('span.error-message')
 
+importLinkCss('/css/user/ordersChecking.css')
+
 // when submit, the form will push the input value from user to the URL for backend
 getSubmitButton.onclick = function () {
   var orderCode = getOrderCheckingForm.querySelector('input').value

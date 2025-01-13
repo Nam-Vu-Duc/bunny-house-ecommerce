@@ -3,3 +3,5 @@ document.addEventListener("DOMContentLoaded", function() {
   const metaDescription = document.querySelector("meta[name='description']");
   metaDescription.setAttribute("content", metaContent);
 })
+
+importLinkCss('/css/user/detailBrand.css')

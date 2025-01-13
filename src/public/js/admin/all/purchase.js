@@ -1,3 +1,3 @@
-if (successful) {
-  console.log(successful)
-}
+pagination('purchases', totalPurchase, currentPage)
+
+importLinkCss('/css/admin/allPurchases.css')

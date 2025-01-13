@@ -6,10 +6,16 @@ class allSuppliersController {
     const index  = 'suppliers'
     const successful = req.flash('successful')
 
-    const suppliers = await supplier.find({}).lean()
-    const totalSupplier = suppliers.length
+    const currentPage  = req.query.page || 1
+    const itemsPerPage = 10;
+    const skip         = (currentPage - 1) * itemsPerPage
 
-    res.render('admin/all/supplier', { title: 'Danh sách đối tác', layout: 'admin', index, suppliers, totalSupplier, successful })
+    const [suppliers, totalSupplier] = await Promise.all([
+      supplier.find({}).skip(skip).limit(itemsPerPage).lean(),
+      supplier.find({}).countDocuments()
+    ])
+
+    res.render('admin/all/supplier', { title: 'Danh sách đối tác', layout: 'admin', index, successful, suppliers, totalSupplier, currentPage })
   }
 
   async supplierInfo(req, res, next) {

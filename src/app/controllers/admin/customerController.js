@@ -8,7 +8,14 @@ class allCustomersController {
     const index = 'customers'
     const successful = req.flash('successful')
 
-    const customers = await user.find({ deletedAt: null, 'loginInfo.role': 'user' }).lean()
+    const currentPage  = req.query.page || 1
+    const itemsPerPage = 10;
+    const skip         = (currentPage - 1) * itemsPerPage
+
+    const [customers, totalCustomer] = await Promise.all([
+      user.find({}).skip(skip).limit(itemsPerPage).lean(),
+      user.find({}).countDocuments()
+    ])
     const customerIds = customers.map(customer => customer._id.toString()) // Get all customer IDs
     const orders = await order.find({ 'customerInfo.userId': { $in: customerIds }, deletedAt: null }).lean()
 
@@ -31,9 +38,8 @@ class allCustomersController {
         totalPrice: totalPrice
       }
     })
-    const totalCustomer = customersWithOrders.length
 
-    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin', index, customersWithOrders, totalCustomer, successful });
+    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin', index, customersWithOrders, totalCustomer, successful, currentPage });
   }
 
   async customerInfo(req, res, next) {

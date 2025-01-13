@@ -12,3 +12,5 @@ validator({
     isRequiredString('#password'),
   ]
 }, 2)
+
+importLinkCss('/css/signIn.css')

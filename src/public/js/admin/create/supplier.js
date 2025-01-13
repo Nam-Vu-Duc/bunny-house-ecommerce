@@ -8,3 +8,5 @@ validator({
     isRequiredString('#address')
   ]
 })
+
+importLinkCss('/css/admin/createSupplier.css')

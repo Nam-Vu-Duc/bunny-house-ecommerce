@@ -6,6 +6,8 @@ var selectedValue           = 'skincare'
 // var newArrivalSelectOptions = document.querySelector('select[name="newArrival"]').querySelectorAll('option')
 var productType             = ''
 
+importLinkCss('/css/admin/detailProduct.css')
+
 // selected product category
 categoriesSelectOptions.forEach(option => {
   if (option.value === productCategories) {

@@ -2,6 +2,8 @@ var getPreparingButton  = document.querySelector('label#preparing')
 var getDeliveringButton = document.querySelector('label#delivering')
 var getDoneButton       = document.querySelector('label#done')
 
+importLinkCss('/css/admin/detailOrder.css')
+
 if (orderStatus === 'preparing') {
   getPreparingButton.style.backgroundColor = 'white'
   getPreparingButton.style.color = 'red'

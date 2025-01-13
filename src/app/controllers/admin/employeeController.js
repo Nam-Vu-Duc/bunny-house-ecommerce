@@ -7,10 +7,16 @@ class allEmployeesController {
     const index  = 'employees'
     const successful = req.flash('successful')
 
-    const employees = await employee.find({}).lean()
-    const totalEmployee = employees.length
+    const currentPage  = req.query.page || 1
+    const itemsPerPage = 10
+    const skip         = (currentPage - 1) * itemsPerPage
 
-    res.render('admin/all/employee', { title: 'Danh sách nhân sự', layout: 'admin', index, successful,  employees, totalEmployee })
+    const [employees, totalEmployee] = await Promise.all([
+      employee.find({}).skip(skip).limit(itemsPerPage).lean(),
+      employee.find({}).countDocuments()
+    ])
+
+    res.render('admin/all/employee', { title: 'Danh sách nhân sự', layout: 'admin', index, successful, employees, totalEmployee, currentPage })
   }
 
   async employeeInfo(req, res, next) {

@@ -1,0 +1,1 @@
+importLinkCss('/css/admin/detailCustomer.css')

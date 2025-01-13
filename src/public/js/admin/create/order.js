@@ -10,6 +10,8 @@ validator({
   ]
 })
 
+importLinkCss('/css/admin/createOrder.css')
+
 // skincare and makeup visibility
 var selectBox = document.querySelector('select[name="categories"]')
 var selectedValue = ''

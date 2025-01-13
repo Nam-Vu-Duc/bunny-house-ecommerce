@@ -7,14 +7,17 @@ class allOrdersController {
 
     const currentPage  = req.query.page || 1
     const orderType    = req.query.type || ''
-    const itemsPerPage = 10;
-    const skip         = (currentPage - 1) * itemsPerPage;
+    const itemsPerPage = 10
+    const skip         = (currentPage - 1) * itemsPerPage
 
-    let orders = await order.find({ deletedAt: null }).sort({'createdAt': -1}).lean()
-    if (orderType !== '') orders = orders.filter(order => order.status === orderType)
-    orders = orders.slice(skip, skip + itemsPerPage)
+    const [orders, totalOrder] = await Promise.all([
+      order.find({ deletedAt: null }).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),
+      order.find({ deletedAt: null }).countDocuments()
+    ])
 
-    res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin', index, successful, orders, orderType, currentPage })
+    // if (orderType !== '') orders = orders.filter(order => order.status === orderType)
+
+    res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin', index, successful, orders, orderType, totalOrder, currentPage })
   }
 
   orderInfo(req, res, next) {

@@ -1,5 +1,8 @@
 var getSubmitButton = document.querySelector('div.submit-button').querySelector('button')
 var getSubmitForm = document.querySelector('form.admin-update-form')
+
+importLinkCss('/css/admin/profile.css')
+
 getSubmitButton.onclick = function() {
   getSubmitForm.submit()
 }

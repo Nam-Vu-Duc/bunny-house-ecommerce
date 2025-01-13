@@ -82,7 +82,7 @@ class allProductsController {
     const deleteImg = newProduct.img.filename
     
     await cloudinary.uploader.destroy(deleteImg)
-    const removeProduct = await product.deleteOne({ _id: req.params.id })
+    await product.deleteOne({ _id: req.params.id })
 
     res.redirect('/admin/all-products')
   }

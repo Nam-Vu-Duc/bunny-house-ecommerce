@@ -7,6 +7,8 @@ var productPrice          = Array.from(document.querySelectorAll('p#product-pric
 var productName           = Array.from(document.querySelectorAll('p#product-name')).map((item) => item.innerText)
 var productNameNormalize  = Array.from(document.querySelectorAll('p#product-name')).map((item) => item.innerText.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase())
 
+importLinkCss('/css/admin/createPurchase.css')
+
 formatNumber = function(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 }

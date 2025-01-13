@@ -6,6 +6,8 @@ var getSubmitButton  = document.querySelector('button.submit-button')
 var getTableBody     = document.querySelector('tbody')
 var getTableFooter   = document.querySelector('tfoot')
 
+importLinkCss('/css/user/allOrders.css')
+
 // define a total order price, store as an object to change initial value through each function
 var totalOrderPrice = {
   total: 0

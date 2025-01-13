@@ -6,10 +6,16 @@ class allBrandsController {
     const index  = 'brands'
     const successful = req.flash('successful')
 
-    const brands = await brand.find({}).lean()
-    const totalBrand = brands.length
+    const currentPage  = req.query.page || 1
+    const itemsPerPage = 10;
+    const skip         = (currentPage - 1) * itemsPerPage
 
-    res.render('admin/all/brand', { title: 'Danh sách cửa hàng', layout: 'admin', index, successful, brands, totalBrand })
+    const [brands, totalBrand] = await Promise.all([
+      brand.find({}).skip(skip).limit(itemsPerPage).lean(),
+      brand.find({}).countDocuments()
+    ])
+
+    res.render('admin/all/brand', { title: 'Danh sách cửa hàng', layout: 'admin', index, successful, brands, totalBrand, currentPage })
   }
 
   async brandInfo(req, res, next) {

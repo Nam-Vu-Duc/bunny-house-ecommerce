@@ -12,3 +12,5 @@ validator({
     })
   ]
 }, 6)
+
+importLinkCss('/css/admin/createCustomer.css')

@@ -16,3 +16,5 @@ validator({
     })
   ]
 }, 4)
+
+importLinkCss('/css/user/signUp.css')

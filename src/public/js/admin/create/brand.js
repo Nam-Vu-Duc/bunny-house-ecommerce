@@ -7,3 +7,5 @@ validator({
     isRequiredString('#details'),
   ]
 }, 3)
+
+importLinkCss('/css/admin/createBrand.css')

@@ -6,10 +6,16 @@ class allStoresController {
     const index  = 'stores'
     const successful = req.flash('successful')
 
-    const stores = await store.find({}).lean()
-    const totalStore = stores.length
+    const currentPage  = req.query.page || 1
+    const itemsPerPage = 10;
+    const skip         = (currentPage - 1) * itemsPerPage
 
-    res.render('admin/all/store', { title: 'Danh sách cửa hàng', layout: 'admin', index, stores, totalStore, successful })
+    const [stores, totalStore] = await Promise.all([  
+      store.find({}).skip(skip).limit(itemsPerPage).lean(),
+      store.find({}).countDocuments()
+    ])
+
+    res.render('admin/all/store', { title: 'Danh sách cửa hàng', layout: 'admin', index, successful, stores, totalStore, currentPage })
   }
 
   async storeInfo(req, res, next) {

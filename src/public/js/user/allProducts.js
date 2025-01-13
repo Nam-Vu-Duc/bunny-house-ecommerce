@@ -3,6 +3,8 @@ var mainTitle           = document.querySelector('div.main-title').querySelector
 var getSkincareCategory = document.querySelector('div.all-category-skincare')
 var getMakeupCategory   = document.querySelector('div.all-category-makeup')
 
+importLinkCss('/css/user/allProducts.css')
+
 switch (getSlug) {
   case 'flash-sale': 
     mainTitle.innerText = 'Toàn bộ sản phẩm đang sale'
