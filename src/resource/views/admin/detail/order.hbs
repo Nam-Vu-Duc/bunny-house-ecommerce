@@ -35,18 +35,12 @@
       <tr>
         <td> Trạng thái đơn </td>
         <td>
-          <div>
-            <input type="radio" id="preparing" name="status" value="preparing">
-            <label id="preparing" for="preparing">Đang Xử Lý</label>
-          </div>
-          <div>
-            <input type="radio" id="delivering" name="status" value="delivering">
-            <label id="delivering" for="delivering">Đang Giao Hàng</label>
-          </div>
-          <div>
-            <input type="radio" id="done" name="status" value="done">
-            <label id="done" for="done">Hoàn Thành</label>
-          </div>
+          <select name="status" id="status">
+            <option value="preparing">Đang chuẩn bị đơn hàng</option>
+            <option value="delivering">Đang giao đơn hàng</option>
+            <option value="done">Hoàn thành đơn hàng</option>
+            <option value="cancel">Huỷ đơn hàng</option>
+          </select>
         </td>
       </tr>
     </table>

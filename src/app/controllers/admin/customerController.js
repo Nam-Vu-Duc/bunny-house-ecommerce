@@ -53,7 +53,26 @@ class allCustomersController {
   }
 
   async customerUpdate(req, res, next) {
-    
+    const {
+      name,
+      email,
+      phone,
+      address,
+      gender
+    } = req.body
+
+    await user.updateOne({ _id: req.params.id }, {
+      $set: {
+        "loginInfo.email" : email   ,
+        "userInfo.name"   : name    ,
+        "userInfo.phone"  : phone   ,
+        "userInfo.address": address ,
+        "userInfo.gender" : gender  ,
+      }
+    })
+
+    req.flash('successful', 'update successful')
+    res.redirect(req.get('Referrer') || '/admin')
   }
 
   createCustomer(req, res, next) {

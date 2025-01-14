@@ -27,7 +27,22 @@ class allSuppliersController {
   }
 
   async supplierUpdate(req, res, next) {
-    
+    const {
+      name,
+      email,
+      phone,
+      address
+    } = req.body
+
+    await supplier.updateOne({ _id: req.params.id }, {
+      name    : name    ,
+      phone   : phone   ,
+      email   : email   ,
+      address : address ,
+    })
+
+    req.flash('successful', 'update successfully')
+    res.redirect(req.get('Referrer') || '/admin')
   }
 
   async supplierCreate(req, res, next) {

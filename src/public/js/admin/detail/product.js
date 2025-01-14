@@ -1,62 +1,50 @@
-var selectedValue           = 'skincare'
-// var skincareBox             = document.querySelector('select[name="skincare"]').parentElement
-// var makeUpBox               = document.querySelector('select[name="makeup"]').parentElement
-// var categoriesSelectOptions = document.querySelector('select[name="categories"]').querySelectorAll('option')
-// var statusSelectOptions     = document.querySelector('select[name="status"]').querySelectorAll('option')
-// var newArrivalSelectOptions = document.querySelector('select[name="newArrival"]').querySelectorAll('option')
-var productType             = ''
+var selectedValue     = 'skincare'
+var categories        = document.querySelector('select#categories')
+var skincare          = document.querySelector('select#skincare')
+var makeup            = document.querySelector('select#makeup')
+var skincareOptions   = document.querySelector('select#skincare').querySelectorAll('option')
+var makeUpOptions     = document.querySelector('select#makeup').querySelectorAll('option')
+var categoriesOptions = document.querySelector('select#categories').querySelectorAll('option')
+var statusOptions     = document.querySelector('select#status').querySelectorAll('option')
+var newArrivalOptions = document.querySelector('select#newArrival').querySelectorAll('option')
 
 importLinkCss('/css/admin/detailProduct.css')
 
-// selected product category
-categoriesSelectOptions.forEach(option => {
-  if (option.value === productCategories) {
-    option.setAttribute('selected', 'selected')
-  }
+categoriesOptions.forEach(option => {
+  if (option.value === productCategories) option.selected = true
 })
 
-// selected product status
-statusSelectOptions.forEach(option => {
-  if (option.value === productStatus) {
-    option.setAttribute('selected', 'selected')
-  }
+statusOptions.forEach(option => {
+  if (option.value === productStatus) option.selected = true
 })
 
-// selected product newArrival
-newArrivalSelectOptions.forEach(option => {
-  if (option.value === productNewArrival) {
-    option.setAttribute('selected', 'selected')
-  }
+newArrivalOptions.forEach(option => {
+  if (option.value === productNewArrival) option.selected = true
 })
 
-// display product category
 if (productCategories === 'skincare') {
-  skincareBox.style.display = 'block'
-  makeUpBox.style.display = 'none'
-  productType = 'skincare'
-}
+  skincare.style.display = 'block'
+  skincareOptions.forEach(option => {
+    if (option.value === productSkincare) option.selected = true
+  })
+} 
 
 if (productCategories === 'makeup') {
-  skincareBox.style.display = 'none'
-  makeUpBox.style.display = 'block'
-  productType = 'makeup'
-}
-
-// selected product type
-if (productType === 'skincare') {
-  var skincareSelectOptions = document.querySelector('select[name="skincare"]').querySelectorAll('option')
-  skincareSelectOptions.forEach(option => {
-    if (option.value === productSkincare) {
-      option.setAttribute('selected', 'selected')
-    }
+  makeup.style.display = 'block'
+  makeUpOptions.forEach(option => {
+    if (option.value === productMakeup) option.selected = true
   })
 }
 
-if (productType === 'makeup') {
-  var makeupSelectOptions = document.querySelector('select[name="makeup"]').querySelectorAll('option')
-  makeupSelectOptions.forEach(option => {
-    if (option.value === productMakeup) {
-      option.setAttribute('selected', 'selected')
-    }
-  })
-}
+categories.addEventListener('change', (event) => {
+  selectedValue = event.target.value
+  if (selectedValue === 'skincare') {
+    skincare.style.display = 'block'
+    makeup.style.display = 'none'
+  }
+
+  if (selectedValue === 'makeup') {
+    skincare.style.display = 'none'
+    makeup.style.display = 'block'
+  }
+})

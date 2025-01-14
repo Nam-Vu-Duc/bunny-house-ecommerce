@@ -18,7 +18,7 @@ class profileController {
       'userInfo.gender'  : req.body.gender,
       'userInfo.address' : req.body.address,
     })
-    res.redirect('back')
+    res.redirect(req.get('Referrer') || '/')
   }
 }
 module.exports = new profileController

@@ -10,27 +10,45 @@
       </tr>
       <tr>
         <td>Tên Nhân Viên</td>
-        <td>{{employeeInfo.userInfo.name}}</td>
+        <td><input type="text" id="name" name="name" value="{{employeeInfo.userInfo.name}}"></td>
+      </tr>
+      <tr>
+        <td>Vị trí</td>
+        <td>
+          <select name="role" id="role">
+            <option value="employee">Nhân viên</option>
+            <option value="admin">Quản trị viên</option>
+          </select>
+        </td>
       </tr>
       <tr>
         <td>Email</td>
-        <td>{{employeeInfo.loginInfo.email}}</td>
+        <td><input type="text" id="email" name="email" value="{{employeeInfo.loginInfo.email}}"></td>
       </tr>
       <tr>
         <td>SĐT</td>
-        <td>{{employeeInfo.userInfo.phone}}</td>
+        <td><input type="text" id="phone" name="phone" value="{{employeeInfo.userInfo.phone}}"></td>
       </tr>
       <tr>
         <td>Địa Chỉ</td>
-        <td>{{employeeInfo.userInfo.address}}</td>
+        <td><input type="text" id="address" name="address" value="{{employeeInfo.userInfo.address}}"></td>
       </tr>
       <tr>
         <td>Giới tính</td>
-        <td>{{employeeInfo.userInfo.gender}}</td>
+        <td>
+          <input type="radio" name="gender" id="male" value="male">Nam
+          <input type="radio" name="gender" id="female" value="female">Nữ
+        </td>
       </tr>
       <tr>
         <td>Cửa hàng làm việc</td>
-        <td>{{employeeInfo.userInfo.storeId}}</td>
+        <td>
+          <select name="store" id="store">
+            {{#each stores}}
+              <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </td>
       </tr>
     </table>
     
@@ -38,5 +56,10 @@
   </form>
 </div>
 
+<script>
+  var role    = '{{employeeInfo.loginInfo.role}}'
+  var gender  = '{{employeeInfo.userInfo.gender}}'
+  var storeId = '{{employeeInfo.userInfo.storeId}}'
+</script>
 <script src="/js/importLinkCss.js" defer></script>
 <script src="/js/admin/detail/employee.js" defer></script>

@@ -22,12 +22,36 @@ class allEmployeesController {
   async employeeInfo(req, res, next) {
     const index = 'employees'
     const employeeInfo = await employee.findOne({ _id: req.params.id }).lean()
+    const stores = await store.find().lean()
 
-    res.render('admin/detail/employee', { title: employeeInfo.userInfo.name, layout: 'admin', index, employeeInfo })
+    res.render('admin/detail/employee', { title: employeeInfo.userInfo.name, layout: 'admin', index, employeeInfo, stores })
   }
 
   async employeeUpdate(req, res, next) {
-    
+    const {
+      role,
+      name,
+      email,
+      phone,
+      address,
+      gender,
+      store
+    } = req.body
+
+    await employee.updateOne({ _id: req.params.id }, {
+      $set: {
+        "loginInfo.email"   : email   ,
+        "loginInfo.role"    : role    ,
+        "userInfo.name"     : name    ,
+        "userInfo.phone"    : phone   ,
+        "userInfo.address"  : address ,
+        "userInfo.gender"   : gender  ,
+        "userInfo.storeId"  : store   ,
+      }
+    })
+
+    req.flash('successful', 'update successful')
+    res.redirect(req.get('Referrer') || '/admin')
   }
 
   async employeeCreate(req, res, next) {

@@ -276,7 +276,8 @@ div.submit-button {
           height: fit-content;
           border-bottom: 1px solid black;
           padding: 10px;
-          input {display: none}
+          ::placeholder {color: black}
+          input[type='text'] { width: 80% }
         }
       }
     }

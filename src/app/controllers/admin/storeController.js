@@ -28,7 +28,20 @@ class allStoresController {
   }
 
   async storeUpdate(req, res, next) {
-    
+    const {
+      name,
+      address,
+      details
+    } = req.body
+
+    await store.updateOne({ _id: req.params.id }, {
+      name   : name,
+      address: address,
+      details: details
+    })
+
+    req.flash('successful', 'update successfully')
+    res.redirect(req.get('Referrer') || '/admin')
   }
 
   async storeCreate(req, res, next) {

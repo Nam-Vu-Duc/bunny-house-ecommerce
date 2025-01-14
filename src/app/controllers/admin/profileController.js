@@ -11,14 +11,22 @@ class profileController {
   }
 
   async profileUpdated(req, res, next) {
+    const {
+      name,
+      phone,
+      address,
+      gender,
+    } = req.body
+
     await emp.updateOne({ _id: req.params.id}, {
-      'userInfo.name'   : req.body.name,
-      'userInfo.phone'  : req.body.phone,
-      'userInfo.gender' : req.body.gender,
-      'userInfo.address': req.body.address,
+      'userInfo.name'   : name,
+      'userInfo.phone'  : phone,
+      'userInfo.gender' : gender,
+      'userInfo.address': address,
     })
+    
     req.flash('successful', 'update successfully')
-    res.redirect('back')
+    res.redirect(req.get('Referrer') || '/admin')
   }
 }
 module.exports = new profileController

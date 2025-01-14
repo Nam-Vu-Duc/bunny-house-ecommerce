@@ -1,72 +1,31 @@
 <div class="profile-details-container">
   <form id="form-2" method="POST" action="/admin/profile/updated/{{userInfo._id}}?_method=PUT">
-    {{!-- <div class="form-title">
-      <p>Thông Tin Cá Nhân</p>
-    </div>
-
-    <div class="form-group">
-      <label for="name">Tên nhân viên</label>
-      <input 
-        type="text" 
-        class="form-control" 
-        id="name" 
-        name="name" 
-        value="{{userInfo.userInfo.name}}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label for="gender">Giới tính</label>
-      <div>
-        <input type="radio" id="male" name="gender" value="male">
-        <label for="cash">Nam</label>
-        
-        <input type="radio" id="female" name="gender" value="female">
-        <label for="cashless">Nữ</label>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="phone">Số điện thoại</label>
-      <input 
-        type="text" 
-        class="form-control" 
-        id="phone" 
-        name="phone" 
-        value="{{userInfo.userInfo.phone}}"
-      >
-    </div>
-
-    <div class="form-group">
-      <label for="address">Địa Chỉ Nhà</label>
-      <input 
-        type="text" 
-        class="form-control" 
-        id="address" 
-        name="address" 
-        value="{{userInfo.userInfo.address}}"
-      >
-    </div> --}}
-
     <table id="table-1">
       <thead>
         <tr><td colspan="2">THÔNG TIN CÁ NHÂN</td></tr>
       </thead>
       <tr>
+        <td>Mã nhân viên</td>
+        <td>{{userInfo._id}}</td>
+      </tr>
+      <tr>
         <td>Tên nhân viên</td>
-        <td>{{userInfo.userInfo.name}}</td>
+        <td><input type="text" id="name" name="name" value="{{userInfo.userInfo.name}}"></td>
       </tr>
       <tr>
         <td>Giới tính</td>
-        <td>{{userInfo.userInfo.gender}}</td>
+        <td>
+          <input type="radio" name="gender" id="male" value="male">Nam
+          <input type="radio" name="gender" id="female" value="female">Nữ
+        </td>
       </tr>
       <tr>
         <td>Số điện thoại</td>
-        <td>{{userInfo.userInfo.phone}}</td>
+        <td><input type="text" id="phone" name="phone" value="{{userInfo.userInfo.phone}}"></td>
       </tr>
       <tr>
-        <td>Địa Chỉ Nhà</td>
-        <td>{{userInfo.userInfo.address}}</td>
+        <td>Địa Chỉ</td>
+        <td><input type="text" id="address" name="address" value="{{userInfo.userInfo.address}}"></td>
       </tr>
     </table>
     
@@ -75,7 +34,7 @@
 </div>   
 
 <script defer>
-  var userGender = `{{userInfo.userInfo.gender}}`
+  var gender = `{{userInfo.userInfo.gender}}`
 </script>
 <script src="/js/importLinkCss.js" defer></script>
 <script src="/js/admin/profile.js" defer></script>  

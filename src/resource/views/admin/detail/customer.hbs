@@ -10,23 +10,26 @@
       </tr>
       <tr>
         <td>Tên Khách Hàng</td>
-        <td>{{customerInfo.userInfo.name}}</td>
+        <td><input type="text" id="name" name="name" value="{{customerInfo.userInfo.name}}"></td>
       </tr>
       <tr>
         <td>Email</td>
-        <td>{{customerInfo.loginInfo.email}}</td>
+        <td><input type="text" id="email" name="email" value="{{customerInfo.loginInfo.email}}"></td>
       </tr>
       <tr>
         <td>SĐT</td>
-        <td>{{customerInfo.userInfo.phone}}</td>
+        <td><input type="text" id="phone" name="phone" value="{{customerInfo.userInfo.phone}}"></td>
       </tr>
       <tr>
         <td>Địa Chỉ</td>
-        <td>{{customerInfo.userInfo.address}}</td>
+        <td><input type="text" id="address" name="address" value="{{customerInfo.userInfo.address}}"></td>
       </tr>
       <tr>
         <td>Giới tính</td>
-        <td>{{customerInfo.userInfo.gender}}</td>
+        <td>
+          <input type="radio" name="gender" id="male" value="male">Nam
+          <input type="radio" name="gender" id="female" value="female">Nữ
+        </td>
       </tr>
       <tr>
         <td>Tổng doanh thu</td>
@@ -64,5 +67,8 @@
   </form>
 </div>
 
+<script>
+  var gender = '{{customerInfo.userInfo.gender}}'
+</script>
 <script src="/js/importLinkCss.js" defer></script>
 <script src="/js/admin/detail/customer.js" defer></script>

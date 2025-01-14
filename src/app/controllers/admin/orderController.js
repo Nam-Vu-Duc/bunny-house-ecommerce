@@ -26,14 +26,20 @@ class allOrdersController {
     order.findOne({ _id: req.params.id }).lean()
       .then(order => {
         const index = 'orders'
-        res.render('admin/detail/order', { title: `Đơn ${order.customerInfo.name}`, layout: 'admin', order,index })
+        res.render('admin/detail/order', { title: `Đơn hàng ${order.customerInfo.name}`, layout: 'admin', order,index })
       })
       .catch(next)
   }
 
   async orderUpdate(req, res, next) {
-    await order.updateOne({ _id: req.params.id }, { status: req.body.status })
-    res.redirect('back')
+    const status = req.body.status
+
+    await order.updateOne({ _id: req.params.id }, { 
+      status: status
+    })
+
+    req.flash('successful', 'update successful')
+    res.redirect(req.get('Referrer') || '/admin')
   }
 
   async orderCreate(req, res, next) {
