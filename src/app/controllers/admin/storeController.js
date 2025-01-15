@@ -20,11 +20,13 @@ class allStoresController {
 
   async storeInfo(req, res, next) {
     const index = 'stores'
+    const successful = req.flash('successful')
+    
     const [storeInfo, employeesInfo] = await Promise.all([
       store.findOne({ _id: req.params.id }).lean(),
       employee.find({ 'userInfo.storeId': req.params.id }).lean(),
     ]);
-    res.render('admin/detail/store', { title: storeInfo.name, layout: 'admin', index, storeInfo, employeesInfo })
+    res.render('admin/detail/store', { title: storeInfo.name, layout: 'admin', index, successful, storeInfo, employeesInfo })
   }
 
   async storeUpdate(req, res, next) {
@@ -40,7 +42,7 @@ class allStoresController {
       details: details
     })
 
-    req.flash('successful', 'update successfully')
+    req.flash('successful', 'Cập nhật cửa hàng thành công')
     res.redirect(req.get('Referrer') || '/admin')
   }
 
@@ -54,7 +56,7 @@ class allStoresController {
     const newStore = new store(req.body)
 
     await newStore.save()
-    req.flash('successful', 'purchase successfully')
+    req.flash('successful', 'Thêm cửa hàng thành công')
     res.redirect('/admin/all-stores')
   }
 }

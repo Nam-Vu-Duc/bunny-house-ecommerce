@@ -1,10 +1,11 @@
 importLinkCss('/css/admin/detailEmployee.css')
 
+pushNotification(successful)
+
 var male = document.querySelector('input#male')
 var female = document.querySelector('input#female')
 gender === 'male' ? male.checked = true : female.checked = true
 
-console.log(role)
 var roleOptions = document.querySelector('select#role').querySelectorAll('option')
 roleOptions.forEach(option => {
   if (option.value === role) option.selected = true

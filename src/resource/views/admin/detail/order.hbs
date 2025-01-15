@@ -1,36 +1,40 @@
 <div class="order-details-container">
-  <form id="form-2" method="POST" action="/admin/all-orders/order/updated/{{order._id}}?_method=PUT">
+  <form id="form-2" method="POST" action="/admin/all-orders/order/updated/{{orderInfo._id}}?_method=PUT">
     <table id="table-1">
       <thead>
         <tr><td colspan="2">THÔNG TIN ĐƠN HÀNG</td></tr>
       </thead>
       <tr>
         <td>Mã Đơn</td>
-        <td>{{order._id}}</td>
+        <td>{{orderInfo._id}}</td>
       </tr>
       <tr>
         <td>Ngày Đặt</td>
-        <td>{{formatDate order.createdAt}}</td>
+        <td>{{formatDate orderInfo.createdAt}}</td>
       </tr>
       <tr>
         <td>Khách Hàng</td>
-        <td>{{order.customerInfo.name}}</td>
+        <td>{{orderInfo.customerInfo.name}}</td>
       </tr>
       <tr>
         <td>SĐT</td>
-        <td>{{order.customerInfo.phone}}</td>
+        <td>{{orderInfo.customerInfo.phone}}</td>
       </tr>
       <tr>
         <td>Địa Chỉ</td>
-        <td>{{order.customerInfo.address}}</td>
+        <td>{{orderInfo.customerInfo.address}}</td>
       </tr>
       <tr>
         <td>Ghi Chú</td>
-        <td>{{order.customerInfo.note}}</td>
+        <td>{{orderInfo.customerInfo.note}}</td>
+      </tr>
+      <tr>
+        <td>Phương thức thanh toán</td>
+        <td>{{formatPaymentMethod orderInfo.paymentMethod}}</td>
       </tr>
       <tr>
         <td>Tổng Tiền</td>
-        <td>{{formatNumber order.totalOrderPrice}}</td>
+        <td>{{formatNumber orderInfo.totalOrderPrice}}</td>
       </tr>
       <tr>
         <td> Trạng thái đơn </td>
@@ -58,7 +62,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each order.products}}
+        {{#each orderInfo.products}}
         <tr>
           <td>{{addIndex @index 1 }}</td>
           <td>{{this.name}}</td>
@@ -73,8 +77,8 @@
   </form>     
 </div>
 
-<script defer>
-  var orderStatus = `{{order.status}}`
+<script>
+  var orderStatus = `{{orderInfo.status}}`
+  var successful = '{{successful}}'
 </script>
-<script src="/js/importLinkCss.js" defer></script>
 <script src="/js/admin/detail/order.js" defer></script>

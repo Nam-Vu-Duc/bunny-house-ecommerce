@@ -36,10 +36,19 @@ app.engine('hbs', handlebars.engine({
     limit: (a, b) => a.slice(0, b),
     checkStatus: (a, b, c) => a.filter(a => a.status === b).slice(0, c),
     formatStatus: (a) => {
-      if(a === 'preparing') return 'Đang chuẩn bị đơn hàng'
-      if(a === 'delivering') return 'Đang giao đơn hàng'
-      if(a === 'done') return 'Hoàn thành đơn hàng'
-      if(a === 'cancel') return 'Huỷ đơn hàng'
+      if(a === 'preparing')   return 'Đang chuẩn bị đơn hàng'
+      if(a === 'delivering')  return 'Đang giao đơn hàng'
+      if(a === 'done')        return 'Hoàn thành đơn hàng'
+      if(a === 'cancel')      return 'Huỷ đơn hàng'
+    },
+    formatRole: (a) => {
+      if (a === 'admin')    return 'Quản trị viên'
+      if (a === 'manager')  return 'Quản lý'
+      if (a === 'employee') return 'Nhân viên'
+    },
+    formatPaymentMethod: (a) => {
+      if (a === 'cash')     return 'Tiền mặt'
+      if (a === 'transfer') return 'Chuyển khoản'
     },
     formatDate: (a) => a ? format(new Date(a), 'dd/MM/yyyy') : '',
     formatNumber: (a) => a ? a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND' : '0 VND',

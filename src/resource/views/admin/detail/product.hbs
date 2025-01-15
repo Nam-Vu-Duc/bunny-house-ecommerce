@@ -1,5 +1,5 @@
 <div class="product-details-container">
-  <form id="form-2" method="POST" action="/admin/all-products/product/updated/{{product._id}}?_method=PUT">
+  <form id="form-2" method="POST" action="/admin/all-products/product/updated/{{productInfo._id}}?_method=PUT">
     <table id="table-1">
       <thead>
         <tr><td colspan="2">THÔNG TIN SẢN PHẨM</td></tr>
@@ -36,27 +36,27 @@
       </tr>
       <tr>
         <td>Hãng</td>
-        <td><input type="text" id="brand" name="brand" value="{{product.brand}}"></td>
+        <td><input type="text" id="brand" name="brand" value="{{productInfo.brand}}"></td>
       </tr>
       <tr>
         <td>Tên</td>
-        <td><input type="text" id="name" name="name" value="{{product.name}}"></td>
+        <td><input type="text" id="name" name="name" value="{{productInfo.name}}"></td>
       </tr>
       <tr>
         <td>Giá cũ</td>
-        <td><input type="text" id="oldPrice" name="oldPrice" value="{{formatNumber product.oldPrice}}"></td>
+        <td><input type="text" id="oldPrice" name="oldPrice" value="{{formatNumber productInfo.oldPrice}}"></td>
       </tr>
       <tr>
         <td>Giá mới</td>
-        <td><input type="text" id="price" name="price" value="{{formatNumber product.price}}"></td>
+        <td><input type="text" id="price" name="price" value="{{formatNumber productInfo.price}}"></td>
       </tr>
       <tr>
         <td>Mô tả</td>
-        <td><input type="text" id="description" name="description" value="{{product.description}}"></td>
+        <td><input type="text" id="description" name="description" value="{{productInfo.description}}"></td>
       </tr>
       <tr>
         <td>Chi tiết</td>
-        <td><input type="text" id="details" name="details" value="{{product.details}}"></td>
+        <td><input type="text" id="details" name="details" value="{{productInfo.details}}"></td>
       </tr>
       <tr>
         <td>Độ hot</td>
@@ -83,12 +83,12 @@
   </form>
 </div>
 
-<script defer>
-  var productCategories  = `{{product.categories}}`
-  var productStatus      = `{{product.status}}`
-  var productNewArrival  = `{{product.newArrival}}`
-  var productSkincare    = `{{product.skincare}}`
-  var productMakeup      = `{{product.makeup}}`
+<script>
+  var productCategories  = `{{productInfo.categories}}`
+  var productStatus      = `{{productInfo.status}}`
+  var productNewArrival  = `{{productInfo.newArrival}}`
+  var productSkincare    = `{{productInfo.skincare}}`
+  var productMakeup      = `{{productInfo.makeup}}`
+  var successful         = '{{successful}}'
 </script>
-<script src="/js/importLinkCss.js" defer></script>
 <script src="/js/admin/detail/product.js" defer></script>

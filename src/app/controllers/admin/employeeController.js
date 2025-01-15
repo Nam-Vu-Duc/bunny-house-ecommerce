@@ -21,10 +21,12 @@ class allEmployeesController {
 
   async employeeInfo(req, res, next) {
     const index = 'employees'
+    const successful = req.flash('successful')
+
     const employeeInfo = await employee.findOne({ _id: req.params.id }).lean()
     const stores = await store.find().lean()
 
-    res.render('admin/detail/employee', { title: employeeInfo.userInfo.name, layout: 'admin', index, employeeInfo, stores })
+    res.render('admin/detail/employee', { title: employeeInfo.userInfo.name, layout: 'admin', index, successful, employeeInfo, stores })
   }
 
   async employeeUpdate(req, res, next) {
@@ -50,7 +52,7 @@ class allEmployeesController {
       }
     })
 
-    req.flash('successful', 'update successful')
+    req.flash('successful', 'Cập nhật nhân sự thành công')
     res.redirect(req.get('Referrer') || '/admin')
   }
 
@@ -86,7 +88,7 @@ class allEmployeesController {
     })
     await newEmp.save()
 
-    req.flash('successful', 'create successful')
+    req.flash('successful', 'Thêm nhân viên thành công')
     res.redirect('/admin/all-employees')
   }
 }

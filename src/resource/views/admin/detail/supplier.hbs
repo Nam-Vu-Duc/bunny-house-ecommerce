@@ -26,7 +26,7 @@
       </tr>
       <tr>
         <td>Tổng chi phí</td>
-        <td>{{formatNumber totalCost}}</td>
+        <td>{{formatNumber supplierInfo.totalCost}}</td>
       </tr>
     </table>
 
@@ -48,7 +48,7 @@
             <td>{{addIndex @index 1}}</td>
             <td>{{formatNumber this.totalPurchasePrice}}</td>
             <td>{{formatDate this.purchaseDate}}</td>
-            <td><a href="/admin/all-suppliers/supplier/{{this._id}}">Xem</a></td>
+            <td><a href="/admin/all-purchases/purchase/{{this._id}}">Xem</a></td>
           </tr>
         {{/each}}
       </tbody>
@@ -58,5 +58,7 @@
   </form>
 </div>
 
-<script src="/js/importLinkCss.js" defer></script>
+<script>
+  var successful = '{{successful}}'
+</script>
 <script src="/js/admin/detail/supplier.js" defer></script>

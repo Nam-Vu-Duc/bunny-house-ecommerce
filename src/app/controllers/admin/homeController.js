@@ -7,7 +7,9 @@ const employee = require('../../models/employeeModel')
 
 class homeController {
   async show(req, res, next) {
-    const index = 'home';
+    const index = 'home'
+    const successful = req.flash('successful') 
+
     const [orders, products, employees, customers, stores, brands] = await Promise.all([
       order.find({ deletedAt: null }).sort({ totalOrderPrice: -1 }).lean(),
       product.find().lean(),
@@ -53,7 +55,7 @@ class homeController {
     const maxValueOrderId = maxValueOrder._id?.toString() || ''
     const maxValueOrderNumber = maxValueOrder.totalOrderPrice
 
-    res.render('admin/home', { title: 'Trang chủ', layout: 'admin', index, ...orderStats, ...productStats, maxValueOrderId, maxValueOrderNumber, totalEmployee, totalCustomer, totalStore, totalBrand});
+    res.render('admin/home', { title: 'Trang chủ', layout: 'admin', index, successful, ...orderStats, ...productStats, maxValueOrderId, maxValueOrderNumber, totalEmployee, totalCustomer, totalStore, totalBrand});
   }
 }
 module.exports = new homeController

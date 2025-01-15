@@ -1,10 +1,15 @@
+pagination('products', totalProduct, currentPage)
+
+importLinkCss('/css/admin/allProducts.css')
+
+pushNotification(successful)
+
 // display delete confirmation box
 var courseId;
 var deleteForm   = document.forms['delete-form']
 var deleteButton = document.getElementById('delete-button')
 var formButton   = document.getElementsByClassName('form-button')
 
-importLinkCss('/css/admin/allProducts.css')
 
 function reply_click(clicked_id, clicked_name) {
   const name = clicked_name
@@ -33,4 +38,3 @@ deleteButton.onclick = function () {
 //   }
 // })
 
-pagination('products', totalProduct, currentPage)

@@ -18,6 +18,14 @@
       </select>
     </div>
     <div class="form-group">
+      <label for="paymentMethod">Chọn phương thức thanh toán</label>
+      <select name="paymentMethod" id="paymentMethod" required>
+        <option value="" selected disabled>-- Phương thức thanh toán --</option>
+          <option value="cash">Tiền mặt</option>
+          <option value="transfer">Chuyển khoản</option>
+      </select>
+    </div>
+    <div class="form-group">
       <label for="note">Ghi chú</label>
       <input type="text" id="note" name="note">
       <span class="form-message"></span>
@@ -72,5 +80,4 @@
   </form>
 </div>
 
-<script src="/js/utils.js" async></script>
 <script src="/js/admin/create/order.js" defer></script>

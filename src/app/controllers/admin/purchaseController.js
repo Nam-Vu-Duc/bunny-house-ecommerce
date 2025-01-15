@@ -21,6 +21,8 @@ class adminController {
 
   async purchaseInfo(req, res, next) {
     const index  = 'purchases'
+    const successful = req.flash('successful')
+
     const purchaseInfo = await purchase.findOne({ _id: req.params.id }).lean()
     const productId = purchaseInfo.products.map(product => product.id)
     const productInfo = await product.find({ _id: { $in: productId }, deletedAt: null }).lean()
@@ -29,7 +31,7 @@ class adminController {
       return { product: product, purchaseQuantity: quantity }
     })
 
-    res.render('admin/detail/purchase', { title: 'Phiếu nhập', layout: 'admin', index, purchaseInfo, productInfoWithQuantity })
+    res.render('admin/detail/purchase', { title: 'Phiếu nhập', layout: 'admin', index, successful, purchaseInfo, productInfoWithQuantity })
   }
 
   async purchaseUpdate(req, res, next) {
@@ -84,10 +86,18 @@ class adminController {
         update: { $inc: { quantity: quantity } }, // Increment quantity
         upsert: true, // Create product if it doesn't exist
       },
-    }));
+    }))
+    
     await newPurchase.save()
-    await product.bulkWrite(bulkOps);
-    req.flash('successful', 'purchase successfully')
+    await supplier.updateOne({ _id: supplierId }, {
+      $inc: { 
+        totalCost: totalPurchasePrice,
+        quantity: 1
+       }
+    })
+    await product.bulkWrite(bulkOps)
+    
+    req.flash('successful', 'Thêm đơn nhập thành công')
     return res.redirect('/admin/all-purchases')
   }
 }

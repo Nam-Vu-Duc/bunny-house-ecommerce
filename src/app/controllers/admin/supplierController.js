@@ -20,10 +20,12 @@ class allSuppliersController {
 
   async supplierInfo(req, res, next) {
     const index  = 'suppliers'
-    const supplierInfo =  await supplier.findOne({ _id: req.params.id }).lean()
-    const purchaseInfo = await purchase.find({ 'supplierInfo.supplierId': req.params.id }).lean()
+    const successful = req.flash('successful')
 
-    res.render('admin/detail/supplier', { title: supplierInfo.name, layout: 'admin', index, supplierInfo, purchaseInfo })
+    const supplierInfo =  await supplier.findOne({ _id: req.params.id }).lean()
+    const purchaseInfo = await purchase.find({ 'supplierId': req.params.id }).lean()
+
+    res.render('admin/detail/supplier', { title: supplierInfo.name, layout: 'admin', index, successful, supplierInfo, purchaseInfo })
   }
 
   async supplierUpdate(req, res, next) {
@@ -41,12 +43,13 @@ class allSuppliersController {
       address : address ,
     })
 
-    req.flash('successful', 'update successfully')
+    req.flash('successful', 'Cập nhật đối tác thành công')
     res.redirect(req.get('Referrer') || '/admin')
   }
 
   async supplierCreate(req, res, next) {
     const index  = 'suppliers'
+    
     res.render('admin/create/supplier', { title: 'Thêm đối tác mới', layout: 'admin', index })
   }
 
@@ -59,7 +62,7 @@ class allSuppliersController {
     const newSupplier = new supplier(req.body)
 
     await newSupplier.save()
-    req.flash('successful', 'create successfully')
+    req.flash('successful', 'Thêm đối tác thành công')
     res.redirect('/admin/all-suppliers')
   }
 }

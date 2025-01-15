@@ -38,7 +38,7 @@
             <td>{{this.userInfo.name}}</td>
             <td>{{this.loginInfo.email}}</td>
             <td>{{this.userInfo.address}}</td>
-            <td>{{this.loginInfo.role}}</td>
+            <td>{{formatRole this.loginInfo.role}}</td>
             <td><a href="/admin/all-employees/employee/{{this._id}}">Xem</a></td>
           </tr>
         {{/each}}
@@ -54,6 +54,4 @@
   const totalEmployee = `{{totalEmployee}}`
   const currentPage = `{{currentPage}}`
 </script>
-<script src="/js/importLinkCss.js" defer></script>
-<script src="/js/pagination.js" defer></script>
 <script src="/js/admin/all/employee.js" defer></script>

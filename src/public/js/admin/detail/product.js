@@ -1,3 +1,7 @@
+importLinkCss('/css/admin/detailProduct.css')
+
+pushNotification(successful)
+
 var selectedValue     = 'skincare'
 var categories        = document.querySelector('select#categories')
 var skincare          = document.querySelector('select#skincare')
@@ -8,7 +12,6 @@ var categoriesOptions = document.querySelector('select#categories').querySelecto
 var statusOptions     = document.querySelector('select#status').querySelectorAll('option')
 var newArrivalOptions = document.querySelector('select#newArrival').querySelectorAll('option')
 
-importLinkCss('/css/admin/detailProduct.css')
 
 categoriesOptions.forEach(option => {
   if (option.value === productCategories) option.selected = true

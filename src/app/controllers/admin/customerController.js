@@ -16,40 +16,20 @@ class allCustomersController {
       user.find({}).skip(skip).limit(itemsPerPage).lean(),
       user.find({}).countDocuments()
     ])
-    const customerIds = customers.map(customer => customer._id.toString()) // Get all customer IDs
-    const orders = await order.find({ 'customerInfo.userId': { $in: customerIds }, deletedAt: null }).lean()
 
-    // Create a mapping of userId to orders
-    const ordersByCustomer = {}
-    orders.forEach(order => {
-      const userId = order.customerInfo.userId
-      if (!ordersByCustomer[userId]) { ordersByCustomer[userId] = [] }
-      ordersByCustomer[userId].push(order)
-    })
-
-    // Attach the orders to each customer
-    const customersWithOrders = customers.map(customer => {
-      const customerOrders = ordersByCustomer[customer._id.toString()] || []
-      const totalPrice = customerOrders.reduce((total, order) => total + order.totalOrderPrice, 0)
-      return {
-        ...customer,
-        orders: customerOrders, // Attach orders or empty array if no orders found
-        totalOrder: customerOrders.length,
-        totalPrice: totalPrice
-      }
-    })
-
-    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin', index, customersWithOrders, totalCustomer, successful, currentPage });
+    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin', index, successful, customers, totalCustomer, currentPage });
   }
 
   async customerInfo(req, res, next) {
     const index = 'customers'
+    const successful = req.flash('successful')
+
     const customerInfo = await user.findOne({ _id: req.params.id }).lean()
     const orderInfo = await order.find({ 'customerInfo.userId': req.params.id, deletedAt: null }).lean()
     const totalOrder = orderInfo.length
     const totalPrice = orderInfo.reduce((total, order) => total + order.totalOrderPrice, 0)
     
-    res.render('admin/detail/customer', { title: customerInfo.userInfo.name, layout: 'admin', index, customerInfo, orderInfo, totalOrder, totalPrice })
+    res.render('admin/detail/customer', { title: customerInfo.userInfo.name, layout: 'admin', index, successful, customerInfo, orderInfo, totalOrder, totalPrice })
   }
 
   async customerUpdate(req, res, next) {
@@ -71,7 +51,7 @@ class allCustomersController {
       }
     })
 
-    req.flash('successful', 'update successful')
+    req.flash('successful', 'Cập nhật khách hàng thành công')
     res.redirect(req.get('Referrer') || '/admin')
   }
 
@@ -111,7 +91,7 @@ class allCustomersController {
       userId: savedUser._id
     })
     await newChat.save()
-    req.flash('successful', 'create successful')
+    req.flash('successful', 'Thêm khách hàng thành công')
     res.redirect('/admin/all-customers')
   }
 }

@@ -31,22 +31,22 @@ class allProductsController {
       newProduct.img.filename = req.file.filename
     }
     await newProduct.save()
-      .then(() => {
-        req.flash('successful', 'purchase successfully')
-        res.redirect('/admin/all-products')
-      })
-      .catch(next)
+
+    req.flash('successful', 'Thêm sản phẩm thành công')
+    res.redirect('/admin/all-products')
   }
 
-  updatingProduct(req, res, next) {
+  async productInfo(req, res, next) {
     const index = 'products'
-    product.findById(req.params.id).lean()
-      .then(product => { res.render('admin/detail/product', { title: product.name, layout: 'admin', product, index } )})
-      .catch(next)
+    const successful = req.flash('successful')
+
+    const productInfo = await product.findOne({ _id: req.params.id }).lean()
+    res.render('admin/detail/product', { title: product.name, layout: 'admin', index, successful, productInfo })
+
   }
   
-  productUpdated(req, res, next) {    
-    product.updateOne({ _id: req.params.id }, {
+  async productUpdated(req, res, next) {    
+    await product.updateOne({ _id: req.params.id }, {
       categories  : req.body.categories,
       skincare    : req.body.skincare,
       makeup      : req.body.makeup,
@@ -58,23 +58,17 @@ class allProductsController {
       details     : req.body.details,
       status      : req.body.status,
       newArrival  : req.body.newArrival,
-      img         : {
-        path      : req.file.path,
-        filename  : req.file.filename
-      }
     })
-      .then(() => { 
-        res.redirect('/admin/all-products')})
-      .catch(next)
+
+    req.flash('successful', 'Cập nhật sản phẩm thành công')
+    res.redirect(req.get('Referrer') || '/admin')
   }
 
-  softDelete(req, res, next) {
-    product.updateOne({ _id: req.params.id}, { deletedAt: Date.now() })
-      .then(() => {
-        req.flash('successful', 'delete successful')
-        res.redirect('/admin/all-products')
-      })
-      .catch(next)
+  async softDelete(req, res, next) {
+    await product.updateOne({ _id: req.params.id}, { deletedAt: Date.now() })
+    
+    req.flash('successful', 'Thêm sản phẩm vào kho thành công')
+    res.redirect('/admin/all-products')
   }
 
   async deleteProduct(req, res, next) {
@@ -84,23 +78,25 @@ class allProductsController {
     await cloudinary.uploader.destroy(deleteImg)
     await product.deleteOne({ _id: req.params.id })
 
+    req.flash('successful', 'Xoá sản phẩm thành công')
     res.redirect('/admin/all-products')
   }
 
-  restore(req, res, next) {
-    product.updateOne({ _id: req.params.id}, { deletedAt: null })
-      .then(() => res.redirect('/admin/all-products'))
-      .catch(next)
+  async restore(req, res, next) {
+    await product.updateOne({ _id: req.params.id}, { deletedAt: null })
+    
+    req.flash('successful', 'Phục hồi sản phẩm thành công')
+    res.redirect('/admin/all-products')
   }
 
-  trash(req, res, next) {
+  async trash(req, res, next) {
     const index = 'trash'
     const successful = req.flash('successful')
-    product.find({ deletedAt: { $ne: null } }).lean()
-      .then(product => { 
-        const totalDeletedProduct = product.length
-        res.render('admin/all/trash', { title: 'Kho', layout: 'admin', index, successful, product, totalDeletedProduct })})
-      .catch(next)
+
+    const products = await product.find({ deletedAt: { $ne: null } }).lean()
+    const totalDeletedProduct = products.length
+
+    res.render('admin/all/trash', { title: 'Kho', layout: 'admin', index, successful, products, totalDeletedProduct })
   }
 }
 module.exports = new allProductsController

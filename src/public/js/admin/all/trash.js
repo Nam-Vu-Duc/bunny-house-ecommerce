@@ -1,3 +1,9 @@
+pagination('trash', totalDeletedProduct, currentPage)
+
+importLinkCss('/css/admin/trash.css') 
+
+pushNotification(successful)
+
 // delete button
 var productId;
 var deleteForm    = document.forms['delete-form']
@@ -5,7 +11,6 @@ var restoreForm   = document.forms['restore-form']
 var deleteButton  = document.getElementById('delete-button')
 var restoreButton = document.getElementById('restore-button')
 
-importLinkCss('/css/admin/trash.css')
 
 function clickToDelete(clicked_id) {
   document.getElementById('id01').style.display='block'
@@ -27,5 +32,3 @@ restoreButton.onclick = function () {
   restoreForm.action = '/admin/all-products/product/restore/' + productId 
   restoreForm.submit()
 }
-
-pagination('trash', totalDeletedProduct, currentPage)

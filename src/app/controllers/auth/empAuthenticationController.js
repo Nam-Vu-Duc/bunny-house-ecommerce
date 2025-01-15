@@ -28,7 +28,8 @@ class loginController {
           httpOnly: true,
           secure: true,
         })
-        res.redirect('/admin')
+        req.flash('successful', 'Đăng nhập thành công')
+        return res.redirect('/admin')
       } else {
         req.flash('error', 'Mật khẩu không đúng')
         return res.redirect('/emp/authentication/sign-in')

@@ -55,7 +55,7 @@
         <tr>
           <td>{{addIndex @index 1}}</td>
           <td>{{formatNumber this.totalOrderPrice}}</td>
-          <td>{{this.paymentMethod}}</td>
+          <td>{{formatPaymentMethod this.paymentMethod}}</td>
           <td>{{formatStatus this.status}}</td>
           <td><a href="/admin/all-orders/order/{{this._id}}">Xem</a></td>
         </tr>
@@ -69,6 +69,7 @@
 
 <script>
   var gender = '{{customerInfo.userInfo.gender}}'
+  var successful = '{{successful}}'
+  console.log('default')
 </script>
-<script src="/js/importLinkCss.js" defer></script>
 <script src="/js/admin/detail/customer.js" defer></script>

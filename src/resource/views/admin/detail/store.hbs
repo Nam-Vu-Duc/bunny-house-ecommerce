@@ -43,7 +43,7 @@
         <tr>
           <td>{{this._id}}</td>
           <td>{{this.userInfo.name}}</td>
-          <td>{{this.loginInfo.role}}</td>
+          <td>{{formatRole this.loginInfo.role}}</td>
           <td><a href="/admin/all-employees/employee/{{this._id}}">Xem</a></td>
         </tr>
         {{/each}}
@@ -54,5 +54,7 @@
   </form>
 </div>
 
-<script src="/js/importLinkCss.js" defer></script>
+<script>
+  var successful = '{{successful}}'
+</script>
 <script src="/js/admin/detail/store.js" defer></script>

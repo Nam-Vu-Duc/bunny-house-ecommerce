@@ -17,7 +17,7 @@ router.get('/trash', productController.trash)
 router.get('/product/create', productController.createProduct)
 router.post('/product/created', upload.single('img'), productController.productCreated)
 
-router.get('/product/:id', productController.updatingProduct)
+router.get('/product/:id', productController.productInfo)
 router.put('/product/updated/:id', upload.single('img'), productController.productUpdated)
 
 router.delete('/product/soft-delete/:id', productController.softDelete)

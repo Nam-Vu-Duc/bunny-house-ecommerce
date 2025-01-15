@@ -22,13 +22,13 @@ class allOrdersController {
     res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin', index, successful, orders, orderType, totalOrder, currentPage })
   }
 
-  orderInfo(req, res, next) {
-    order.findOne({ _id: req.params.id }).lean()
-      .then(order => {
-        const index = 'orders'
-        res.render('admin/detail/order', { title: `Đơn hàng ${order.customerInfo.name}`, layout: 'admin', order,index })
-      })
-      .catch(next)
+  async orderInfo(req, res, next) {
+    const index = 'orders'
+    const successful = req.flash('successful')
+
+    const orderInfo = await order.findOne({ _id: req.params.id }).lean()
+
+    res.render('admin/detail/order', { title: `Đơn hàng ${orderInfo.customerInfo.name}`, layout: 'admin', index, successful, orderInfo })
   }
 
   async orderUpdate(req, res, next) {
@@ -38,7 +38,7 @@ class allOrdersController {
       status: status
     })
 
-    req.flash('successful', 'update successful')
+    req.flash('successful', 'Cập nhật đơn hàng thành công')
     res.redirect(req.get('Referrer') || '/admin')
   }
 
@@ -56,6 +56,7 @@ class allOrdersController {
     let { 
       orderDate, 
       userId,
+      paymentMethod,
       note,
       productId, 
       productName,
@@ -70,6 +71,8 @@ class allOrdersController {
       productQuantity = [productQuantity]
     }
 
+    const userInfo = await user.findOne({ _id: userId }).lean()
+
     const newOrder = new order({
       products: productId.map((product, index) => ({
         id        : productId[index],
@@ -77,15 +80,21 @@ class allOrdersController {
         price     : productPrice[index],
         quantity  : productQuantity[index], 
       })),
-      userId: userId,
-      note: note,
+      customerInfo: {
+        userId: userId,
+        name: userInfo.userInfo.name,
+        phone: userInfo.userInfo.phone,
+        address: userInfo.userInfo.address,
+        note: note
+      },
+      paymentMethod: paymentMethod,
       createdAt: orderDate,
       totalOrderPrice: totalOrderPrice
     });
 
     await newOrder.save()
-    req.flash('successful', 'order successfully')
-    return res.redirect('/admin/all-purchases')
+    req.flash('successful', 'Thêm đơn hàng thành công')
+    return res.redirect('/admin/all-orders')
   }
 }
 module.exports = new allOrdersController

@@ -23,7 +23,8 @@
           <td style="width:  5%">STT           </td>
           <td style="width: 15%">Mã Đối Tác    </td>
           <td style="width: 20%">Tên Đối Tác   </td>
-          <td style="width: 30%">Địa chỉ       </td>
+          <td style="width: 20%">Địa chỉ       </td>
+          <td style="width: 10%">Tổng đơn nhập </td>
           <td style="width: 20%">Tổng Chi phí  </td>
           <td style="width: 10%">Chi tiết      </td>
         </tr>
@@ -36,6 +37,7 @@
             <td>{{this._id}}</td>
             <td>{{this.name}}</td>
             <td>{{this.address}}</td>
+            <td>{{this.quantity}}</td>
             <td>{{formatNumber this.totalCost}}</td>
             <td><a href="/admin/all-suppliers/supplier/{{this._id}}">Xem</a></td>
           </tr>
@@ -52,6 +54,4 @@
   const totalSupplier = `{{totalSupplier}}`
   const currentPage = `{{currentPage}}`
 </script>
-<script src="/js/importLinkCss.js" defer></script>
-<script src="/js/pagination.js" defer></script>
 <script src="/js/admin/all/supplier.js" defer></script>
