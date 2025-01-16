@@ -19,7 +19,6 @@
   "homepage": "https://github.com/Nam-Vu-Duc/bunnyStore#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "chart.js": "^4.4.7",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",

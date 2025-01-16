@@ -14,7 +14,7 @@ class homeController {
       order.find({ deletedAt: null }).sort({ totalOrderPrice: -1 }).lean(),
       product.find().lean(),
       employee.find().lean(),
-      user.find({ deletedAt: null, 'loginInfo.role': 'user' }).lean(),
+      user.find({ deletedAt: null }).lean(),
       store.find({}).lean(),
       brand.find({}).lean()
     ])
@@ -55,7 +55,9 @@ class homeController {
     const maxValueOrderId = maxValueOrder._id?.toString() || ''
     const maxValueOrderNumber = maxValueOrder.totalOrderPrice
 
-    res.render('admin/home', { title: 'Trang chủ', layout: 'admin', index, successful, ...orderStats, ...productStats, maxValueOrderId, maxValueOrderNumber, totalEmployee, totalCustomer, totalStore, totalBrand});
+    const name = customers.map(cus => cus.userInfo.name)
+
+    res.render('admin/home', { title: 'Trang chủ', layout: 'admin', index, successful, ...orderStats, ...productStats, maxValueOrderId, maxValueOrderNumber, totalEmployee, totalCustomer, totalStore, totalBrand, name });
   }
 }
 module.exports = new homeController

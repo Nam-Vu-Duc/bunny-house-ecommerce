@@ -21,10 +21,11 @@
       <thead>
         <tr>
           <td style="width:  5%">STT     </td>
-          <td style="width: 15%">Hãng    </td>
-          <td style="width: 30%">Tên     </td>
+          <td style="width: 10%">Hãng    </td>
+          <td style="width: 25%">Tên     </td>
           <td style="width: 10%">Loại    </td>
-          <td style="width: 20%">Giá     </td>
+          <td style="width: 15%">Giá nhập</td>
+          <td style="width: 15%">Giá bán </td>
           <td style="width: 10%">Số lượng</td>
           <td style="width: 10%">Thao tác</td>
         </tr>
@@ -45,6 +46,7 @@
             <p>{{this.name}}</p>
           </td>  
           <td>{{this.categories}}</td>
+          <td>{{formatNumber this.purchasePrice}}</td>
           <td>{{formatNumber this.price}}</td>
           <td>{{this.quantity}}</td>
           <td>

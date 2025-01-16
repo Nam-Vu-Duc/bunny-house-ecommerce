@@ -24,6 +24,8 @@ class adminController {
     const successful = req.flash('successful')
 
     const purchaseInfo = await purchase.findOne({ _id: req.params.id }).lean()
+    const supplierInfo = await supplier.findOne({ _id: purchaseInfo.supplierId }).lean()
+
     const productId = purchaseInfo.products.map(product => product.id)
     const productInfo = await product.find({ _id: { $in: productId }, deletedAt: null }).lean()
     const productInfoWithQuantity = productInfo.map(product => {
@@ -31,7 +33,7 @@ class adminController {
       return { product: product, purchaseQuantity: quantity }
     })
 
-    res.render('admin/detail/purchase', { title: 'Phiếu nhập', layout: 'admin', index, successful, purchaseInfo, productInfoWithQuantity })
+    res.render('admin/detail/purchase', { title: 'Phiếu nhập', layout: 'admin', index, successful, purchaseInfo, supplierInfo, productInfoWithQuantity })
   }
 
   async purchaseUpdate(req, res, next) {
@@ -72,6 +74,7 @@ class adminController {
       supplierId: supplierId,
       note: note,
       purchaseDate: purchaseDate,
+      totalProducts: productQuantity.reduce((acc, curr) => acc + parseInt(curr), 0),
       totalPurchasePrice: totalPurchasePrice
     });
 
@@ -82,9 +85,9 @@ class adminController {
 
     const bulkOps = productUpdates.map(({ productId, quantity }) => ({
       updateOne: {
-        filter: { _id: productId }, // Find product by ID
-        update: { $inc: { quantity: quantity } }, // Increment quantity
-        upsert: true, // Create product if it doesn't exist
+        filter: { _id: productId },
+        update: { $inc: { quantity: quantity } }, 
+        upsert: true,
       },
     }))
     

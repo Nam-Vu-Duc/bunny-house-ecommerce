@@ -13,5 +13,3 @@ document.body.appendChild(pagination)
 var pushNotification = document.createElement('script')
 pushNotification.src = '/js/pushNotification.js'
 document.body.appendChild(pushNotification)
-
-console.log('utils')

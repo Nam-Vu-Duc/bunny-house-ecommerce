@@ -123,12 +123,12 @@
         <tbody>
           <tr>
             <td>Tổng doanh thu</td>
-            <td class="totalRevenue">{{formatNumber totalRevenue}}</td>
+            <td>{{formatNumber totalRevenue}}</td>
             <td></td>
           </tr>
           <tr>
             <td>Đơn có giá trị cao nhất</td>
-            <td class="maxValueOrderNumber">{{formatNumber maxValueOrderNumber}}</td>
+            <td>{{formatNumber maxValueOrderNumber}}</td>
             <td><a href="/admin/all-orders/order/{{maxValueOrderId}}">Chi tiết</a></td>
           </tr>
         </tbody>
@@ -169,10 +169,171 @@
         </tbody>
       </table>
     </div>
+
+    <div><canvas id="customer"></canvas></div>
+    <div><canvas id="purchase"></canvas></div>
+    <div><canvas id="order"></canvas></div>
+    <div><canvas id="store"></canvas></div>
+    <div><canvas id="product"></canvas></div>
+    <div><canvas id="employee"></canvas></div>
+    <div><canvas id="supplier"></canvas></div>
+    <div><canvas id="brand"></canvas></div>
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
   var successful = '{{successful}}'
+  const customer  = document.getElementById('customer')
+  const purchase  = document.getElementById('purchase')
+  const order     = document.getElementById('order')
+  const store     = document.getElementById('store')
+  const product   = document.getElementById('product')
+  const employee  = document.getElementById('employee')
+  const supplier  = document.getElementById('supplier')
+  const brand     = document.getElementById('brand')
+  console.log({{name}})
+
+  new Chart(customer, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'THỐNG KÊ KHÁCH HÀNG',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1,
+        backgroundColor: '#FFDFDF'
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  })
+
+  new Chart(purchase, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'THỐNG KÊ NHẬP HÀNG',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  })
+
+  new Chart(order, {
+    type: 'bar',
+    data: {
+      labels: ['Đang chuẩn bị', 'Đang giao', 'Hoàn thành'],
+      datasets: [{
+        label: 'THỐNG KÊ ĐƠN HÀNG',
+        data: [{{preparingOrders}}, {{deliveringOrders}}, {{doneOrders}}],
+        borderColor: '#36A2EB',
+        backgroundColor: '#9BD0F5',
+      }]
+    }
+  })
+
+  new Chart(store, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'THỐNG KÊ CỬA HÀNG',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  })
+
+  new Chart(product, {
+    type: 'bar',
+    data: {
+      labels: ['Skincare', 'Makeup', 'Xoá'],
+      datasets: [{
+        label: 'THỐNG KÊ SẢN PHẨM',
+        data: [{{allSkincareProducts}}, {{allMakeupProducts}}, {{deletedProducts}}],
+        borderWidth: 1
+      }]
+    }
+  })
+
+  new Chart(employee, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'THỐNG KÊ NHÂN SỰ',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  })
+
+  new Chart(supplier, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'THỐNG KÊ ĐỐI TÁC',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  })
+
+  new Chart(brand, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'THỐNG KÊ THƯƠNG HIỆU',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  })
+
+  Chart.defaults.backgroundColor = '#FFDFDF'
 </script>
 <script src="/js/admin/home.js" defer></script>

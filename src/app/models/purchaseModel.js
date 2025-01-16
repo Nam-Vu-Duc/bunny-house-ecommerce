@@ -11,7 +11,8 @@ const purchase = new Schema({
   ],
   supplierId          : { type: String, default: '' },
   purchaseDate        : { type: Date, default: '' },
-  totalPurchasePrice  : { type: Number, default: 0 },
   note                : { type: String, default: '' },
+  totalProducts       : { type: Number, default: 0 },
+  totalPurchasePrice  : { type: Number, default: 0 },
 }, { timestamps: true })
 module.exports = mongoose.model('purchase', purchase);

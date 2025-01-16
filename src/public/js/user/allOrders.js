@@ -215,64 +215,6 @@ function deleteCart(totalOrderPrice) {
 }
 deleteCart(totalOrderPrice)
 
-//
-function validating(inputElement, rule, checkValidate, index) {
-  var errorMessage = rule.test(inputElement.value)
-  var errorElement = inputElement.parentElement.querySelector('.form-message')
-  var errorLabelElement = inputElement.parentElement.querySelector('label')
-
-  if (errorMessage) {
-    errorElement.innerText = errorMessage
-    errorLabelElement.style.color = 'red'
-    inputElement.style.borderColor = 'red'
-    errorElement.style.color = "red"
-    checkValidate[index] = false
-  } else {
-    errorElement.innerText = ''
-    errorLabelElement.style.color = 'black'
-    inputElement.style.borderColor = 'black'
-    errorElement.style.color = "black"
-    checkValidate[index] = true
-  }
-}  
-
-// isRequiredString requires input must have string
-function isRequiredString(selector) {
-  return {
-    selector: selector,
-    test: function (value) {
-      return value.trim() ? undefined : 'Quên Chưa Nhập Kìa =((('
-    }
-  }
-}
-
-// validator function to validate input form from user
-function validator(options) {
-  var formElement = document.querySelector(options.form)
-  var checkValidate = Array(3).fill(false)
-
-  options.rules.forEach(function (rule, index) {
-    var inputElement = formElement.querySelector(rule.selector)
-    // input blur
-    inputElement.onblur = function () {
-      validating(inputElement, rule, checkValidate, index)
-    }
-  })
-
-  formElement.onsubmit = function (e) {
-    for (var i = 0; i < checkValidate.length; ++i) {
-      if(checkValidate[i] === false) {
-        e.preventDefault()
-        options.rules.forEach(function (rule, index) {
-          var inputElement = formElement.querySelector(rule.selector)
-          validating(inputElement, rule, checkValidate, index)
-        })
-        break
-      } 
-    }
-  }
-}
-
 validator({
   form: '#form-4',
   errorSelector: '.form-message',
@@ -281,7 +223,7 @@ validator({
     isRequiredString('#phone'),
     isRequiredString('#address'),
   ]
-})
+}, 3)
 
 // create successfully message
 if (successful && newOrderId) {

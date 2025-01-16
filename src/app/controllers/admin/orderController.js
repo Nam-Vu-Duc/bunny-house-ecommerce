@@ -1,6 +1,7 @@
 const order = require('../../models/orderModel')
 const user = require('../../models/userModel')
 const product = require('../../models/productModel')
+const store = require('../../models/storeModel')
 
 class allOrdersController {
   async allOrders(req, res, next) {
@@ -37,6 +38,36 @@ class allOrdersController {
     await order.updateOne({ _id: req.params.id }, { 
       status: status
     })
+
+    if (status === 'done') {
+      const orderInfo = await order.findOne({ _id: req.params.id }).lean()
+      const userId = orderInfo.customerInfo.userId
+      const storeId = orderInfo.storeId
+
+      // update product quantity
+      const productInfo = orderInfo.products.map(product => ({id: product.id, quantity: product.quantity}))
+      const bulkOps = productInfo.map(({ id, quantity }) => ({
+        updateOne: {
+          filter: { _id: id },
+          update: { $inc: { quantity: -quantity } }, 
+          upsert: true,
+        },
+      }))
+      await product.bulkWrite(bulkOps)
+
+      await store.updateOne({ _id: storeId }, {
+        $inc: { revenue: orderInfo.totalOrderPrice }
+      })
+
+      if(userId !== 'guest') {
+        await user.updateOne({ _id: userId }, {
+          $inc: { 
+            revenue: orderInfo.totalOrderPrice,
+            quantity: 1
+          }
+        })
+      }
+    }
 
     req.flash('successful', 'Cập nhật đơn hàng thành công')
     res.redirect(req.get('Referrer') || '/admin')

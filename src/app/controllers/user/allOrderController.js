@@ -1,17 +1,20 @@
 const order = require('../../models/orderModel')
 const user = require('../../models/userModel')
-const product = require('../../models/productModel')
-const mongoose = require('mongoose')
+const store = require('../../models/storeModel')
 
 class allOrderController {
   async show(req, res, next) {
     const isUser = req.isUser === true ? true : false
     const userId = req.cookies.user_id ? req.cookies.user_id : null
+
     const successful = req.flash('successful')
     const newOrderId = req.flash('newOrderId')
+
     let userInfo = []
     if(userId) userInfo = await user.findOne({ _id: userId }).lean()
-    res.render('users/allOrders', { title: 'Đơn hàng', successful, newOrderId, isUser, userId, userInfo })
+    const storeInfo = await store.find({}).lean()
+
+    res.render('users/allOrders', { title: 'Đơn hàng', successful, newOrderId, isUser, userId, userInfo, storeInfo })
   }
 
   async orderInfo(req, res, next) {
