@@ -1,3 +1,5 @@
+importLinkCss('/css/user/detailProduct.css')
+
 var getAddToCart        = document.querySelector('div.add-to-cart')
 var getBuyNow           = document.querySelector('div.buy-now')
 var getOutOfOrder       = document.querySelector('div.out-of-order')
@@ -8,8 +10,6 @@ var getDecreaseQuantity = document.querySelector('i.fi-rr-minus-circle')
 var getQuantityValue    = document.querySelector('div.quantity').querySelector('p')
 var metaContent         = productDetails.slice(0, 150) + '...'
 var metaDescription     = document.querySelector("meta[name='description']")
-
-importLinkCss('/css/user/detailProduct.css')
 
 document.addEventListener("DOMContentLoaded", function() {metaDescription.setAttribute("content", metaContent);})
 

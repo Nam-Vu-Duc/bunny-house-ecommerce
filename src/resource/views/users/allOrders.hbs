@@ -77,10 +77,11 @@
   <div class="button"><button class="next-button">Tiếp tục</button></div>
 </div>
 
-<script defer>
+<script>
   var successful = `{{successful}}`
   var newOrderId = `{{newOrderId}}`
   var userId     = `{{userId}}`
 </script>
-<script src="/js/importLinkCss.js" defer></script>
-<script src="/js/user/allOrders.js" defer></script>
+<script defer>
+  loadFile('/js/user/allOrders.js')
+</script>

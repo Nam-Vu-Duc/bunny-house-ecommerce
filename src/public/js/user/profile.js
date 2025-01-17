@@ -1,10 +1,10 @@
+importLinkCss('/css/user/profile.css')
+
 var profileButton     = document.querySelector('li.profile')
 var ordersButton      = document.querySelector('li.orders')
 var rateButton        = document.querySelector('li.rate-orders')
 var feedbackButton    = document.querySelector('li.feedback')
 var contentContainer  = document.querySelector('div.content')
-
-importLinkCss('/css/user/profile.css')
 
 // display profile update on first loaded page
 if (contentContainer.innerText === '') showProfile()

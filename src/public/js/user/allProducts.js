@@ -1,9 +1,9 @@
+importLinkCss('/css/user/allProducts.css')
+
 // update main-title base on params.slug
 var mainTitle           = document.querySelector('div.main-title').querySelector('b')
 var getSkincareCategory = document.querySelector('div.all-category-skincare')
 var getMakeupCategory   = document.querySelector('div.all-category-makeup')
-
-importLinkCss('/css/user/allProducts.css')
 
 switch (getSlug) {
   case 'flash-sale': 

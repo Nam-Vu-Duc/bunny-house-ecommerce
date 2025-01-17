@@ -1,15 +1,15 @@
-var checkInput = document.createElement('script')
-checkInput.src = '/js/checkInput.js'
-document.body.appendChild(checkInput)
+const checkInputScript = document.createElement('script')
+checkInputScript.src = '/js/checkInput.js'
+document.head.appendChild(checkInputScript)
 
-var importLinkCSS = document.createElement('script')
-importLinkCSS.src = '/js/importLinkCSS.js'
-document.body.appendChild(importLinkCSS)
+const importLinkScript = document.createElement('script')
+importLinkScript.src = '/js/importLinkCSS.js'
+document.head.appendChild(importLinkScript)
 
-var pagination = document.createElement('script')
-pagination.src = '/js/pagination.js'
-document.body.appendChild(pagination)
+const paginationScript = document.createElement('script')
+paginationScript.src = '/js/pagination.js'
+document.head.appendChild(paginationScript)
 
-var pushNotification = document.createElement('script')
-pushNotification.src = '/js/pushNotification.js'
-document.body.appendChild(pushNotification)
+const pushNotificationScript = document.createElement('script')
+pushNotificationScript.src = '/js/pushNotification.js'
+document.head.appendChild(pushNotificationScript)

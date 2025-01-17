@@ -16,5 +16,6 @@
     var orderStatus     = `{{orderInfo.status}}`
     var orderId         = `{{orderInfo._id}}`
 </script>
-<script src="/js/importLinkCss.js" defer></script>
-<script src="/js/user/ordersChecking.js" defer></script>
+<script defer>
+  loadFile('/js/user/ordersChecking.js')
+</script>

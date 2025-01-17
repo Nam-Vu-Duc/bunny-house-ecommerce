@@ -1,3 +1,5 @@
+importLinkCss('/css/user/signUp.css')
+
 var wrongInfo = document.querySelector('p.wrong-info')
 if (error) {
   wrongInfo.innerText = error
@@ -16,5 +18,3 @@ validator({
     })
   ]
 }, 4)
-
-importLinkCss('/css/user/signUp.css')
