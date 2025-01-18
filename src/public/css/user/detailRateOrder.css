@@ -1,36 +1,6 @@
 .detail-rate-order-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  form {
-    width: 70%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-  table {
-    width: 100%;
-    border-spacing: 0px 10px;
-    padding: 0px 10px;
-    thead {
-      background-color: #D1A6A6;
-      height: 50px;
-      font-weight: bolder;
-      text-align: center;
-      width: fit-content;
-    }
-    tbody {
-      td {
-        height: 50px;
-        padding: 5px 0;
-        p {margin-block-end: 1em}
-        input {
-          width: 100%;
-          min-height: 30px;
-        }
-      }
-    }
+  .rate-star {
+    padding: 5px;
   }
 }
 @media screen and (max-width: 700px) {

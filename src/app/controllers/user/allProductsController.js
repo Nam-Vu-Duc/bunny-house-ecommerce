@@ -4,6 +4,7 @@ const comment = require('../../models/commentModel')
 class allProductsController {
   async showAllProducts(req, res, next) {
     const isUser = req.isUser === true ? true : false
+
     const currentPage  = req.query.page   || 1
     const sortedColumn = req.query.column || ''
     const sort         = req.query.sort   || ''
@@ -38,6 +39,7 @@ class allProductsController {
 
   async showAllSkincare(req, res, next) {
     const isUser = req.isUser === true ? true : false
+
     const type = req.params.slug
     const products = await product.find({ deletedAt: null, skincare: type }).lean()
 
@@ -54,6 +56,7 @@ class allProductsController {
 
   async productInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
+    
     const newProduct = await product.findOne({ _id: req.params.id }).lean()
     const comments = await comment.find({ productId: newProduct._id }).lean()
     let newProductType = ''

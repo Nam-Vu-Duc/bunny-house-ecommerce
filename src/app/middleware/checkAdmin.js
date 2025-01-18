@@ -1,15 +1,13 @@
 const emp = require('../models/employeeModel')
 
-module.exports = function checkAdmin(req, res, next) {
+module.exports = async function checkAdmin(req, res, next) {
   var userId = req.cookies.user_id
   // if (!token) return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
   if (userId) {
-    emp.findOne({ _id: userId })
-      .then(emp => {
-        if (emp.loginInfo.role !== 'admin') return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
-        next()
-      })
-      .catch(next)
+    const isEmp = await emp.findOne({ _id: userId })
+    if (!isEmp) return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
+    if (isEmp.loginInfo.role !== 'admin') return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
+    next()
   } else {
     return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
   }

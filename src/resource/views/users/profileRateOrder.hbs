@@ -1,0 +1,45 @@
+<div class="user-update-profile-container">
+    <div class="sidebar-menu">
+      <div class="avatar">
+        <img src="https://res.cloudinary.com/bunny-store/image/upload/v1711070727/web-img/logo_xkavlj.webp" alt="{{userInfo.userInfo.name}}" loading="lazy">
+        <span>{{userInfo.userInfo.name}}</span>
+      </div>
+      <div class="tag">
+        <a href="/profile/info"><i class="fi fi-br-circle-user"></i>Thông tin cá nhân</a>
+        <a href="/profile/order"><i class="fi fi-rr-piggy-bank"></i>Thông tin đơn hàng</a>
+        <a href="/profile/rate-order"><i class="fi fi-rr-piggy-bank"></i>Đánh giá đơn hàng</a>
+        <a href="/profile/feedback"><i class="fi fi-rr-feedback-alt"></i>Góp ý</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <p>Đánh giá Đơn Hàng</p>
+
+      <table style="width:100%">
+        <thead>
+          <tr>
+            <td style="width: 25%">Người Nhận</td>
+            <td style="width: 25%">Tổng Tiền</td>
+            <td style="width: 20%">Ngày</td>
+            <td style="width: 15%">Tình Trạng</td>
+            <td style="width: 15%">Đánh giá</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each orderInfo}}
+            <tr>
+              <td>{{this.customerInfo.name}}</td>
+              <td>{{formatNumber this.totalOrderPrice}}</td>
+              <td>{{formatDate this.createdAt}}</td>
+              <td>{{formatStatus this.status}}</td>
+              <td><a href="/all-orders/order/rate/{{this._id}}">Đánh giá</a></td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+</div>   
+
+<script defer>
+  loadFile('/js/user/profileRateOrder.js')
+</script>

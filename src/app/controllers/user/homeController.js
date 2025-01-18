@@ -7,6 +7,7 @@ class homeController {
     const isUser = req.isUser === true ? true : false
     const userId = req.cookies.user_id ? req.cookies.user_id : null
     const chatId = req.cookies.chat_id ? req.cookies.chat_id : null
+    
     const [products, brands] = await Promise.all([
       product.find({ deletedAt: null }).lean(),
       brand.find({}).lean(),

@@ -19,6 +19,7 @@ class allOrderController {
 
   async orderInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
+    
     const orderInfo = await order.findOne({ _id: req.params.id }).lean()
     res.render('users/detailOrder', { title: `Đơn của ${orderInfo.customerInfo.name}`, orderInfo, isUser })
   }

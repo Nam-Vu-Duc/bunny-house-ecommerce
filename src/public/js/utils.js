@@ -3,7 +3,7 @@ checkInputScript.src = '/js/checkInput.js'
 document.head.appendChild(checkInputScript)
 
 const importLinkScript = document.createElement('script')
-importLinkScript.src = '/js/importLinkCSS.js'
+importLinkScript.src = '/js/importLinkCss.js'
 document.head.appendChild(importLinkScript)
 
 const paginationScript = document.createElement('script')

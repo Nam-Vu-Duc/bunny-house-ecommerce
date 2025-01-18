@@ -1,0 +1,35 @@
+<div class="user-update-profile-container">
+    <div class="sidebar-menu">
+      <div class="avatar">
+        <img src="https://res.cloudinary.com/bunny-store/image/upload/v1711070727/web-img/logo_xkavlj.webp" alt="{{userInfo.userInfo.name}}" loading="lazy">
+        <span>{{userInfo.userInfo.name}}</span>
+      </div>
+      <div class="tag">
+        <a href="/profile/info"><i class="fi fi-br-circle-user"></i>Thông tin cá nhân</a>
+        <a href="/profile/order"><i class="fi fi-rr-piggy-bank"></i>Thông tin đơn hàng</a>
+        <a href="/profile/rate-order"><i class="fi fi-rr-piggy-bank"></i>Đánh giá đơn hàng</a>
+        <a href="/profile/feedback"><i class="fi fi-rr-feedback-alt"></i>Góp ý</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <p>Góp ý</p>
+      <form class="update-feedback" method="POST" action="/profile/updated/{{user._id}}?_method=PUT">
+        <div class="form-group">
+          <label for="phone">Bạn có góp ý gì cho mình thì điền vô đây nha</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="phone" 
+            name="phone" 
+          >
+        </div>
+      </form> 
+
+      <div class="submit-button"><button type="submit">Cập Nhật</button></div>
+    </div>
+</div>   
+
+<script defer>
+  loadFile('/js/user/profileFeedback.js')
+</script>

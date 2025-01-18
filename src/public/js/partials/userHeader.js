@@ -49,7 +49,7 @@ document.addEventListener('click', function(event) {
 if (isUser === 'true') {
   var updateProfileButton = document.createElement('a')
   updateProfileButton.innerText = 'Thông tin cá nhân'
-  updateProfileButton.setAttribute('href', `/profile`)
+  updateProfileButton.setAttribute('href', `/profile/info`)
   getAvatarMenu.appendChild(updateProfileButton)
 
   var logOutButton = document.createElement('a')

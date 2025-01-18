@@ -43,8 +43,10 @@ body {
   border-radius: 50%;
   animation: 1s reloader infinite linear;
 }
-input {
+input:not(input[type='radio']) {
+  width: 100%;
   font-family: 'Roboto', sans-serif;
+  height: 40px;
   text-indent: 10px;
   border-radius: 5px;
   border: 1px solid #D1A6A6
@@ -90,7 +92,6 @@ table {
       height: fit-content;
       border-bottom: 1px solid black;
       padding: 10px;
-      input {display: none}
     }
     a {
       width: fit-content; 
@@ -121,6 +122,25 @@ table {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
   }
+}
+div.submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0 10px 0;
+}
+button {
+  width: fit-content; 
+  height: 30px;
+  background-color: white;
+  color: #D1A6A6;
+  border: 1px solid #D1A6A6;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #D1A6A6;
+  color: white;
 }
 @keyframes reloader {
   to { transform: rotate(360deg)}

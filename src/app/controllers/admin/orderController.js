@@ -110,17 +110,18 @@ class allOrdersController {
         name      : productName[index],
         price     : productPrice[index],
         quantity  : productQuantity[index], 
+        totalPrice: productPrice[index] * productQuantity[index]
       })),
       customerInfo: {
-        userId: userId,
-        name: userInfo.userInfo.name,
-        phone: userInfo.userInfo.phone,
-        address: userInfo.userInfo.address,
-        note: note
+        userId  : userId,
+        name    : userInfo.userInfo.name,
+        phone   : userInfo.userInfo.phone,
+        address : userInfo.userInfo.address,
+        note    : note
       },
-      paymentMethod: paymentMethod,
-      createdAt: orderDate,
-      totalOrderPrice: totalOrderPrice
+      paymentMethod   : paymentMethod,
+      createdAt       : orderDate,
+      totalOrderPrice : totalOrderPrice
     });
 
     await newOrder.save()
