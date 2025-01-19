@@ -1,5 +1,5 @@
 <div class="detail-rate-order-container">
-  <form id="form-1" method="post" action="/all-orders/order/rate/rated">
+  <form id="form-1" method="post" action="/all-orders/order/rate/updated/{{orderInfo._id}}?_method=PUT">
     <table>
       <thead>
         <tr><td colspan="2"> Thông tin chung </td></tr>
@@ -57,10 +57,10 @@
         </tr>
         <tr>
           <td colspan="4">
-            <input type="text" placeholder="Nhập đánh giá của bạn" id="productRate" name="productRate">
-            <input type="hidden" id="productId" name="productId[]" value="{{this._id}}">
-            <input type="hidden" id="productRate" name="productRate[]" value="0">
+            <input type="text" placeholder="Nhập đánh giá của bạn" id="productComment" name="productComment">
+            <input type="hidden" id="productId" name="productId[]" value="{{this.id}}">
             <div class="rate-star">
+              <input type="hidden" id="productRate" name="productRate[]" value="0">
               <i class="fi fi-ss-star"></i>
               <i class="fi fi-ss-star"></i>
               <i class="fi fi-ss-star"></i>
@@ -80,6 +80,7 @@
   <div class="button"><button type="submit">Gửi</button></div>
 </div>
 
-<script defer>
+<script>
+  const isRated = '{{orderInfo.isRated}}'
   loadFile('/js/user/detailRateOrder.js')
 </script>

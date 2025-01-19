@@ -1,24 +1,23 @@
 function loadFile(file) {
-  const loadScript = (src) => {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = src;
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
-  };
+  const checkInputScript = document.createElement('script')
+  checkInputScript.src = '/js/checkInput.js'
+  document.head.appendChild(checkInputScript)
 
-  // Load scripts in sequence
-  loadScript('/js/utils.js')
-    .then(() => {
-      console.log('Utils.js loaded');
-      return loadScript(file);
-    })
-    .then(() => {
-      console.log('Profile.js loaded');
-    })
-    .catch((err) => {
-      console.error('Failed to load a script:', err);
-    });
+  const importLinkScript = document.createElement('script')
+  importLinkScript.src = '/js/importLinkCss.js'
+  document.head.appendChild(importLinkScript)
+
+  const paginationScript = document.createElement('script')
+  paginationScript.src = '/js/pagination.js'
+  document.head.appendChild(paginationScript)
+
+  const pushNotificationScript = document.createElement('script')
+  pushNotificationScript.src = '/js/pushNotification.js'
+  document.head.appendChild(pushNotificationScript)
+  
+  setTimeout(() => {
+    const fileScript = document.createElement('script')
+    fileScript.src = file
+    document.head.appendChild(fileScript)
+  }, 200)
 }

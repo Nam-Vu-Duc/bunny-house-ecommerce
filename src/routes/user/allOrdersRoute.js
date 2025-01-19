@@ -11,11 +11,14 @@ router.use(session({
 }))
 router.use(flash())
 router.get('/', allOrderController.show)
+
+router.get('/order/:id', allOrderController.orderInfo)
+router.get('/order/rate/:id', allOrderController.rateOrder)
+router.put('/order/rate/updated/:id', allOrderController.orderRated)
+
 router.get('/checking', allOrderController.ordersChecking)
 router.get('/checking/:id', allOrderController.orderChecked)
+
 router.post('/create-orders', allOrderController.createOrders)
-router.get('/order/:id', allOrderController.orderInfo)
-router.post('/order/rate/rated', allOrderController.orderRated)
-router.get('/order/rate/:id', allOrderController.rateOrder)
 
 module.exports = router

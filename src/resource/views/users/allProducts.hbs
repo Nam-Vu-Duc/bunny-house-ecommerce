@@ -5,7 +5,6 @@
   </div>
 
   <div class="all-category-skincare"></div>
-
   <div class="all-category-makeup"></div>
 
   <div class="filter">
@@ -16,24 +15,9 @@
     </select>
   </div>
 
-  <div class="all-products">
+  <div class="products">
     {{#each products}}
-    <a href="/all-products/product/{{this._id}}">
-      <div class="product">
-        <img src="{{this.img.path}}" alt="{{this.name}}" id="product-1" loading="lazy">
-        <del><p id="product-old-price">{{formatNumber this.oldPrice}}</p></del>
-        <p id="product-price">{{formatNumber this.price}}</p>
-        <p id="product-details">{{this.name}}</p>
-        <p id="product-rate">
-          {{this.rate}}/5
-          <i class="fi fi-ss-star"></i>
-          <i class="fi fi-ss-star"></i>
-          <i class="fi fi-ss-star"></i>
-          <i class="fi fi-ss-star"></i>
-          <i class="fi fi-ss-star"></i>
-        </p>
-      </div>
-    </a>
+      {{> product}}
     {{/each}}
   </div>
 
@@ -46,7 +30,5 @@
   var productLength = `{{productLength}}`
   var sortedColumn  = `{{sortedColumn}}`
   var sort          = `{{sort}}`
-</script>
-<script defer>
   loadFile('/js/user/allProducts.js')
 </script>

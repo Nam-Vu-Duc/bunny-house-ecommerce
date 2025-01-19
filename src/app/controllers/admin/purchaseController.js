@@ -82,14 +82,6 @@ class adminController {
     productId.forEach((id, index) => {
       productUpdates.push({ productId: id, quantity: productQuantity[index] })
     })
-
-    const bulkOps = productUpdates.map(({ productId, quantity }) => ({
-      updateOne: {
-        filter: { _id: productId },
-        update: { $inc: { quantity: quantity } }, 
-        upsert: true,
-      },
-    }))
     
     await newPurchase.save()
     await supplier.updateOne({ _id: supplierId }, {
@@ -98,6 +90,14 @@ class adminController {
         quantity: 1
        }
     })
+
+    const bulkOps = productUpdates.map(({ productId, quantity }) => ({
+      updateOne: {
+        filter: { _id: productId },
+        update: { $inc: { quantity: quantity } }, 
+        upsert: true,
+      },
+    }))
     await product.bulkWrite(bulkOps)
     
     req.flash('successful', 'Thêm đơn nhập thành công')

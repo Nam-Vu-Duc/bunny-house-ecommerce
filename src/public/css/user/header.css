@@ -104,7 +104,7 @@ header {
       i { color: red } 
     }
   }
-  .title, .dropdown-title {
+  .header-title, .dropdown-title {
     display: flex; 
     gap: 10px; 
     align-items: center; 
@@ -120,7 +120,7 @@ header {
       width: 100%;
     }
   }
-  .title:hover, .dropdown-title:hover {
+  .header-title:hover, .dropdown-title:hover {
     background-color: #ffffff19;
   }
   .dropdown {

@@ -23,6 +23,7 @@ const order = new Schema({
   totalOrderPrice : { type: Number, default: 0 },
   paymentMethod   : { type: String, default: '' },
   status          : { type: String, default: 'preparing' },
+  isRated         : { type: Boolean, default: false},
   storeId         : { type: String, default: '671600cc147dd8bae142bbb5' },
   deletedAt       : { type: Date, default: null }
 }, { timestamps: true })

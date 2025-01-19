@@ -11,7 +11,6 @@ var restoreForm   = document.forms['restore-form']
 var deleteButton  = document.getElementById('delete-button')
 var restoreButton = document.getElementById('restore-button')
 
-
 function clickToDelete(clicked_id) {
   document.getElementById('id01').style.display='block'
   productId = clicked_id

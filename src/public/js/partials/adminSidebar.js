@@ -1,3 +1,4 @@
+var resizeButton  = document.querySelector('button.resize-button')
 var currentTime = new Date().getHours()
 var checkDay = ''
 var homeButton          = document.querySelector('a#home-page')
@@ -36,3 +37,14 @@ else    checkDay = 'buổi tối'
 
 var helloText = `Xin chào Quỳnh Ly, Chúc bạn một ${checkDay} vui vẻ !!!`
 document.getElementById('welcome-text').innerHTML = helloText
+
+resizeButton.onclick = function() {
+  if (adminSidebar.className.includes('small')) {
+    adminSidebar.classList.remove('small')
+    main.style.marginLeft = '200px'
+  }
+  else {
+    adminSidebar.classList.add('small')
+    main.style.marginLeft = '70px'
+  }
+}

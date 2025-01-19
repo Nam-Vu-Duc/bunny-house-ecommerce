@@ -1,6 +1,8 @@
 const order = require('../../models/orderModel')
 const user = require('../../models/userModel')
 const store = require('../../models/storeModel')
+const product = require('../../models/productModel')
+const comment = require('../../models/commentModel')
 
 class allOrderController {
   async show(req, res, next) {
@@ -49,6 +51,7 @@ class allOrderController {
 
     // if the req.body has only 1 record, then convert the productName % productQuantity to an array
     if(!Array.isArray(productName)) {
+      productId         = [productId]
       productName       = [productName]
       productPrice      = [productPrice]
       productQuantity   = [productQuantity]
@@ -82,16 +85,65 @@ class allOrderController {
 
   async rateOrder(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const orderInfo = await order.findOne({ _id: req.params.id }).lean()
+    const userId = req.cookies.user_id ? req.cookies.user_id : null
+    const orderId = req.params.id
+    const successful = req.flash('successful')
 
-    res.render('users/detailRateOrder', { title: 'Đánh giá đơn hàng', isUser, orderInfo })
+    const orderInfo = await order.findOne({ _id: req.params.id, status: 'done' }).lean()
+    if (!orderInfo) return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
+    const commentInfo = await comment.find({ orderId: orderId, senderId: userId }).lean()
+
+    res.render('users/detailRateOrder', { title: 'Đánh giá đơn hàng', isUser, successful, orderInfo })
   }
   
   async orderRated(req, res, next) {
-    const senderId = req.cookies.userId
-    const { name, rate } = req.body
-    console.log(name, rate)
-    res.json(req.body)
+    const senderId = req.cookies.user_id ? req.cookies.user_id : null
+    const orderId = req.params.id
+    const {
+      productId,
+      productComment,
+      productRate
+    } = req.body
+
+    if(!Array.isArray(productId)) {
+      productId      = [productId]
+      productComment = [productComment]
+      productRate    = [productRate]
+    }
+
+    await comment.insertMany(productId.map((id, index) => (
+      {
+        orderId: orderId,
+        productId: id,
+        senderId: senderId,
+        comment: productComment[index],
+      }
+    )))
+
+    await order.updateOne({ _id: orderId }, {
+      isRated: true
+    })
+
+    const bulkOps = productId.map((id, index) => ({
+      updateOne: {
+        filter: { _id: id },
+        update: [{
+          $set: {
+            rate: { 
+              $divide: [
+                { $add: [{ $multiply: ["$rate", "$rateNumber"] }, parseInt(productRate[index])] },
+                { $add: ["$rateNumber", 1] }
+              ]
+            },
+            rateNumber: { $add: ["$rateNumber", 1] }
+          }
+        }]
+      }
+    }));
+    await product.bulkWrite(bulkOps)
+
+    req.flash('successful', 'rate successfully')
+    res.redirect(req.get('Referrer') || '/')
   }
 }
 module.exports = new allOrderController

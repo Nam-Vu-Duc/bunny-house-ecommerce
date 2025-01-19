@@ -183,7 +183,9 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
+  loadFile('/js/admin/home.js')
   var successful = '{{successful}}'
+  console.log('successful')
   const customer  = document.getElementById('customer')
   const purchase  = document.getElementById('purchase')
   const order     = document.getElementById('order')
@@ -192,7 +194,7 @@
   const employee  = document.getElementById('employee')
   const supplier  = document.getElementById('supplier')
   const brand     = document.getElementById('brand')
-  console.log({{name}})
+  {{!-- console.log({{name}}) --}}
 
   new Chart(customer, {
     type: 'bar',
@@ -336,4 +338,3 @@
 
   Chart.defaults.backgroundColor = '#FFDFDF'
 </script>
-<script src="/js/admin/home.js" defer></script>

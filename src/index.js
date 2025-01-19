@@ -52,6 +52,7 @@ app.engine('hbs', handlebars.engine({
     },
     formatDate: (a) => a ? format(new Date(a), 'dd/MM/yyyy') : '',
     formatNumber: (a) => a ? a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND' : '0 VND',
+    formatRate: (a) => a.toFixed(1),
     getLength: (a) => a.length,
     getIndexed: (a, b, c) => a[b],
   }

@@ -5,7 +5,9 @@ tippy('[data-tippy-content]', {
 
 window.addEventListener('load', () => {
   const preloader = document.querySelector('div.preloader')
-  preloader.classList.add('inactive')
+  setTimeout(() => {
+    preloader.classList.add('inactive')
+  }, 200)
   
   const fixedComponents = document.createElement('script')
   fixedComponents.src = '/js/partials/fixedComponents.js'
