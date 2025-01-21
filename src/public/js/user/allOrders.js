@@ -1,3 +1,5 @@
+importLinkCss('/css/user/allOrders.css')
+
 // display each process logic
 var getContactInfo   = document.querySelector('div.contact-info')
 var getPaymentMethod = document.querySelector('div.payment-method')
@@ -5,8 +7,7 @@ var getNextButton    = document.querySelector('button.next-button')
 var getSubmitButton  = document.querySelector('button.submit-button')
 var getTableBody     = document.querySelector('tbody')
 var getTableFooter   = document.querySelector('tfoot')
-
-importLinkCss('/css/user/allOrders.css')
+var orderForm        = document.querySelector('form#form-4')
 
 // define a total order price, store as an object to change initial value through each function
 var totalOrderPrice = {
@@ -238,4 +239,11 @@ if (successful && newOrderId) {
     <a href="/"><button>OK</button></a>
   `
   document.body.appendChild(orderSuccessfullyMessage)
+}
+
+function reply_click() {
+  orderForm.onsubmit = function(e) {
+    e.preventDefault()
+  }
+  document.getElementById('id01').style.display='block'
 }

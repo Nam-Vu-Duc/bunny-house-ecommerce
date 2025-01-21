@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const slug = require('mongoose-slug-updater');
+const slug = require('mongoose-slug-updater')
 mongoose.plugin(slug)
 const Schema = mongoose.Schema
 const comment = new Schema({
@@ -8,4 +8,4 @@ const comment = new Schema({
   senderId  : { type: String, default: '' },
   comment   : { type: String, default: '' },
 }, { timestamps: true })
-module.exports = mongoose.model('comment', comment);
+module.exports = mongoose.model('comment', comment)

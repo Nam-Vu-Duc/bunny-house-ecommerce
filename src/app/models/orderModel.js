@@ -1,6 +1,5 @@
-const { id } = require('date-fns/locale');
 const mongoose = require('mongoose')
-const slug = require('mongoose-slug-updater');
+const slug = require('mongoose-slug-updater')
 mongoose.plugin(slug)
 const Schema = mongoose.Schema
 const order = new Schema({
@@ -27,4 +26,4 @@ const order = new Schema({
   storeId         : { type: String, default: '671600cc147dd8bae142bbb5' },
   deletedAt       : { type: Date, default: null }
 }, { timestamps: true })
-module.exports = mongoose.model('order', order);
+module.exports = mongoose.model('order', order)

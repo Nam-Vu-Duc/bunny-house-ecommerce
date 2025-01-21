@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const slug = require('mongoose-slug-updater');
+const slug = require('mongoose-slug-updater')
 mongoose.plugin(slug)
 const Schema = mongoose.Schema
 const supplier = new Schema({
@@ -11,4 +11,4 @@ const supplier = new Schema({
   totalCost : { type: Number, default: 0 },
   slug      : { type: String, slug: 'name', unique: true },
 }, { timestamps: true })
-module.exports = mongoose.model('supplier', supplier);
+module.exports = mongoose.model('supplier', supplier)

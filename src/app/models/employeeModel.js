@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const slug = require('mongoose-slug-updater');
+const slug = require('mongoose-slug-updater')
 mongoose.plugin(slug)
 const Schema = mongoose.Schema
 const employee = new Schema({
@@ -17,4 +17,4 @@ const employee = new Schema({
   },
   slug      : { type: String, slug: 'userInfo.name', unique: true },
 }, { timestamps: true })
-module.exports = mongoose.model('employee', employee);
+module.exports = mongoose.model('employee', employee)

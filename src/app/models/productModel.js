@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const slug = require('mongoose-slug-updater');
+const slug = require('mongoose-slug-updater')
 mongoose.plugin(slug)
 const Schema = mongoose.Schema
 const product = new Schema({
@@ -38,4 +38,4 @@ product.query.sortable = function (req) {
   }
   return this
 }
-module.exports = mongoose.model('product', product);
+module.exports = mongoose.model('product', product)
