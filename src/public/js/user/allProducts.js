@@ -212,13 +212,16 @@ for (let i = 0; i < allPagesTag.length; ++i) {
 // sort
 let selectButton = document.querySelector('select')
 selectButton.onchange = function () {
+  const urlParams = new URLSearchParams(window.location.search)
+  urlParams.set('order', 'date')
   // if (getSlug === 'skincare') {
   //   location = `/all-products/skincare/${getSlug}?page=1&column=price&sort=${this.value}`
   // } else if (getSlug === 'makeup') {
   //   location = `/all-products/makeup/${getSlug}?page=1&column=price&sort=${this.value}`    
   // } else {
   //   location = `/all-products/${getSlug}?page=1&column=price&sort=${this.value}`
-  location = `/all-products/${getSlug}?page=1&column=price&sort=${this.value}`
+  window.location.search = urlParams
+  // location = `/all-products/${getSlug}?page=1&column=price&sort=${this.value}`
 }
 
 let selectButtonOptions = selectButton.querySelectorAll('option')
