@@ -12,8 +12,8 @@
       <label for="price">Giá bán</label>
       <select id="price" class="filter-btn">
         <option value="">Sắp xếp theo</option>
-        <option value="asc">Giá tăng dần</option>
-        <option value="desc">Giá giảm dần</option>
+        <option value="asc">Tăng dần</option>
+        <option value="desc">Giảm dần</option>
       </select>
     </div>
 
@@ -21,8 +21,8 @@
       <label for="rate">Đánh giá</label>
       <select id="rate" class="filter-btn">
         <option value="">Sắp xếp theo</option>
-        <option value="asc">Giá tăng dần</option>
-        <option value="desc">Giá giảm dần</option>
+        <option value="asc">Tăng dần</option>
+        <option value="desc">Giảm dần</option>
       </select>
     </div>
     
@@ -30,9 +30,13 @@
       <label for="saleNumber">Lượng bán</label>
       <select id="saleNumber" class="filter-btn">
         <option value="">Sắp xếp theo</option>
-        <option value="asc">Giá tăng dần</option>
-        <option value="desc">Giá giảm dần</option>
+        <option value="asc">Tăng dần</option>
+        <option value="desc">Giảm dần</option>
       </select>
+    </div>
+
+    <div>
+      <p id="clear-filter">Xoá bộ lọc</p>
     </div>
   </div>
 
@@ -49,8 +53,6 @@
   var getSlug       = `{{type}}`
   var currentPage   = `{{currentPage}}`
   var productLength = `{{productLength}}`
-  var sortedColumn  = `{{sortedColumn}}`
-  var sort          = `{{sort}}`
   loadFile('/js/user/allProducts.js')
 </script>
 <script src="/js/user/product.js"></script>

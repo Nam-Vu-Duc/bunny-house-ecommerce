@@ -11,5 +11,6 @@ router.use(session({
 }));
 router.use(flash())
 router.get('/', homeController.show)
+router.get('/search', homeController.searchInfo)
 
 module.exports = router

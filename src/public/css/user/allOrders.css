@@ -1,7 +1,4 @@
 .all-orders-container {
-  form {
-    padding-top: 10px;
-  }
   .cart, .contact-info, .payment-method {
     background-color: white;
     margin-top: 10px;

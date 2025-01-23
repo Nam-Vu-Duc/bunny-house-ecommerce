@@ -4,8 +4,13 @@ header {
   justify-content: space-between;
   height: 70px;
   position: fixed;
-  top: 0;
-  width: 100%;
+  margin-top: 5px;
+  top: 5px; /* Aligns header flush with the top */
+  left: 0; 
+  right: 0; 
+  margin: auto;
+  width: 95%;
+  border-radius: 10px;
   background-color: #FFDFDF;
   z-index: 3;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -32,11 +37,9 @@ header {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     #search-input {
       height: 50px;
-      width: 100%;
       border-style: none;
-    }
-    input {
       text-align: center;
+      box-sizing: border-box;
     }
   }
   .header-button {
@@ -132,6 +135,7 @@ header {
       top: 100%;
       left: 0;
       width: 100%;
+      border-radius: 5px;
       background-color: white;
       margin-block-start: 0;
       margin-block-end: 0;
@@ -161,6 +165,7 @@ header {
     ul > li > ul {
       position: absolute;
       top: 0;
+      width: calc(100% - 210px);
       left: 210px;
       display: grid;
       justify-content: start;

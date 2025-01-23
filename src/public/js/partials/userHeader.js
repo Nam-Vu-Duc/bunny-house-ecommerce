@@ -1,6 +1,5 @@
 // update cart-orders base on each user using local storage
 var getOrdersQuantity = document.querySelector('span.orders-quantity')
-  
 function updateCartCount() {
   var countObject = JSON.parse(localStorage.getItem('product_cart_count')) || {};
   var countOrdersQuantity = countObject.localCounting || 0;
@@ -18,8 +17,9 @@ getForm.style.display = 'none'
 // create input element
 var searchInput = document.createElement('input')
 searchInput.setAttribute('id', 'search-input')
+searchInput.setAttribute('name', 'q')
 searchInput.setAttribute('type', 'text')
-searchInput.setAttribute('placeholder', 'nhập mã hàng, tên sản phẩm để tìm kiếm')
+searchInput.setAttribute('placeholder', 'Nhập mã hàng, tên sản phẩm để tìm kiếm')
 
 getSearchIcon.onclick = function() {
   if (getForm.style.display === 'none') {

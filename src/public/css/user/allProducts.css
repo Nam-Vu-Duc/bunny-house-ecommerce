@@ -12,9 +12,16 @@
     justify-content: start;
     gap: 20px;
   }
-  .filter-btn {
-    background-color: #FFDFDF;
-    padding: 5px;
+  select, option {
+    width: fit-content;
+    height: 40px;
+    border: 1px solid #D1A6A6;
+    border-radius: 5px;
+    padding-left: 5px;
+    cursor: pointer;
+  }
+  select:focus {
+    outline: 1.5px solid #D1A6A6
   }
   .all-category-skincare, .all-category-makeup {
     padding: 10px;
@@ -60,16 +67,15 @@
     align-items: center; 
     justify-content: center; 
     gap: 10px;
-
-    a {
+    p {
       display: flex;
       align-items: center;
       justify-content: center;
       border: 1px solid black;
       border-radius: 5px;
-      text-decoration: none;
       width: 20px;
       color: black;
+      cursor: pointer;
     }
   }
 }

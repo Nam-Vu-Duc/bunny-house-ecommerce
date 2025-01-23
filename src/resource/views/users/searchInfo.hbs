@@ -1,0 +1,20 @@
+<div class="user-all-products-container">
+  <div class="title">
+    <div class="main-title" style="text-transform:uppercase"><b>Kết quả tìm kiếm</b></div>
+  </div>
+
+  <div class="products">
+    {{#each products}}
+      {{> product}}
+    {{/each}}
+  </div>
+
+  <span class="pagination"></span>
+</div>
+
+<script>
+  var currentPage   = `{{currentPage}}`
+  var productLength = `{{productLength}}`
+  loadFile('/js/user/allProducts.js')
+</script>
+<script src="/js/user/product.js"></script>

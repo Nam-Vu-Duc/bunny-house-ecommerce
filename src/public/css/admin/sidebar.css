@@ -1,13 +1,14 @@
 .admin-sidebar-container {
-  left: 0;
+  left: 5px;
   right: auto;
   width: 200px;
-  height: 100%;
-  z-index: 1;
+  height: 98%;
+  /* transform: translateX(-50%); */
+  z-index: 999;
   position: fixed;
   background-color: #D1A6A6;
-  transition: 0.1s ease-out;
   overflow-y: scroll;
+  border-radius: 10px;
   .resize-button{
     margin-top: 10px;
     width: 70px; 

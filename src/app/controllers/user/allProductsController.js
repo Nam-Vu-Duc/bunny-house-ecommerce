@@ -6,9 +6,8 @@ class allProductsController {
     const isUser = req.isUser === true ? true : false
 
     const currentPage  = req.query.page   || 1
-    const sortedColumn = req.query.column || ''
-    const sort         = req.query.sort   || ''
     const type         = req.params.slug
+    const sortedList   = req.query
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
 
@@ -21,19 +20,31 @@ class allProductsController {
           'new-arrival': { filter: product => product.newArrival === 'yes'       , title: 'Sản Phẩm Mới Về'          },
           'skincare'   : { filter: product => product.skincare   !== ''          , title: 'Sản Phẩm Skincare'        },
           'makeup'     : { filter: product => product.makeup     !== ''          , title: 'Sản Phẩm Makeup'          }
-        };
-        if (type in filters) {
-          products = products.filter(filters[type].filter);
-          title = filters[type].title;
         }
+        const sortFields = [
+          'price',
+          'rate',
+          'saleNumber'
+        ]
 
-        if (sortedColumn === 'price' && sort === 'asc') products = products.sort((a, b) => a.price - b.price)
-        else if (sortedColumn === 'price' && sort === 'desc') products = products.sort((a, b) => b.price - a.price)
+        if (type in filters) {
+          products = products.filter(filters[type].filter)
+          title = filters[type].title
+        }
+        sortFields.forEach((field) => {
+          if (sortedList[field]) {
+            console.log(field, sortedList[field])
+            products = products.sort((a, b) => {
+              if (sortedList[field] === 'asc') return a[field] - b[field] 
+              if (sortedList[field] === 'desc') return b[field] - a[field]
+            })
+          }
+        })
 
         const productLength = products.length
         products = products.slice(skip, skip + itemsPerPage)
         
-        res.render('users/allProducts', { title: title, products, type, productLength, currentPage, sortedColumn, sort, isUser }) })
+        res.render('users/allProducts', { title: title, isUser, products, type, productLength, currentPage }) })
       .catch(next)
   }
 
