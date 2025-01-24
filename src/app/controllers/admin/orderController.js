@@ -18,8 +18,6 @@ class allOrdersController {
       order.find({ deletedAt: null }).countDocuments()
     ])
 
-    // if (orderType !== '') orders = orders.filter(order => order.status === orderType)
-
     res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin', index, successful, orders, orderType, totalOrder, currentPage })
   }
 
@@ -75,12 +73,13 @@ class allOrdersController {
 
   async orderCreate(req, res, next) {
     const index = 'orders'
-    const [users, products] = await Promise.all([
+    const [users, products, stores] = await Promise.all([
       user.find({}).lean(),
-      product.find({ deletedAt: null }).lean()
+      product.find({ deletedAt: null }).lean(),
+      store.find({}).lean()
     ]) 
   
-    res.render('admin/create/order', { title: 'Thêm đơn hàng mới', layout: 'admin', index, users, products })
+    res.render('admin/create/order', { title: 'Thêm đơn hàng mới', layout: 'admin', index, users, products, stores })
   }
 
   async orderCreated(req, res, next) {
@@ -89,6 +88,7 @@ class allOrdersController {
       userId,
       paymentMethod,
       note,
+      storeId,
       productId, 
       productName,
       productPrice,
@@ -120,6 +120,7 @@ class allOrdersController {
         note    : note
       },
       paymentMethod   : paymentMethod,
+      storeId         : storeId,
       createdAt       : orderDate,
       totalOrderPrice : totalOrderPrice
     });

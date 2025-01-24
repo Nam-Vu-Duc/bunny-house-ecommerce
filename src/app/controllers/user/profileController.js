@@ -7,6 +7,7 @@ class profileController {
     const userId = req.cookies.user_id ? req.cookies.user_id : null
 
     const userInfo  = await user.findOne({ _id: userId }).lean()
+    if (!userInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     
     res.render('users/profileInfo', { title: 'Thông tin cá nhân', isUser, userInfo })
   }
@@ -16,6 +17,7 @@ class profileController {
     const userId = req.cookies.user_id ? req.cookies.user_id : null
 
     const orderInfo = await order.find({ 'customerInfo.userId': userId, deletedAt: null }).lean()
+    if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
     res.render('users/profileOrder', { title: 'Thông tin đơn hàng', isUser, orderInfo })
   }
@@ -25,6 +27,7 @@ class profileController {
     const userId = req.cookies.user_id ? req.cookies.user_id : null
 
     const orderInfo = await order.find({ 'customerInfo.userId': userId, deletedAt: null, status: 'done' }).lean()
+    if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
     res.render('users/profileRateOrder', { title: 'Đánh giá đơn hàng', isUser, orderInfo })
   }

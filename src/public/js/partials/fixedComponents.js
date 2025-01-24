@@ -1,8 +1,5 @@
 importLinkCss('/css/user/fixedComponents.css')
 
-const socket = io('http://localhost:3000', {
-  path: "/socket.io"
-})
 const minimize    = document.querySelector('div.minimize')
 const chat        = document.querySelector('div.chat-icon')
 const chatBox     = document.querySelector('div.chat-box')

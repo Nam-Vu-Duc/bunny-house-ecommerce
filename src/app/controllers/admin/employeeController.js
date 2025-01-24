@@ -12,7 +12,7 @@ class allEmployeesController {
     const skip         = (currentPage - 1) * itemsPerPage
 
     const [employees, totalEmployee] = await Promise.all([
-      employee.find({}).skip(skip).limit(itemsPerPage).lean(),
+      employee.find({}).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),
       employee.find({}).countDocuments()
     ])
 

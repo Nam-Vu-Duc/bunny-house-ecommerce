@@ -11,7 +11,7 @@ class allSuppliersController {
     const skip         = (currentPage - 1) * itemsPerPage
 
     const [suppliers, totalSupplier] = await Promise.all([
-      supplier.find({}).skip(skip).limit(itemsPerPage).lean(),
+      supplier.find({}).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),
       supplier.find({}).countDocuments()
     ])
 

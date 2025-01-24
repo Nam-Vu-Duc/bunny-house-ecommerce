@@ -23,6 +23,8 @@ class allOrderController {
     const isUser = req.isUser === true ? true : false
     
     const orderInfo = await order.findOne({ _id: req.params.id }).lean()
+    if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+
     res.render('users/detailOrder', { title: `Đơn của ${orderInfo.customerInfo.name}`, orderInfo, isUser })
   }
 
@@ -90,7 +92,7 @@ class allOrderController {
     const successful = req.flash('successful')
 
     const orderInfo = await order.findOne({ _id: req.params.id, status: 'done' }).lean()
-    if (!orderInfo) return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
+    if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     const commentInfo = await comment.find({ orderId: orderId, senderId: userId }).lean()
 
     res.render('users/detailRateOrder', { title: 'Đánh giá đơn hàng', isUser, successful, orderInfo })

@@ -1,4 +1,4 @@
-importLinkCss('/css/user/signUp.css')
+importLinkCss('/css/empty/signIn.css')
 
 var wrongInfo = document.querySelector('p.wrong-info')
 if (error) {

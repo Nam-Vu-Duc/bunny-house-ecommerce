@@ -9,7 +9,7 @@ class allProductsController {
     const currentPage  = req.query.page || 1
     const productType  = req.query.type || ''
     const itemsPerPage = 10;
-    const skip         = (currentPage - 1) * itemsPerPage;
+    const skip         = (currentPage - 1) * itemsPerPage
 
     let products = await product.find({ deletedAt: null }).sort({ createdAt: -1, name: 1 }).lean()
     const totalProduct = products.length

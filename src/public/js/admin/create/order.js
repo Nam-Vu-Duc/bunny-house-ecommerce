@@ -9,11 +9,11 @@ var productNameNormalize  = Array.from(document.querySelectorAll('p#product-name
 
 importLinkCss('/css/admin/createOrder.css')
 
-formatNumber = function(number) {
+function formatNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 }
 
-deFormatNumber = function(number) {
+function deFormatNumber(number) {
   return parseInt(number.replace(/\./g, ''))
 }
 

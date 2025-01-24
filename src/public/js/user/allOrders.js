@@ -228,6 +228,7 @@ validator({
 
 // create successfully message
 if (successful && newOrderId) {
+  socket.emit('order')
   var orderSuccessfullyMessage = document.createElement('div')
   orderSuccessfullyMessage.setAttribute('class', 'order-successfully-message')
   orderSuccessfullyMessage.innerHTML = `
@@ -241,9 +242,9 @@ if (successful && newOrderId) {
   document.body.appendChild(orderSuccessfullyMessage)
 }
 
-function reply_click() {
-  orderForm.onsubmit = function(e) {
-    e.preventDefault()
-  }
-  document.getElementById('id01').style.display='block'
-}
+// function reply_click() {
+//   orderForm.onsubmit = function(e) {
+//     e.preventDefault()
+//   }
+//   document.getElementById('id01').style.display='block'
+// }

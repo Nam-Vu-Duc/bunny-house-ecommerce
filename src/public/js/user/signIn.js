@@ -6,6 +6,11 @@ if (error) {
   wrongInfo.style.color = 'red'
 }
 
+console.log(successful)
+if (successful) {
+  socket.emit('account')
+}
+
 validator({
   form: '#form-1',
   errorSelector: '.form-message',

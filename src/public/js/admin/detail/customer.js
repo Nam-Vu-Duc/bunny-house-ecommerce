@@ -1,5 +1,3 @@
-console.log('defer')
-
 importLinkCss('/css/admin/detailCustomer.css')
 
 pushNotification(successful)

@@ -11,7 +11,7 @@ class allBrandsController {
     const skip         = (currentPage - 1) * itemsPerPage
 
     const [brands, totalBrand] = await Promise.all([
-      brand.find({}).skip(skip).limit(itemsPerPage).lean(),
+      brand.find({}).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),
       brand.find({}).countDocuments()
     ])
 

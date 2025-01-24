@@ -6,7 +6,9 @@ const jwt = require('jsonwebtoken')
 class loginController {
   signIn(req, res, next) {
     const error = req.flash('error')
-    res.render('users/signIn', { title: 'Đăng Nhập', layout: 'empty', message: error, error})
+    const successful = req.flash('successful')
+
+    res.render('users/signIn', { title: 'Đăng Nhập', layout: 'empty', message: error, error, successful})
   }
 
   async checkingAccount(req, res, next) {
@@ -87,6 +89,7 @@ class loginController {
     })
     await newChat.save()
 
+    req.flash('successful', 'Tạo tài khoản thành công')
     res.redirect('/authentication/sign-in')
   }
 }

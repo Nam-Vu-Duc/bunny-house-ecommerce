@@ -11,7 +11,7 @@ class allStoresController {
     const skip         = (currentPage - 1) * itemsPerPage
 
     const [stores, totalStore] = await Promise.all([  
-      store.find({}).skip(skip).limit(itemsPerPage).lean(),
+      store.find({}).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),
       store.find({}).countDocuments()
     ])
 

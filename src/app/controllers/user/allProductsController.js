@@ -69,6 +69,8 @@ class allProductsController {
     const isUser = req.isUser === true ? true : false
     
     const newProduct = await product.findOne({ _id: req.params.id }).lean()
+    if (!newProduct) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+      
     const comments = await comment.find({ productId: newProduct._id }).lean()
     let newProductType = ''
     let relatedProducts 

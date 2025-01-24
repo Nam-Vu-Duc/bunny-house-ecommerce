@@ -9,11 +9,20 @@
       <span class="form-message"></span>
     </div>
     <div class="form-group">
-      <label for="name">Chọn khách hàng</label>
+      <label for="userId">Chọn khách hàng</label>
       <select name="userId" id="userId" required>
         <option value="" selected disabled>-- Khách hàng --</option>
         {{#each users}}
           <option value="{{this._id}}">{{this.userInfo.name}}, {{this.userInfo.address}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="storeId">Chọn cửa hàng</label>
+      <select name="storeId" id="storeId" required>
+        <option value="" selected disabled>-- Cửa hàng --</option>
+        {{#each stores}}
+          <option value="{{this._id}}">{{this.name}}</option>
         {{/each}}
       </select>
     </div>

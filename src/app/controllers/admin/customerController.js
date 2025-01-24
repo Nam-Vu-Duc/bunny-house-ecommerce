@@ -13,7 +13,7 @@ class allCustomersController {
     const skip         = (currentPage - 1) * itemsPerPage
 
     const [customers, totalCustomer] = await Promise.all([
-      user.find({}).skip(skip).limit(itemsPerPage).lean(),
+      user.find({}).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),
       user.find({}).countDocuments()
     ])
 

@@ -28,14 +28,4 @@ const product = new Schema({
   deletedAt    : {type: Date, default: null }
 }, { timestamps: true })
 
-// product.query.sortable = function (req) {
-//   if (req.query.hasOwnProperty('_sort')) {
-//     const isValidType = ['asc', 'desc'].includes(req.query.type)
-    
-//     return this.sort({
-//       [req.query.column]: isValidType ? req.query.type : 'desc'
-//     })
-//   }
-//   return this
-// }
 module.exports = mongoose.model('product', product)

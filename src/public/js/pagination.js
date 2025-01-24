@@ -2,26 +2,29 @@ function pagination(type, length, currentPage) {
   var pagination = document.querySelector('span.pagination')
   var totalPage = 1
 
-  // display all page tags
-  for (let i = 0; i < length; i += 10) {
-    var newPage = document.createElement('a')
-    newPage.setAttribute('href', `/admin/all-${type}?page=${totalPage}`)
+  for (var i = 0; i < length; i += 10) {
+    var newPage = document.createElement('p')
     newPage.innerText = `${totalPage}`
     pagination.appendChild(newPage)
     totalPage++
   }
 
   // Style the current selected page
-  var allPagesTag = pagination.querySelectorAll('a')
-  for (let i = 0; i < allPagesTag.length; ++i) {
-    if (allPagesTag[i].innerText === currentPage) {
-      allPagesTag[i].style.borderColor = '#D1A6A6'
-      allPagesTag[i].style.backgroundColor = '#D1A6A6'
-      allPagesTag[i].style.color = 'white'
-      allPagesTag[i].style.width = '25px'
-      allPagesTag[i].style.height = '25px'
+  var allPagesTag = pagination.querySelectorAll('p')
+  allPagesTag.forEach((tag, index) => {
+    if (tag.innerText === currentPage) {
+      tag.style.borderColor = '#D1A6A6'
+      tag.style.backgroundColor = '#D1A6A6'
+      tag.style.color = 'white'
+      tag.style.width = '25px'
+      tag.style.height = '25px'
     }
-  } 
+    tag.onclick = function() {
+      const urlParams = new URLSearchParams(window.location.search)
+      urlParams.set('page', index+1)
+      window.location.search = urlParams
+    }
+  })
 }
 
 function filterButtonLogic() {
@@ -37,30 +40,6 @@ function filterButtonLogic() {
     }
   })
 }
-
-for (var i = 0; i < productLength; i += 10) {
-  var newPage = document.createElement('p')
-  newPage.innerText = `${totalPage}`
-  pagination.appendChild(newPage)
-  totalPage++
-}
-
-// Style the current selected page
-var allPagesTag = pagination.querySelectorAll('p')
-allPagesTag.forEach((tag, index) => {
-  if (tag.innerText === currentPage) {
-    tag.style.borderColor = '#D1A6A6'
-    tag.style.backgroundColor = '#D1A6A6'
-    tag.style.color = 'white'
-    tag.style.width = '25px'
-    tag.style.height = '25px'
-  }
-  tag.onclick = function() {
-    const urlParams = new URLSearchParams(window.location.search)
-    urlParams.set('page', index+1)
-    window.location.search = urlParams
-  }
-})
 
 // sort
 var selectButton = document.querySelectorAll('select')

@@ -8,7 +8,6 @@ const methodOverride = require('method-override')
 const app = express()
 const route = require('./routes')
 const db = require('./config/db')
-const sortMiddleware = require('./app/middleware/sortMiddleware')
 const Handlebars = require('handlebars')
 const { format } = require('date-fns')
 const { createServer } = require("http")
@@ -26,7 +25,6 @@ app.use(express.json())
 app.use(morgan('combined'))
 app.use(cookieParser())
 app.use(methodOverride('_method'))
-app.use(sortMiddleware)
 app.engine('hbs', handlebars.engine({
   extname: '.hbs',
   defaultLayout: 'users',
@@ -71,6 +69,14 @@ io.on('connection', (socket) => {
     const id = message.split(':')[0]
     const msg = message.split(':')[1]
     io.to(room).emit('chat message', id, msg)
+  })
+
+  socket.on('order', () => {
+    io.emit('order')
+  })
+
+  socket.on('account', () => {
+    io.emit('account')
   })
 })
 
