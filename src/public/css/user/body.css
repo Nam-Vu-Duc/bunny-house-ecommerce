@@ -59,7 +59,6 @@ div.title {
   align-items: center; 
   justify-content: center;
   gap: 5px; 
-  font-size: 32px;
   margin-top: 10px;
   i { color: red;}
   .main-title {
@@ -67,6 +66,8 @@ div.title {
     position: relative;
     color: red;
     text-decoration: none;
+    font-size: 25px;
+    text-transform: uppercase;
   }
   .main-title::after {
     content: '';
@@ -91,6 +92,7 @@ div.products {
   gap: 10px;
   height: auto;
   padding: 15px;
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: repeat(5, minmax(min(11.25rem, 100%), 1fr));
   scroll-snap-type: x mandatory;

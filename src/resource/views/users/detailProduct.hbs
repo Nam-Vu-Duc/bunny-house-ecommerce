@@ -2,29 +2,30 @@
   <div class="table">
     <div class="image-box">
       <div class="image">
-        <img src="{{newProduct.img.path}}" alt="{{newProduct.name}}" loading="lazy"/>
+        <img src="{{productInfo.img.path}}" alt="{{productInfo.name}}" loading="lazy"/>
       </div>
     </div>
     
     <div class="details-box">
       <div class="product-title">
         <p id="product-rate">
-          <span id="rate-score">{{formatRate newProduct.rate}}</span>/5
+          <span id="rate-score">{{formatRate productInfo.rate}}</span>/5
           <i class="fi fi-ss-star"></i>
           <i class="fi fi-ss-star"></i>
           <i class="fi fi-ss-star"></i>
           <i class="fi fi-ss-star"></i>
           <i class="fi fi-ss-star"></i>
         </p>
-        <h3>{{newProduct.brand}}</h3>
-        <h1>{{newProduct.name}}</h1>
-        <del><h4 id="product-old-price">{{formatNumber newProduct.oldPrice}}</h4></del>
-        <h3 id="product-price">{{formatNumber newProduct.price}}</h3>
-        <h4 id="product-quantity">Số lượng: {{newProduct.quantity}}</h4>
+        <h3>{{productInfo.brand}}</h3>
+        <h1>{{productInfo.name}}</h1>
+        <del><h4 id="product-old-price">{{formatNumber productInfo.oldPrice}}</h4></del>
+        <h3 id="product-price">{{formatNumber productInfo.price}}</h3>
+        <h4 id="product-quantity">Số lượng: {{productInfo.quantity}}</h4>
+        <h5 id="sale-number">Đã bán: {{productInfo.saleNumber}}</h5>
       </div>
       
       <div class="description">
-        <p>{{newProduct.description}}</p>
+        <p>{{productInfo.description}}</p>
       </div>
 
       <div class="quantity">
@@ -43,20 +44,37 @@
 
   <div class="more-details">
     <h3>THÔNG TIN SẢN PHẨM</h3>
-    <p>{{newProduct.details}}</p>
+    <p>{{productInfo.details}}</p>
   </div>
   
   <div class="more-details">
     <h3>HƯỚNG DẪN SỬ DỤNG</h3>
-    <p>{{newProduct.guide}}</p>
+    <p>{{productInfo.guide}}</p>
   </div>
 
   <div class="more-details">
-    <h3>Đánh giá</h3>
-    <div class="comment-list">
+    <h3>ĐÁNH GIÁ SẢN PHẨM</h3>
+    <div class="rating-box">
+      <div class="rating-score">
+        <i class="fi fi-ss-star"></i><h1>{{formatRate productInfo.rate}}</h1>
+      </div>
+      <div class="rating-detail-score">
+        <div>1<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> đánh giá</div>
+        <div>2<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> đánh giá</div>
+        <div>3<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> đánh giá</div>
+        <div>4<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> đánh giá</div>
+        <div>5<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> đánh giá</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="more-details">
+    <h3>BÌNH LUẬN SẢN PHẨM</h3>
+    <div class="comment-box">
       {{#each comments}}
         <div class="comment">
           <p id="sender">user{{this.senderId}}</p>
+          <p id="rate">{{this.rate}}</p>
           <p id="send-date">{{formatDate this.createdAt}}</p>
           <p id="comment">{{this.comment}}</p>
         </div>
@@ -66,7 +84,7 @@
 
   <div class="related-products">
     <div class="title">
-      <a href="/all-products/{{newProduct.categories}}/{{newProductType}}" class="main-title"><b>SẢN PHẨM TƯƠNG ỨNG</b></a>
+      <a href="/all-products/{{productInfo.categories}}/{{productType}}" class="main-title"><b>SẢN PHẨM TƯƠNG ỨNG</b></a>
     </div>
 
     <div class="products">
@@ -78,12 +96,12 @@
 </div>
 
 <script>
-  var productDetails = `{{newProduct.details}}`
-  var productStatus  = `{{newProduct.status}}`
-  var productId      = `{{newProduct._id}}`
-  var productName    = `{{newProduct.name}}`
-  var productPrice   = `{{newProduct.price}}`
-  var productImage   = `{{newProduct.img.path}}`
+  var productDetails = `{{productInfo.details}}`
+  var productStatus  = `{{productInfo.status}}`
+  var productId      = `{{productInfo._id}}`
+  var productName    = `{{productInfo.name}}`
+  var productPrice   = `{{productInfo.price}}`
+  var productImage   = `{{productInfo.img.path}}`
   loadFile('/js/user/detailProduct.js')
 </script>
 <script src="/js/user/product.js" defer></script>

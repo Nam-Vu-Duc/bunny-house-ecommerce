@@ -30,7 +30,6 @@ var titles = {
 };
 
 if (titles[getSlug]) mainTitle.innerText = titles[getSlug]
-else mainTitle.innerText = 'Sản phẩm không xác định'
 
 if (getSlug === 'skincare') {
   getSkincareCategory.innerHTML = `
@@ -114,8 +113,9 @@ selectButton.forEach((button) => {
   })
 }) 
 
-var clearBtn = document.querySelector('p#clear-filter')
+var url = new URL(window.location.href)
+var clearBtn = document.querySelector('button#clear-filter')
+if (url.search.length > 0) clearBtn.style.display = ''
 clearBtn.onclick = function() {
-  const url = new URL(window.location.href)
   window.location.href = `${url.pathname}`
 }

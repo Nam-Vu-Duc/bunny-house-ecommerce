@@ -11,79 +11,113 @@ class allProductsController {
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
 
-    product.find({ deletedAt: null }).lean()
-      .then(products => { 
-        let title = 'Toàn Bộ Sản Phẩm'
-        const filters = {
-          'flash-sale' : { filter: product => product.status     === 'flash-sale', title: 'Sản Phẩm Đang Flash Sale' },
-          'hot'        : { filter: product => product.status     === 'hot'       , title: 'Sản Phẩm Đang Hot'        },
-          'new-arrival': { filter: product => product.newArrival === 'yes'       , title: 'Sản Phẩm Mới Về'          },
-          'skincare'   : { filter: product => product.skincare   !== ''          , title: 'Sản Phẩm Skincare'        },
-          'makeup'     : { filter: product => product.makeup     !== ''          , title: 'Sản Phẩm Makeup'          }
-        }
-        const sortFields = [
-          'price',
-          'rate',
-          'saleNumber'
-        ]
+    let [products, productLength] = await Promise.all([
+      product.find({ deletedAt: null }).sort({ createdAt: -1 }).lean(),
+      product.countDocuments()
+    ])
 
-        if (type in filters) {
-          products = products.filter(filters[type].filter)
-          title = filters[type].title
-        }
-        sortFields.forEach((field) => {
-          if (sortedList[field]) {
-            console.log(field, sortedList[field])
-            products = products.sort((a, b) => {
-              if (sortedList[field] === 'asc') return a[field] - b[field] 
-              if (sortedList[field] === 'desc') return b[field] - a[field]
-            })
-          }
+    const filters = {
+      'flash-sale' : { filter: product => product.status     === 'flash-sale' },
+      'hot'        : { filter: product => product.status     === 'hot'        },
+      'new-arrival': { filter: product => product.newArrival === 'yes'        },
+      'skincare'   : { filter: product => product.skincare   !== ''           },
+      'makeup'     : { filter: product => product.makeup     !== ''           }
+    }
+    const sortFields = [
+      'price',
+      'rate',
+      'saleNumber'
+    ]
+
+    if (type in filters) products = products.filter(filters[type].filter)
+
+    sortFields.forEach((field) => {
+      if (sortedList[field]) {
+        products = products.sort((a, b) => {
+          if (sortedList[field] === 'asc') return a[field] - b[field] 
+          if (sortedList[field] === 'desc') return b[field] - a[field]
         })
-
-        const productLength = products.length
-        products = products.slice(skip, skip + itemsPerPage)
+      }
+    })
+    products = products.slice(skip, skip + itemsPerPage)
         
-        res.render('users/allProducts', { title: title, isUser, products, type, productLength, currentPage }) })
-      .catch(next)
+    res.render('users/allProducts', { title: 'Toàn bộ sản phẩm', isUser, products, type, productLength, currentPage }) 
   }
 
   async showAllSkincare(req, res, next) {
     const isUser = req.isUser === true ? true : false
 
-    const type = req.params.slug
-    const products = await product.find({ deletedAt: null, skincare: type }).lean()
+    const currentPage  = req.query.page   || 1
+    const type         = req.params.slug
+    const sortedList   = req.query
+    const itemsPerPage = 10
+    const skip         = (currentPage - 1) * itemsPerPage
+    const sortFields = [
+      'price',
+      'rate',
+      'saleNumber'
+    ]
 
-    res.render('users/allProducts', { title: 'Dòng Skincare', products, type, isUser })
+    let products = await product.find({ deletedAt: null, skincare: type }).lean()
+    sortFields.forEach((field) => {
+      if (sortedList[field]) {
+        products = products.sort((a, b) => {
+          if (sortedList[field] === 'asc') return a[field] - b[field] 
+          if (sortedList[field] === 'desc') return b[field] - a[field]
+        })
+      }
+    })
+    const productLength = products.length
+    products = products.slice(skip, skip + itemsPerPage)
+
+    res.render('users/allProducts', { title: 'Sản phẩm Skincare', isUser, products, type, productLength, currentPage })
   }
 
   async showAllMakeUp(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const type = req.params.slug
-    const products = await product.find({ deletedAt: null, makeup: type }).lean()
+    
+    const currentPage  = req.query.page   || 1
+    const type         = req.params.slug
+    const sortedList   = req.query
+    const itemsPerPage = 10
+    const skip         = (currentPage - 1) * itemsPerPage
+    const sortFields = [
+      'price',
+      'rate',
+      'saleNumber'
+    ]
+
+    let products = await product.find({ deletedAt: null, makeup: type }).lean()
+    sortFields.forEach((field) => {
+      if (sortedList[field]) {
+        products = products.sort((a, b) => {
+          if (sortedList[field] === 'asc') return a[field] - b[field] 
+          if (sortedList[field] === 'desc') return b[field] - a[field]
+        })
+      }
+    })
+    const productLength = products.length
+    products = products.slice(skip, skip + itemsPerPage)
   
-    res.render('users/allProducts', { title: 'Dòng Makeup', products, type, isUser }) 
+    res.render('users/allProducts', { title: 'Sản phẩm Makeup', isUser, products, type, productLength, currentPage }) 
   }
 
   async productInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
     
-    const newProduct = await product.findOne({ _id: req.params.id }).lean()
-    if (!newProduct) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    const [productInfo, comments] = await Promise.all([
+      product.findOne({ _id: req.params.id }).lean(),
+      comment.find({ productId: req.params.id }).lean()
+    ]) 
+    if (!productInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
       
-    const comments = await comment.find({ productId: newProduct._id }).lean()
-    let newProductType = ''
-    let relatedProducts 
+    const productType = productInfo.skincare || productInfo.makeup
+    const relatedProducts = await product.find({ 
+        _id: { $ne: productInfo._id }, 
+        ...(productInfo.skincare ? { skincare: productType } : { makeup: productType }) 
+      }).lean().limit(5);
 
-    if (newProduct.skincare !== '') {
-      newProductType = newProduct.skincare
-      relatedProducts = await product.find({ skincare: newProductType }).lean().limit(5)
-    } else {
-      newProductType = newProduct.makeup
-      relatedProducts = await product.find({ makeup: newProductType }).lean().limit(5)
-    }
-    relatedProducts = relatedProducts.filter(product => product._id.toString() !== newProduct._id.toString())
-    res.render('users/detailProduct', { title: newProduct.name , isUser, newProduct, relatedProducts, newProductType, comments })
+    res.render('users/detailProduct', { title: productInfo.name , isUser, productInfo, relatedProducts, productType, comments })
   }
 }
 module.exports = new allProductsController

@@ -4,7 +4,7 @@ const order = require('../../models/orderModel')
 class profileController {
   async profileInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.user_id ? req.cookies.user_id : null
+    const userId = req.cookies.user_id || null
 
     const userInfo  = await user.findOne({ _id: userId }).lean()
     if (!userInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
@@ -14,7 +14,7 @@ class profileController {
 
   async orderInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.user_id ? req.cookies.user_id : null
+    const userId = req.cookies.user_id || null
 
     const orderInfo = await order.find({ 'customerInfo.userId': userId, deletedAt: null }).lean()
     if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
@@ -24,7 +24,7 @@ class profileController {
 
   async rateOrderInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.user_id ? req.cookies.user_id : null
+    const userId = req.cookies.user_id || null
 
     const orderInfo = await order.find({ 'customerInfo.userId': userId, deletedAt: null, status: 'done' }).lean()
     if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
@@ -33,7 +33,8 @@ class profileController {
   }
 
   async profileUpdate(req, res, next) {
-    const userId = req.cookies.user_id ? req.cookies.user_id : null
+    const userId = req.cookies.user_id || null
+
     await user.updateOne({ _id: userId}, {
       'userInfo.name'    : req.body.name,
       'userInfo.phone'   : req.body.phone,
@@ -47,7 +48,7 @@ class profileController {
   
   async feedBack(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.user_id ? req.cookies.user_id : null
+    const userId = req.cookies.user_id || null
 
     res.render('users/profileFeedback', { title: 'Góp ý cửa hàng', isUser, userId })
   }

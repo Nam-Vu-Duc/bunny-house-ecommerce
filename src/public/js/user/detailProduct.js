@@ -151,3 +151,25 @@ getBuyNow.onclick = function () {
     localStorage.setItem('product_cart_count', JSON.stringify(myObj));
   } else {}
 }
+
+var scoreList = Array.from(document.querySelectorAll('div.comment'))
+var ratingPercents = Array.from(document.querySelector('div.rating-detail-score').querySelectorAll('span#rating-percent'))
+var ratingBars = document.querySelector('div.rating-detail-score').querySelectorAll('span#rating-progress')
+var ratingNums = Array.from(document.querySelector('div.rating-detail-score').querySelectorAll('span#rating-num'))
+var rateList = Array(5).fill(0)
+
+scoreList.forEach((score, index) => {
+  var value = parseFloat(score.querySelector('p#rate').innerText)
+  scoreList[index] = value
+  rateList.forEach((rate, index) => {
+    if (index+1 === value) rateList[index] = rate + 1
+  })
+})
+
+ratingPercents.forEach((rate, index) => {
+  var value = (rateList[index] / scoreList.length * 100).toFixed(0)
+  rate.innerText = value
+  ratingNums[index].innerText = rateList[index]
+  ratingBars[index].style.width = `${value}%`
+  ratingBars[index].style.backgroundColor = '#D1A6A6'
+})

@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 10px;
 }
 .flash-deal-board {
   background: linear-gradient(rgb(248, 62, 96), rgb(254, 80, 72));
@@ -18,36 +19,6 @@
   position: relative;
   margin: auto;
   justify-content: center;
-  .title {
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    gap: 5px; 
-    font-size: 32px;
-    i { color: red;}
-    .main-title {
-      display: inline-block;
-      position: relative;
-      color: red;
-      text-decoration: none;
-    }
-    .main-title::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      transform: scaleX(0);
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background-color: red;
-      transform-origin: bottom right;
-      transition: transform 0.25s ease-out;
-    }
-    .main-title:hover::after {
-      transform: scaleX(1);
-      transform-origin: bottom left;
-    }
-  }
   .brands {
     width: 100%;
     position: relative;
