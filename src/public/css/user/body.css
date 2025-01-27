@@ -100,20 +100,23 @@ div.products {
   max-width: 1300px;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
-  img { max-width: 100%; aspect-ratio: 1 / 1; };
+  img { max-width: 100%; aspect-ratio: 1 / 1; transition: 0.5s; border-radius: 5px};
   a, p { text-decoration: none; color: black};
   a {
     display: flex;
     align-items: center;
     justify-content: center;
   }
+  p {
+    margin-block-start: 10px;
+    margin-block-end: 5px;
+  }
   .product {
     background-color: white; 
     max-width: 220px;
-    padding: 5px 12px;
-    border: 1.5px solid #FFDFDF;
-    /* scroll-snap-align: start; */
+    padding: 10px 12px;
     border-radius: 10px;
+    box-sizing: border-box;
     #product-price {
       background-color: #FFDFDF;
       padding: 5px;
@@ -131,10 +134,9 @@ div.products {
     }
   };
   .product:hover {
-    border: 1.5px solid red; 
     border-radius: 10px;
-    /* box-shadow: 1rem black; */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    img { transform: scale(1.05); }
   }
 }
 div.button {

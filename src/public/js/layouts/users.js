@@ -13,3 +13,11 @@ window.addEventListener('load', () => {
   fixedComponents.async = true
   document.head.appendChild(fixedComponents)
 })
+
+window.onscroll = function() {
+  if (document.documentElement.scrollTop > 50) {
+    document.getElementById("myP").className = "test";
+  } else {
+    document.getElementById("myP").className = "";
+  }
+}

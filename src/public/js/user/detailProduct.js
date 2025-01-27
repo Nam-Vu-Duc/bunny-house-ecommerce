@@ -167,7 +167,8 @@ scoreList.forEach((score, index) => {
 })
 
 ratingPercents.forEach((rate, index) => {
-  var value = (rateList[index] / scoreList.length * 100).toFixed(0)
+  var length = scoreList.length || 1
+  var value = (rateList[index] / length * 100).toFixed(0)
   rate.innerText = value
   ratingNums[index].innerText = rateList[index]
   ratingBars[index].style.width = `${value}%`

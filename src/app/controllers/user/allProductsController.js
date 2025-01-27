@@ -11,10 +11,7 @@ class allProductsController {
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
 
-    let [products, productLength] = await Promise.all([
-      product.find({ deletedAt: null }).sort({ createdAt: -1 }).lean(),
-      product.countDocuments()
-    ])
+    let products = await product.find({ deletedAt: null }).sort({ createdAt: -1 }).lean()
 
     const filters = {
       'flash-sale' : { filter: product => product.status     === 'flash-sale' },
@@ -39,6 +36,7 @@ class allProductsController {
         })
       }
     })
+    const productLength = products.length
     products = products.slice(skip, skip + itemsPerPage)
         
     res.render('users/allProducts', { title: 'Toàn bộ sản phẩm', isUser, products, type, productLength, currentPage }) 

@@ -64,8 +64,6 @@ if (getSlug === 'makeup') {
 // pagination 
 var pagination = document.querySelector('span.pagination')
 var totalPage = 1
-
-// display all pages tag
 for (var i = 0; i < productLength; i += 10) {
   var newPage = document.createElement('p')
   newPage.innerText = `${totalPage}`
@@ -119,3 +117,32 @@ if (url.search.length > 0) clearBtn.style.display = ''
 clearBtn.onclick = function() {
   window.location.href = `${url.pathname}`
 }
+
+var min = 0;
+var max = 10000000;
+const calcLeftPosition = (value) => (100 / (100 - 10)) * (value - 10);
+document.getElementById('rangeMin').addEventListener('input', function (e) {
+  const newValue = parseInt(e.target.value);
+  if (newValue > max) return;
+  min = newValue;
+
+  document.getElementById('thumbMin').style.left = calcLeftPosition(newValue) + '%';
+  document.getElementById('min').innerHTML = newValue;
+
+  const line = document.getElementById('line');
+  line.style.left = calcLeftPosition(newValue) + '%';
+  line.style.right = (100 - calcLeftPosition(max)) + '%';
+});
+
+document.getElementById('rangeMax').addEventListener('input', function (e) {
+  const newValue = parseInt(e.target.value);
+  if (newValue < min) return;
+  max = newValue;
+
+  document.getElementById('thumbMax').style.left = calcLeftPosition(newValue) + '%';
+  document.getElementById('max').innerHTML = newValue;
+
+  const line = document.getElementById('line');
+  line.style.left = calcLeftPosition(min) + '%';
+  line.style.right = (100 - calcLeftPosition(newValue)) + '%';
+})
