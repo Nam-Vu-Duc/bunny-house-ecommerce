@@ -4,16 +4,12 @@ header {
   justify-content: space-between;
   height: 70px;
   position: fixed;
-  margin-top: 5px;
-  top: 5px; /* Aligns header flush with the top */
-  left: 0; 
-  right: 0; 
-  margin: auto;
-  width: 95%;
-  border-radius: 10px;
+  top: 0;
+  width: 100%;
   background-color: #FFDFDF;
   z-index: 3;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transition: 0.2s;
   .store-logo {
     padding: 0 10px;
     gap: 10px;
@@ -205,6 +201,15 @@ header {
       }
     }
   };
+}
+header.scroll {
+  margin-top: 5px;
+  top: 5px;
+  left: 0; 
+  right: 0; 
+  margin: auto;
+  width: 95%;
+  border-radius: 10px;
 }
 @media screen and (max-width: 700px) {
   .responsive-menu {

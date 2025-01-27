@@ -1,3 +1,9 @@
+var header = document.querySelector('header')
+
+window.addEventListener('scroll', function() {
+  document.documentElement.scrollTop > 0 ? header.classList.add('scroll') : header.classList.remove('scroll')
+})
+
 // update cart-orders base on each user using local storage
 var getOrdersQuantity = document.querySelector('span.orders-quantity')
 function updateCartCount() {

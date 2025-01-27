@@ -63,9 +63,9 @@
   <div class="brands">
     <div class="inner">
       {{#each brands}}
-      <div class="brand" data-tippy-content="{{this.name}}">
-        <a href="/all-brands/brand/{{this._id}}">{{this.name}}</a>
-      </div>
+      <a class="brand" href="/all-brands/brand/{{this._id}}" data-tippy-content="{{this.name}}">
+        <img src="{{this.img.path}}" alt="{{this.name}}" loading="lazy">
+      </a>
       {{/each}}
     </div>
     <div class="fade"></div>

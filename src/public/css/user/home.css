@@ -37,6 +37,9 @@
     border-radius: 5px;
     padding: 10px;
     background-color: white;
+    img {
+      height: 50px;
+    }
     a { 
       text-decoration: none; 
       color: black;

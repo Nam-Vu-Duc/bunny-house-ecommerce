@@ -17,22 +17,14 @@
 .contact-icon {bottom: 70px}
 .chat-icon {bottom: 10px}
 .dropup {
-  display: inline-block;
   margin-left: auto;
   margin-right: 0;
-  bottom: 70px;
-  right: 5px;
+  bottom: 77px;
+  right: 58px;
   position: fixed;
-  /* display: none; */
-  position: absolute;
-  width: 50px;
-  z-index: 1;
-  bottom: 60px;
-  right: 5px;
+  width: fit-content;
+  z-index: 99;
   img { width: 30px }
-}
-.contact-icon:hover .dropup-content {
-  display: block;
 }
 .chat-box {
   background-color: white;

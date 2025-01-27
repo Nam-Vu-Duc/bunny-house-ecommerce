@@ -1,6 +1,9 @@
 importLinkCss('/css/user/fixedComponents.css')
 
 const minimize    = document.querySelector('div.minimize')
+const scrollTop   = document.querySelector('div.scroll-to-top-icon')
+const contact     = document.querySelector('div.contact-icon')
+const dropup      = document.querySelector('div.dropup')
 const chat        = document.querySelector('div.chat-icon')
 const chatBox     = document.querySelector('div.chat-box')
 const chatBody    = document.querySelector('div.chat-body')
@@ -11,8 +14,22 @@ const notLoggedIn = document.querySelector('div.not-logged-in')
 const form = document.querySelector('form.input-form')
 
 if (userId) chatBody.style.display = ''
-chat.onclick = function() {chatBox.style.display === 'none' ? chatBox.style.display = '' : chatBox.style.display = 'none'}
-minimize.onclick = function () {chatBox.style.display = 'none'}
+
+window.addEventListener('scroll', function() {
+  document.documentElement.scrollTop >= 1000 ? scrollTop.style.display = "" : scrollTop.style.display = "none"
+})
+scrollTop.onclick = function() {
+  window.scrollTo({top: 0, behavior: "smooth"})
+}
+contact.onclick = function() {
+  dropup.style.display === 'none' ? dropup.style.display = 'block' : dropup.style.display = 'none'
+}
+chat.onclick = function() {
+  chatBox.style.display === 'none' ? chatBox.style.display = 'block' : chatBox.style.display = 'none'
+}
+minimize.onclick = function () {
+  chatBox.style.display = 'none'
+}
 
 // if (userId === '65eddb9e7abb421b88771b35') {
 //   socket.emit('joinRoom', '67682d1ef5b2b2e80b0f439c')

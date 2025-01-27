@@ -19,15 +19,16 @@ class homeController {
     const isUser = req.isUser === true ? true : false
     const userId = req.cookies.user_id || null
     const chatId = req.cookies.chat_id || null
-    
+  
     const query = req.query.q
-    console.log(query)
 
-    const [products, brands] = await Promise.all([
-      product.find({ deletedAt: null }).lean(),
-      brand.find({}).lean(),
-    ])
-    res.render('users/searchInfo', { title: 'Kết quả tìm kiếm', products, brands, userId, chatId, isUser });
+    const products = await product.find({
+      $or: [
+        { name: { $regex: query, $options: 'i'} },
+        { brand: { $regex: query, $options: 'i'}}
+      ]
+    }).lean()
+    res.render('users/searchInfo', { title: 'Kết quả tìm kiếm', isUser, products, userId, chatId, query });
   }
 }
 module.exports = new homeController
