@@ -1,5 +1,8 @@
 importLinkCss('/css/user/profile.css')
 
+console.log(successful)
+pushNotification(successful)
+
 var maleGender = document.querySelector('input#male')
 var femaleGender = document.querySelector('input#female')
 if (gender === 'male') maleGender.checked = true

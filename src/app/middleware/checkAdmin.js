@@ -1,4 +1,5 @@
 const emp = require('../models/employeeModel')
+const jwt = require('jsonwebtoken')
 
 module.exports = async function checkAdmin(req, res, next) {
   var userId = req.cookies.user_id

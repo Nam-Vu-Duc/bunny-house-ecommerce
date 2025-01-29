@@ -8,6 +8,17 @@
 body {
   background-color: #FFDFDF;
   font-family: 'Roboto', sans-serif;
+  max-width: 1300px;
+  margin: auto;
+}
+header {
+  max-width: 1300px;
+  margin: auto;
+}
+main {
+  margin-top: 80px; 
+  margin-bottom: 50px;
+  padding: 0 10px;
 }
 .dark-mode {
   background-color: #2d3436;
@@ -53,6 +64,27 @@ input:not(input[type='radio']) {
 }
 input:focus {
   outline: 1.5px solid #D1A6A6
+}
+div.notification {
+  position: fixed;
+  opacity: 0;
+  top: 50px;
+  left: 50%;
+  height: 50px;
+  width: 300px;
+  z-index: 9999;
+  background-color: white;
+  color: #567A0D;
+  border-radius: 10px;
+  border: 1px solid #D1A6A6;
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation-name: notification;
+  animation-duration: 3s;
+  animation-timing-function: linear
 }
 div.title {
   display: flex; 
@@ -270,4 +302,11 @@ div.clearfix::after {
 
 @keyframes reloader {
   to { transform: rotate(360deg)}
+}
+@keyframes notification {
+  0%    {opacity: 0; top: 0}
+  25%   {opacity: 1; top: 5%}
+  50%   {opacity: 1; top: 5%}
+  75%   {opacity: 1; top: 5%}
+  100%  {opacity: 0; top: 0}
 }

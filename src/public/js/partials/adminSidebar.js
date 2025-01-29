@@ -15,20 +15,20 @@ var trashButton         = document.querySelector('a#trash')
 var updateProfileButton = document.querySelector('a#profile')
 var logOutButton        = document.querySelector('a#log-out')
 const buttonMap = {
-  home            : homeButton,
-  customers       : customersButton,
-  chats           : chatsButton,
-  purchases       : purchaseButton,
-  orders          : ordersButton,
-  stores          : storeButton,
-  employees       : employeesButton,
-  suppliers       : suppliersButton,
-  products        : productsButton,
-  brands          : brandsButton,
-  trash           : trashButton,
-  profile         : updateProfileButton,
+  home       : homeButton,
+  customers  : customersButton,
+  chats      : chatsButton,
+  purchases  : purchaseButton,
+  orders     : ordersButton,
+  stores     : storeButton,
+  employees  : employeesButton,
+  suppliers  : suppliersButton,
+  products   : productsButton,
+  brands     : brandsButton,
+  trash      : trashButton,
+  profile    : updateProfileButton,
 };
-if (buttonMap[index]) buttonMap[index].style.backgroundColor = '#FFDFDF';
+if (buttonMap[index]) buttonMap[index].style.backgroundColor = '#FFDFDF'
 
 if      (currentTime <= 9) checkDay = 'buổi sáng'
 else if (currentTime <= 14) checkDay = 'buổi trưa'

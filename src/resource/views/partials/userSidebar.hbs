@@ -1,0 +1,17 @@
+<div class="sidebar-menu">
+  <div class="avatar">
+    <img src="https://res.cloudinary.com/bunny-store/image/upload/v1711070727/web-img/logo_xkavlj.webp" alt="{{userInfo.userInfo.name}}" loading="lazy">
+    <span>{{userInfo.userInfo.name}}</span>
+  </div>
+  <div class="tag">
+    <a href="/profile/info" class="profile"><i class="fi fi-br-circle-user"></i>Thông tin cá nhân</a>
+    <a href="/profile/order" class="order"><i class="fi fi-rr-piggy-bank"></i>Thông tin đơn hàng</a>
+    <a href="/profile/rate-order" class="rateOrder"><i class="fi fi-rr-piggy-bank"></i>Đánh giá đơn hàng</a>
+    <a href="/profile/feedback" class="feedBack"><i class="fi fi-rr-feedback-alt"></i>Góp ý</a>
+  </div>
+</div>
+
+<script defer>
+  var index = '{{index}}'
+</script>
+<script src="/js/partials/userSidebar.js"></script>

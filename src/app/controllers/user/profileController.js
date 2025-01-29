@@ -5,31 +5,35 @@ class profileController {
   async profileInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
     const userId = req.cookies.user_id || null
+    const index  = 'profile'
+    const successful = req.flash('successful')
 
     const userInfo  = await user.findOne({ _id: userId }).lean()
     if (!userInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     
-    res.render('users/profileInfo', { title: 'Thông tin cá nhân', isUser, userInfo })
+    res.render('users/profileInfo', { title: 'Thông tin cá nhân', isUser, index, successful, userInfo })
   }
 
   async orderInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
     const userId = req.cookies.user_id || null
+    const index  = 'order'
 
     const orderInfo = await order.find({ 'customerInfo.userId': userId, deletedAt: null }).lean()
     if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-    res.render('users/profileOrder', { title: 'Thông tin đơn hàng', isUser, orderInfo })
+    res.render('users/profileOrder', { title: 'Thông tin đơn hàng', isUser, index, orderInfo })
   }
 
   async rateOrderInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
     const userId = req.cookies.user_id || null
+    const index  = 'rateOrder'
 
     const orderInfo = await order.find({ 'customerInfo.userId': userId, deletedAt: null, status: 'done' }).lean()
     if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-    res.render('users/profileRateOrder', { title: 'Đánh giá đơn hàng', isUser, orderInfo })
+    res.render('users/profileRateOrder', { title: 'Đánh giá đơn hàng', isUser, index, orderInfo })
   }
 
   async profileUpdate(req, res, next) {
@@ -49,8 +53,9 @@ class profileController {
   async feedBack(req, res, next) {
     const isUser = req.isUser === true ? true : false
     const userId = req.cookies.user_id || null
+    const index  = 'feedback'
 
-    res.render('users/profileFeedback', { title: 'Góp ý cửa hàng', isUser, userId })
+    res.render('users/profileFeedback', { title: 'Góp ý cửa hàng', isUser, index, userId })
   }
 }
 module.exports = new profileController
