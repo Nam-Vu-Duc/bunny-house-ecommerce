@@ -25,15 +25,20 @@ class loginController {
     bcrypt.compare(password, getUser.loginInfo.password, function(err, result) {
       if (result) {
         const payload = { email: getUser.email }// Payload with only essential data
-        const token = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '15m' })
+        const rt = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '15m' })
+        const at = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '7d' })
         const userId = getUser ? getUser._id.toString() : ''
         const chatId = getChat ? getChat._id.toString() : ''
 
-        res.cookie('token', token, {
+        res.cookie('rt', rt, {
           httpOnly: true,
           secure: true,
         })
-        res.cookie('user_id', userId, {
+        res.cookie('at', at, {
+          httpOnly: true,
+          secure: true,
+        })
+        res.cookie('uid', userId, {
           httpOnly: true,
           secure: true,
         })
@@ -42,10 +47,7 @@ class loginController {
           secure: true,
         })
 
-        if (getUser.loginInfo.role === 'admin') {
-          req.flash('sync-chat', 'sync-chat')
-          res.redirect('/admin')
-        } else {
+        if (getUser.loginInfo.role === 'user') {
           req.flash('sync-chat', 'sync-chat')
           res.redirect('/')
         }

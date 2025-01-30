@@ -4,11 +4,14 @@ const flash = require('connect-flash');
 
 router.use(flash())
 router.get('/', (req, res) => {
-  res.clearCookie('user_id', {
+  res.clearCookie('rt', {
     httpOnly: true,
     secure: true,
   })
-  // req.flash('success', 'Logged out successfully')
+  res.clearCookie('uid', {
+    httpOnly: true,
+    secure: true,
+  })
   res.redirect('/emp/authentication/sign-in');
 })
 

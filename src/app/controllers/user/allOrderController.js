@@ -7,7 +7,7 @@ const comment = require('../../models/commentModel')
 class allOrderController {
   async show(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.user_id || null
+    const userId = req.cookies.uid || null
 
     const successful = req.flash('successful')
     const newOrderId = req.flash('newOrderId')
@@ -88,7 +88,7 @@ class allOrderController {
 
   async rateOrder(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.user_id || null
+    const userId = req.cookies.uid || null
 
     const orderId = req.params.id
     const successful = req.flash('successful')
@@ -101,7 +101,7 @@ class allOrderController {
   }
   
   async orderRated(req, res, next) {
-    const senderId = req.cookies.user_id || null
+    const senderId = req.cookies.uid || null
     const orderId = req.params.id
     const {
       productId,

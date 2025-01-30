@@ -4,7 +4,7 @@ const order = require('../../models/orderModel')
 class profileController {
   async profileInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.user_id || null
+    const userId = req.cookies.uid || null
     const index  = 'profile'
     const successful = req.flash('successful')
 
@@ -16,7 +16,7 @@ class profileController {
 
   async orderInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.user_id || null
+    const userId = req.cookies.uid || null
     const index  = 'order'
 
     const orderInfo = await order.find({ 'customerInfo.userId': userId, deletedAt: null }).lean()
@@ -27,7 +27,7 @@ class profileController {
 
   async rateOrderInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.user_id || null
+    const userId = req.cookies.uid || null
     const index  = 'rateOrder'
 
     const orderInfo = await order.find({ 'customerInfo.userId': userId, deletedAt: null, status: 'done' }).lean()
@@ -37,7 +37,7 @@ class profileController {
   }
 
   async profileUpdate(req, res, next) {
-    const userId = req.cookies.user_id || null
+    const userId = req.cookies.uid || null
 
     await user.updateOne({ _id: userId}, {
       'userInfo.name'    : req.body.name,
@@ -52,7 +52,7 @@ class profileController {
   
   async feedBack(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.user_id || null
+    const userId = req.cookies.uid || null
     const index  = 'feedback'
 
     res.render('users/profileFeedback', { title: 'Góp ý cửa hàng', isUser, index, userId })

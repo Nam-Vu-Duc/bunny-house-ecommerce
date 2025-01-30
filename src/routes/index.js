@@ -26,6 +26,7 @@ const allOrdersRoute    = require('./user/allOrdersRoute')
 const profileRoute      = require('./user/profileRoute')
 const logOutRoute       = require('./user/logOutRoute')
 const chatRoute         = require('./user/chatRoute')
+const refreshRoute      = require('./user/refreshToken')
 
 // login
 const authenticationRoute    = require('./auth/authenticationRoute')
@@ -56,6 +57,7 @@ function route(app) {
   app.use('/profile'      , checkUser, profileRoute)
   app.use('/log-out'      , checkUser, logOutRoute)
   app.use('/api/chat'     , checkUser, chatRoute)
+  app.use('/refresh-token', refreshRoute)
 
   // login
   app.use('/authentication'     , authenticationRoute)

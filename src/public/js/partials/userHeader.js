@@ -1,5 +1,4 @@
 var header = document.querySelector('header')
-
 window.addEventListener('scroll', function() {
   document.documentElement.scrollTop > 0 ? header.classList.add('scroll') : header.classList.remove('scroll')
 })

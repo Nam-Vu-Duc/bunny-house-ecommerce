@@ -21,14 +21,19 @@ class loginController {
     bcrypt.compare(password, getEmp.loginInfo.password, function(err, result) {
       if (result) {
         const payload = { email: getEmp.email }; // Payload with only essential data
-        const token = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '15m' })
+        const rt = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '15m' })
+        const at = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '7d' })
         const userId = getEmp._id.toString()
 
-        res.cookie('token', token, {
+        res.cookie('rt', rt, {
           httpOnly: true,
           secure: true,
         })
-        res.cookie('user_id', userId, {
+        res.cookie('at', at, {
+          httpOnly: true,
+          secure: true,
+        })
+        res.cookie('uid', userId, {
           httpOnly: true,
           secure: true,
         })

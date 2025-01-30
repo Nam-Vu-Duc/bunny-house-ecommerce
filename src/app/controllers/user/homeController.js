@@ -5,7 +5,7 @@ class homeController {
   async show(req, res, next) {
     const sync_chat = req.flash('sync-chat')
     const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.user_id || null
+    const userId = req.cookies.uid || null
     const chatId = req.cookies.chat_id || null
     
     const [products, brands] = await Promise.all([
@@ -17,7 +17,7 @@ class homeController {
 
   async searchInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.user_id || null
+    const userId = req.cookies.uid || null
     const chatId = req.cookies.chat_id || null
   
     const query = req.query.q

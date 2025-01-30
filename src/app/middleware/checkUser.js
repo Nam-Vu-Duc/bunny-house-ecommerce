@@ -1,25 +1,23 @@
 const user = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 
-module.exports = function checkAdmin(req, res, next) {
-  const userId = req.cookies.user_id
-  const token = req.cookies.token
-  if (!token) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
-  
-  jwt.verify(token, 'SECRET_KEY', (err, decoded) => {
-    if (err) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
-  })
+module.exports = async function checkUser(req, res, next) {
+  try {
+    const rt = req.cookies.rt
+    const uid = req.cookies.uid
 
-  if (userId) {
-    user.findOne({ _id: userId })
-      .then(user => {
-        if (!user) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
-        if (user.loginInfo.role !== 'user') return res.render('partials/denyAdminAccess', { title: 'Warning', layout: 'empty' })
-        req.isUser = true
-        next()
-      })
-      .catch(next)
-  } else {
+    if (rt && uid) {
+      const decoded = jwt.verify(rt, 'SECRET_KEY')
+      if (!decoded) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+      
+      const userInfo = await user.findOne({ _id: uid })
+      if (!userInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+      if (userInfo.loginInfo.role !== 'user') return res.render('partials/denyAdminAccess', { title: 'Access Denied', layout: 'empty' })
+      req.isUser = true
+    }
     next()
+  } catch (error) {
+    console.error('Authentication Error:', error)
+    return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
   }
 }
