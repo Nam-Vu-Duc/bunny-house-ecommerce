@@ -16,7 +16,6 @@ const product = new Schema({
   description  : { type: String, default: '' },
   details      : { type: String, default: '' },
   status       : { type: String, default: 'no' },
-  newArrival   : { type: String, default: 'no' },
   rate         : { type: Number, default: 0 },
   saleNumber   : { type: Number, default: 0 },
   rateNumber   : { type: Number, default: 0 },

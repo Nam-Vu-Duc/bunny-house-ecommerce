@@ -6,7 +6,6 @@ if (error) {
   wrongInfo.style.color = 'red'
 }
 
-console.log(successful)
 if (successful) {
   socket.emit('account')
 }

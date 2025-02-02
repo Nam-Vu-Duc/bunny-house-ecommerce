@@ -14,8 +14,9 @@ module.exports = async function checkAdmin(req, res, next) {
       if (!empInfo) return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
       if (empInfo.loginInfo.role !== 'admin') return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
       req.isUser = true
+      next()
     }
-    next()
+    return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
   } catch (error) {
     console.error('Authentication Error:', error)
     return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })

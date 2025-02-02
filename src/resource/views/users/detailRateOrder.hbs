@@ -57,7 +57,7 @@
         </tr>
         <tr>
           <td colspan="4">
-            <input type="text" placeholder="Nhập đánh giá của bạn" id="productComment" name="productComment">
+            <input type="text" placeholder="Nhập đánh giá của bạn" id="productComment" name="productComment[]">
             <input type="hidden" id="productId" name="productId[]" value="{{this.id}}">
             <div class="rate-star">
               <input type="hidden" id="productRate" name="productRate[]" value="0">
@@ -81,6 +81,7 @@
 </div>
 
 <script>
-  const isRated = '{{orderInfo.isRated}}'
+  const isRated = `{{orderInfo.isRated}}`
+  const successful = `{{successful}}`
   loadFile('/js/user/detailRateOrder.js')
 </script>

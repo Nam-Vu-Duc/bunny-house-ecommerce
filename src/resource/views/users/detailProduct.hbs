@@ -73,9 +73,8 @@
     <div class="comment-box">
       {{#each comments}}
         <div class="comment">
-          <p id="sender">user{{this.senderId}}</p>
-          <p id="rate">{{this.rate}}</p>
-          <p id="send-date">{{formatDate this.createdAt}}</p>
+          <p id="sender">Người dùng ẩn danh</p>
+          <p id="rate">{{this.rate}}<i class="fi fi-ss-star"></i> {{formatDate this.createdAt}}</p>
           <p id="comment">{{this.comment}}</p>
         </div>
       {{/each}}

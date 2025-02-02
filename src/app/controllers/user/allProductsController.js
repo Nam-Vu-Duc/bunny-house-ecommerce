@@ -5,97 +5,173 @@ class allProductsController {
   async showAllProducts(req, res, next) {
     const isUser = req.isUser === true ? true : false
 
-    const currentPage  = req.query.page   || 1
+    const currentPage  = req.query.page || 1
     const type         = req.params.slug
     const sortedList   = req.query
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
+    const sortOptions  = {}
 
-    let products = await product.find({ deletedAt: null }).sort({ createdAt: -1 }).lean()
-
-    const filters = {
-      'flash-sale' : { filter: product => product.status     === 'flash-sale' },
-      'hot'        : { filter: product => product.status     === 'hot'        },
-      'new-arrival': { filter: product => product.newArrival === 'yes'        },
-      'skincare'   : { filter: product => product.skincare   !== ''           },
-      'makeup'     : { filter: product => product.makeup     !== ''           }
-    }
-    const sortFields = [
-      'price',
-      'rate',
-      'saleNumber'
-    ]
-
-    if (type in filters) products = products.filter(filters[type].filter)
-
-    sortFields.forEach((field) => {
-      if (sortedList[field]) {
-        products = products.sort((a, b) => {
-          if (sortedList[field] === 'asc') return a[field] - b[field] 
-          if (sortedList[field] === 'desc') return b[field] - a[field]
-        })
+    for (var key in sortedList) {
+      if (sortedList.hasOwnProperty(key) && key !== "page") {
+        sortOptions[key] = parseInt(sortedList[key])
       }
-    })
-    const productLength = products.length
-    products = products.slice(skip, skip + itemsPerPage)
+    }
+
+    const [products, productLength] = await Promise.all([
+      product
+        .find({ deletedAt: null })
+        .sort(sortOptions)
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      product.countDocuments()
+    ]) 
         
     res.render('users/allProducts', { title: 'Toàn bộ sản phẩm', isUser, products, type, productLength, currentPage }) 
+  }
+
+  async showAllStatus(req, res, next) {
+    const isUser = req.isUser === true ? true : false
+
+    const currentPage  = req.query.page || 1
+    const type         = req.params.slug || ''
+    const sortedList   = req.query
+    const itemsPerPage = 10
+    const skip         = (currentPage - 1) * itemsPerPage
+    const sortOptions  = {}
+
+    for (var key in sortedList) {
+      if (sortedList.hasOwnProperty(key) && key !== "page") {
+        sortOptions[key] = parseInt(sortedList[key])
+      }
+    }
+
+    const [products, productLength] = await Promise.all([
+      product
+        .find({ deletedAt: null, status: type })
+        .sort(sortOptions)
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      product.find({ deletedAt: null, status: type }).countDocuments()
+    ]) 
+        
+    res.render('users/allProducts', { title: `Sản phẩm ${type}`, isUser, products, type, productLength, currentPage }) 
   }
 
   async showAllSkincare(req, res, next) {
     const isUser = req.isUser === true ? true : false
 
-    const currentPage  = req.query.page   || 1
+    const currentPage  = req.query.page || 1
+    const type         = 'skincare'
+    const sortedList   = req.query
+    const itemsPerPage = 10
+    const skip         = (currentPage - 1) * itemsPerPage
+    const sortOptions  = {}
+
+    for (var key in sortedList) {
+      if (sortedList.hasOwnProperty(key) && key !== "page") {
+        sortOptions[key] = parseInt(sortedList[key])
+      }
+    }
+
+    const [products, productLength] = await Promise.all([
+      product
+        .find({ deletedAt: null, categories: 'skincare' })
+        .sort(sortOptions)
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      product.find({ deletedAt: null, categories: 'skincare' }).countDocuments()
+    ]) 
+
+    res.render('users/allProducts', { title: 'Sản phẩm Skincare', isUser, products, type, productLength, currentPage })
+  }
+  
+  async showAllSkincareType(req, res, next) {
+    const isUser = req.isUser === true ? true : false
+
+    const currentPage  = req.query.page || 1
     const type         = req.params.slug
     const sortedList   = req.query
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
-    const sortFields = [
-      'price',
-      'rate',
-      'saleNumber'
-    ]
+    const sortOptions  = {}
 
-    let products = await product.find({ deletedAt: null, skincare: type }).lean()
-    sortFields.forEach((field) => {
-      if (sortedList[field]) {
-        products = products.sort((a, b) => {
-          if (sortedList[field] === 'asc') return a[field] - b[field] 
-          if (sortedList[field] === 'desc') return b[field] - a[field]
-        })
+    for (var key in sortedList) {
+      if (sortedList.hasOwnProperty(key) && key !== "page") {
+        sortOptions[key] = parseInt(sortedList[key])
       }
-    })
-    const productLength = products.length
-    products = products.slice(skip, skip + itemsPerPage)
+    }
+
+    const [products, productLength] = await Promise.all([
+      product
+        .find({ deletedAt: null, skincare: type })
+        .sort(sortOptions)
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      product.find({ deletedAt: null, skincare: type }).countDocuments()
+    ]) 
 
     res.render('users/allProducts', { title: 'Sản phẩm Skincare', isUser, products, type, productLength, currentPage })
   }
 
   async showAllMakeUp(req, res, next) {
     const isUser = req.isUser === true ? true : false
-    
-    const currentPage  = req.query.page   || 1
+
+    const currentPage  = req.query.page || 1
+    const type         = 'makeup'
+    const sortedList   = req.query
+    const itemsPerPage = 10
+    const skip         = (currentPage - 1) * itemsPerPage
+    const sortOptions  = {}
+
+    for (var key in sortedList) {
+      if (sortedList.hasOwnProperty(key) && key !== "page") {
+        sortOptions[key] = parseInt(sortedList[key])
+      }
+    }
+
+    const [products, productLength] = await Promise.all([
+      product
+        .find({ deletedAt: null, categories: 'makeup' })
+        .sort(sortOptions)
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      product.find({ deletedAt: null, categories: 'makeup' }).countDocuments()
+    ]) 
+  
+    res.render('users/allProducts', { title: 'Sản phẩm Makeup', isUser, products, type, productLength, currentPage }) 
+  }
+  
+  async showAllMakeUpType(req, res, next) {
+    const isUser = req.isUser === true ? true : false
+
+    const currentPage  = req.query.page || 1
     const type         = req.params.slug
     const sortedList   = req.query
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
-    const sortFields = [
-      'price',
-      'rate',
-      'saleNumber'
-    ]
+    const sortOptions  = {}
 
-    let products = await product.find({ deletedAt: null, makeup: type }).lean()
-    sortFields.forEach((field) => {
-      if (sortedList[field]) {
-        products = products.sort((a, b) => {
-          if (sortedList[field] === 'asc') return a[field] - b[field] 
-          if (sortedList[field] === 'desc') return b[field] - a[field]
-        })
+    for (var key in sortedList) {
+      if (sortedList.hasOwnProperty(key) && key !== "page") {
+        sortOptions[key] = parseInt(sortedList[key])
       }
-    })
-    const productLength = products.length
-    products = products.slice(skip, skip + itemsPerPage)
+    }
+
+    const [products, productLength] = await Promise.all([
+      product
+        .find({ deletedAt: null, makeup: type })
+        .sort(sortOptions)
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      product.find({ deletedAt: null, makeup: type }).countDocuments()
+    ]) 
   
     res.render('users/allProducts', { title: 'Sản phẩm Makeup', isUser, products, type, productLength, currentPage }) 
   }
@@ -105,7 +181,7 @@ class allProductsController {
     
     const [productInfo, comments] = await Promise.all([
       product.findOne({ _id: req.params.id }).lean(),
-      comment.find({ productId: req.params.id }).lean()
+      comment.find({ productId: req.params.id }).lean(),
     ]) 
     if (!productInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
       

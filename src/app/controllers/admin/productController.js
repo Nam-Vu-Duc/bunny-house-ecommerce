@@ -57,7 +57,6 @@ class allProductsController {
       description : req.body.description,
       details     : req.body.details,
       status      : req.body.status,
-      newArrival  : req.body.newArrival,
     })
 
     req.flash('successful', 'Cập nhật sản phẩm thành công')

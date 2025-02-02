@@ -20,11 +20,12 @@ class allOrderController {
 
   async orderInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
+    const successful = req.flash('successful')
     
     const orderInfo = await order.findOne({ _id: req.params.id }).lean()
     if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-    res.render('users/detailOrder', { title: `Đơn của ${orderInfo.customerInfo.name}`, orderInfo, isUser })
+    res.render('users/detailOrder', { title: `Đơn của ${orderInfo.customerInfo.name}`, isUser, successful, orderInfo })
   }
 
   ordersChecking(req, res, next) {
@@ -121,6 +122,7 @@ class allOrderController {
         productId: id,
         senderId: senderId,
         comment: productComment[index],
+        rate: productRate[index]
       }
     )))
 
@@ -146,7 +148,7 @@ class allOrderController {
     }));
     await product.bulkWrite(bulkOps)
 
-    req.flash('successful', 'rate successfully')
+    req.flash('successful', 'Đánh giá đơn hàng thành công')
     res.redirect(req.get('Referrer') || '/')
   }
 }

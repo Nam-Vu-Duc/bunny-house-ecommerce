@@ -1,5 +1,7 @@
 importLinkCss('/css/user/detailRateOrder.css')
 
+pushNotification(successful)
+
 const submitBtn = document.querySelector("button[type='submit']")
 const rateForm = document.querySelector('form#form-1')
 const rateDiv = document.querySelectorAll('div.rate-star')

@@ -1,9 +1,14 @@
 const express = require('express')
+const jwt = require('jsonwebtoken')
+const user = require('../../app/models/userModel')
 const router = express.Router()
 
-router.post('/', (req, res) => {
+router.post('/', async function(req, res) {
   const { refreshToken } = req.body;
-  if (!refreshToken) return res.status(401).json({ message: "Unauthorized" });
+  const uid = req.cookies.uid
+  const userInfo = await user.findOne({ _id: uid })
+  if (!userInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+  if (!refreshToken) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
   // Check if refresh token is in our storage
   if (!refreshTokens.includes(refreshToken)) {
