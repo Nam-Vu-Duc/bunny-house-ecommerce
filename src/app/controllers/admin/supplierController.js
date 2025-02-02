@@ -3,8 +3,8 @@ const purchase = require('../../models/purchaseModel')
 
 class allSuppliersController {
   async allSuppliers(req, res, next) {
-    const index  = 'suppliers'
-    const successful = req.flash('successful')
+    const index        = 'suppliers'
+    const successful   = req.flash('successful')
 
     const currentPage  = req.query.page || 1
     const itemsPerPage = 10;

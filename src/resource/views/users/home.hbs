@@ -9,7 +9,7 @@
   </div>
   
   <div class="products">
-    {{#each (checkStatus products 'flash-sale' 5)}}
+    {{#each flashSaleProducts}}
       {{> product}}
     {{/each}}
   </div>
@@ -22,7 +22,7 @@
   </div>
   
   <div class="products">
-    {{#each (checkStatus products 'flash-sale' 5)}}
+    {{#each hotSaleProducts}}
       {{> product}}
     {{/each}}
   </div>
@@ -35,7 +35,7 @@
   </div>
   
   <div class="products">
-    {{#each (checkStatus products 'hot' 5)}}
+    {{#each hotProducts}}
       {{> product}}
     {{/each}}
   </div>
@@ -48,7 +48,7 @@
   </div>
 
   <div class="products">
-    {{#each (limit products 5)}}
+    {{#each allProducts}}
       {{> product}}
     {{/each}}
   </div>

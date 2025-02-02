@@ -3,8 +3,8 @@ const product = require('../../models/productModel')
 
 class allBrandsController {
   async allBrands(req, res, next) {
-    const index  = 'brands'
-    const successful = req.flash('successful')
+    const index        = 'brands'
+    const successful   = req.flash('successful')
 
     const currentPage  = req.query.page || 1
     const itemsPerPage = 10;

@@ -5,8 +5,8 @@ const store = require('../../models/storeModel')
 
 class allOrdersController {
   async allOrders(req, res, next) {
-    const index = 'orders'
-    const successful = req.flash('successful')
+    const index        = 'orders'
+    const successful   = req.flash('successful')
 
     const currentPage  = req.query.page || 1
     const orderType    = req.query.type || ''

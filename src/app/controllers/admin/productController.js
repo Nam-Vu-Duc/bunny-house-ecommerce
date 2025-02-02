@@ -4,17 +4,17 @@ const cloudinary = require('cloudinary').v2
 class allProductsController {
   async allProducts(req, res, next) {
     const index        = 'products'
-    const successful = req.flash('successful')
+    const successful   = req.flash('successful')
     
     const currentPage  = req.query.page || 1
     const productType  = req.query.type || ''
     const itemsPerPage = 10;
     const skip         = (currentPage - 1) * itemsPerPage
 
-    let products = await product.find({ deletedAt: null }).sort({ createdAt: -1, name: 1 }).lean()
-    const totalProduct = products.length
-    if (productType !== '') products = products.filter(product => product.categories === productType)
-    products = products.slice(skip, skip + itemsPerPage)
+    const [products, totalProduct] = await Promise.all([
+      product.find({ deletedAt: null }).sort({ createdAt: -1, name: 1 }).skip(skip).limit(itemsPerPage).lean(),
+      product.find({ deletedAt: null }).countDocuments()
+    ])
 
     res.render('admin/all/product', { title: 'Danh sách sản phẩm', layout: 'admin', index, successful, totalProduct, products, productType, currentPage })
   }
@@ -92,8 +92,10 @@ class allProductsController {
     const index = 'trash'
     const successful = req.flash('successful')
 
-    const products = await product.find({ deletedAt: { $ne: null } }).lean()
-    const totalDeletedProduct = products.length
+    const [products, totalDeletedProduct] = await Promise.all([
+      product.find({ deletedAt: { $ne: null } }).sort({ deletedAt: -1, name: 1 }).skip(skip).limit(itemsPerPage).lean(),
+      product.find({ deletedAt: null }).countDocuments()
+    ])
 
     res.render('admin/all/trash', { title: 'Kho', layout: 'admin', index, successful, products, totalDeletedProduct })
   }

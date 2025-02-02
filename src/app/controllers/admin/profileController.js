@@ -2,7 +2,7 @@ const emp = require('../../models/employeeModel')
 
 class profileController {
   async updateProfile(req, res, next) {
-    const index = 'profile'
+    const index      = 'profile'
     const successful = req.flash('successful')
 
     const userId = req.cookies.user_id

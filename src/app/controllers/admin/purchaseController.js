@@ -20,8 +20,8 @@ class adminController {
   }
 
   async purchaseInfo(req, res, next) {
-    const index  = 'purchases'
-    const successful = req.flash('successful')
+    const index        = 'purchases'
+    const successful   = req.flash('successful')
 
     const purchaseInfo = await purchase.findOne({ _id: req.params.id }).lean()
     const supplierInfo = await supplier.findOne({ _id: purchaseInfo.supplierId }).lean()

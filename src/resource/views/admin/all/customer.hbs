@@ -4,23 +4,31 @@
   </div>
 
   <div class="filter-and-create">
-    <select class="filter">
-      <option value="">Toàn bộ</option>
-      <option value=""></option>
-      <option value=""></option>
-    </select>
+    <div class="sort">
+      <label for="quantity">Sắp xếp theo:</label>
+      <select id="quantity" class="filter-btn">
+        <option value="">Đơn hàng</option>
+        <option value="1">Đơn hàng tăng dần</option>
+        <option value="-1">Đơn hàng giảm dần</option>
+      </select>
+
+      <select id="revenue" class="filter-btn">
+        <option value="">Doanh thu</option>
+        <option value="1">Doanh thu tăng dần</option>
+        <option value="-1">Doanh thu giảm dần</option>
+      </select>
+
+      <button id="clear-filter" style="display: none">Xoá bộ lọc</button>
+    </div>
 
     <a href="/admin/all-customers/customer/create" class="create-btn" id="create-btn">
-      <i class="fi fi-rr-user-add"></i>
+      <i class="fi fi-rr-plus"></i>
       <p>Thêm Khách Hàng</p>
     </a>
-  </div>
-
-  <div>
-    <input type="text" placeholder="Tìm kiếm khách hàng">
-  </div>
+  </div>  
 
   <div class="table">
+    <input type="text" id="search-input" placeholder="Tìm kiếm khách hàng">
     <table class="all-items">
       <thead>
         <tr>

@@ -8,11 +8,14 @@ class homeController {
     const userId = req.cookies.uid || null
     const chatId = req.cookies.chat_id || null
     
-    const [products, brands] = await Promise.all([
-      product.find({ deletedAt: null }).lean(),
+    const [flashSaleProducts, hotProducts, hotSaleProducts, allProducts, brands] = await Promise.all([
+      product.find({ deletedAt: null, status: 'flash-sale' }).limit(5).lean(),
+      product.find({ deletedAt: null, status: 'hot' }).limit(5).lean(),
+      product.find({ deletedAt: null }).sort({ saleNumber: -1 }) .limit(5).lean(),
+      product.find({ deletedAt: null }).limit(5).lean(),
       brand.find({}).lean(),
     ])
-    res.render('users/home', { title: 'Bunny House - Cửa hàng mỹ phẩm chính hãng', products, brands, userId, chatId, isUser, sync_chat });
+    res.render('users/home', { title: 'Bunny House - Cửa hàng mỹ phẩm chính hãng', isUser, flashSaleProducts, hotProducts, hotSaleProducts, allProducts, brands, userId, chatId, sync_chat })
   }
 
   async searchInfo(req, res, next) {

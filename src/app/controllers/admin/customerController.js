@@ -5,12 +5,20 @@ const bcrypt = require('bcryptjs')
 
 class allCustomersController {
   async allCustomers(req, res, next) {
-    const index = 'customers'
-    const successful = req.flash('successful')
+    const index        = 'customers'
+    const successful   = req.flash('successful')
 
     const currentPage  = req.query.page || 1
+    const sortedList   = req.query
     const itemsPerPage = 10;
     const skip         = (currentPage - 1) * itemsPerPage
+    const sortOptions  = {}
+
+    for (var key in sortedList) {
+      if (sortedList.hasOwnProperty(key) && key !== "page") {
+        sortOptions[key] = parseInt(sortedList[key])
+      }
+    }
 
     const [customers, totalCustomer] = await Promise.all([
       user.find({}).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),

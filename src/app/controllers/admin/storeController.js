@@ -3,8 +3,8 @@ const employee = require('../../models/employeeModel')
 
 class allStoresController {
   async allStores(req, res, next) {
-    const index  = 'stores'
-    const successful = req.flash('successful')
+    const index        = 'stores'
+    const successful   = req.flash('successful')
 
     const currentPage  = req.query.page || 1
     const itemsPerPage = 10;

@@ -4,6 +4,7 @@
   </div>
 
   <div class="table">
+    <input type="text" id="search-input" placeholder="Tìm kiếm khách hàng">
     <table class="all-items">
       <thead>
         <tr>
@@ -21,12 +22,7 @@
         <tr>
           <td>{{addIndex @index 1}}</td>
           <td>{{this.brand}}</td>
-          <td style="
-                display: flex; 
-                justify-content: center;
-                align-items: center
-                "
-          >
+          <td style="display: flex; justify-content: center;align-items: center">
             <img src="{{this.img.path}}" alt="{{this.name}}" loading="lazy">
             <p>{{this.name}}</p>
           </td>

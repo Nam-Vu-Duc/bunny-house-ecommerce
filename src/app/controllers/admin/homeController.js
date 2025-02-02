@@ -7,7 +7,7 @@ const employee = require('../../models/employeeModel')
 
 class homeController {
   async show(req, res, next) {
-    const index = 'home'
+    const index      = 'home'
     const successful = req.flash('successful')
 
     const [orders, products, employees, customers, stores, brands] = await Promise.all([

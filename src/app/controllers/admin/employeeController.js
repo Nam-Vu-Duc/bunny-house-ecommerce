@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs')
 
 class allEmployeesController {
   async allEmployees(req, res, next) {
-    const index  = 'employees'
-    const successful = req.flash('successful')
+    const index        = 'employees'
+    const successful   = req.flash('successful')
 
     const currentPage  = req.query.page || 1
     const itemsPerPage = 10
