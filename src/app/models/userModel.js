@@ -16,6 +16,7 @@ const user = new Schema({
   },
   quantity  : { type: Number, default: 0 },
   revenue   : { type: Number, default: 0 },
+  memberCode: { type: String, default: 'silver'},
   slug      : { type: String, slug: 'userInfo.name', unique: true },
 }, { timestamps: true })
 module.exports = mongoose.model('user', user)

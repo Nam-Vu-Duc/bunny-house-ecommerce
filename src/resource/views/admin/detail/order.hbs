@@ -30,20 +30,25 @@
       </tr>
       <tr>
         <td>Phương thức thanh toán</td>
-        <td>{{formatPaymentMethod orderInfo.paymentMethod}}</td>
+        <td>
+          <select name="paymentMethod" id="paymentMethod">
+            {{#each paymentMethods}}
+            <option value="{{this.code}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </td>
       </tr>
       <tr>
         <td>Tổng Tiền</td>
         <td>{{formatNumber orderInfo.totalOrderPrice}}</td>
       </tr>
       <tr>
-        <td> Trạng thái đơn </td>
+        <td>Trạng thái đơn</td>
         <td>
           <select name="status" id="status">
-            <option value="preparing">Đang chuẩn bị đơn hàng</option>
-            <option value="delivering">Đang giao đơn hàng</option>
-            <option value="done">Hoàn thành đơn hàng</option>
-            <option value="cancel">Huỷ đơn hàng</option>
+            {{#each orderStatuses}}
+            <option value="{{this.code}}">{{this.name}}</option>
+            {{/each}}
           </select>
         </td>
       </tr>
@@ -78,6 +83,7 @@
 </div>
 
 <script>
+  var paymentMethod = '{{orderInfo.paymentMethod}}'
   var orderStatus = '{{orderInfo.status}}'
   var successful = '{{successful}}'
   loadFile('/js/admin/detail/order.js')

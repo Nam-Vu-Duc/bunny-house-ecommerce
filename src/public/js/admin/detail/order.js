@@ -2,9 +2,13 @@ importLinkCss('/css/admin/detailOrder.css')
 
 pushNotification(successful)
 
+var selectPaymentMethod = document.querySelector('select#paymentMethod')
+var paymentMethodOptions = selectPaymentMethod.querySelectorAll('option')
+
 var selectStatus = document.querySelector('select#status')
+var selectOptions = selectStatus.querySelectorAll('option')
+
 var submitButton = document.querySelector('button[type="submit"]')
-var options = selectStatus.querySelectorAll('option')
 
 if (orderStatus === 'done') {
   selectStatus.disabled = true
@@ -12,6 +16,10 @@ if (orderStatus === 'done') {
   submitButton.style.display = 'none'
 } 
 
-options.forEach(option => {
+paymentMethodOptions.forEach(option => {
+  if (option.value === paymentMethod) option.selected = true
+})
+
+selectOptions.forEach(option => {
   if (option.value === orderStatus) option.selected = true
 })

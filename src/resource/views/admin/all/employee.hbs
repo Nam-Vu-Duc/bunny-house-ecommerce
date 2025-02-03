@@ -1,40 +1,52 @@
 <div class="admin-all-employees-container">  
   <div class="board-title">
-    <p>Tổng nhân sự: {{totalEmployee}}</p>
+    <p>Nhân sự: {{totalEmployee}}</p>
   </div>
 
-  <div class="filter-and-create">
-    <div class="sort">
-      <label for="price">Sắp xếp theo:</label>
-      <select id="price" class="filter-btn">
-        <option value="">Giá mặc định</option>
-        <option value="1">Giá tăng dần</option>
-        <option value="-1">Giá giảm dần</option>
-      </select>
+  <div class="control-bar">
+    <div class="filter-and-create">
+      <div class="sort">
+        <label for="price">Sắp xếp theo:</label>
+        <select id="price" class="filter-btn">
+          <option value="">Mức lương</option>
+          <option value="1">Mức lương tăng dần</option>
+          <option value="-1">Mức lương giảm dần</option>
+        </select>
 
-      <select id="rate" class="filter-btn">
-        <option value="">Đánh giá mặc định</option>
-        <option value="1">Đánh giá tăng dần</option>
-        <option value="-1">Đánh giá giảm dần</option>
-      </select>
+        <select id="rate" class="filter-btn">
+          <option value="">Thâm niên</option>
+          <option value="1">Thâm niên tăng dần</option>
+          <option value="-1">Thâm niên giảm dần</option>
+        </select>
+      </div>
 
-      <select id="saleNumber" class="filter-btn">
-        <option value="">Lượng bán mặc định</option>
-        <option value="1">Lượng bán tăng dần</option>
-        <option value="-1">Lượng bán giảm dần</option>
-      </select>
+      <div class="filter">
+        <label>Lọc theo:</label>
+        <select id="position" class="filter-btn">
+          <option value="">Vị trí</option>
+          {{#each positions}}
+          <option value="{{this.code}}">{{this.name}}</option>
+          {{/each}}
+        </select>
 
+        <select id="store" class="filter-btn">
+          <option value="">Cửa hàng</option>
+          {{#each stores}}
+          <option value="{{this._id}}">{{this.name}}</option>
+          {{/each}}
+        </select>
+      </div>
       <button id="clear-filter" style="display: none">Xoá bộ lọc</button>
-    </div>
 
-    <a href="/admin/all-employees/employee/create" class="create-btn" id="create-btn">
-      <i class="fi fi-rr-plus"></i>
-      <p>Thêm nhân viên</p>
-    </a>
+      <a href="/admin/all-employees/employee/create" class="create-btn" id="create-btn">
+        <i class="fi fi-rr-plus"></i>
+        <p>Thêm Nhân Sự</p>
+      </a>
+    </div>
+    <input type="text" id="search-input" placeholder="Tìm kiếm nhân sự">
   </div>
 
   <div class="table">
-    <input type="text" id="search-input" placeholder="Tìm kiếm khách hàng">
     <table class="all-items">
       <thead>
         <tr>

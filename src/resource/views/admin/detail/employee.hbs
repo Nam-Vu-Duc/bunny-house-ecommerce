@@ -16,8 +16,9 @@
         <td>Vị trí</td>
         <td>
           <select name="role" id="role">
-            <option value="employee">Nhân viên</option>
-            <option value="admin">Quản trị viên</option>
+            {{#each positions}}
+            <option value="{{this.code}}">{{this.name}}</option>
+            {{/each}}
           </select>
         </td>
       </tr>
@@ -45,7 +46,7 @@
         <td>
           <select name="store" id="store">
             {{#each stores}}
-              <option value="{{this._id}}">{{this.name}}</option>
+              <option value="{{this.code}}">{{this.name}}</option>
             {{/each}}
           </select>
         </td>

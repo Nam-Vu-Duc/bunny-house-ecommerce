@@ -1,5 +1,6 @@
 const employee = require('../../models/employeeModel')
 const store = require('../../models/storeModel')
+const position = require('../../models/positionModel')
 const bcrypt = require('bcryptjs')
 
 class allEmployeesController {
@@ -11,22 +12,27 @@ class allEmployeesController {
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
 
-    const [employees, totalEmployee] = await Promise.all([
+    const [employees, totalEmployee, positions, stores] = await Promise.all([
       employee.find({}).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),
-      employee.find({}).countDocuments()
+      employee.find({}).countDocuments(),
+      position.find({}).lean(),
+      store.find({}).lean()
     ])
 
-    res.render('admin/all/employee', { title: 'Danh sách nhân sự', layout: 'admin', index, successful, employees, totalEmployee, currentPage })
+    res.render('admin/all/employee', { title: 'Danh sách nhân sự', layout: 'admin', index, successful, employees, totalEmployee, positions, stores, currentPage })
   }
 
   async employeeInfo(req, res, next) {
     const index = 'employees'
     const successful = req.flash('successful')
 
-    const employeeInfo = await employee.findOne({ _id: req.params.id }).lean()
-    const stores = await store.find().lean()
+    const [employeeInfo, stores, positions] = await Promise.all([
+      employee.findOne({ _id: req.params.id }).lean(),
+      store.find().lean(),
+      position.find().lean()
+    ])
 
-    res.render('admin/detail/employee', { title: employeeInfo.userInfo.name, layout: 'admin', index, successful, employeeInfo, stores })
+    res.render('admin/detail/employee', { title: employeeInfo.userInfo.name, layout: 'admin', index, successful, employeeInfo, positions, stores })
   }
 
   async employeeUpdate(req, res, next) {

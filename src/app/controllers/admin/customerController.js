@@ -1,6 +1,7 @@
 const user = require('../../models/userModel')
 const chat = require('../../models/chatModel')
 const order = require('../../models/orderModel')
+const member = require('../../models/memberModel')
 const bcrypt = require('bcryptjs')
 
 class allCustomersController {
@@ -20,12 +21,13 @@ class allCustomersController {
       }
     }
 
-    const [customers, totalCustomer] = await Promise.all([
+    const [customers, totalCustomer, members] = await Promise.all([
       user.find({}).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),
-      user.find({}).countDocuments()
+      user.find({}).countDocuments(),
+      member.find({}).lean()
     ])
 
-    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin', index, successful, customers, totalCustomer, currentPage });
+    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin', index, successful, customers, totalCustomer, members, currentPage });
   }
 
   async customerInfo(req, res, next) {
@@ -33,11 +35,27 @@ class allCustomersController {
     const successful = req.flash('successful')
 
     const customerInfo = await user.findOne({ _id: req.params.id }).lean()
-    const orderInfo = await order.find({ 'customerInfo.userId': req.params.id, deletedAt: null }).lean()
-    const totalOrder = orderInfo.length
-    const totalPrice = orderInfo.reduce((total, order) => total + order.totalOrderPrice, 0)
+    const [memberInfo, orderInfo] = await Promise.all([
+      member.findOne({ code: customerInfo.memberCode}).lean(),
+      order.aggregate([
+        {
+          $match: { 'customerInfo.userId': req.params.id }
+        },
+        {
+          $lookup: {
+            from: 'orderStatuses',
+            localField: 'status',
+            foreignField: 'code',
+            as: 'orderStatus'
+          }
+        },
+        {
+          $unwind: '$orderStatus'
+        }
+      ])
+    ])
     
-    res.render('admin/detail/customer', { title: customerInfo.userInfo.name, layout: 'admin', index, successful, customerInfo, orderInfo, totalOrder, totalPrice })
+    res.render('admin/detail/customer', { title: customerInfo.userInfo.name, layout: 'admin', index, successful, customerInfo, memberInfo, orderInfo })
   }
 
   async customerUpdate(req, res, next) {

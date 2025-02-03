@@ -21,7 +21,7 @@ class loginController {
     bcrypt.compare(password, getEmp.loginInfo.password, function(err, result) {
       if (result) {
         const payload = { email: getEmp.email }; // Payload with only essential data
-        const rt = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '60m' })
+        const rt = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '1d' })
         const at = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '7d' })
         const userId = getEmp._id.toString()
 

@@ -11,6 +11,7 @@ window.addEventListener('load', () => {
 
 socket.on('order', () => {
   pushNotification('Bạn có đơn hàng mới')
+  console.log('new order from front end')
 })
 
 socket.on('account', () => {

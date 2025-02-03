@@ -2,6 +2,8 @@ const order = require('../../models/orderModel')
 const user = require('../../models/userModel')
 const product = require('../../models/productModel')
 const store = require('../../models/storeModel')
+const orderStatus = require('../../models/orderStatusModel')
+const paymentMethod = require('../../models/paymentMethodModel')
 
 class allOrdersController {
   async allOrders(req, res, next) {
@@ -9,32 +11,39 @@ class allOrdersController {
     const successful   = req.flash('successful')
 
     const currentPage  = req.query.page || 1
-    const orderType    = req.query.type || ''
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
 
-    const [orders, totalOrder] = await Promise.all([
+    const [orders, totalOrder, orderStatuses, paymentMethods] = await Promise.all([
       order.find({ deletedAt: null }).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),
-      order.find({ deletedAt: null }).countDocuments()
+      order.find({ deletedAt: null }).countDocuments(),
+      orderStatus.find({}).lean(),
+      paymentMethod.find({}).lean()
     ])
 
-    res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin', index, successful, orders, orderType, totalOrder, currentPage })
+    res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin', index, successful, orders, orderStatuses, paymentMethods, totalOrder, currentPage })
   }
 
   async orderInfo(req, res, next) {
     const index = 'orders'
     const successful = req.flash('successful')
 
-    const orderInfo = await order.findOne({ _id: req.params.id }).lean()
+    const [orderInfo, orderStatuses, paymentMethods] = await Promise.all([
+      order.findOne({ _id: req.params.id }).lean(),
+      orderStatus.find({}).lean(),
+      paymentMethod.find({}).lean()
+    ])
 
-    res.render('admin/detail/order', { title: `Đơn hàng ${orderInfo.customerInfo.name}`, layout: 'admin', index, successful, orderInfo })
+    res.render('admin/detail/order', { title: `Đơn hàng ${orderInfo.customerInfo.name}`, layout: 'admin', index, successful, orderInfo, orderStatuses, paymentMethods })
   }
 
   async orderUpdate(req, res, next) {
     const status = req.body.status
+    const paymentMethod = req.body.paymentMethod
 
     await order.updateOne({ _id: req.params.id }, { 
-      status: status
+      status: status,
+      paymentMethod: paymentMethod
     })
 
     if (status === 'done') {
@@ -73,13 +82,14 @@ class allOrdersController {
 
   async orderCreate(req, res, next) {
     const index = 'orders'
-    const [users, products, stores] = await Promise.all([
+    const [users, products, stores, paymentMethods] = await Promise.all([
       user.find({}).lean(),
       product.find({ deletedAt: null }).lean(),
-      store.find({}).lean()
+      store.find({}).lean(),
+      paymentMethod.find({}).lean()
     ]) 
   
-    res.render('admin/create/order', { title: 'Thêm đơn hàng mới', layout: 'admin', index, users, products, stores })
+    res.render('admin/create/order', { title: 'Thêm đơn hàng mới', layout: 'admin', index, users, products, stores, paymentMethods })
   }
 
   async orderCreated(req, res, next) {

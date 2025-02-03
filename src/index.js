@@ -31,8 +31,6 @@ app.engine('hbs', handlebars.engine({
   helpers: {
     addIndex: (a, b) => a + b,
     isEqual: (a, b) => a === b,
-    limit: (a, b) => a.slice(0, b),
-    checkStatus: (a, b, c) => a.filter(a => a.status === b).slice(0, c),
     formatStatus: (a) => {
       if(a === 'preparing')   return 'Đang chuẩn bị đơn hàng'
       if(a === 'delivering')  return 'Đang giao đơn hàng'
@@ -46,11 +44,17 @@ app.engine('hbs', handlebars.engine({
     },
     formatPaymentMethod: (a) => {
       if (a === 'cash')     return 'Tiền mặt'
-      if (a === 'transfer') return 'Chuyển khoản'
+      if (a === 'transfer') return 'Chuyển khoản ngân hàng'
+      if (a === 'e-wallet') return 'Ví điện tử'
     },
     formatDate: (a) => a ? format(new Date(a), 'dd/MM/yyyy') : '',
     formatNumber: (a) => a ? a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND' : '0 VND',
     formatRate: (a) => a.toFixed(1),
+    formatMember: (a) => {
+      if (a === 'silver')   return 'Bạc'
+      if (a === 'gold')     return 'Vàng'
+      if (a === 'diamond')  return 'Kim cương'
+    },
     getLength: (a) => a.length,
     getIndexed: (a, b, c) => a[b],
   }
@@ -73,6 +77,7 @@ io.on('connection', (socket) => {
 
   socket.on('order', () => {
     io.emit('order')
+    console.log('new order from back end')
   })
 
   socket.on('account', () => {

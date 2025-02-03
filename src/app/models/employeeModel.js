@@ -13,7 +13,7 @@ const employee = new Schema({
     phone    : { type: String, default: '' },
     gender   : { type: String, default: '' },
     address  : { type: String, default: '' },
-    storeId  : { type: String, default: '' }
+    storeCode: { type: String, default: '' }
   },
   slug      : { type: String, slug: 'userInfo.name', unique: true },
 }, { timestamps: true })

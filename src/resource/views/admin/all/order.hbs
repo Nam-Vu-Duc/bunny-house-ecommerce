@@ -3,58 +3,50 @@
     <p>Đơn Hàng: {{totalOrder}}</p>
   </div>
   
-  <div class="filter-and-create">
-    <div class="sort">
-      <label for="price">Sắp xếp theo:</label>
-      <select id="price" class="filter-btn">
-        <option value="">Giá mặc định</option>
-        <option value="1">Giá tăng dần</option>
-        <option value="-1">Giá giảm dần</option>
-      </select>
+  <div class="control-bar">
+    <div class="filter-and-create">
+      <div class="sort">
+        <label>Sắp xếp theo:</label>
+        <select id="createdAt" class="filter-btn">
+          <option value="">Ngày đặt hàng</option>
+          <option value="1">Ngày tăng dần</option>
+          <option value="-1">Ngày giảm dần</option>
+        </select>
 
-      <select id="rate" class="filter-btn">
-        <option value="">Đánh giá mặc định</option>
-        <option value="1">Đánh giá tăng dần</option>
-        <option value="-1">Đánh giá giảm dần</option>
-      </select>
+        <select id="totalOrderPrice" class="filter-btn">
+          <option value="">Giá trị đơn mặc định</option>
+          <option value="1">Giá trị tăng dần</option>
+          <option value="-1">Giá trị giảm dần</option>
+        </select>
+      </div>
 
-      <select id="saleNumber" class="filter-btn">
-        <option value="">Lượng bán mặc định</option>
-        <option value="1">Lượng bán tăng dần</option>
-        <option value="-1">Lượng bán giảm dần</option>
-      </select>
+      <div class="filter">
+        <label>Lọc theo:</label>
+        <select id="status" class="filter-btn">
+          <option value="">Trạng thái đơn</option>
+          {{#each orderStatuses}}
+          <option value="{{this.code}}">{{this.name}}</option>
+          {{/each}}
+        </select>
+
+        <select id="paymentMethod" class="filter-btn">
+          <option value="">Phương thức thanh toán</option>
+          {{#each paymentMethods}}
+          <option value="{{this.code}}">{{this.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <button id="clear-filter" style="display: none">Xoá bộ lọc</button>
+
+      <a href="/admin/all-orders/order/create" class="create-btn" id="create-btn">
+        <i class="fi fi-rr-plus"></i>
+        <p>Thêm Đơn Hàng</p>
+      </a>
     </div>
-
-    <div class="filter">
-      <label for="price">Lọc theo:</label>
-      <select id="price" class="filter-btn">
-        <option value="">Giá mặc định</option>
-        <option value="1">Giá tăng dần</option>
-        <option value="-1">Giá giảm dần</option>
-      </select>
-
-      <select id="rate" class="filter-btn">
-        <option value="">Đánh giá mặc định</option>
-        <option value="1">Đánh giá tăng dần</option>
-        <option value="-1">Đánh giá giảm dần</option>
-      </select>
-
-      <select id="saleNumber" class="filter-btn">
-        <option value="">Lượng bán mặc định</option>
-        <option value="1">Lượng bán tăng dần</option>
-        <option value="-1">Lượng bán giảm dần</option>
-      </select>
-    </div>
-    <button id="clear-filter" style="display: none">Xoá bộ lọc</button>
-
-    <a href="/admin/all-orders/order/create" class="create-btn" id="create-btn">
-      <i class="fi fi-rr-plus"></i>
-      <p>Thêm Đơn Hàng</p>
-    </a>
+    <input type="text" id="search-input" placeholder="Tìm kiếm đơn hàng">
   </div>
 
   <div class="table">
-    <input type="text" id="search-input" placeholder="Tìm kiếm khách hàng">
     <table class="all-items">
       <thead>
         <tr>
