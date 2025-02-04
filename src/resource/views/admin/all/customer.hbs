@@ -28,7 +28,7 @@
           <option value="female">Nữ</option>
         </select>
 
-        <select id="rate" class="filter-btn">
+        <select id="memberCode" class="filter-btn">
           <option value="">Hạng thành viên</option>
           {{#each members}}
             <option value="{{this.code}}">{{this.name}}</option>
@@ -64,8 +64,8 @@
           <tr>
             <td>{{addIndex @index 1}}</td>
             <td>{{this._id}}</td>
-            <td>{{this.userInfo.name}}</td>
-            <td>{{this.userInfo.address}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.address}}</td>
             <td>{{this.quantity}}</td>
             <td>{{formatNumber this.revenue}}</td>
             <td><a href="/admin/all-customers/customer/{{this._id}}">Xem</a></td>

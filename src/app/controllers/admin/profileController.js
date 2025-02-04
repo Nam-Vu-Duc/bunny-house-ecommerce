@@ -5,8 +5,7 @@ class profileController {
     const index      = 'profile'
     const successful = req.flash('successful')
 
-    const userId = req.cookies.user_id
-    const userInfo = await emp.findOne({ _id: userId }).lean()
+    const userInfo = await emp.findOne({ _id: req.cookies.uid }).lean()
     res.render('admin/detail/profile', { title: 'Thông tin cá nhân', layout: 'admin', index, successful, userInfo } )
   }
 
@@ -19,10 +18,10 @@ class profileController {
     } = req.body
 
     await emp.updateOne({ _id: req.params.id}, {
-      'userInfo.name'   : name,
-      'userInfo.phone'  : phone,
-      'userInfo.gender' : gender,
-      'userInfo.address': address,
+      name   : name   ,
+      phone  : phone  ,
+      gender : gender ,
+      address: address,
     })
     
     req.flash('successful', 'Cập nhật thông tin thành công')

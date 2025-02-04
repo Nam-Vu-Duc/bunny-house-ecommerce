@@ -7,12 +7,29 @@ class allStoresController {
     const successful   = req.flash('successful')
 
     const currentPage  = req.query.page || 1
-    const itemsPerPage = 10;
+    const queryList    = req.query
+    const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
+    const sortOptions  = {}
+    const filterOptions= {}
+
+    for (var key in queryList) {
+      if (queryList.hasOwnProperty(key) && key.includes('sort_')) {
+        sortOptions[key.slice(5)] = parseInt(queryList[key])
+      }
+      if (queryList.hasOwnProperty(key) && key.includes('filter_')) {
+        filterOptions[key.slice(7)] = queryList[key]
+      }
+    }
 
     const [stores, totalStore] = await Promise.all([  
-      store.find({}).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),
-      store.find({}).countDocuments()
+      store
+      .find(filterOptions)
+      .sort(sortOptions)
+      .skip(skip)
+      .limit(itemsPerPage)
+      .lean(),
+      store.find(filterOptions).countDocuments()
     ])
 
     res.render('admin/all/store', { title: 'Danh sách cửa hàng', layout: 'admin', index, successful, stores, totalStore, currentPage })

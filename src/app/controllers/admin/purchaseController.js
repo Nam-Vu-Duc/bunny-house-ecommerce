@@ -8,12 +8,29 @@ class adminController {
     const successful = req.flash('successful')
 
     const currentPage  = req.query.page || 1
-    const itemsPerPage = 10;
+    const queryList    = req.query
+    const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
+    const sortOptions  = {}
+    const filterOptions= { deletedAt: null }
+
+    for (var key in queryList) {
+      if (queryList.hasOwnProperty(key) && key.includes('sort_')) {
+        sortOptions[key.slice(5)] = parseInt(queryList[key])
+      }
+      if (queryList.hasOwnProperty(key) && key.includes('filter_')) {
+        filterOptions[key.slice(7)] = queryList[key]
+      }
+    }
 
     const [purchases, totalPurchase] = await Promise.all([
-      purchase.find({deletedAt: null}).sort({ purchaseDate: -1 }).skip(skip).limit(itemsPerPage).lean(),
-      purchase.find({deletedAt: null}).countDocuments()
+      purchase
+        .find(filterOptions)
+        .sort(sortOptions)
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      purchase.find(filterOptions).countDocuments()
     ])
 
     res.render('admin/all/purchase', { title: 'Danh sách phiếu nhập', layout: 'admin', index, successful, purchases, totalPurchase, currentPage })

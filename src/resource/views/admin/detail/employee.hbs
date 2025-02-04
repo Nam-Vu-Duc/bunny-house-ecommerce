@@ -10,7 +10,7 @@
       </tr>
       <tr>
         <td>Tên Nhân Viên</td>
-        <td><input type="text" id="name" name="name" value="{{employeeInfo.userInfo.name}}"></td>
+        <td><input type="text" id="name" name="name" value="{{employeeInfo.name}}"></td>
       </tr>
       <tr>
         <td>Vị trí</td>
@@ -24,15 +24,15 @@
       </tr>
       <tr>
         <td>Email</td>
-        <td><input type="text" id="email" name="email" value="{{employeeInfo.loginInfo.email}}"></td>
+        <td><input type="text" id="email" name="email" value="{{employeeInfo.email}}"></td>
       </tr>
       <tr>
         <td>SĐT</td>
-        <td><input type="text" id="phone" name="phone" value="{{employeeInfo.userInfo.phone}}"></td>
+        <td><input type="text" id="phone" name="phone" value="{{employeeInfo.phone}}"></td>
       </tr>
       <tr>
         <td>Địa Chỉ</td>
-        <td><input type="text" id="address" name="address" value="{{employeeInfo.userInfo.address}}"></td>
+        <td><input type="text" id="address" name="address" value="{{employeeInfo.address}}"></td>
       </tr>
       <tr>
         <td>Giới tính</td>
@@ -51,6 +51,10 @@
           </select>
         </td>
       </tr>
+      <tr>
+        <td>Ngày vào làm</td>
+        <td>{{formatDate employeeInfo.createdAt }}</td>
+      </tr>
     </table>
     
     <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>
@@ -58,9 +62,9 @@
 </div>
 
 <script>
-  var role    = '{{employeeInfo.loginInfo.role}}'
-  var gender  = '{{employeeInfo.userInfo.gender}}'
-  var storeId = '{{employeeInfo.userInfo.storeId}}'
-  var successful = '{{successful}}'
+  var role      = '{{employeeInfo.role}}'
+  var gender    = '{{employeeInfo.gender}}'
+  var storeCode = '{{employeeInfo.storeCode}}'
+  var successful= '{{successful}}'
   loadFile('/js/admin/detail/employee.js')
 </script>

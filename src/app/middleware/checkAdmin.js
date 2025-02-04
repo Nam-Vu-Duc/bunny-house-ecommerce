@@ -12,7 +12,7 @@ module.exports = async function checkAdmin(req, res, next) {
       
       const empInfo = await emp.findOne({ _id: uid })
       if (!empInfo) return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
-      if (empInfo.loginInfo.role !== 'admin') return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
+      if (empInfo.role !== 'admin') return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
       req.isUser = true
       next()
     } else {

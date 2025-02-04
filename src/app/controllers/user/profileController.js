@@ -40,10 +40,10 @@ class profileController {
     const userId = req.cookies.uid || null
 
     await user.updateOne({ _id: userId}, {
-      'userInfo.name'    : req.body.name,
-      'userInfo.phone'   : req.body.phone,
-      'userInfo.gender'  : req.body.gender,
-      'userInfo.address' : req.body.address,
+      name    : req.body.name,
+      phone   : req.body.phone,
+      gender  : req.body.gender,
+      address : req.body.address,
     })
 
     req.flash('successful', 'Cập nhật thông tin thành công')

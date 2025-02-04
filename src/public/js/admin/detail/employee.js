@@ -1,5 +1,4 @@
 importLinkCss('/css/admin/detailEmployee.css')
-
 pushNotification(successful)
 
 var male = document.querySelector('input#male')
@@ -13,5 +12,5 @@ roleOptions.forEach(option => {
 
 var storeOptions = document.querySelector('select#store').querySelectorAll('option')
 storeOptions.forEach(option => {
-  if (option.value === storeId) option.selected = true
+  if (option.value === storeCode) option.selected = true
 })

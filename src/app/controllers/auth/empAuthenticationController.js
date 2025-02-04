@@ -12,13 +12,13 @@ class loginController {
     const email = req.body.email
     const password = req.body.password
 
-    const getEmp = await emp.findOne({ 'loginInfo.email': email })
+    const getEmp = await emp.findOne({ 'email': email })
     if (!getEmp) {
       req.flash('error', 'Email không đúng')
       return res.redirect('/emp/authentication/sign-in')
     }
 
-    bcrypt.compare(password, getEmp.loginInfo.password, function(err, result) {
+    bcrypt.compare(password, getEmp.password, function(err, result) {
       if (result) {
         const payload = { email: getEmp.email }; // Payload with only essential data
         const rt = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '1d' })

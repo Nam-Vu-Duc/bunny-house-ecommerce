@@ -1,7 +1,5 @@
 pagination('trash', totalDeletedProduct, currentPage)
-
 importLinkCss('/css/admin/trash.css') 
-
 pushNotification(successful)
 
 // delete button

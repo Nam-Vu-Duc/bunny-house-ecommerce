@@ -36,18 +36,28 @@
       </tr>
       <tr>
         <td>Hãng</td>
-        <td><input type="text" id="brand" name="brand" value="{{productInfo.brand}}"></td>
+        <td>
+          <select name="brand" id="brand">
+            {{#each brands}}
+            <option value="{{this.name}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </td>
       </tr>
       <tr>
         <td>Tên</td>
         <td><input type="text" id="name" name="name" value="{{productInfo.name}}"></td>
       </tr>
       <tr>
-        <td>Giá cũ</td>
+        <td>Giá nhập</td>
+        <td><input type="text" id="purchasePrice" name="purchasePrice" value="{{formatNumber productInfo.purchasePrice}}"></td>
+      </tr>
+      <tr>
+        <td>Giá bán cũ</td>
         <td><input type="text" id="oldPrice" name="oldPrice" value="{{formatNumber productInfo.oldPrice}}"></td>
       </tr>
       <tr>
-        <td>Giá mới</td>
+        <td>Giá bán mới</td>
         <td><input type="text" id="price" name="price" value="{{formatNumber productInfo.price}}"></td>
       </tr>
       <tr>
@@ -59,14 +69,28 @@
         <td><input type="text" id="details" name="details" value="{{productInfo.details}}"></td>
       </tr>
       <tr>
+        <td>Số lượng</td>
+        <td><input type="text" id="quantity" name="quantity" value="{{productInfo.quantity}}"></td>
+      </tr>
+      <tr>
+        <td>Đánh giá</td>
+        <td><input type="text" id="rate" name="rate" value="{{productInfo.rate}}/5" disabled></td>
+      </tr>
+      <tr>
+        <td>Lượt bán</td>
+        <td><input type="text" id="saleNumber" name="saleNumber" value="{{productInfo.saleNumber}}" disabled></td>
+      </tr>
+      <tr>
+        <td>Lượt đánh giá</td>
+        <td><input type="text" id="rateNumber" name="rateNumber" value="{{productInfo.rateNumber}}" disabled></td>
+      </tr>
+      <tr>
         <td>Tình trạng sản phẩm</td>
         <td>
           <select name="status" id="status">
-            <option value="no">Bình thường</option>
-            <option value="flash-sale">Đang Flash Sale</option>
-            <option value="hot">Đang hot</option>
-            <option value="new-arrival">Mới ra</option>
-            <option value="out-of-order">Đang hot</option>
+            {{#each productStatuses}}
+            <option value="{{this.code}}">{{this.name}}</option>
+            {{/each}}
           </select>
         </td>
       </tr>
@@ -79,7 +103,7 @@
 <script>
   var productCategories  = '{{productInfo.categories}}'
   var productStatus      = '{{productInfo.status}}'
-  var productNewArrival  = '{{productInfo.newArrival}}'
+  var productBrand       = '{{productInfo.brand}}'
   var productSkincare    = '{{productInfo.skincare}}'
   var productMakeup      = '{{productInfo.makeup}}'
   var successful         = '{{successful}}'

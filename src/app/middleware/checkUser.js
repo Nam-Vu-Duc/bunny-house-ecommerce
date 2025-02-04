@@ -12,7 +12,7 @@ module.exports = async function checkUser(req, res, next) {
       
       const userInfo = await user.findOne({ _id: uid })
       if (!userInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
-      if (userInfo.loginInfo.role !== 'user') return res.render('partials/denyAdminAccess', { title: 'Access Denied', layout: 'empty' })
+      if (userInfo.role !== 'user') return res.render('partials/denyAdminAccess', { title: 'Access Denied', layout: 'empty' })
       req.isUser = true
     }
     next()

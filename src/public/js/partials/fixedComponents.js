@@ -1,5 +1,3 @@
-importLinkCss('/css/user/fixedComponents.css')
-
 const minimize    = document.querySelector('div.minimize')
 const scrollTop   = document.querySelector('div.scroll-to-top-icon')
 const contact     = document.querySelector('div.contact-icon')

@@ -14,6 +14,10 @@ function loadFile(file) {
   const pushNotificationScript = document.createElement('script')
   pushNotificationScript.src = '/js/pushNotification.js'
   document.head.appendChild(pushNotificationScript)
+
+  const sortAndFilterScript = document.createElement('script')
+  sortAndFilterScript.src = '/js/sortAndFilter.js'
+  document.head.appendChild(sortAndFilterScript)
   
   setTimeout(() => {
     const fileScript = document.createElement('script')

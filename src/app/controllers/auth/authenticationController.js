@@ -15,14 +15,14 @@ class loginController {
     const email = req.body.email
     const password = req.body.password
 
-    const getUser = await user.findOne({ 'loginInfo.email': email })
+    const getUser = await user.findOne({ email: email })
     if (!getUser) {
       req.flash('error', 'Email không đúng')
       return res.redirect('/authentication/sign-in')
     }
 
     const getChat = await chat.findOne({ userId: getUser._id })
-    bcrypt.compare(password, getUser.loginInfo.password, function(err, result) {
+    bcrypt.compare(password, getUser.password, function(err, result) {
       if (result) {
         const payload = { email: getUser.email }// Payload with only essential data
         const rt = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '60m' })
@@ -47,7 +47,7 @@ class loginController {
           secure: true,
         })
 
-        if (getUser.loginInfo.role === 'user') {
+        if (getUser.role === 'user') {
           req.flash('sync-chat', 'sync-chat')
           res.redirect('/')
         }
@@ -74,14 +74,10 @@ class loginController {
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
     let newUser = new user({
-      loginInfo: {
-        email: req.body.email,
-        password: hashedPassword,
-        role: 'user'
-      },
-      userInfo: {
-        name: req.body.name,
-      }
+      email: req.body.email,
+      password: hashedPassword,
+      role: 'user',
+      name: req.body.name,
     })
     const savedUser = await newUser.save()
 

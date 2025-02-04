@@ -10,19 +10,19 @@
       </tr>
       <tr>
         <td>Tên Khách Hàng</td>
-        <td><input type="text" id="name" name="name" value="{{customerInfo.userInfo.name}}"></td>
+        <td><input type="text" id="name" name="name" value="{{customerInfo.name}}"></td>
       </tr>
       <tr>
         <td>Email</td>
-        <td><input type="text" id="email" name="email" value="{{customerInfo.loginInfo.email}}"></td>
+        <td><input type="text" id="email" name="email" value="{{customerInfo.email}}"></td>
       </tr>
       <tr>
         <td>SĐT</td>
-        <td><input type="text" id="phone" name="phone" value="{{customerInfo.userInfo.phone}}"></td>
+        <td><input type="text" id="phone" name="phone" value="{{customerInfo.phone}}"></td>
       </tr>
       <tr>
         <td>Địa Chỉ</td>
-        <td><input type="text" id="address" name="address" value="{{customerInfo.userInfo.address}}"></td>
+        <td><input type="text" id="address" name="address" value="{{customerInfo.address}}"></td>
       </tr>
       <tr>
         <td>Giới tính</td>
@@ -76,7 +76,7 @@
 </div>
 
 <script>
-  var gender = '{{customerInfo.userInfo.gender}}'
+  var gender = '{{customerInfo.gender}}'
   var successful = '{{successful}}'
   loadFile('/js/admin/detail/customer.js')
 </script>

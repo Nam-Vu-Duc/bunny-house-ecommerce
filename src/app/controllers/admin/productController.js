@@ -1,4 +1,6 @@
 const product = require('../../models/productModel')
+const brand = require('../../models/brandModel')
+const productStatus = require('../../models/productStatusModel')
 const cloudinary = require('cloudinary').v2
 
 class allProductsController {
@@ -7,16 +9,33 @@ class allProductsController {
     const successful   = req.flash('successful')
     
     const currentPage  = req.query.page || 1
-    const productType  = req.query.type || ''
-    const itemsPerPage = 10;
+    const queryList    = req.query
+    const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
+    const sortOptions  = {}
+    const filterOptions= { deletedAt: null }
 
-    const [products, totalProduct] = await Promise.all([
-      product.find({ deletedAt: null }).sort({ createdAt: -1, name: 1 }).skip(skip).limit(itemsPerPage).lean(),
-      product.find({ deletedAt: null }).countDocuments()
+    for (var key in queryList) {
+      if (queryList.hasOwnProperty(key) && key.includes('sort_')) {
+        sortOptions[key.slice(5)] = parseInt(queryList[key])
+      }
+      if (queryList.hasOwnProperty(key) && key.includes('filter_')) {
+        filterOptions[key.slice(7)] = queryList[key]
+      }
+    }
+
+    const [products, totalProduct, brands] = await Promise.all([
+      product
+        .find(filterOptions)
+        .sort(sortOptions)
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      product.find(filterOptions).countDocuments(),
+      brand.find().lean()
     ])
 
-    res.render('admin/all/product', { title: 'Danh sách sản phẩm', layout: 'admin', index, successful, totalProduct, products, productType, currentPage })
+    res.render('admin/all/product', { title: 'Danh sách sản phẩm', layout: 'admin', index, successful, totalProduct, products, brands, currentPage })
   }
 
   createProduct(req, res, next) {
@@ -40,23 +59,38 @@ class allProductsController {
     const index = 'products'
     const successful = req.flash('successful')
 
-    const productInfo = await product.findOne({ _id: req.params.id }).lean()
-    res.render('admin/detail/product', { title: product.name, layout: 'admin', index, successful, productInfo })
+    const [productInfo, brands, productStatuses] = await Promise.all([
+      product.findOne({ _id: req.params.id }).lean(),
+      brand.find().lean(),
+      productStatus.find().lean()
+    ]) 
+    res.render('admin/detail/product', { title: productInfo.name, layout: 'admin', index, successful, productInfo, brands, productStatuses })
 
   }
   
   async productUpdated(req, res, next) {    
+    
+    function deFormatNumber(number) {
+      return parseInt(number.replace(/\./g, ''))
+    }
+    let skincare = ''
+    let makeup = ''
+    if (req.body.categories === 'skincare') skincare = req.body.skincare
+    if (req.body.categories === 'makeup') makeup = req.body.makeup
+
     await product.updateOne({ _id: req.params.id }, {
-      categories  : req.body.categories,
-      skincare    : req.body.skincare,
-      makeup      : req.body.makeup,
-      brand       : req.body.brand,
-      oldPrice    : req.body.oldPrice,
-      name        : req.body.name,
-      price       : req.body.price,
-      description : req.body.description,
-      details     : req.body.details,
-      status      : req.body.status,
+      categories    : req.body.categories,
+      skincare      : skincare,
+      makeup        : makeup,
+      brand         : req.body.brand,
+      name          : req.body.name,
+      purchasePrice : deFormatNumber(req.body.purchasePrice),
+      oldPrice      : deFormatNumber(req.body.oldPrice),
+      price         : deFormatNumber(req.body.price),
+      description   : req.body.description,
+      details       : req.body.details,
+      quantity      : req.body.quantity,
+      status        : req.body.status,
     })
 
     req.flash('successful', 'Cập nhật sản phẩm thành công')

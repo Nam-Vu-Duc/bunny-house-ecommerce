@@ -11,12 +11,29 @@ class allOrdersController {
     const successful   = req.flash('successful')
 
     const currentPage  = req.query.page || 1
+    const queryList    = req.query
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
+    const sortOptions  = {}
+    const filterOptions= { deletedAt: null }
+
+    for (var key in queryList) {
+      if (queryList.hasOwnProperty(key) && key.includes('sort_')) {
+        sortOptions[key.slice(5)] = parseInt(queryList[key])
+      }
+      if (queryList.hasOwnProperty(key) && key.includes('filter_')) {
+        filterOptions[key.slice(7)] = queryList[key]
+      }
+    }
 
     const [orders, totalOrder, orderStatuses, paymentMethods] = await Promise.all([
-      order.find({ deletedAt: null }).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),
-      order.find({ deletedAt: null }).countDocuments(),
+      order
+      .find(filterOptions)
+      .sort(sortOptions)
+      .skip(skip)
+      .limit(itemsPerPage)
+      .lean(),
+      order.find(filterOptions).countDocuments(),
       orderStatus.find({}).lean(),
       paymentMethod.find({}).lean()
     ])
@@ -56,7 +73,7 @@ class allOrdersController {
       const bulkOps = productInfo.map(({ id, quantity }) => ({
         updateOne: {
           filter: { _id: id },
-          update: { $inc: { quantity: -quantity } }, 
+          update: { $inc: { quantity: -quantity, saleNumber: quantity }}, 
           upsert: true,
         },
       }))

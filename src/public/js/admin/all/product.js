@@ -1,7 +1,5 @@
 pagination('products', totalProduct, currentPage)
-
 importLinkCss('/css/admin/allProducts.css')
-
 pushNotification(successful)
 
 // display delete confirmation box

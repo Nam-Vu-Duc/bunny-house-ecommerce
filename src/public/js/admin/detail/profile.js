@@ -1,5 +1,4 @@
 importLinkCss('/css/admin/profile.css')
-
 pushNotification(successful)
 
 var male = document.querySelector('input#male')

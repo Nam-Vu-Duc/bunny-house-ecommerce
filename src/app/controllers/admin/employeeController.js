@@ -9,12 +9,29 @@ class allEmployeesController {
     const successful   = req.flash('successful')
 
     const currentPage  = req.query.page || 1
+    const queryList    = req.query
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
+    const sortOptions  = {}
+    const filterOptions= {}
+
+    for (var key in queryList) {
+      if (queryList.hasOwnProperty(key) && key.includes('sort_')) {
+        sortOptions[key.slice(5)] = parseInt(queryList[key])
+      }
+      if (queryList.hasOwnProperty(key) && key.includes('filter_')) {
+        filterOptions[key.slice(7)] = queryList[key]
+      }
+    }
 
     const [employees, totalEmployee, positions, stores] = await Promise.all([
-      employee.find({}).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),
-      employee.find({}).countDocuments(),
+      employee
+        .find(filterOptions)
+        .sort(sortOptions)
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      employee.find(filterOptions).countDocuments(),
       position.find({}).lean(),
       store.find({}).lean()
     ])
@@ -32,7 +49,7 @@ class allEmployeesController {
       position.find().lean()
     ])
 
-    res.render('admin/detail/employee', { title: employeeInfo.userInfo.name, layout: 'admin', index, successful, employeeInfo, positions, stores })
+    res.render('admin/detail/employee', { title: employeeInfo.name, layout: 'admin', index, successful, employeeInfo, positions, stores })
   }
 
   async employeeUpdate(req, res, next) {
@@ -47,15 +64,13 @@ class allEmployeesController {
     } = req.body
 
     await employee.updateOne({ _id: req.params.id }, {
-      $set: {
-        "loginInfo.email"   : email   ,
-        "loginInfo.role"    : role    ,
-        "userInfo.name"     : name    ,
-        "userInfo.phone"    : phone   ,
-        "userInfo.address"  : address ,
-        "userInfo.gender"   : gender  ,
-        "userInfo.storeId"  : store   ,
-      }
+      email    : email   ,
+      role     : role    ,
+      name     : name    ,
+      phone    : phone   ,
+      address  : address ,
+      gender   : gender  ,
+      storeCode: store   ,
     })
 
     req.flash('successful', 'Cập nhật nhân sự thành công')
@@ -70,7 +85,7 @@ class allEmployeesController {
   }
 
   async employeeCreated(req, res, next) {
-    const empExist = await employee.findOne({ 'loginInfo.email': req.body.email })
+    const empExist = await employee.findOne({ email: req.body.email })
     if (empExist) {
       req.flash('error', 'Email đã tồn tại')
       return res.redirect('/admin/all-employees/employee/create')
@@ -80,17 +95,13 @@ class allEmployeesController {
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
     let newEmp = new employee({
-      loginInfo: {
-        email: req.body.email,
-        password: hashedPassword,
-        role: req.body.role
-      },
-      userInfo: {
-        name: req.body.name,
-        phone: req.body.phone,
-        address: req.body.address,
-        storeId: req.body.storeId
-      }
+      email     : req.body.email,
+      password  : hashedPassword,
+      role      : req.body.role,
+      name      : req.body.name,
+      phone     : req.body.phone,
+      address   : req.body.address,
+      storeCode : req.body.storeCode
     })
     await newEmp.save()
 

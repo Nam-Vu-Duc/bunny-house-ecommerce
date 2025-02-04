@@ -10,20 +10,29 @@ class allCustomersController {
     const successful   = req.flash('successful')
 
     const currentPage  = req.query.page || 1
-    const sortedList   = req.query
-    const itemsPerPage = 10;
+    const queryList    = req.query
+    const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
     const sortOptions  = {}
+    const filterOptions= {}
 
-    for (var key in sortedList) {
-      if (sortedList.hasOwnProperty(key) && key !== "page") {
-        sortOptions[key] = parseInt(sortedList[key])
+    for (var key in queryList) {
+      if (queryList.hasOwnProperty(key) && key.includes('sort_')) {
+        sortOptions[key.slice(5)] = parseInt(queryList[key])
+      }
+      if (queryList.hasOwnProperty(key) && key.includes('filter_')) {
+        filterOptions[key.slice(7)] = queryList[key]
       }
     }
 
     const [customers, totalCustomer, members] = await Promise.all([
-      user.find({}).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage).lean(),
-      user.find({}).countDocuments(),
+      user
+        .find(filterOptions)
+        .sort(sortOptions)
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      user.find(filterOptions).countDocuments(),
       member.find({}).lean()
     ])
 
@@ -55,7 +64,7 @@ class allCustomersController {
       ])
     ])
     
-    res.render('admin/detail/customer', { title: customerInfo.userInfo.name, layout: 'admin', index, successful, customerInfo, memberInfo, orderInfo })
+    res.render('admin/detail/customer', { title: customerInfo.name, layout: 'admin', index, successful, customerInfo, memberInfo, orderInfo })
   }
 
   async customerUpdate(req, res, next) {
@@ -68,13 +77,11 @@ class allCustomersController {
     } = req.body
 
     await user.updateOne({ _id: req.params.id }, {
-      $set: {
-        "loginInfo.email" : email   ,
-        "userInfo.name"   : name    ,
-        "userInfo.phone"  : phone   ,
-        "userInfo.address": address ,
-        "userInfo.gender" : gender  ,
-      }
+        email  : email   ,
+        name   : name    ,
+        phone  : phone   ,
+        address: address ,
+        gender : gender  ,
     })
 
     req.flash('successful', 'Cập nhật khách hàng thành công')
@@ -89,7 +96,7 @@ class allCustomersController {
   }
 
   async customerCreated(req, res, next) {
-    const userExist = await user.findOne({ 'loginInfo.email': req.body.email })
+    const userExist = await user.findOne({ email: req.body.email })
     if (userExist) {
       req.flash('error', 'Email đã tồn tại')
       return res.redirect('/admin/all-customers/customer/create')
@@ -99,16 +106,12 @@ class allCustomersController {
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
     const newUser = new user({
-      loginInfo: {
-        email: req.body.email,
-        password: hashedPassword,
-        role: 'user'
-      },
-      userInfo: {
-        name: req.body.name,
-        phone: req.body.phone,
-        address: req.body.address
-      }
+      email: req.body.email,
+      password: hashedPassword,
+      role: 'user',
+      name: req.body.name,
+      phone: req.body.phone,
+      address: req.body.address
     })
     const savedUser = await newUser.save()
 
