@@ -11,7 +11,7 @@ class profileController {
     const userInfo  = await user.findOne({ _id: userId }).lean()
     if (!userInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     
-    res.render('users/profileInfo', { title: 'Thông tin cá nhân', isUser, index, successful, userInfo })
+    res.render('users/profileInfo', { title: 'Thông tin cá nhân', isUser, userId, index, successful, userInfo })
   }
 
   async orderInfo(req, res, next) {
@@ -22,7 +22,7 @@ class profileController {
     const orderInfo = await order.find({ 'customerInfo.userId': userId, deletedAt: null }).lean()
     if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-    res.render('users/profileOrder', { title: 'Thông tin đơn hàng', isUser, index, orderInfo })
+    res.render('users/profileOrder', { title: 'Thông tin đơn hàng', isUser, userId, index, orderInfo })
   }
 
   async rateOrderInfo(req, res, next) {
@@ -33,7 +33,7 @@ class profileController {
     const orderInfo = await order.find({ 'customerInfo.userId': userId, deletedAt: null, status: 'done' }).lean()
     if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-    res.render('users/profileRateOrder', { title: 'Đánh giá đơn hàng', isUser, index, orderInfo })
+    res.render('users/profileRateOrder', { title: 'Đánh giá đơn hàng', isUser, userId, index, orderInfo })
   }
 
   async profileUpdate(req, res, next) {
@@ -55,7 +55,7 @@ class profileController {
     const userId = req.cookies.uid || null
     const index  = 'feedback'
 
-    res.render('users/profileFeedback', { title: 'Góp ý cửa hàng', isUser, index, userId })
+    res.render('users/profileFeedback', { title: 'Góp ý cửa hàng', isUser, userId, index })
   }
 }
 module.exports = new profileController

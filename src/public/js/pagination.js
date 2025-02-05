@@ -1,4 +1,4 @@
-function pagination(type, length, currentPage) {
+function pagination(length, currentPage) {
   var pagination = document.querySelector('span.pagination')
   var totalPage = 1
 
@@ -26,40 +26,3 @@ function pagination(type, length, currentPage) {
     }
   })
 }
-
-// function filterButtonLogic() {
-//   var selectButton = document.querySelector('select')
-//   selectButton.onchange = function () {
-//     location = `/all-products/${getSlug}?page=1&column=${sortedColumn}&sort=${sort}&type=${this.value}`
-//   }
-
-//   var selectButtonOptions = selectButton.querySelectorAll('option')
-//   selectButtonOptions.forEach(option => {
-//     if (option.value === productType) {
-//       option.setAttribute('selected', 'selected')
-//     }
-//   })
-// }
-
-// sort
-var selectButton = document.querySelectorAll('select')
-// selectButton.forEach((button) => {
-//   button.onchange = function () {
-//     const sortType = button.id
-//     const sortValue = button.value
-//     const urlParams = new URLSearchParams(window.location.search)
-//     urlParams.set(sortType, sortValue)
-//     window.location.search = urlParams
-//   }
-  
-//   const options = button.querySelectorAll('option')
-//   options.forEach((option) => {
-//     const sortType = button.id
-//     const urlParams = new URLSearchParams(window.location.search)
-//     if (urlParams.get(sortType)) {
-//       if (option.value === urlParams.get(sortType)) {
-//         option.setAttribute('selected', 'selected')
-//       }
-//     } 
-//   })
-// }) 

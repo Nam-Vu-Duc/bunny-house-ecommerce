@@ -1,3 +1,4 @@
-pagination('suppliers', totalSupplier, currentPage)
+pagination(totalSupplier, currentPage)
 importLinkCss('/css/admin/allSuppliers.css')
 pushNotification(successful)
+sortAndFilter()

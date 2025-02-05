@@ -14,6 +14,15 @@
         </select>
       </div>
 
+      <div class="filter">
+        <label>Sắp xếp theo:</label>
+        <select id="revenue" class="filter-btn">
+          <option value="">Doanh thu mặc định</option>
+          <option value="1">Doanh thu tăng dần</option>
+          <option value="-1">Doanh thu giảm dần</option>
+        </select>
+      </div>
+
       <button id="clear-filter" style="display: none">Xoá bộ lọc</button>
 
       <a href="/admin/all-stores/store/create" class="create-btn" id="create-btn">
@@ -21,7 +30,7 @@
         <p>Thêm Cửa Hàng</p>
       </a>
     </div>
-    <input type="text" id="search-input" placeholder="Tìm kiếm cửa hàng">
+    <input type="text" id="search-input" name="name" placeholder="Tìm kiếm cửa hàng">
   </div>
 
   <div class="table">

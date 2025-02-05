@@ -4,6 +4,7 @@ const comment = require('../../models/commentModel')
 class allProductsController {
   async showAllProducts(req, res, next) {
     const isUser = req.isUser === true ? true : false
+    const userId = req.cookies.uid || null
 
     const currentPage  = req.query.page || 1
     const type         = req.params.slug
@@ -28,11 +29,12 @@ class allProductsController {
       product.countDocuments()
     ]) 
         
-    res.render('users/allProducts', { title: 'Toàn bộ sản phẩm', isUser, products, type, productLength, currentPage }) 
+    res.render('users/allProducts', { title: 'Toàn bộ sản phẩm', isUser, userId, products, type, productLength, currentPage }) 
   }
 
   async showAllStatus(req, res, next) {
     const isUser = req.isUser === true ? true : false
+    const userId = req.cookies.uid || null
 
     const currentPage  = req.query.page || 1
     const type         = req.params.slug || ''
@@ -57,11 +59,12 @@ class allProductsController {
       product.find({ deletedAt: null, status: type }).countDocuments()
     ]) 
         
-    res.render('users/allProducts', { title: `Sản phẩm ${type}`, isUser, products, type, productLength, currentPage }) 
+    res.render('users/allProducts', { title: `Sản phẩm ${type}`, isUser, userId, products, type, productLength, currentPage }) 
   }
 
   async showAllSkincare(req, res, next) {
     const isUser = req.isUser === true ? true : false
+    const userId = req.cookies.uid || null
 
     const currentPage  = req.query.page || 1
     const type         = 'skincare'
@@ -86,11 +89,12 @@ class allProductsController {
       product.find({ deletedAt: null, categories: 'skincare' }).countDocuments()
     ]) 
 
-    res.render('users/allProducts', { title: 'Sản phẩm Skincare', isUser, products, type, productLength, currentPage })
+    res.render('users/allProducts', { title: 'Sản phẩm Skincare', isUser, userId, products, type, productLength, currentPage })
   }
   
   async showAllSkincareType(req, res, next) {
     const isUser = req.isUser === true ? true : false
+    const userId = req.cookies.uid || null
 
     const currentPage  = req.query.page || 1
     const type         = req.params.slug
@@ -115,11 +119,12 @@ class allProductsController {
       product.find({ deletedAt: null, skincare: type }).countDocuments()
     ]) 
 
-    res.render('users/allProducts', { title: 'Sản phẩm Skincare', isUser, products, type, productLength, currentPage })
+    res.render('users/allProducts', { title: 'Sản phẩm Skincare', isUser, userId, products, type, productLength, currentPage })
   }
 
   async showAllMakeUp(req, res, next) {
     const isUser = req.isUser === true ? true : false
+    const userId = req.cookies.uid || null
 
     const currentPage  = req.query.page || 1
     const type         = 'makeup'
@@ -144,11 +149,12 @@ class allProductsController {
       product.find({ deletedAt: null, categories: 'makeup' }).countDocuments()
     ]) 
   
-    res.render('users/allProducts', { title: 'Sản phẩm Makeup', isUser, products, type, productLength, currentPage }) 
+    res.render('users/allProducts', { title: 'Sản phẩm Makeup', isUser, userId, products, type, productLength, currentPage }) 
   }
   
   async showAllMakeUpType(req, res, next) {
     const isUser = req.isUser === true ? true : false
+    const userId = req.cookies.uid || null
 
     const currentPage  = req.query.page || 1
     const type         = req.params.slug
@@ -173,11 +179,12 @@ class allProductsController {
       product.find({ deletedAt: null, makeup: type }).countDocuments()
     ]) 
   
-    res.render('users/allProducts', { title: 'Sản phẩm Makeup', isUser, products, type, productLength, currentPage }) 
+    res.render('users/allProducts', { title: 'Sản phẩm Makeup', isUser, userId, products, type, productLength, currentPage }) 
   }
 
   async productInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
+    const userId = req.cookies.uid || null
     
     const [productInfo, comments] = await Promise.all([
       product.findOne({ _id: req.params.id }).lean(),
@@ -191,7 +198,7 @@ class allProductsController {
         ...(productInfo.skincare ? { skincare: productType } : { makeup: productType }) 
       }).lean().limit(5);
 
-    res.render('users/detailProduct', { title: productInfo.name , isUser, productInfo, relatedProducts, productType, comments })
+    res.render('users/detailProduct', { title: productInfo.name , isUser, userId, productInfo, relatedProducts, productType, comments })
   }
 }
 module.exports = new allProductsController

@@ -1,3 +1,4 @@
-pagination('stores', totalStore, currentPage)
+pagination(totalStore, currentPage)
 importLinkCss('/css/admin/allStores.css')
 pushNotification(successful)
+sortAndFilter()

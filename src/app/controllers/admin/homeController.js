@@ -55,7 +55,7 @@ class homeController {
     const maxValueOrderId = maxValueOrder._id?.toString() || ''
     const maxValueOrderNumber = maxValueOrder.totalOrderPrice
 
-    const name = customers.map(cus => cus.userInfo.name)
+    const name = customers.map(cus => cus.name)
 
     res.render('admin/home', { title: 'Trang chủ', layout: 'admin', index, successful, ...orderStats, ...productStats, maxValueOrderId, maxValueOrderNumber, totalEmployee, totalCustomer, totalStore, totalBrand, name });
   }

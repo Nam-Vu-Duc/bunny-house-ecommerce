@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
     httpOnly: true,
     secure: true,
   })
-  res.clearCookie('chat_id', {
+  res.clearCookie('cid', {
     httpOnly: true,
     secure: true,
   })

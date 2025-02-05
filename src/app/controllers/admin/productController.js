@@ -24,6 +24,8 @@ class allProductsController {
       }
     }
 
+    if (filterOptions['name']) filterOptions['name'] = { $regex: filterOptions['name'], $options: 'i'}
+
     const [products, totalProduct, brands] = await Promise.all([
       product
         .find(filterOptions)

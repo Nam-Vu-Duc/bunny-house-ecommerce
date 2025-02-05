@@ -1,6 +1,7 @@
-pagination('products', totalProduct, currentPage)
+pagination(totalProduct, currentPage)
 importLinkCss('/css/admin/allProducts.css')
 pushNotification(successful)
+sortAndFilter()
 
 // display delete confirmation box
 var courseId;

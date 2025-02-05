@@ -1,4 +1,4 @@
-.flash-deal-board, .hot-products-board, .content-board {
+.flash-deal-board, .products-board {
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -9,7 +9,7 @@
 .flash-deal-board {
   background: linear-gradient(168.12deg, #ffb0a4 0%, #ff6b7f 100%);;
   border-radius: 10px;
-  i.fi-sr-flame, a {
+  i.fi-sr-bolt, a {
     animation: bling 1s infinite
   }
 }
@@ -23,6 +23,7 @@
     width: 100%;
     position: relative;
     overflow: hidden;
+    margin-top: 10px;
   }
   .inner {
     width: 100%;
@@ -39,7 +40,7 @@
     background-color: white;
     box-sizing: border-box;
     img {
-      height: 50px;
+      height: 100px;
     }
     a { 
       text-decoration: none; 

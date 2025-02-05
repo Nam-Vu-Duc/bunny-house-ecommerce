@@ -10,9 +10,10 @@ class allCustomersController {
     const successful   = req.flash('successful')
 
     const currentPage  = req.query.page || 1
-    const queryList    = req.query
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
+    
+    const queryList    = req.query
     const sortOptions  = {}
     const filterOptions= {}
 
@@ -24,6 +25,10 @@ class allCustomersController {
         filterOptions[key.slice(7)] = queryList[key]
       }
     }
+
+    if (filterOptions['name']) filterOptions['name'] = { $regex: filterOptions['name'], $options: 'i'}
+
+    console.log(filterOptions)
 
     const [customers, totalCustomer, members] = await Promise.all([
       user

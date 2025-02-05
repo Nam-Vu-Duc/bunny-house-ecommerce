@@ -20,25 +20,28 @@ class allOrderController {
 
   async orderInfo(req, res, next) {
     const isUser = req.isUser === true ? true : false
+    const userId = req.cookies.uid || null
     const successful = req.flash('successful')
     
     const orderInfo = await order.findOne({ _id: req.params.id }).lean()
     if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-    res.render('users/detailOrder', { title: `Đơn của ${orderInfo.customerInfo.name}`, isUser, successful, orderInfo })
+    res.render('users/detailOrder', { title: `Đơn của ${orderInfo.customerInfo.name}`, isUser, userId, successful, orderInfo })
   }
 
   ordersChecking(req, res, next) {
     const isUser = req.isUser === true ? true : false
+    const userId = req.cookies.uid || null
 
-    res.render('users/ordersChecking', { title: 'Kiểm Tra Đơn Hàng', isUser })
+    res.render('users/ordersChecking', { title: 'Kiểm Tra Đơn Hàng', isUser, userId })
   }
 
   async orderChecked(req, res, next) {
     const isUser = req.isUser === true ? true : false
+    const userId = req.cookies.uid || null
 
     const orderInfo = await order.findOne({ _id: req.params.id }).lean()
-    res.render('users/ordersChecking', { title: 'Kiểm Tra Đơn Hàng', orderInfo, isUser })
+    res.render('users/ordersChecking', { title: 'Kiểm Tra Đơn Hàng', isUser, userId, orderInfo })
   }
 
   async createOrders(req, res, next) {
@@ -98,7 +101,7 @@ class allOrderController {
     if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     const commentInfo = await comment.find({ orderId: orderId, senderId: userId }).lean()
 
-    res.render('users/detailRateOrder', { title: 'Đánh giá đơn hàng', isUser, successful, orderInfo })
+    res.render('users/detailRateOrder', { title: 'Đánh giá đơn hàng', isUser, userId, successful, orderInfo })
   }
   
   async orderRated(req, res, next) {

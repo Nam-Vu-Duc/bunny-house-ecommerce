@@ -25,7 +25,7 @@ class loginController {
     bcrypt.compare(password, getUser.password, function(err, result) {
       if (result) {
         const payload = { email: getUser.email }// Payload with only essential data
-        const rt = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '60m' })
+        const rt = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '1d' })
         const at = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '7d' })
         const userId = getUser ? getUser._id.toString() : ''
         const chatId = getChat ? getChat._id.toString() : ''
@@ -42,7 +42,7 @@ class loginController {
           httpOnly: true,
           secure: true,
         })
-        res.cookie('chat_id', chatId, {
+        res.cookie('cid', chatId, {
           httpOnly: true,
           secure: true,
         })

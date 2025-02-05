@@ -8,14 +8,16 @@ class homeController {
     const userId = req.cookies.uid || null
     const chatId = req.cookies.chat_id || null
     
-    const [flashSaleProducts, hotProducts, hotSaleProducts, allProducts, brands] = await Promise.all([
+    const [flashSaleProducts, hotProducts, hotSaleProducts, allProducts, brands, skincareProducts, makeupProducts] = await Promise.all([
       product.find({ deletedAt: null, status: 'flash-sale' }).limit(5).lean(),
       product.find({ deletedAt: null, status: 'hot' }).limit(5).lean(),
       product.find({ deletedAt: null }).sort({ saleNumber: -1 }) .limit(5).lean(),
       product.find({ deletedAt: null }).limit(5).lean(),
       brand.find({}).lean(),
+      product.find({ deletedAt: null, categories: 'skincare' }).limit(5).lean(),
+      product.find({ deletedAt: null, categories: 'makeup' }).limit(5).lean(),
     ])
-    res.render('users/home', { title: 'Bunny House - Cửa hàng mỹ phẩm chính hãng', isUser, flashSaleProducts, hotProducts, hotSaleProducts, allProducts, brands, userId, chatId, sync_chat })
+    res.render('users/home', { title: 'Bunny House - Cửa hàng mỹ phẩm chính hãng', isUser, userId, flashSaleProducts, hotProducts, hotSaleProducts, allProducts, brands, skincareProducts, makeupProducts, chatId, sync_chat })
   }
 
   async searchInfo(req, res, next) {
@@ -31,7 +33,7 @@ class homeController {
         { brand: { $regex: query, $options: 'i'}}
       ]
     }).lean()
-    res.render('users/searchInfo', { title: 'Kết quả tìm kiếm', isUser, products, userId, chatId, query });
+    res.render('users/searchInfo', { title: 'Kết quả tìm kiếm', isUser, userId, products, chatId, query });
   }
 }
 module.exports = new homeController

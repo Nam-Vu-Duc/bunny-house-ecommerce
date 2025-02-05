@@ -1,4 +1,4 @@
-pagination('trash', totalDeletedProduct, currentPage)
+pagination(totalDeletedProduct, currentPage)
 importLinkCss('/css/admin/trash.css') 
 pushNotification(successful)
 

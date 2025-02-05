@@ -7,7 +7,7 @@
     <form class="update-profile" method="POST" action="/profile/updated/{{userInfo._id}}?_method=PUT">
       <div class="form-group">
         <label for="name">Tên Khách Hàng</label>
-        <input type="text" id="name" name="name" value="{{userInfo.userInfo.name}}">
+        <input type="text" id="name" name="name" value="{{userInfo.name}}">
       </div>
 
       <div class="form-group">
@@ -23,17 +23,17 @@
 
       <div class="form-group">
         <label for="name">Email khách hàng</label>
-        <input type="text" id="email" name="email" value="{{userInfo.loginInfo.email}}">
+        <input type="text" id="email" name="email" value="{{userInfo.email}}">
       </div>
 
       <div class="form-group">
         <label for="phone">Số điện thoại</label>
-        <input type="text" id="phone" name="phone" value="{{userInfo.userInfo.phone}}">
+        <input type="text" id="phone" name="phone" value="{{userInfo.phone}}">
       </div>
 
       <div class="form-group">
         <label for="address">Địa chỉ nhận hàng</label>
-        <input type="text" id="address" name="address" value="{{userInfo.userInfo.address}}">
+        <input type="text" id="address" name="address" value="{{userInfo.address}}">
       </div>
       
       <div class="form-group">
@@ -62,7 +62,7 @@
 </div>   
 
 <script>
-  var gender = `{{userInfo.userInfo.gender}}`
+  var gender = `{{userInfo.gender}}`
   var successful = `{{successful}}`
   loadFile('/js/user/profileInfo.js')
 </script>

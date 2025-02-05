@@ -4,7 +4,7 @@
 
 <div class="flash-deal-board">
   <div class="title" data-tippy-content="Xem toàn bộ sản phẩm đang sale">
-    <i class="fi fi-sr-flame"></i>
+    <i class="fi fi-sr-bolt"></i>
     <div><a href="/all-products/flash-sale" class="main-title"><b>TOP SẢN PHẨM FLASH DEAL</b></a></div>
   </div>
   
@@ -15,9 +15,9 @@
   </div>
 </div>
 
-<div class="hot-products-board">
+<div class="products-board">
   <div class="title" data-tippy-content="Xem toàn bộ sản phẩm bán chạy">
-    <i class="fi fi-sr-flame"></i>
+    <i class="fi fi-sr-trophy-star"></i>
     <div><a href="/all-products?saleNumber=-1" class="main-title"><b>TOP SẢN PHẨM BÁN CHẠY</b></a></div>
   </div>
   
@@ -28,7 +28,7 @@
   </div>
 </div>
 
-<div class="hot-products-board">
+<div class="products-board">
   <div class="title" data-tippy-content="Xem toàn bộ sản phẩm đang hot">
     <i class="fi fi-sr-flame"></i>
     <div><a href="/all-products/hot" class="main-title"><b>TOP SẢN PHẨM HOT</b></a></div>
@@ -41,7 +41,33 @@
   </div>
 </div>
 
-<div class="content-board">
+<div class="products-board">
+  <div class="title" data-tippy-content="Xem toàn bộ sản phẩm skincare">
+    <i class="fi fi-sr-spray-can"></i>
+    <div><a href="/all-products/skincare" class="main-title"><b>TOP SẢN PHẨM SKINCARE</b></a></div>
+  </div>
+  
+  <div class="products">
+    {{#each skincareProducts}}
+      {{> product}}
+    {{/each}}
+  </div>
+</div>
+
+<div class="products-board">
+  <div class="title" data-tippy-content="Xem toàn bộ sản phẩm makeup">
+    <i class="fi fi-sr-lipstick"></i>
+    <div><a href="/all-products/makeup" class="main-title"><b>TOP SẢN PHẨM MAKEUP</b></a></div>
+  </div>
+  
+  <div class="products">
+    {{#each makeupProducts}}
+      {{> product}}
+    {{/each}}
+  </div>
+</div>
+
+<div class="products-board">
   <div class="title" data-tippy-content="Xem toàn bộ sản phẩm">
     <i class="fi fi-sr-flame"></i>
     <div><a href="/all-products" class="main-title"><b>TOÀN BỘ SẢN PHẨM</b></a></div>
@@ -56,7 +82,7 @@
 
 <div class="famous-brand-board">
   <div class="title" data-tippy-content="Xem toàn bộ thương hiệu">
-    <i class="fi fi-sr-flame"></i>
+    <i class="fi fi-rr-brand"></i>
     <div><a href="/all-brands" class="main-title"><b>TOP THƯƠNG HIỆU NỔI BẬT</b></a></div>
   </div>
 
