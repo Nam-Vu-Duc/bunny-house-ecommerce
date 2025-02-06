@@ -1,11 +1,11 @@
 <div class="admin-all-chats-container">  
   <div class="chat-sidebar">
-    <div class="chat-header">Chats</div>
+    <div class="chat-header">Chats ({{totalChat}})</div>
     <input class="chat-search" placeholder="Tìm kiếm đoạn chat"></input>
     <div class="chat-list">
       {{#each chats}}
-        <div class="item">
-          <div class="name">{{this.userInfo.userInfo.name}}</div>
+        <div class="item" id="{{this.userInfo._id}}">
+          <div class="name">{{this.userInfo.name}}</div>
           <div class="last-message">abcd</div>
         </div>
       {{/each}}
@@ -28,5 +28,6 @@
 </div>
 
 <script>
+  const uid = `{{uid}}`
   loadFile('/js/admin/all/chat.js')
 </script>

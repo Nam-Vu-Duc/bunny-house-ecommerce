@@ -63,7 +63,6 @@ sendBtn.onclick = async function() {
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
     const json = await response.json();
     console.log(json)
-    // {{!-- socket.emit('chat message', `${userId}:${input.value}`); --}}
     input.value = ''
     sendBtn.classList.add('not-allowed')
   }
@@ -83,11 +82,8 @@ input.addEventListener("keypress", function(event) {
 })
 
 socket.on('chat message', (id, msg) => {
-  console.log(`${id},${msg}`)
   const chat = document.createElement('li')
   chat.textContent = msg
-  if (id.trim() === uid) {
-    chat.setAttribute('class', 'right-content')
-  }  
-    chatContent.appendChild(chat)
-});
+  if (id.trim() === uid) chat.setAttribute('class', 'right-content')  
+  chatContent.appendChild(chat)
+})

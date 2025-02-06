@@ -72,7 +72,7 @@ io.on('connection', (socket) => {
     console.log(room, message)
     const id = message.split(':')[0]
     const msg = message.split(':')[1]
-    io.to(room).emit('chat message', id, msg)
+    io.to(room).to('admin-room').emit('chat message', id, msg)
   })
 
   socket.on('order', () => {

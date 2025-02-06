@@ -16,6 +16,7 @@ const adminStoreRoute     = require('./admin/storeRoute')
 const adminSupplierRoute  = require('./admin/supplierRoute')
 const adminProfileRoute   = require('./admin/profileRoute')
 const adminLogOutRoute    = require('./admin/logOutRoute')
+const adminRefreshRoute   = require('./admin/refreshToken')
 
 // user
 const homeRoute         = require('./user/homeRoute')
@@ -46,6 +47,7 @@ function route(app) {
   app.use('/admin/all-suppliers', checkAdmin, adminSupplierRoute)
   app.use('/admin/profile'      , checkAdmin, adminProfileRoute)
   app.use('/admin/log-out'      , checkAdmin, adminLogOutRoute)
+  app.use('/admin/refresh-token', checkAdmin, refreshRoute)
 
   // user
   app.use('/'             , checkUser, homeRoute)

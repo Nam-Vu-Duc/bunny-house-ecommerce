@@ -11,7 +11,6 @@ router.get('/:id', async function(req, res) {
   res.json({data: chatMessages})
 })
 router.post('/create', async function(req, res) {
-  console.log(req.body)
   const newMessage = new message({
     chatId: req.cookies.cid,
     senderId: req.cookies.uid,

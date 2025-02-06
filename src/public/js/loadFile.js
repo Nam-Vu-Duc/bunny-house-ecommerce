@@ -23,5 +23,5 @@ function loadFile(file) {
     const fileScript = document.createElement('script')
     fileScript.src = file
     document.head.appendChild(fileScript)
-  }, 100)
+  }, 150)
 }
