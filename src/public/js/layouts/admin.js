@@ -1,13 +1,10 @@
 const socket = io('http://localhost:3000', {
-  path: "/socket.io"
+  path: "/socket.io",
 })
 
-window.addEventListener('load', () => {
-  const preloader = document.querySelector('div.preloader')
-  setTimeout(() => {
-    preloader.classList.add('inactive')
-  }, 100)
-})
+setInterval(() => {
+  socket.emit('heartbeat', { message: 'ping' });
+}, 30000); // Send a ping every 30 seconds
 
 socket.on('order', () => {
   pushNotification('Bạn có đơn hàng mới')
@@ -16,4 +13,11 @@ socket.on('order', () => {
 
 socket.on('account', () => {
   pushNotification('Bạn có khách hàng mới')
+})
+
+window.addEventListener('load', () => {
+  const preloader = document.querySelector('div.preloader')
+  setTimeout(() => {
+    preloader.classList.add('inactive')
+  }, 100)
 })

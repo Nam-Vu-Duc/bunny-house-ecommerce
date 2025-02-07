@@ -18,23 +18,20 @@ async function getChatData() {
 
     const json = await response.json();
     const messages = json.data
-
+    chatContent.replaceChildren()
     messages.forEach((message) => {
       const chat = document.createElement('li')
       chat.textContent = message.content 
       if (message.senderId === uid) chat.setAttribute('class', 'right-content')
       chatContent.appendChild(chat)
     })
+    chatContent.scrollTo(0, chatContent.scrollHeight)
   } catch (error) {
     console.error("Error fetching chat data:", error)
   }
 }
 
-if (uid) {
-  chatBody.style.display = ''
-  socket.emit('joinRoom', '12345')
-  getChatData()
-} 
+if (uid) chatBody.style.display = ''
 
 window.addEventListener('scroll', function() {
   document.documentElement.scrollTop >= 1000 ? scrollTop.style.display = "" : scrollTop.style.display = "none"
@@ -46,7 +43,12 @@ contact.onclick = function() {
   dropup.style.display === 'none' ? dropup.style.display = 'block' : dropup.style.display = 'none'
 }
 chat.onclick = function() {
-  chatBox.style.display === 'none' ? chatBox.style.display = 'block' : chatBox.style.display = 'none'
+  if (chatBox.style.display === 'none') {
+    chatBox.style.display = 'block'
+    getChatData()
+  } else {
+    chatBox.style.display = 'none'
+  } 
 }
 minimize.onclick = function () {
   chatBox.style.display = 'none'
@@ -54,7 +56,7 @@ minimize.onclick = function () {
   
 sendBtn.onclick = async function() {
   if (input.value.trim() !== '') {
-    socket.emit('privateMessage', { room: '12345', message: `${uid}:${input.value}` })
+    socket.emit('privateMessage', { room: uid, message: `${uid}:${input.value}` })
     const response = await fetch('/api/chat/create', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -65,6 +67,7 @@ sendBtn.onclick = async function() {
     console.log(json)
     input.value = ''
     sendBtn.classList.add('not-allowed')
+    chatContent.scrollTo(0, chatContent.scrollHeight)
   }
 }
 
@@ -84,6 +87,7 @@ input.addEventListener("keypress", function(event) {
 socket.on('chat message', (id, msg) => {
   const chat = document.createElement('li')
   chat.textContent = msg
-  if (id.trim() === uid) chat.setAttribute('class', 'right-content')  
+  if (id.trim() === uid) chat.classList.add('right-content')
   chatContent.appendChild(chat)
+  chatContent.scrollTo(0, chatContent.scrollHeight)
 })

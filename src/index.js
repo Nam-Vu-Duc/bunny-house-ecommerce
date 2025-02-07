@@ -64,8 +64,9 @@ app.set('views', path.join(__dirname, 'resource', 'views'))
 app.set('view options', { layout: 'other' })
 
 io.on('connection', (socket) => {
-  socket.on('joinRoom', (room) => {
+  socket.on('joinRoom', ({id, room}) => {
     socket.join(room)
+    console.log(id, 'join room successfully:', room)
   })
 
   socket.on('privateMessage', ({ room, message }) => {
@@ -73,7 +74,12 @@ io.on('connection', (socket) => {
     const id = message.split(':')[0]
     const msg = message.split(':')[1]
     io.to(room).to('admin-room').emit('chat message', id, msg)
+    console.log('emit new message successfully')
   })
+
+  socket.on('heartbeat', (data) => {
+    console.log('Received heartbeat:', data);
+  });
 
   socket.on('order', () => {
     io.emit('order')

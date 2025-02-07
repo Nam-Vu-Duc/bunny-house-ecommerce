@@ -3,7 +3,6 @@ const brand = require('../../models/brandModel')
 
 class homeController {
   async show(req, res, next) {
-    const sync_chat = req.flash('sync-chat')
     const isUser = req.isUser === true ? true : false
     const userId = req.cookies.uid || null
     const chatId = req.cookies.chat_id || null
@@ -17,7 +16,7 @@ class homeController {
       product.find({ deletedAt: null, categories: 'skincare' }).limit(5).lean(),
       product.find({ deletedAt: null, categories: 'makeup' }).limit(5).lean(),
     ])
-    res.render('users/home', { title: 'Bunny House - Cửa hàng mỹ phẩm chính hãng', isUser, userId, flashSaleProducts, hotProducts, hotSaleProducts, allProducts, brands, skincareProducts, makeupProducts, chatId, sync_chat })
+    res.render('users/home', { title: 'Bunny House - Cửa hàng mỹ phẩm chính hãng', isUser, userId, flashSaleProducts, hotProducts, hotSaleProducts, allProducts, brands, skincareProducts, makeupProducts, chatId })
   }
 
   async searchInfo(req, res, next) {

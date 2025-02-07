@@ -7,7 +7,7 @@ router.use(express.json())
 router.get('/:id', async function(req, res) {
   const userId = req.params.id
   const chatRoom = await chat.findOne({ userId: userId }).lean()
-  const chatMessages = await message.find({ chatId: chatRoom._id }).sort({'timestamp': -1}).lean()
+  const chatMessages = await message.find({ chatId: chatRoom._id }).sort({createdAt: 1}).lean()
   res.json({data: chatMessages})
 })
 router.post('/create', async function(req, res) {

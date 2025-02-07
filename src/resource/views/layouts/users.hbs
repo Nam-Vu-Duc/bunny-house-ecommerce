@@ -36,5 +36,6 @@
 <script src="/js/tippy.js"></script>
 <script>
   var uid = `{{userId}}`
+  if (uid) socket.emit('joinRoom', {id: uid, room: uid})
 </script>
 <script src="/js/partials/fixedComponents.js"></script>

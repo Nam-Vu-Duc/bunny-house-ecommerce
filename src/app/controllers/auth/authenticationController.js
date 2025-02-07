@@ -48,7 +48,6 @@ class loginController {
         })
 
         if (getUser.role === 'user') {
-          req.flash('sync-chat', 'sync-chat')
           res.redirect('/')
         }
       } else {

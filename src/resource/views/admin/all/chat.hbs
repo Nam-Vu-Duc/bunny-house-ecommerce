@@ -5,23 +5,30 @@
     <div class="chat-list">
       {{#each chats}}
         <div class="item" id="{{this.userInfo._id}}">
-          <div class="name">{{this.userInfo.name}}</div>
-          <div class="last-message">abcd</div>
+          <img src="https://res.cloudinary.com/bunny-store/image/upload/v1730102111/web-img/4_lnwzuk_jkpls2.webp" alt="loading">
+          <div>
+            <div class="name">{{this.userInfo.name}}</div>
+            <div class="last-message">abcd</div>
+          </div>
         </div>
       {{/each}}
     </div>
   </div>
 
   <div class="chat-body">
-    <ul class="chat-content">
-      <div class="left-content">
-        <img src="https://res.cloudinary.com/bunny-store/image/upload/v1730102111/web-img/4_lnwzuk_jkpls2.webp" alt="loading">
-        <li>Hi, em có thể hỗ trợ gì cho anh/chị không ạ</li>
+    <div class="chat-header" style="opacity: 0;">
+      <img src="https://res.cloudinary.com/bunny-store/image/upload/v1730102111/web-img/4_lnwzuk_jkpls2.webp" alt="loading">
+      <div>
+        <div class="name"></div>
+        <div class="last-active"></div>
       </div>
+    </div>
+    <ul class="chat-content">
+      <li>Chọn đoạn chat</li>
     </ul>
     
     <form class="input-form">
-      <textarea name="input" id="input" class="input" placeholder="Aa"></textarea>
+      <textarea name="input" class="input" placeholder="Aa"></textarea>
       <div class="send-btn not-allowed">Gửi</div>
     </form>
   </div>

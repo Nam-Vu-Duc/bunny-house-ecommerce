@@ -36,13 +36,13 @@ class allChatsController {
   async chatInfo(req, res) {
     const userId = req.params.id
     const chatRoom = await chat.findOne({ userId: userId }).lean()
-    const chatMessages = await message.find({ chatId: chatRoom._id }).sort({'timestamp': -1}).lean()
-    res.json({data: chatMessages})
+    const chatMessages = await message.find({ chatId: chatRoom._id }).sort({createdAt: 1}).lean()
+    res.json({data: chatMessages, chatId: chatRoom._id})
   }
 
   async chatCreated(req, res) {
     const newMessage = new message({
-      chatId: req.cookies.cid,
+      chatId: req.body.chatId,
       senderId: req.cookies.uid,
       content: req.body.value
     })
