@@ -27,6 +27,9 @@ class allChatsController {
         {
           $unwind: "$userInfo"  // Flatten the array (optional)
         },
+        {
+          $sort: { updatedAt: -1 }
+        }
       ]),
       chat.find().countDocuments(),
     ])
@@ -47,6 +50,9 @@ class allChatsController {
       chatId: req.body.chatId,
       senderId: req.cookies.uid,
       content: req.body.value
+    })
+    await chat.updateOne({_id: req.body.chatId}, {
+      updatedAt: new Date()
     })
     await newMessage.save()
     res.json({message: 'save successfully'})

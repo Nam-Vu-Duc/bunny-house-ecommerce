@@ -37,11 +37,24 @@ async function getChatData(adminId, userId, userName, chatContent) {
   }
 }
 
-function checkActive(index) {
+function checkCurrentIndex(index) {
   chatList.forEach((item, i) => {
     if (i === index) item.classList.add('active')
     else item.classList.remove('active')
   })
+}
+
+function reOrderChatSidebar(id) {
+  for (const chat of chatList) {
+    if (chat.id === id) {  // Assuming ID is stored in data-id attribute
+      console.log(`Moving chat with id: ${id}`)
+      const parent = chat.parentElement
+      if (parent) {
+        parent.prepend(chat) // Move the chat to the top
+      }
+      break // Stop loop after finding the chat
+    }
+  }
 }
 
 chatList.forEach((chat, index) => {
@@ -50,13 +63,12 @@ chatList.forEach((chat, index) => {
     const userName = chat.querySelector('div.name').textContent
     input.id = userId
     getChatData(uid, userId, userName, chatContent)
-    checkActive(index)
+    checkCurrentIndex(index)
   }
 })
 
 sendBtn.onclick = async function() {
   if (input.value.trim() !== '') {
-    console.log(input.id)
     socket.emit('privateMessage', { room: input.id, message: `${uid}:${input.value}` })
     const response = await fetch('/admin/all-chats/create', {
       method: 'POST',
@@ -64,8 +76,7 @@ sendBtn.onclick = async function() {
       body: JSON.stringify({value: input.value, chatId: chatId})
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    const json = await response.json()
-    console.log(json)
+    reOrderChatSidebar(input.id)
     input.value = ''
     sendBtn.classList.add('not-allowed')
     chatContent.scrollTo(0, chatContent.scrollHeight)
@@ -85,11 +96,13 @@ input.addEventListener("keypress", function(event) {
   }
 })
 
-socket.on('chat message', (id, msg) => {
-  console.log(`${id},${msg}`)
+socket.on('chat-message', (id, msg) => {
   const chat = document.createElement('li')
   chat.textContent = msg
-  if (id.trim() === uid) chat.setAttribute('class', 'right-content') 
+  if (id.trim() === uid) {
+    chat.setAttribute('class', 'right-content') 
+  } 
+  reOrderChatSidebar(id)
   chatContent.appendChild(chat)
   chatContent.scrollTo(0, chatContent.scrollHeight)
 })

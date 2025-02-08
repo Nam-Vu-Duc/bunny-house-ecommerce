@@ -66,15 +66,13 @@ app.set('view options', { layout: 'other' })
 io.on('connection', (socket) => {
   socket.on('joinRoom', ({id, room}) => {
     socket.join(room)
-    console.log(id, 'join room successfully:', room)
   })
 
   socket.on('privateMessage', ({ room, message }) => {
     console.log(room, message)
     const id = message.split(':')[0]
     const msg = message.split(':')[1]
-    io.to(room).to('admin-room').emit('chat message', id, msg)
-    console.log('emit new message successfully')
+    io.to(room).to('admin-room').emit('chat-message', id, msg)
   })
 
   socket.on('heartbeat', (data) => {
@@ -83,7 +81,6 @@ io.on('connection', (socket) => {
 
   socket.on('order', () => {
     io.emit('order')
-    console.log('new order from back end')
   })
 
   socket.on('account', () => {

@@ -1,31 +1,25 @@
-function loadFile(file) {
-  const checkInputScript = document.createElement('script')
-  checkInputScript.src = '/js/checkInput.js'
-  document.head.appendChild(checkInputScript)
+async function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script')
+    script.src = src
+    script.onload = () => resolve(src + ' loaded')
+    script.onerror = () => reject(new Error(src + ' failed to load'))
+    document.head.appendChild(script)
+  })
+}
 
-  const importLinkScript = document.createElement('script')
-  importLinkScript.src = '/js/importLinkCss.js'
-  document.head.appendChild(importLinkScript)
-
-  const paginationScript = document.createElement('script')
-  paginationScript.src = '/js/pagination.js'
-  document.head.appendChild(paginationScript)
-
-  const pushNotificationScript = document.createElement('script')
-  pushNotificationScript.src = '/js/pushNotification.js'
-  document.head.appendChild(pushNotificationScript)
-
-  const sortAndFilterScript = document.createElement('script')
-  sortAndFilterScript.src = '/js/sortAndFilter.js'
-  document.head.appendChild(sortAndFilterScript)
-  
-  const exportJsScript = document.createElement('script')
-  exportJsScript.src = '/js/exportJs.js'
-  document.head.appendChild(exportJsScript)
-  
-  setTimeout(() => {
-    const fileScript = document.createElement('script')
-    fileScript.src = file
-    document.head.appendChild(fileScript)
-  }, 150)
+async function loadFile(file) {
+  try {
+    await loadScript('/js/checkInput.js')
+    await loadScript('/js/importLinkCss.js')
+    await loadScript('/js/pagination.js')
+    await loadScript('/js/pushNotification.js')
+    await loadScript('/js/sortAndFilter.js')
+    await loadScript('/js/exportJs.js')
+    await loadScript(file)
+    
+    console.log('All scripts loaded successfully')
+  } catch (error) {
+    console.error(error)
+  }
 }

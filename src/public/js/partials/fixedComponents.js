@@ -4,8 +4,9 @@ const contact     = document.querySelector('div.contact-icon')
 const dropup      = document.querySelector('div.dropup')
 const chat        = document.querySelector('div.chat-icon')
 const chatBox     = document.querySelector('div.chat-box')
-const chatBody    = document.querySelector('div.chat-body')
-const chatContent = document.querySelector('ul.chat-content')
+const chatHeader  = chatBox.querySelector('div.chat-header')
+const chatBody    = chatBox.querySelector('div.chat-body')
+const chatContent = chatBody.querySelector('ul.chat-content')
 const input       = document.querySelector('textarea.input')
 const sendBtn     = document.querySelector('div.send-btn')
 const notLoggedIn = document.querySelector('div.not-logged-in')
@@ -31,7 +32,10 @@ async function getChatData() {
   }
 }
 
-if (uid) chatBody.style.display = ''
+if (uid) {
+ chatBody.style.display = ''
+ chatHeader.style.opacity = '1'
+}
 
 window.addEventListener('scroll', function() {
   document.documentElement.scrollTop >= 1000 ? scrollTop.style.display = "" : scrollTop.style.display = "none"
@@ -63,8 +67,6 @@ sendBtn.onclick = async function() {
       body: JSON.stringify({value: input.value})
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    const json = await response.json();
-    console.log(json)
     input.value = ''
     sendBtn.classList.add('not-allowed')
     chatContent.scrollTo(0, chatContent.scrollHeight)
@@ -84,7 +86,7 @@ input.addEventListener("keypress", function(event) {
   }
 })
 
-socket.on('chat message', (id, msg) => {
+socket.on('chat-message', (id, msg) => {
   const chat = document.createElement('li')
   chat.textContent = msg
   if (id.trim() === uid) chat.classList.add('right-content')
