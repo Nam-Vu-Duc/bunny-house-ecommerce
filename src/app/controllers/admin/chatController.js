@@ -1,4 +1,5 @@
 const chat = require('../../models/chatModel')
+const user = require('../../models/userModel')
 const message = require('../../models/messageModel')
 
 class allChatsController {
@@ -35,9 +36,10 @@ class allChatsController {
 
   async chatInfo(req, res) {
     const userId = req.params.id
+    const userStatus = await user.findOne({ _id: userId }).lean()
     const chatRoom = await chat.findOne({ userId: userId }).lean()
     const chatMessages = await message.find({ chatId: chatRoom._id }).sort({createdAt: 1}).lean()
-    res.json({data: chatMessages, chatId: chatRoom._id})
+    res.json({data: chatMessages, chatId: chatRoom._id, userStatus: userStatus.isActive})
   }
 
   async chatCreated(req, res) {

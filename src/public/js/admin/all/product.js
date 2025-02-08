@@ -2,6 +2,7 @@ pagination(totalProduct, currentPage)
 importLinkCss('/css/admin/allProducts.css')
 pushNotification(successful)
 sortAndFilter()
+exportJs()
 
 // display delete confirmation box
 var courseId;

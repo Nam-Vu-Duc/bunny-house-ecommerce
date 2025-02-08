@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const flash = require('connect-flash');
+const flash = require('connect-flash')
+const user = require('../../app/models/userModel')
 
 router.use(flash())
-router.get('/', (req, res) => {
+router.get('/', async function(req, res) {
   res.clearCookie('rt', {
     httpOnly: true,
     secure: true,
@@ -12,11 +13,10 @@ router.get('/', (req, res) => {
     httpOnly: true,
     secure: true,
   })
-  res.clearCookie('cid', {
-    httpOnly: true,
-    secure: true,
+  await user.updateOne({_id: req.cookies.uid}, {
+    isActive: false
   })
-  res.redirect('/authentication/sign-in');
+  res.redirect('/authentication/sign-in')
 })
 
 module.exports = router

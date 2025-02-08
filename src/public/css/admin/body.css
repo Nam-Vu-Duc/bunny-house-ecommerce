@@ -171,9 +171,17 @@ table {
 div.table {
   /* overflow-x: auto; */
   margin-top: 20px;
+  background-color: #F0F0F0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+  div.table-button {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+  }
   table.all-items {
-    background-color: #F0F0F0;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
     tbody {
       tr {
         background-color: white;

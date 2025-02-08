@@ -18,10 +18,11 @@ async function getChatData(adminId, userId, userName, chatContent) {
 
     const json = await response.json();
     const messages = json.data
+    const userStatus = json.userStatus
     chatId = json.chatId
     
     chatHeader.querySelector('div.name').textContent = userName
-    chatHeader.querySelector('div.last-active').textContent = 'active now'
+    chatHeader.querySelector('div.last-active').textContent = userStatus ? 'Active now' : 'Offline'
     chatHeader.style.opacity = 1
     chatContent.replaceChildren()
     messages.forEach((message) => {

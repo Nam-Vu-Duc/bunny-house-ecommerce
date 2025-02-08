@@ -11,9 +11,11 @@ router.get('/:id', async function(req, res) {
   res.json({data: chatMessages})
 })
 router.post('/create', async function(req, res) {
+  const userId = req.cookies.uid
+  const chatRoom = await chat.findOne({ userId: userId }).lean()
   const newMessage = new message({
-    chatId: req.cookies.cid,
-    senderId: req.cookies.uid,
+    chatId: chatRoom._id,
+    senderId: userId,
     content: req.body.value
   })
   await newMessage.save()

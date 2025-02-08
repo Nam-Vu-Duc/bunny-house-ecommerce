@@ -21,14 +21,15 @@ class loginController {
       return res.redirect('/authentication/sign-in')
     }
 
-    const getChat = await chat.findOne({ userId: getUser._id })
-    bcrypt.compare(password, getUser.password, function(err, result) {
+    bcrypt.compare(password, getUser.password, async function(err, result) {
       if (result) {
         const payload = { email: getUser.email }// Payload with only essential data
         const rt = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '1d' })
         const at = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '7d' })
-        const userId = getUser ? getUser._id.toString() : ''
-        const chatId = getChat ? getChat._id.toString() : ''
+        const userId = getUser._id.toString()
+        await user.updateOne({ _id: userId}, {
+          isActive: true
+        })
 
         res.cookie('rt', rt, {
           httpOnly: true,
@@ -39,10 +40,6 @@ class loginController {
           secure: true,
         })
         res.cookie('uid', userId, {
-          httpOnly: true,
-          secure: true,
-        })
-        res.cookie('cid', chatId, {
           httpOnly: true,
           secure: true,
         })

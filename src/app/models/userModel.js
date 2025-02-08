@@ -13,6 +13,7 @@ const user = new Schema({
   quantity  : { type: Number, default: 0 },
   revenue   : { type: Number, default: 0 },
   memberCode: { type: String, default: 'silver'},
+  isActive  : { type: Boolean, default: false },
   slug      : { type: String, slug: 'name', unique: true },
 }, { timestamps: true })
 module.exports = mongoose.model('user', user)
