@@ -52,10 +52,17 @@ class allChatsController {
       content: req.body.value
     })
     await chat.updateOne({_id: req.body.chatId}, {
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      lastMessage: req.body.value
     })
     await newMessage.save()
     res.json({message: 'save successfully'})
+  }
+
+  async chatLastMessage(req, res) {
+    const chatInfo = await chat.findOne({ userId: req.body.userId}).lean()
+    if (!chatInfo) return res.json({lastMessage: ''})
+    res.json({lastMessage: chatInfo.lastMessage})
   }
 }
 module.exports = new allChatsController

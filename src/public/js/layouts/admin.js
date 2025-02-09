@@ -3,7 +3,7 @@ const socket = io('http://localhost:3000', {
 })
 
 setInterval(() => {
-  socket.emit('heartbeat', { message: 'ping' });
+  socket.emit('heartbeat', { message: 'admin ping' });
 }, 30000); // Send a ping every 30 seconds
 
 socket.on('order', () => {
@@ -17,7 +17,5 @@ socket.on('account', () => {
 
 window.addEventListener('load', () => {
   const preloader = document.querySelector('div.preloader')
-  setTimeout(() => {
-    preloader.classList.add('inactive')
-  }, 100)
+  preloader.classList.add('inactive')
 })

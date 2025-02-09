@@ -86,7 +86,7 @@ input.addEventListener("keypress", function(event) {
   }
 })
 
-socket.on('chat-message', (id, msg) => {
+socket.on('chat-message', (id, msg, room) => {
   const chat = document.createElement('li')
   chat.textContent = msg
   if (id.trim() === uid) chat.classList.add('right-content')

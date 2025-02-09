@@ -10,15 +10,17 @@ async function loadScript(src) {
 
 async function loadFile(file) {
   try {
-    await loadScript('/js/checkInput.js')
-    await loadScript('/js/importLinkCss.js')
-    await loadScript('/js/pagination.js')
-    await loadScript('/js/pushNotification.js')
-    await loadScript('/js/sortAndFilter.js')
-    await loadScript('/js/exportJs.js')
-    await loadScript(file)
-    
-    console.log('All scripts loaded successfully')
+    window.addEventListener('load', () => {
+      loadScript('/js/importLinkCss.js')
+      loadScript('/js/checkInput.js')
+      loadScript('/js/pagination.js')
+      loadScript('/js/pushNotification.js')
+      loadScript('/js/sortAndFilter.js')
+      loadScript('/js/exportJs.js')
+      loadScript(file)
+      
+      console.log('All scripts loaded successfully')
+    })
   } catch (error) {
     console.error(error)
   }

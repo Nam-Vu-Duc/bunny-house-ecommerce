@@ -1,6 +1,4 @@
 window.addEventListener('load', () => {
   const preloader = document.querySelector('div.preloader')
-  setTimeout(() => {
-    preloader.classList.add('inactive')
-  }, 100)
+  preloader.classList.add('inactive')
 })

@@ -44,14 +44,33 @@ function checkCurrentIndex(index) {
   })
 }
 
-function reOrderChatSidebar(id) {
+async function updateLastMessage(id) {
+  const response = await fetch('/admin/all-chats/get-last-message', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({userId: id})
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+
+  const json = await response.json()
+  const lastMessage = json.lastMessage
+  return lastMessage
+}
+
+async function reOrderChatSidebar(id, room) {
+  console.log(room)
   for (const chat of chatList) {
-    if (chat.id === id) {  // Assuming ID is stored in data-id attribute
-      console.log(`Moving chat with id: ${id}`)
+    if (chat.id === room) { 
+      console.log(`Moving chat with id: ${room}`)
+
       const parent = chat.parentElement
-      if (parent) {
-        parent.prepend(chat) // Move the chat to the top
-      }
+      if (parent) parent.prepend(chat)
+
+      const lastMessage = await updateLastMessage(room)
+      const lastMessageElement = chat.querySelector('div.last-message')
+      lastMessageElement.textContent = lastMessage
+      if (id !== uid) lastMessageElement.style.fontWeight = 'bold'
+
       break // Stop loop after finding the chat
     }
   }
@@ -61,6 +80,8 @@ chatList.forEach((chat, index) => {
   chat.onclick = function() {
     const userId = chat.id
     const userName = chat.querySelector('div.name').textContent
+    const lastMessage = chat.querySelector('div.last-message')
+    if (lastMessage.style.fontWeight === 'bold') lastMessage.style.fontWeight = ''
     input.id = userId
     getChatData(uid, userId, userName, chatContent)
     checkCurrentIndex(index)
@@ -76,7 +97,6 @@ sendBtn.onclick = async function() {
       body: JSON.stringify({value: input.value, chatId: chatId})
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    reOrderChatSidebar(input.id)
     input.value = ''
     sendBtn.classList.add('not-allowed')
     chatContent.scrollTo(0, chatContent.scrollHeight)
@@ -96,13 +116,13 @@ input.addEventListener("keypress", function(event) {
   }
 })
 
-socket.on('chat-message', (id, msg) => {
+socket.on('chat-message', (id, msg, room) => {
   const chat = document.createElement('li')
   chat.textContent = msg
   if (id.trim() === uid) {
     chat.setAttribute('class', 'right-content') 
-  } 
-  reOrderChatSidebar(id)
+  }
+  reOrderChatSidebar(id, room)
   chatContent.appendChild(chat)
   chatContent.scrollTo(0, chatContent.scrollHeight)
 })

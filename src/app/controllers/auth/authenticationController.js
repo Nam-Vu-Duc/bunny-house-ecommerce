@@ -78,8 +78,9 @@ class loginController {
     const savedUser = await newUser.save()
 
     let newChat = new chat({
-      adminId: '65eddca37abb421b88771b3f',
-      userId: savedUser._id
+      adminId: '67a224263d86defd99f29edb',
+      userId: savedUser._id,
+      lastMessage: ''
     })
     await newChat.save()
 

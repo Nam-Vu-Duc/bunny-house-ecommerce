@@ -18,6 +18,10 @@ router.post('/create', async function(req, res) {
     senderId: userId,
     content: req.body.value
   })
+  await chat.updateOne({_id: chatRoom._id}, {
+    updatedAt: new Date(),
+    lastMessage: req.body.value
+  })
   await newMessage.save()
   res.json({message: 'save successfully'})
 })
