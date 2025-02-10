@@ -86,9 +86,22 @@
       height: 18px;
     }
     .display {
-      width: 240px;
       display: flex;
-      justify-content: space-between;
+      align-items: center;
+      gap: 5px;
+      #min, #max {
+        border: 1px solid #D1A6A6;
+        border-radius: 5px;
+        padding: 5px;
+        box-sizing: border-box;
+      }
+      #m-m {
+        width: 30px;
+        height: 3px;
+        background-color: #D1A6A6;
+        border-radius: 99px;
+      }
+
     }
   }
   .all-category-skincare, .all-category-makeup {

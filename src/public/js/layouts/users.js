@@ -4,9 +4,9 @@ const socket = io('http://localhost:3000', {
 
 setInterval(() => {
   socket.emit('heartbeat', { message: 'user ping' });
-}, 30000); // Send a ping every 30 seconds
+}, 30000) // Send a ping every 30 seconds
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
   const preloader = document.querySelector('div.preloader')
   preloader.classList.add('inactive')
 })

@@ -27,7 +27,7 @@
   z-index: 99;
   img { width: 30px }
 }
-.chat-box {
+.chat-box, .ai-chat-box {
   background-color: white;
   width: 300px;
   height: 400px;

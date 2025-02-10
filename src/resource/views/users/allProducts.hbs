@@ -27,25 +27,27 @@
       <option value="-1">Lượng bán giảm dần</option>
     </select>
 
-    <button id="clear-filter" style="display: none">Xoá bộ lọc</button>
+    <button id="clear-sort" style="display: none">Xoá sắp xếp</button>
   </div>
 
   <div class="filter">
-    <label>Khoảng giá</label>
+    <label>Khoảng giá:</label>
     <div class="range-slide">
       <div class="slide">
         <div class="line" id="line" style="left: 0%; right: 0%;"></div>
         <span class="thumb" id="thumbMin" style="left: 0%;"></span>
         <span class="thumb" id="thumbMax" style="left: 100%;"></span>
       </div>
-      <input id="rangeMin" type="range" max="100" min="10" step="5" value="0">
-      <input id="rangeMax" type="range" max="100" min="10" step="5" value="10000000">
+      <input id="rangeMin" type="range" max="{{maxPrice.0.price}}" min="{{minPrice.0.price}}" step="5" value="{{minPrice.0.price}}">
+      <input id="rangeMax" type="range" max="{{maxPrice.0.price}}" min="{{minPrice.0.price}}" step="5" value="{{maxPrice.0.price}}">
     </div>
     <div class="display">
-      <span id="min">10</span>
-      <span id="max">100</span>
+      <span id="min">{{formatNumber minPrice.0.price}}</span>
+      <span id="m-m"></span>
+      <span id="max">{{formatNumber maxPrice.0.price}}</span>
     </div>
 
+    <button id="submit-filter">Chọn</button>
     <button id="clear-filter" style="display: none">Xoá bộ lọc</button>
   </div>
 
@@ -59,6 +61,8 @@
 </div>
 
 <script>
+  var minPrice      = `{{minPrice.0.price}}`
+  var maxPrice      = `{{maxPrice.0.price}}`
   var getSlug       = `{{type}}`
   var currentPage   = `{{currentPage}}`
   var productLength = `{{productLength}}`

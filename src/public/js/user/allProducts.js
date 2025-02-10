@@ -61,6 +61,7 @@ if (getSlug === 'makeup') {
   `
 }
 
+var urlParams = new URLSearchParams(window.location.search)
 // pagination 
 var pagination = document.querySelector('span.pagination')
 var totalPage = 1
@@ -82,67 +83,107 @@ allPagesTag.forEach((tag, index) => {
     tag.style.height = '25px'
   }
   tag.onclick = function() {
-    const urlParams = new URLSearchParams(window.location.search)
     urlParams.set('page', index+1)
     window.location.search = urlParams
   }
 })
 
 // sort
-var selectButton = document.querySelectorAll('select')
+var sortElement = document.querySelector('div.sort')
+var selectButton = sortElement.querySelectorAll('select')
 selectButton.forEach((button) => {
   button.onchange = function () {
     const sortType = button.id
     const sortValue = button.value
-    const urlParams = new URLSearchParams(window.location.search)
-    urlParams.set(sortType, sortValue)
+    urlParams.set(`sort_${sortType}`, sortValue)
     window.location.search = urlParams
   }
   
   const options = button.querySelectorAll('option')
   options.forEach((option) => {
     const sortType = button.id
-    const urlParams = new URLSearchParams(window.location.search)
-    if (urlParams.get(sortType)) {
-      if (option.value === urlParams.get(sortType)) {
-        option.setAttribute('selected', 'selected')
-      }
+    if (urlParams.get(`sort_${sortType}`) === `${option.value}`) {
+      option.setAttribute('selected', 'selected')
     } 
   })
 }) 
 
-var url = new URL(window.location.href)
-var clearBtn = document.querySelector('button#clear-filter')
-if (url.search.length > 0) clearBtn.style.display = ''
-clearBtn.onclick = function() {
-  window.location.href = `${url.pathname}`
+var clearSortBtn = sortElement.querySelector('button#clear-sort')
+clearSortBtn.onclick = function() {
+  for (const key of urlParams.keys()) {
+    if (key.startsWith("sort_")) {
+      urlParams.delete(key)
+      window.location.search = urlParams
+    }
+  }
 }
 
-var min = 0;
-var max = 10000000;
-const calcLeftPosition = (value) => (100 / (100 - 10)) * (value - 10);
-document.getElementById('rangeMin').addEventListener('input', function (e) {
-  const newValue = parseInt(e.target.value);
-  if (newValue > max) return;
-  min = newValue;
+// filter
+var filterElement = document.querySelector('div.filter')
+var min = parseInt(minPrice) 
+var max = parseInt(maxPrice) 
+function calcLeftPosition(value) {
+  return (value - min)/(max - min) * 100
+}
+function formatNumber(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND'
+}
+filterElement.querySelector('input#rangeMin').addEventListener('input', function (e) {
+  const newValue = parseInt(e.target.value)
+  if (newValue > max) return
 
-  document.getElementById('thumbMin').style.left = calcLeftPosition(newValue) + '%';
-  document.getElementById('min').innerHTML = newValue;
+  filterElement.querySelector('span#thumbMin').style.left = calcLeftPosition(newValue) + '%'
+  filterElement.querySelector('span#min').innerHTML = formatNumber(newValue)
+  filterElement.querySelector('input#rangeMin').value = newValue
 
-  const line = document.getElementById('line');
-  line.style.left = calcLeftPosition(newValue) + '%';
-  line.style.right = (100 - calcLeftPosition(max)) + '%';
-});
-
-document.getElementById('rangeMax').addEventListener('input', function (e) {
-  const newValue = parseInt(e.target.value);
-  if (newValue < min) return;
-  max = newValue;
-
-  document.getElementById('thumbMax').style.left = calcLeftPosition(newValue) + '%';
-  document.getElementById('max').innerHTML = newValue;
-
-  const line = document.getElementById('line');
-  line.style.left = calcLeftPosition(min) + '%';
-  line.style.right = (100 - calcLeftPosition(newValue)) + '%';
+  const line = filterElement.querySelector('div#line')
+  line.style.left = calcLeftPosition(newValue) + '%'
+  line.style.right = (100 - calcLeftPosition(max)) + '%'
 })
+filterElement.querySelector('input#rangeMax').addEventListener('input', function (e) {
+  const newValue = parseInt(e.target.value)
+  if (newValue > max) return
+
+  filterElement.querySelector('span#thumbMax').style.left = calcLeftPosition(newValue) + '%'
+  filterElement.querySelector('span#max').innerHTML = formatNumber(newValue)
+  filterElement.querySelector('input#rangeMax').value = newValue
+
+  const line = filterElement.querySelector('div#line')
+  line.style.left = calcLeftPosition(min) + '%'
+  line.style.right = (100 - calcLeftPosition(newValue)) + '%'
+})
+filterElement.querySelector('button#submit-filter').addEventListener('click', function() {
+  const min = filterElement.querySelector('input#rangeMin').value
+  const max = filterElement.querySelector('input#rangeMax').value
+  if (min === minPrice && max === maxPrice) return
+
+  urlParams.set('filter_price', `${min}-${max}`)
+  window.location.search = urlParams
+})
+
+var clearFilterBtn = filterElement.querySelector('button#clear-filter')
+clearFilterBtn.onclick = function() {
+  for (const key of urlParams.keys()) {
+    if (key.startsWith("filter_")) {
+      urlParams.delete(key)
+      window.location.search = urlParams
+    }
+  }
+}
+
+for (const key of urlParams.keys()) {
+  if (key.startsWith("sort_")) {
+    clearSortBtn.style.display = ''
+  }
+  if (key.startsWith("filter_")) {
+    clearFilterBtn.style.display = ''
+    const [min, max] = urlParams.get(key).split('-')
+    filterElement.querySelector('span#thumbMin').style.left = calcLeftPosition(min) + '%'
+    filterElement.querySelector('span#min').innerHTML = formatNumber(min)
+    filterElement.querySelector('input#rangeMin').value = min
+
+    filterElement.querySelector('span#thumbMax').style.left = calcLeftPosition(max) + '%'
+    filterElement.querySelector('span#max').innerHTML = formatNumber(max)
+    filterElement.querySelector('input#rangeMax').value = max
+  }
+}
