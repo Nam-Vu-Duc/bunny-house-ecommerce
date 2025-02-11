@@ -1,4 +1,6 @@
-const socket = io('http://localhost:3000', {
+const isLocal = window.location.hostname === "localhost"
+
+const socket = io(isLocal ? "http://localhost:3000" : "https://bunny-store.vercel.app/", {
   path: "/socket.io",
 })
 

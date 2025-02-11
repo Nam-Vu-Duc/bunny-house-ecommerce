@@ -4,7 +4,7 @@ const purchase = require('../../models/purchaseModel')
 class allSuppliersController {
   async allSuppliers(req, res, next) {
     const index        = 'suppliers'
-    const successful   = req.flash('successful')
+    const successful   = req.flash('message')
 
     const currentPage  = req.query.page || 1
     const queryList    = req.query
@@ -66,20 +66,21 @@ class allSuppliersController {
 
   async supplierCreate(req, res, next) {
     const index  = 'suppliers'
+    const successful   = req.flash('message')
     
-    res.render('admin/create/supplier', { title: 'Thêm đối tác mới', layout: 'admin', index })
+    res.render('admin/create/supplier', { title: 'Thêm đối tác mới', layout: 'admin', index, successful })
   }
 
   async supplierCreated(req, res, next) {
     const userExist = await supplier.findOne({ phone: req.body.phone })
     if (userExist) {
-      req.flash('error', 'SĐT đã tồn tại')
+      req.flash('message', 'SĐT đã tồn tại')
       return res.redirect('/admin/all-suppliers/supplier/create')
     }
     const newSupplier = new supplier(req.body)
 
     await newSupplier.save()
-    req.flash('successful', 'Thêm đối tác thành công')
+    req.flash('message', 'Thêm đối tác thành công')
     res.redirect('/admin/all-suppliers')
   }
 }

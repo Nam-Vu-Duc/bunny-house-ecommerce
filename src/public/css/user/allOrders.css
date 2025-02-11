@@ -39,6 +39,7 @@
           color: black;
           padding-left: 0 !important;
           border: none;
+          background-color: transparent !important
         }
       }
     }

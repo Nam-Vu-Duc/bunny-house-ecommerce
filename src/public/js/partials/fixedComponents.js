@@ -24,6 +24,23 @@ const AIsendBtn     = AIchatBox.querySelector('div.send-btn')
 const AInotLoggedIn = AIchatBox.querySelector('div.not-logged-in')
 const AIform        = AIchatBox.querySelector('form.input-form')
 
+if (uid) {
+  chatBody.style.display     = ''
+  AIchatBody.style.display   = ''
+  chatHeader.style.opacity   = '1'
+  AIchatHeader.style.opacity = '1'
+}
+
+window.addEventListener('scroll', function() {
+  document.documentElement.scrollTop >= 1000 ? scrollTop.style.display = "" : scrollTop.style.display = "none"
+})
+scrollTop.onclick = function() {
+  window.scrollTo({top: 0, behavior: "smooth"})
+}
+contact.onclick = function() {
+  dropup.style.display === 'none' ? dropup.style.display = 'block' : dropup.style.display = 'none'
+}
+
 async function getChatData() {
   try {
     const response = await fetch(`/api/chat/${uid}`)
@@ -35,7 +52,7 @@ async function getChatData() {
     messages.forEach((message) => {
       const chat = document.createElement('li')
       chat.textContent = message.content 
-      if (message.senderId === uid) chat.setAttribute('class', 'right-content')
+      message.senderId === uid ? chat.setAttribute('class', 'right-content') : chat.setAttribute('class', 'left-content')
       chatContent.appendChild(chat)
     })
     chatContent.scrollTo(0, chatContent.scrollHeight)
@@ -43,22 +60,25 @@ async function getChatData() {
     console.error("Error fetching chat data:", error)
   }
 }
+async function getAIChatData() {
+  try {
+    const response = await fetch(`/api/chat/ai/${uid}`)
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
 
-if (uid) {
- chatBody.style.display     = ''
- AIchatBody.style.display   = ''
- chatHeader.style.opacity   = '1'
- AIchatHeader.style.opacity = '1'
-}
-
-window.addEventListener('scroll', function() {
-  document.documentElement.scrollTop >= 1000 ? scrollTop.style.display = "" : scrollTop.style.display = "none"
-})
-scrollTop.onclick = function() {
-  window.scrollTo({top: 0, behavior: "smooth"})
-}
-contact.onclick = function() {
-  dropup.style.display === 'none' ? dropup.style.display = 'block' : dropup.style.display = 'none'
+    const json = await response.json();
+    const messages = json.data
+    AIchatContent.replaceChildren()
+    messages.forEach((message) => {
+      const chat = document.createElement('li')
+      chat.textContent = message.content 
+      message.senderId === uid ? chat.setAttribute('class', 'right-content') : chat.setAttribute('class', 'left-content')
+        
+      AIchatContent.appendChild(chat)
+    })
+    AIchatContent.scrollTo(0, AIchatContent.scrollHeight)
+  } catch (error) {
+    console.error("Error fetching chat data:", error)
+  }
 }
 
 // icon 
@@ -87,6 +107,7 @@ AIchat.onclick = function() {
       AIchatBox.style.right = '60px'
       isUsed = true
     }
+    getAIChatData()
   } else {
     AIchatBox.style.display = 'none'
     AIchatBox.style.right === '60px' ? isUsed = false : ''
@@ -123,12 +144,16 @@ AIsendBtn.onclick = async function() {
     const prompt = AIinput.value
     AIinput.value = ''
     AIsendBtn.classList.add('not-allowed')
-    AIchatContent.scrollTo(0, AIchatContent.scrollHeight)
 
     const chat = document.createElement('li')
     chat.textContent = prompt
     AIchatContent.appendChild(chat)
     chat.classList.add('right-content')
+
+    const answer = document.createElement('li')
+    answer.textContent = 'Loading...'
+    answer.classList.add('left-content')
+    AIchatContent.appendChild(answer)
     AIchatContent.scrollTo(0, AIchatContent.scrollHeight)
 
     const response = await fetch('/api/chat/ai/create', {
@@ -140,9 +165,7 @@ AIsendBtn.onclick = async function() {
     const json = await response.json()
     console.log(json.answer)
 
-    const answer = document.createElement('li')
     answer.textContent = json.answer
-    AIchatContent.appendChild(answer)
     AIchatContent.scrollTo(0, AIchatContent.scrollHeight)
   }
 }

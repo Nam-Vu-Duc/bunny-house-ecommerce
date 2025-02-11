@@ -11,11 +11,6 @@
             <td>{{totalCustomer}}</td>
             <td><a href="/admin/all-customers">Chi tiết</a></td>
           </tr>
-          <tr>
-            <td>Khách hàng có doanh thu cao nhất</td>
-            <td>{{preparingOrders}}</td>
-            <td><a href="/admin/all-orders/?page=1&type=preparing">Chi tiết</a></td>
-          </tr>
         </tbody>
       </table>
     </div>
@@ -27,9 +22,9 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>Số lượng đơn nhập</td>
+            <td>{{totalPurchase}}</td>
+            <td><a href="/admin/all-purchases">Chi tiết</a></td>
           </tr>
         </tbody>
       </table>
@@ -45,21 +40,6 @@
             <td>Số lượng đơn hàng</td>
             <td>{{totalOrder}}</td>
             <td><a href="/admin/all-orders">Chi tiết</a></td>
-          </tr>
-          <tr>
-            <td>Đơn hàng đang xử lý</td>
-            <td>{{preparingOrders}}</td>
-            <td><a href="/admin/all-orders/?page=1&type=preparing">Chi tiết</a></td>
-          </tr>
-          <tr>
-            <td>Đơn hàng đang giao</td>
-            <td>{{deliveringOrders}}</td>
-            <td><a href="/admin/all-orders/?page=1&type=delivering">Chi tiết</a></td>
-          </tr>
-          <tr>
-            <td>Đơn hàng đã hoàn thành</td>
-            <td>{{doneOrders}}</td>
-            <td><a href="/admin/all-orders/?page=1&type=done">Chi tiết</a></td>
           </tr>
         </tbody>
       </table>

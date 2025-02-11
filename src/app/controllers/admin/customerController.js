@@ -1,5 +1,7 @@
+require('dotenv').config()
 const user = require('../../models/userModel')
 const chat = require('../../models/chatModel')
+const aiChat = require('../../models/aiChatModel')
 const order = require('../../models/orderModel')
 const member = require('../../models/memberModel')
 const bcrypt = require('bcryptjs')
@@ -27,8 +29,6 @@ class allCustomersController {
     }
 
     if (filterOptions['name']) filterOptions['name'] = { $regex: filterOptions['name'], $options: 'i'}
-
-    console.log(filterOptions)
 
     const [customers, totalCustomer, members] = await Promise.all([
       user
@@ -111,20 +111,26 @@ class allCustomersController {
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
     const newUser = new user({
-      email: req.body.email,
+      email   : req.body.email,
       password: hashedPassword,
-      role: 'user',
-      name: req.body.name,
-      phone: req.body.phone,
-      address: req.body.address
+      role    : 'user',
+      name    : req.body.name,
+      phone   : req.body.phone,
+      address : req.body.address
     })
     const savedUser = await newUser.save()
 
+    const adminId = process.env.ADMIN_ID
     const newChat = new chat({
-      adminId: '65eddca37abb421b88771b3f',
+      adminId: adminId,
+      userId: savedUser._id
+    })
+    const newAIChat = new aiChat({
       userId: savedUser._id
     })
     await newChat.save()
+    await newAIChat.save()
+
     req.flash('successful', 'Thêm khách hàng thành công')
     res.redirect('/admin/all-customers')
   }

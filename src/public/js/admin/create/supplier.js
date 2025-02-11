@@ -9,4 +9,5 @@ validator({
   ]
 })
 
+pushNotification(successful)
 importLinkCss('/css/admin/createSupplier.css')

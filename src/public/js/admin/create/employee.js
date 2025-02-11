@@ -13,4 +13,5 @@ validator({
   ]
 })
 
+pushNotification(successful)
 importLinkCss('/css/admin/createEmployee.css')

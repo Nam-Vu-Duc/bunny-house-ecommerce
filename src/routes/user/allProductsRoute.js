@@ -10,6 +10,8 @@ router.get('/skincare/:slug', allProductsController.showAllSkincareType)
 router.get('/makeup', allProductsController.showAllMakeUp)
 router.get('/makeup/:slug', allProductsController.showAllMakeUpType)
 
+router.get('/brand/:slug', allProductsController.showAllBrandType)
+
 router.get('/:slug', allProductsController.showAllStatus)
 router.get('/product/:id', allProductsController.productInfo)
 

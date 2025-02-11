@@ -10,7 +10,7 @@
       </tr>
       <tr>
         <td>Tên nhân viên</td>
-        <td><input type="text" id="name" name="name" value="{{userInfo.userInfo.name}}"></td>
+        <td><input type="text" id="name" name="name" value="{{userInfo.name}}"></td>
       </tr>
       <tr>
         <td>Giới tính</td>
@@ -21,11 +21,11 @@
       </tr>
       <tr>
         <td>Số điện thoại</td>
-        <td><input type="text" id="phone" name="phone" value="{{userInfo.userInfo.phone}}"></td>
+        <td><input type="text" id="phone" name="phone" value="{{userInfo.phone}}"></td>
       </tr>
       <tr>
         <td>Địa Chỉ</td>
-        <td><input type="text" id="address" name="address" value="{{userInfo.userInfo.address}}"></td>
+        <td><input type="text" id="address" name="address" value="{{userInfo.address}}"></td>
       </tr>
     </table>
     
@@ -34,7 +34,7 @@
 </div>   
 
 <script>
-  var gender = '{{userInfo.userInfo.gender}}'
+  var gender = '{{userInfo.gender}}'
   var successful = '{{successful}}'
   loadFile('/js/admin/detail/profile.js')
 </script>

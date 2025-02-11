@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs')
 class allEmployeesController {
   async allEmployees(req, res, next) {
     const index        = 'employees'
-    const successful   = req.flash('successful')
+    const successful   = req.flash('message')
 
     const currentPage  = req.query.page || 1
     const queryList    = req.query
@@ -79,15 +79,16 @@ class allEmployeesController {
 
   async employeeCreate(req, res, next) {
     const index = 'employees'
+    const successful = req.flash('message')
     const stores = await store.find().lean()
     
-    res.render('admin/create/employee', { title: 'Thêm nhân viên mới', layout: 'admin', index, stores })
+    res.render('admin/create/employee', { title: 'Thêm nhân viên mới', layout: 'admin', index, stores, successful })
   }
 
   async employeeCreated(req, res, next) {
     const empExist = await employee.findOne({ email: req.body.email })
     if (empExist) {
-      req.flash('error', 'Email đã tồn tại')
+      req.flash('message', 'Email đã tồn tại')
       return res.redirect('/admin/all-employees/employee/create')
     }
 
@@ -105,7 +106,7 @@ class allEmployeesController {
     })
     await newEmp.save()
 
-    req.flash('successful', 'Thêm nhân viên thành công')
+    req.flash('message', 'Thêm nhân viên thành công')
     res.redirect('/admin/all-employees')
   }
 }

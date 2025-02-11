@@ -128,12 +128,16 @@ class allProductsController {
     const index = 'trash'
     const successful = req.flash('successful')
 
+    const currentPage  = req.query.page || 1
+    const itemsPerPage = 10
+    const skip         = (currentPage - 1) * itemsPerPage
+
     const [products, totalDeletedProduct] = await Promise.all([
       product.find({ deletedAt: { $ne: null } }).sort({ deletedAt: -1, name: 1 }).skip(skip).limit(itemsPerPage).lean(),
-      product.find({ deletedAt: null }).countDocuments()
+      product.find({ deletedAt: { $ne: null } }).countDocuments()
     ])
 
-    res.render('admin/all/trash', { title: 'Kho', layout: 'admin', index, successful, products, totalDeletedProduct })
+    res.render('admin/all/trash', { title: 'Kho', layout: 'admin', index, successful, products, totalDeletedProduct, currentPage })
   }
 }
 module.exports = new allProductsController

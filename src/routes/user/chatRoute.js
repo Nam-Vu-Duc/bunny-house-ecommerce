@@ -25,6 +25,11 @@ router.post('/create', async function(req, res) {
   await newMessage.save()
   res.json({message: 'save successfully'})
 })
+router.get('/ai/:id', async function(req, res) {
+  const chatRoom = await aiChat.findOne({ userId: req.params.id }).lean()
+  const chatMessages = await message.find({ chatId: chatRoom._id }).sort({createdAt: 1}).lean()
+  res.json({data: chatMessages})
+})
 router.post('/ai/create', async function(req, res) {
   const key = process.env.GEMINI_API_KEY
   const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {

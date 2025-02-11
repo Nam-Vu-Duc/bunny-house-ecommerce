@@ -1,3 +1,4 @@
+require('dotenv').config()
 const user = require('../../models/userModel')
 const chat = require('../../models/chatModel')
 const bcrypt = require('bcryptjs')
@@ -77,8 +78,9 @@ class loginController {
     })
     const savedUser = await newUser.save()
 
+    const adminId = process.env.ADMIN_ID
     let newChat = new chat({
-      adminId: '67a224263d86defd99f29edb',
+      adminId: adminId,
       userId: savedUser._id,
       lastMessage: ''
     })
