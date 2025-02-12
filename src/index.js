@@ -13,9 +13,6 @@ const { format } = require('date-fns')
 const { createServer } = require("http")
 const { Server } = require('socket.io')
 const server = createServer(app)
-const io = new Server(server, {
-  path: "/socket.io"
-})
 const port = process.env.PORT
 
 db.connect()
@@ -62,31 +59,6 @@ app.engine('hbs', handlebars.engine({
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'resource', 'views'))
 app.set('view options', { layout: 'other' })
-
-io.on('connection', (socket) => {
-  socket.on('joinRoom', ({id, room}) => {
-    socket.join(room)
-  })
-
-  socket.on('privateMessage', ({ room, message }) => {
-    console.log(room, message)
-    const id = message.split(':')[0]
-    const msg = message.split(':')[1]
-    io.to(room).to('admin-room').emit('chat-message', id, msg, room)
-  })
-
-  socket.on('heartbeat', (data) => {
-    console.log('Received heartbeat:', data);
-  });
-
-  socket.on('order', () => {
-    io.emit('order')
-  })
-
-  socket.on('account', () => {
-    io.emit('account')
-  })
-})
 
 //route 
 route(app)

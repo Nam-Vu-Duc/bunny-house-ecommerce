@@ -48,6 +48,7 @@ async function getChatData() {
 
     const json = await response.json();
     const messages = json.data
+    if (messages.length === 0) return
     chatContent.replaceChildren()
     messages.forEach((message) => {
       const chat = document.createElement('li')
@@ -67,6 +68,7 @@ async function getAIChatData() {
 
     const json = await response.json();
     const messages = json.data
+    if (messages.length === 0) return
     AIchatContent.replaceChildren()
     messages.forEach((message) => {
       const chat = document.createElement('li')
@@ -92,7 +94,7 @@ chat.onclick = function() {
       chatBox.style.right = '60px'
       isUsed = true
     }
-    getChatData()
+    if (uid) getChatData()
   } else {
     chatBox.style.display = 'none'
     chatBox.style.right === '60px' ? isUsed = false : ''
@@ -107,7 +109,7 @@ AIchat.onclick = function() {
       AIchatBox.style.right = '60px'
       isUsed = true
     }
-    getAIChatData()
+    if (uid) getAIChatData()
   } else {
     AIchatBox.style.display = 'none'
     AIchatBox.style.right === '60px' ? isUsed = false : ''
@@ -195,7 +197,7 @@ AIinput.addEventListener("keypress", function(event) {
 socket.on('chat-message', (id, msg, room) => {
   const chat = document.createElement('li')
   chat.textContent = msg
-  if (id.trim() === uid) chat.classList.add('right-content')
+  id.trim() === uid ? chat.classList.add('right-content') : chat.classList.add('left-content')
   chatContent.appendChild(chat)
   chatContent.scrollTo(0, chatContent.scrollHeight)
 })

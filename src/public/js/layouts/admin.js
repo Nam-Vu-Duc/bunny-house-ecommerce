@@ -1,8 +1,5 @@
-const isLocal = window.location.hostname === "localhost"
-
-const socket = io(isLocal ? "http://localhost:3000" : "https://bunny-store.vercel.app/", {
-  path: "/socket.io",
-})
+// const socket = io("http://localhost:3100/", {path: "/socket.io"})
+const socket = io("https://bunny-chat.onrender.com/", {path: "/socket.io"})
 
 setInterval(() => {
   socket.emit('heartbeat', { message: 'admin ping' });
