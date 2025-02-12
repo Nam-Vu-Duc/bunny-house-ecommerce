@@ -165,7 +165,6 @@ AIsendBtn.onclick = async function() {
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
     const json = await response.json()
-    console.log(json.answer)
 
     answer.textContent = json.answer
     AIchatContent.scrollTo(0, AIchatContent.scrollHeight)

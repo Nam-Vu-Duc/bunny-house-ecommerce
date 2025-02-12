@@ -58,11 +58,8 @@ async function updateLastMessage(id) {
 }
 
 async function reOrderChatSidebar(id, room) {
-  console.log(room)
   for (const chat of chatList) {
     if (chat.id === room) { 
-      console.log(`Moving chat with id: ${room}`)
-
       const parent = chat.parentElement
       if (parent) parent.prepend(chat)
 
