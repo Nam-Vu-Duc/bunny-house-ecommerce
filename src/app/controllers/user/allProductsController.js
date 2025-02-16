@@ -4,41 +4,35 @@ const comment = require('../../models/commentModel')
 const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 
 class allProductsController {
-  async showAllProducts(req, res, next) {
-    const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.uid || null
-
-    const currentPage  = req.query.page || 1
-    const type         = req.params.slug
-    const queryList    = req.query
+  async getProducts(req, res, next) {
+    const currentPage  = req.body.page
+    const sort         = req.body.sort
+    const filter       = req.body.filter
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
-    const sortOptions  = {}
-    const filterOptions= { deletedAt: null }
 
-    for (var key in queryList) {
-      if (queryList.hasOwnProperty(key) && key.includes('sort_')) {
-        sortOptions[key.slice(5)] = parseInt(queryList[key])
-      }
-      if (queryList.hasOwnProperty(key) && key.includes('filter_')) {
-        filterOptions[key.slice(7)] = { $gt: queryList[key].split('-')[0], $lt: queryList[key].split('-')[1] }
-      }
-    }
+    console.log(sort)
 
-    const [products, productLength, minPrice, maxPrice] = await Promise.all([
+    const [data, productLength] = await Promise.all([
       product
-        .find(filterOptions)
-        .sort(sortOptions)
+        .find(filter)
+        .sort(sort)
         .skip(skip)
         .limit(itemsPerPage)
         .lean(),
-      product.find(filterOptions).countDocuments(),
-      product.find({ deletedAt: null }).sort({ price: 1 }).limit(1).lean(),
-      product.find({ deletedAt: null }).sort({ price: -1 }).limit(1).lean()
+      product.find(filter).countDocuments(),
     ]) 
-    if (!products) return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    if (!data) return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    
+    res.json({data: data, data_size: productLength})
+  }
+
+  async showAllProducts(req, res, next) {
+    const isUser = req.isUser === true ? true : false
+    const userId = req.cookies.uid || null
+    const holderProducts = Array(10).fill({})
         
-    res.render('users/allProducts', { title: 'Toàn bộ sản phẩm', isUser, userId, products, type, productLength, currentPage, minPrice, maxPrice }) 
+    res.render('users/allProducts', { title: 'Toàn bộ sản phẩm', isUser, userId, holderProducts }) 
   }
 
   async showAllStatus(req, res, next) {

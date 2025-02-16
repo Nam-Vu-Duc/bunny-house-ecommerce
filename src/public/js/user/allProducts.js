@@ -1,10 +1,14 @@
-importLinkCss('/css/user/allProducts.css')
+const mainTitle        = document.querySelector('div.main-title').querySelector('b')
+const skincareCategory = document.querySelector('div.all-category-skincare')
+const makeupCategory   = document.querySelector('div.all-category-makeup')
+const allProducts      = document.querySelector('div[class="products"]').querySelectorAll('div.product')
+const urlParams        = new URLSearchParams(window.location.search)
+const urlSlug          = new URL(window.location).pathname.split('/').slice(1).filter(slug => slug !== 'all-products')
+const sortOptions      = {}
+const filterOptions    = { deletedAt: null, [urlSlug[0]]: urlSlug[1] }
+const currentPage      = { page: 1 }
 
-// update main-title base on params.slug
-var mainTitle           = document.querySelector('div.main-title').querySelector('b')
-var getSkincareCategory = document.querySelector('div.all-category-skincare')
-var getMakeupCategory   = document.querySelector('div.all-category-makeup')
-var titles = {
+const titles = {
   'flash-sale': 'Toàn bộ sản phẩm đang sale',
   'hot': 'Toàn bộ sản phẩm đang hot',
   'new-arrival': 'Toàn bộ sản phẩm mới về',
@@ -27,12 +31,81 @@ var titles = {
   'son': 'Toàn bộ sản phẩm son',
   'makeup': 'Toàn bộ sản phẩm makeup',
   'skincare': 'Toàn bộ sản phẩm skincare'
-};
+}
 
-if (titles[getSlug]) mainTitle.innerText = titles[getSlug]
+async function pagination(data_size) {
+  var pagination = document.querySelector('span.pagination')
+  var totalPage = 1
+  for (var i = 0; i < data_size; i += 10) {
+    var newPage = document.createElement('p')
+    newPage.innerText = `${totalPage}`
+    pagination.appendChild(newPage)
+    totalPage++
+  }
+}
 
-if (getSlug === 'skincare') {
-  getSkincareCategory.innerHTML = `
+async function checkingCurrentPage() {
+  var pagination = document.querySelector('span.pagination')
+  var allPagesTag = pagination.querySelectorAll('p')
+  allPagesTag.forEach((tag, index) => {
+    if (parseInt(tag.innerText) === currentPage.page) {
+      tag.classList.add('current')
+    } else {
+      tag.classList.remove('current')
+    }
+    tag.onclick = function() {
+      currentPage.page = index + 1
+      if (parseInt(tag.innerText) === currentPage.page) {
+        tag.classList.add('current')
+      } else {
+        tag.classList.remove('current')
+      }
+      getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
+    }
+  })
+}
+
+async function getProducts(products, sortOptions, filterOptions, currentPage) {
+  const response = await fetch('/all-products/data/products', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({sort: sortOptions, filter: filterOptions, page: currentPage})
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const json = await response.json()
+
+  const data = json.data
+  const data_size = json.data_size
+
+  products.forEach((product, index) => {
+    if (index < data.length) {
+      product.querySelector('img').setAttribute('src', data[index].img.path)
+      product.querySelector('img').setAttribute('alt', data[index].img.name)
+      product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
+      product.querySelector('p#price').textContent = formatNumber(data[index].price) 
+      product.querySelector('p#name').textContent = data[index].name
+      product.querySelector('span#rate-score').textContent = data[index].rateNumber
+      product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
+      product.classList.remove('loading')
+      product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
+    } else {
+      product.parentElement.remove()
+    }
+  })
+
+  return data_size
+}
+
+window.addEventListener('DOMContentLoaded', async function loadData() {
+  const data_size = await getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
+  pagination(data_size)
+  checkingCurrentPage()
+})
+
+if (titles[urlSlug[0]]) mainTitle.innerText = titles[urlSlug[0]]
+
+if (urlSlug.includes('skincare')) {
+  skincareCategory.innerHTML = `
     <ul>
       <li><a href="/all-products/skincare/xit-khoang">Xịt khoáng<img src="https://res.cloudinary.com/bunny-store/image/upload/v1711079975/web-img/mhseyytpn8h6zvg4tabd_r57wfv.webp" alt="loading" loading="lazy"></a></li>
       <li><a href="/all-products/skincare/mat-na">Mặt nạ<img src="https://res.cloudinary.com/bunny-store/image/upload/v1711079978/web-img/sfudjh00pykqpvav4sgy_xqbzev.webp" alt="loading" loading="lazy"></a></li>
@@ -48,8 +121,8 @@ if (getSlug === 'skincare') {
     </ul>    
   `
 }
-if (getSlug === 'makeup') {
-  getMakeupCategory.innerHTML = `
+if (urlSlug.includes('makeup')) {
+  makeupCategory.innerHTML = `
     <ul>
       <li><a href="/all-products/makeup/phan-ma">Phấn má<img src="https://res.cloudinary.com/bunny-store/image/upload/v1711080154/web-img/o1th0fymd3gzjzgwbrbz_ghkt70.webp" alt="loading" loading="lazy"></a></li>
       <li><a href="/all-products/makeup/mascara">Mascara<img src="https://res.cloudinary.com/bunny-store/image/upload/v1711080143/web-img/ejschlqugyhr4asayspm_hbrdiy.webp" alt="loading" loading="lazy"></a></li>
@@ -61,42 +134,17 @@ if (getSlug === 'makeup') {
   `
 }
 
-var urlParams = new URLSearchParams(window.location.search)
-// pagination 
-var pagination = document.querySelector('span.pagination')
-var totalPage = 1
-for (var i = 0; i < productLength; i += 10) {
-  var newPage = document.createElement('p')
-  newPage.innerText = `${totalPage}`
-  pagination.appendChild(newPage)
-  totalPage++
-}
-
-// Style the current selected page
-var allPagesTag = pagination.querySelectorAll('p')
-allPagesTag.forEach((tag, index) => {
-  if (tag.innerText === currentPage) {
-    tag.style.borderColor = '#D1A6A6'
-    tag.style.backgroundColor = '#D1A6A6'
-    tag.style.color = 'white'
-    tag.style.width = '25px'
-    tag.style.height = '25px'
-  }
-  tag.onclick = function() {
-    urlParams.set('page', index+1)
-    window.location.search = urlParams
-  }
-})
-
 // sort
 var sortElement = document.querySelector('div.sort')
 var selectButton = sortElement.querySelectorAll('select')
 selectButton.forEach((button) => {
   button.onchange = function () {
     const sortType = button.id
-    const sortValue = button.value
+    const sortValue = parseInt(button.value)
+    sortOptions[sortType] = sortValue
+    if (!sortValue) delete sortOptions[sortType]
     urlParams.set(`sort_${sortType}`, sortValue)
-    window.location.search = urlParams
+    getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
   }
   
   const options = button.querySelectorAll('option')

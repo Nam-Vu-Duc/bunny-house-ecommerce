@@ -11,7 +11,6 @@ async function loadScript(src) {
 async function loadFile(file) {
   try {
     document.addEventListener('DOMContentLoaded', async function (params) {
-      await loadScript('/js/importLinkCss.js')
       await loadScript('/js/checkInput.js')
       await loadScript('/js/pagination.js')
       await loadScript('/js/pushNotification.js')

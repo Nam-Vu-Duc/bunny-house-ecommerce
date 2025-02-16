@@ -41,19 +41,19 @@ main {
   justify-content: center;
   z-index: 5000;
   transition: 0.5s;
+  .loading {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #D1A6A6;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    animation: 1s reloader infinite linear;
+  }
 }
 .preloader.inactive {
   opacity: 0;
   pointer-events: none;
-}
-.loading {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #D1A6A6;
-  border-top-color: transparent;
-  border-bottom-color: transparent;
-  border-radius: 50%;
-  animation: 1s reloader infinite linear;
 }
 input:not(input[type='radio']) {
   width: 100%;
@@ -148,18 +148,20 @@ div.products {
   }
   .product {
     background-color: white; 
+    min-height: 350px;
+    width: 220px;
     max-width: 220px;
     padding: 10px 12px;
     border-radius: 10px;
     box-sizing: border-box;
-    #product-price {
+    #price {
       background-color: #FFDFDF;
       padding: 5px;
       width: fit-content;
       border-radius: 5px;
       font-weight: bolder;
     }
-    #product-details {
+    #name {
       display: flex; 
       height: 35px;
       text-overflow: ellipsis; 
@@ -168,6 +170,9 @@ div.products {
       font-size: 14px;
     }
   };
+  .product.loading {
+    animation: flicker 1s infinite;
+  }
   .product:hover {
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -312,4 +317,10 @@ div.clearfix::after {
   50%   {opacity: 1; top: 5%}
   75%   {opacity: 1; top: 5%}
   100%  {opacity: 0; top: 0}
+}
+
+@keyframes flicker {
+  0% { background-color: #ffffff; }
+  50% { background-color: #eeeeee; }
+  100% { background-color: #ffffff; }
 }

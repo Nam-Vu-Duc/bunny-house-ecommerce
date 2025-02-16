@@ -1,16 +1,17 @@
 <a href="/all-products/product/{{this._id}}">
-  <div class="product" data-tippy-content="{{this.name}}">
-    <img src="{{this.img.path}}" alt="{{this.img.name}}" id="product-1" loading="lazy">
-    <p id="product-price">{{formatNumber this.price}}</p>
-    <p id="product-details">{{this.name}}</p>
-    <p id="product-rate">
-      <span id="rate-score">{{formatRate this.rate}}</span>/5
+  <div class="product loading" data-tippy-content="{{this.name}}">
+    <img loading="lazy">
+    <p id="old-price"><del></del></p>
+    <p id="price"></p>
+    <p id="name"></p>
+    <p id="rate">
+      <span id="rate-score"></span>/5
       <i class="fi fi-ss-star"></i>
       <i class="fi fi-ss-star"></i>
       <i class="fi fi-ss-star"></i>
       <i class="fi fi-ss-star"></i>
       <i class="fi fi-ss-star"></i>
     </p>
-    <p>Đã bán: {{this.saleNumber}}</p>
+    <p id="sale-number"></p>
   </div>
 </a>

@@ -2,85 +2,85 @@
   {{> userAdvertise}}
 </div>
 
-<div class="flash-deal-board">
+<div class="flash-deal-board" id="flash-deal">
   <div class="title" data-tippy-content="Xem toàn bộ sản phẩm đang sale">
     <i class="fi fi-sr-bolt"></i>
-    <div><a href="/all-products/flash-sale" class="main-title"><b>TOP SẢN PHẨM FLASH DEAL</b></a></div>
+    <div><a href="/all-products/status/flash-sale" class="main-title"><b>TOP SẢN PHẨM FLASH DEAL</b></a></div>
   </div>
   
   <div class="products">
-    {{#each flashSaleProducts}}
+    {{#each holderProducts}}
       {{> product}}
     {{/each}}
   </div>
 </div>
 
-<div class="products-board">
+<div class="products-board" id="top-sale">
   <div class="title" data-tippy-content="Xem toàn bộ sản phẩm bán chạy">
     <i class="fi fi-sr-trophy-star"></i>
     <div><a href="/all-products?saleNumber=-1" class="main-title"><b>TOP SẢN PHẨM BÁN CHẠY</b></a></div>
   </div>
   
   <div class="products">
-    {{#each hotSaleProducts}}
+    {{#each holderProducts}}
       {{> product}}
     {{/each}}
   </div>
 </div>
 
-<div class="products-board">
+<div class="products-board" id="hot-sale">
   <div class="title" data-tippy-content="Xem toàn bộ sản phẩm đang hot">
     <i class="fi fi-sr-flame"></i>
-    <div><a href="/all-products/hot" class="main-title"><b>TOP SẢN PHẨM HOT</b></a></div>
+    <div><a href="/all-products/status/hot" class="main-title"><b>TOP SẢN PHẨM HOT</b></a></div>
   </div>
   
   <div class="products">
-    {{#each hotProducts}}
+    {{#each holderProducts}}
       {{> product}}
     {{/each}}
   </div>
 </div>
 
-<div class="products-board">
+<div class="products-board" id="skincare">
   <div class="title" data-tippy-content="Xem toàn bộ sản phẩm skincare">
     <i class="fi fi-sr-spray-can"></i>
-    <div><a href="/all-products/skincare" class="main-title"><b>TOP SẢN PHẨM SKINCARE</b></a></div>
+    <div><a href="/all-products/categories/skincare" class="main-title"><b>TOP SẢN PHẨM SKINCARE</b></a></div>
   </div>
   
   <div class="products">
-    {{#each skincareProducts}}
+    {{#each holderProducts}}
       {{> product}}
     {{/each}}
   </div>
 </div>
 
-<div class="products-board">
+<div class="products-board" id="makeup">
   <div class="title" data-tippy-content="Xem toàn bộ sản phẩm makeup">
     <i class="fi fi-sr-lipstick"></i>
-    <div><a href="/all-products/makeup" class="main-title"><b>TOP SẢN PHẨM MAKEUP</b></a></div>
+    <div><a href="/all-products/categories/makeup" class="main-title"><b>TOP SẢN PHẨM MAKEUP</b></a></div>
   </div>
   
   <div class="products">
-    {{#each makeupProducts}}
+    {{#each holderProducts}}
       {{> product}}
     {{/each}}
   </div>
 </div>
 
-<div class="products-board">
+<div class="products-board" id="all">
   <div class="title" data-tippy-content="Xem toàn bộ sản phẩm">
     <i class="fi fi-sr-flame"></i>
     <div><a href="/all-products" class="main-title"><b>TOÀN BỘ SẢN PHẨM</b></a></div>
   </div>
 
   <div class="products">
-    {{#each allProducts}}
+    {{#each holderProducts}}
       {{> product}}
     {{/each}}
   </div>
 </div>
 
-<div class="famous-brand-board">
+<div class="famous-brand-board" id="brand">
   <div class="title" data-tippy-content="Xem toàn bộ thương hiệu">
     <i class="fi fi-rr-brand"></i>
     <div><a href="/all-brands" class="main-title"><b>TOP THƯƠNG HIỆU NỔI BẬT</b></a></div>
@@ -88,7 +88,7 @@
 
   <div class="brands">
     <div class="inner">
-      {{#each brands}}
+      {{#each holderBrands}}
       <a class="brand" href="/all-brands/brand/{{this._id}}" data-tippy-content="{{this.name}}">
         <img src="{{this.img.path}}" alt="{{this.name}}" loading="lazy">
       </a>
@@ -99,6 +99,8 @@
 </div>
 
 <script>
-  loadFile('/js/user/home.js')
+  importLinkCss('/css/user/home.css')
+  importLinkCss('/css/user/advertise.css')
 </script>
+<script src="/js/user/home.js"></script>
 <script src="/js/user/product.js"></script>

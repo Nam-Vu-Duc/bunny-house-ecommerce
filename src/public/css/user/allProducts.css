@@ -158,6 +158,13 @@
       color: black;
       cursor: pointer;
     }
+    p.current {
+      border-color: #D1A6A6;
+      background-color: #D1A6A6;
+      color: white;
+      width: 25px;
+      height: 25px;
+    }
   }
 }
 @media screen and (max-width: 500px) {

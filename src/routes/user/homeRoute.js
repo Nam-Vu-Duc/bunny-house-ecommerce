@@ -11,6 +11,8 @@ router.use(session({
 }));
 router.use(flash())
 router.get('/', homeController.show)
+router.post('/data/products', homeController.getProducts)
+router.post('/data/brands', homeController.getBrands)
 router.get('/search', homeController.searchInfo)
 
 module.exports = router
