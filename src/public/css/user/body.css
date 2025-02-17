@@ -147,6 +147,7 @@ div.products {
     margin-block-end: 5px;
   }
   .product {
+    position: relative;
     background-color: white; 
     min-height: 350px;
     width: 220px;
@@ -154,6 +155,17 @@ div.products {
     padding: 10px 12px;
     border-radius: 10px;
     box-sizing: border-box;
+    .loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: white;
+      border-radius: 10px;
+      z-index: 2;
+      animation: flicker 1s infinite;
+    }
     #price {
       background-color: #FFDFDF;
       padding: 5px;
@@ -170,9 +182,6 @@ div.products {
       font-size: 14px;
     }
   };
-  .product.loading {
-    animation: flicker 1s infinite;
-  }
   .product:hover {
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

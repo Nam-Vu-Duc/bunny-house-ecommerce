@@ -1,5 +1,3 @@
-importLinkCss('/css/user/detailRateOrder.css')
-
 pushNotification(successful)
 
 const submitBtn = document.querySelector("button[type='submit']")

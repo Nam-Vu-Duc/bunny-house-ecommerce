@@ -5,4 +5,7 @@ const allBrandsController = require('../../app/controllers/user/allBrandsControl
 router.get('/', allBrandsController.showAllBrands)
 router.get('/brand/:id', allBrandsController.brandInfo)
 
+router.post('/data/brands', allBrandsController.getBrands)
+router.post('/data/brand', allBrandsController.getBrand)
+
 module.exports = router

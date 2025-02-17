@@ -1,8 +1,9 @@
+// ok
 const mainTitle        = document.querySelector('div.main-title').querySelector('b')
 const skincareCategory = document.querySelector('div.all-category-skincare')
 const makeupCategory   = document.querySelector('div.all-category-makeup')
 const allProducts      = document.querySelector('div[class="products"]').querySelectorAll('div.product')
-const urlParams        = new URLSearchParams(window.location.search)
+const pagination       = document.querySelector('span.pagination')
 const urlSlug          = new URL(window.location).pathname.split('/').slice(1).filter(slug => slug !== 'all-products')
 const sortOptions      = {}
 const filterOptions    = { deletedAt: null, [urlSlug[0]]: urlSlug[1] }
@@ -33,39 +34,36 @@ const titles = {
   'skincare': 'Toàn bộ sản phẩm skincare'
 }
 
-async function pagination(data_size) {
-  var pagination = document.querySelector('span.pagination')
+async function paginatingProducts(data_size) {
+  pagination.querySelectorAll('p').forEach(p => p.remove())
   var totalPage = 1
   for (var i = 0; i < data_size; i += 10) {
-    var newPage = document.createElement('p')
+    const newPage = document.createElement('p')
+    if (i === 0) newPage.classList.add('current')
     newPage.innerText = `${totalPage}`
     pagination.appendChild(newPage)
+    newPage.onclick = function() {
+      pagination.querySelectorAll('p').forEach(t => t.classList.remove('current'))
+      currentPage.page = parseInt(newPage.innerText) 
+      console.log(currentPage)
+      newPage.classList.add('current')
+
+      getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
+    }
     totalPage++
   }
 }
 
-async function checkingCurrentPage() {
-  var pagination = document.querySelector('span.pagination')
-  var allPagesTag = pagination.querySelectorAll('p')
-  allPagesTag.forEach((tag, index) => {
-    if (parseInt(tag.innerText) === currentPage.page) {
-      tag.classList.add('current')
-    } else {
-      tag.classList.remove('current')
-    }
-    tag.onclick = function() {
-      currentPage.page = index + 1
-      if (parseInt(tag.innerText) === currentPage.page) {
-        tag.classList.add('current')
-      } else {
-        tag.classList.remove('current')
-      }
-      getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
-    }
-  })
+async function checkingClearButton(clearSortBtn, clearFilterBtn) {
+  if (Object.keys(sortOptions).length > 0) clearSortBtn.style.display = ''
+  if (Object.keys(filterOptions).length > 2) clearFilterBtn.style.display = ''
 }
 
 async function getProducts(products, sortOptions, filterOptions, currentPage) {
+  products.forEach((product, index) => {
+    product.querySelector('div.loading').style.display = ''
+  })
+
   const response = await fetch('/all-products/data/products', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -73,33 +71,45 @@ async function getProducts(products, sortOptions, filterOptions, currentPage) {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
-
   const data = json.data
   const data_size = json.data_size
 
-  products.forEach((product, index) => {
-    if (index < data.length) {
-      product.querySelector('img').setAttribute('src', data[index].img.path)
-      product.querySelector('img').setAttribute('alt', data[index].img.name)
-      product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
-      product.querySelector('p#price').textContent = formatNumber(data[index].price) 
-      product.querySelector('p#name').textContent = data[index].name
-      product.querySelector('span#rate-score').textContent = data[index].rateNumber
-      product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
-      product.classList.remove('loading')
-      product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
-    } else {
-      product.parentElement.remove()
-    }
-  })
-
+  window.setTimeout(function() {
+    products.forEach((product, index) => {
+      if (index < data.length) {
+        product.querySelector('img').setAttribute('src', data[index].img.path)
+        product.querySelector('img').setAttribute('alt', data[index].img.name)
+        product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
+        product.querySelector('p#price').textContent = formatNumber(data[index].price) 
+        product.querySelector('p#name').textContent = data[index].name
+        product.querySelector('span#rate-score').textContent = data[index].rateNumber
+        product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
+        product.querySelector('div.loading').style.display = 'none'
+        product.querySelectorAll('i').forEach((star, i) => {
+          if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
+        })
+        product.style.display = ''
+        product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
+      } else {
+        product.style.display = 'none'
+      }
+    })
+  }, 2000)
+  
   return data_size
+}
+
+function calcLeftPosition(value) {
+  return (value - minPrice)/(maxPrice - minPrice) * 100
+}
+
+function formatNumber(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND'
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
   const data_size = await getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
-  pagination(data_size)
-  checkingCurrentPage()
+  paginatingProducts(data_size)
 })
 
 if (titles[urlSlug[0]]) mainTitle.innerText = titles[urlSlug[0]]
@@ -135,103 +145,83 @@ if (urlSlug.includes('makeup')) {
 }
 
 // sort
-var sortElement = document.querySelector('div.sort')
-var selectButton = sortElement.querySelectorAll('select')
-selectButton.forEach((button) => {
+const sortButton = document.querySelector('div.sort').querySelectorAll('select')
+sortButton.forEach((button) => {
   button.onchange = function () {
     const sortType = button.id
     const sortValue = parseInt(button.value)
     sortOptions[sortType] = sortValue
     if (!sortValue) delete sortOptions[sortType]
-    urlParams.set(`sort_${sortType}`, sortValue)
     getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
+    checkingClearButton(clearSortBtn, clearFilterBtn)
   }
-  
-  const options = button.querySelectorAll('option')
-  options.forEach((option) => {
-    const sortType = button.id
-    if (urlParams.get(`sort_${sortType}`) === `${option.value}`) {
-      option.setAttribute('selected', 'selected')
-    } 
-  })
 }) 
 
-var clearSortBtn = sortElement.querySelector('button#clear-sort')
+const clearSortBtn = document.querySelector('div.sort').querySelector('button#clear-sort')
 clearSortBtn.onclick = function() {
-  for (const key of urlParams.keys()) {
-    if (key.startsWith("sort_")) {
-      urlParams.delete(key)
-      window.location.search = urlParams
-    }
-  }
+  Object.keys(sortOptions).forEach(key => delete sortOptions[key])
+  getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
+  sortButton.forEach((button) => {
+    button.selectedIndex = 0
+  }) 
+  clearSortBtn.style.display = 'none'
 }
 
 // filter
-var filterElement = document.querySelector('div.filter')
-var min = parseInt(minPrice) 
-var max = parseInt(maxPrice) 
-function calcLeftPosition(value) {
-  return (value - min)/(max - min) * 100
-}
-function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND'
-}
-filterElement.querySelector('input#rangeMin').addEventListener('input', function (e) {
+const minPrice = 10000
+const maxPrice = 1000000
+document.querySelector('div.filter').querySelector('input#rangeMin').addEventListener('input', function (e) {
   const newValue = parseInt(e.target.value)
-  if (newValue > max) return
+  if (newValue > maxPrice) return
 
-  filterElement.querySelector('span#thumbMin').style.left = calcLeftPosition(newValue) + '%'
-  filterElement.querySelector('span#min').innerHTML = formatNumber(newValue)
-  filterElement.querySelector('input#rangeMin').value = newValue
+  document.querySelector('div.filter').querySelector('span#thumbMin').style.left = calcLeftPosition(newValue) + '%'
+  document.querySelector('div.filter').querySelector('span#min').innerHTML = formatNumber(newValue)
+  document.querySelector('div.filter').querySelector('input#rangeMin').value = newValue
 
-  const line = filterElement.querySelector('div#line')
-  line.style.left = calcLeftPosition(newValue) + '%'
-  line.style.right = (100 - calcLeftPosition(max)) + '%'
+  const line = document.querySelector('div.filter').querySelector('div#line')
+  line.style.left  = calcLeftPosition(newValue) + '%'
+  line.style.right = (100 - calcLeftPosition(maxPrice)) + '%'
 })
-filterElement.querySelector('input#rangeMax').addEventListener('input', function (e) {
+document.querySelector('div.filter').querySelector('input#rangeMax').addEventListener('input', function (e) {
   const newValue = parseInt(e.target.value)
-  if (newValue > max) return
+  if (newValue > maxPrice) return
 
-  filterElement.querySelector('span#thumbMax').style.left = calcLeftPosition(newValue) + '%'
-  filterElement.querySelector('span#max').innerHTML = formatNumber(newValue)
-  filterElement.querySelector('input#rangeMax').value = newValue
+  document.querySelector('div.filter').querySelector('span#thumbMax').style.left = calcLeftPosition(newValue) + '%'
+  document.querySelector('div.filter').querySelector('span#max').innerHTML = formatNumber(newValue)
+  document.querySelector('div.filter').querySelector('input#rangeMax').value = newValue
 
-  const line = filterElement.querySelector('div#line')
-  line.style.left = calcLeftPosition(min) + '%'
+  const line = document.querySelector('div.filter').querySelector('div#line')
+  line.style.left  = calcLeftPosition(minPrice) + '%'
   line.style.right = (100 - calcLeftPosition(newValue)) + '%'
 })
-filterElement.querySelector('button#submit-filter').addEventListener('click', function() {
-  const min = filterElement.querySelector('input#rangeMin').value
-  const max = filterElement.querySelector('input#rangeMax').value
+document.querySelector('div.filter').querySelector('button#submit-filter').addEventListener('click', async function() {
+  const min = parseInt(document.querySelector('div.filter').querySelector('input#rangeMin').value)
+  const max = parseInt(document.querySelector('div.filter').querySelector('input#rangeMax').value)
   if (min === minPrice && max === maxPrice) return
 
-  urlParams.set('filter_price', `${min}-${max}`)
-  window.location.search = urlParams
+  filterOptions.price = `${min}-${max}`
+  const data_size = await getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
+  // pagination.querySelectorAll('p').forEach(p => p.remove())
+  paginatingProducts(data_size)
+  checkingClearButton(clearSortBtn, clearFilterBtn)
 })
 
-var clearFilterBtn = filterElement.querySelector('button#clear-filter')
-clearFilterBtn.onclick = function() {
-  for (const key of urlParams.keys()) {
-    if (key.startsWith("filter_")) {
-      urlParams.delete(key)
-      window.location.search = urlParams
-    }
-  }
-}
+const clearFilterBtn = document.querySelector('div.filter').querySelector('button#clear-filter')
+clearFilterBtn.onclick = async function() {
+  delete filterOptions['price']
+  clearFilterBtn.style.display = 'none'
+  
+  document.querySelector('div.filter').querySelector('span#thumbMin').style.left  = calcLeftPosition(minPrice) + '%'
+  document.querySelector('div.filter').querySelector('span#min').innerHTML        = formatNumber(minPrice)
+  document.querySelector('div.filter').querySelector('input#rangeMin').value      = minPrice
+  
+  document.querySelector('div.filter').querySelector('span#thumbMax').style.left  = calcLeftPosition(maxPrice) + '%'
+  document.querySelector('div.filter').querySelector('span#max').innerHTML        = formatNumber(maxPrice)
+  document.querySelector('div.filter').querySelector('input#rangeMax').value      = maxPrice
 
-for (const key of urlParams.keys()) {
-  if (key.startsWith("sort_")) {
-    clearSortBtn.style.display = ''
-  }
-  if (key.startsWith("filter_")) {
-    clearFilterBtn.style.display = ''
-    const [min, max] = urlParams.get(key).split('-')
-    filterElement.querySelector('span#thumbMin').style.left = calcLeftPosition(min) + '%'
-    filterElement.querySelector('span#min').innerHTML = formatNumber(min)
-    filterElement.querySelector('input#rangeMin').value = min
-
-    filterElement.querySelector('span#thumbMax').style.left = calcLeftPosition(max) + '%'
-    filterElement.querySelector('span#max').innerHTML = formatNumber(max)
-    filterElement.querySelector('input#rangeMax').value = max
-  }
+  document.querySelector('div.filter').querySelector('div#line').style.left  = calcLeftPosition(minPrice) + '%'
+  document.querySelector('div.filter').querySelector('div#line').style.right = (100 - calcLeftPosition(minPrice)) + '%'
+  
+  const data_size = await getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
+  paginatingProducts(data_size)
 }

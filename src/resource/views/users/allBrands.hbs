@@ -5,8 +5,8 @@
   </div>
   
   <div class="all-brands">
-    {{#each brands}}
-      <div class="brand" data-tippy-content="{{this.name}}">
+    {{#each holderBrands}}
+      <div class="brand loading">
         <a href="/all-brands/brand/{{this._id}}">
           <img src="{{this.img.path}}" alt="{{this.name}}" loading="lazy"/>
           {{this.name}}
@@ -17,5 +17,6 @@
 </div>
 
 <script>
-  loadFile('/js/user/allBrands.js')
+  importLinkCss('/css/user/allBrands.css')
 </script>
+<script src="/js/user/allBrands.js"></script>

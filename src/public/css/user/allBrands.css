@@ -37,4 +37,13 @@
       color: black;
     }
   }
+  .brand.loading {
+    animation: flicker 1s infinite;
+  }
+}
+
+@keyframes flicker {
+  0% { background-color: #ffffff; }
+  50% { background-color: #eeeeee; }
+  100% { background-color: #ffffff; }
 }

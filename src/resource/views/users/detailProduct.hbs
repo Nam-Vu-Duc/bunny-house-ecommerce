@@ -2,30 +2,30 @@
   <div class="table">
     <div class="image-box">
       <div class="image">
-        <img src="{{productInfo.img.path}}" alt="{{productInfo.name}}" loading="lazy"/>
+        <img loading="lazy"/>
       </div>
     </div>
     
     <div class="details-box">
       <div class="product-title">
         <p id="product-rate">
-          <span id="rate-score">{{formatRate productInfo.rate}}</span>/5
+          <span id="rate-score"></span>/5
           <i class="fi fi-ss-star"></i>
           <i class="fi fi-ss-star"></i>
           <i class="fi fi-ss-star"></i>
           <i class="fi fi-ss-star"></i>
           <i class="fi fi-ss-star"></i>
         </p>
-        <h3>{{productInfo.brand}}</h3>
-        <h1>{{productInfo.name}}</h1>
-        <del><h4 id="product-old-price">{{formatNumber productInfo.oldPrice}}</h4></del>
-        <h3 id="product-price">{{formatNumber productInfo.price}}</h3>
-        <h4 id="product-quantity">Số lượng: {{productInfo.quantity}}</h4>
-        <h5 id="sale-number">Đã bán: {{productInfo.saleNumber}}</h5>
+        <h3 id="brand"></h3>
+        <h1 id="name"></h1>
+        <del><h4 id="old-price"></h4></del>
+        <h3 id="price"></h3>
+        <h4 id="quantity"></h4>
+        <h5 id="sale-number"></h5>
       </div>
       
       <div class="description">
-        <p>{{productInfo.description}}</p>
+        <p id="description"></p>
       </div>
 
       <div class="quantity">
@@ -44,19 +44,19 @@
 
   <div class="more-details">
     <h3>THÔNG TIN SẢN PHẨM</h3>
-    <p>{{productInfo.details}}</p>
+    <p id="details">{{productInfo.details}}</p>
   </div>
   
   <div class="more-details">
     <h3>HƯỚNG DẪN SỬ DỤNG</h3>
-    <p>{{productInfo.guide}}</p>
+    <p id="guide">{{productInfo.guide}}</p>
   </div>
 
   <div class="more-details">
     <h3>ĐÁNH GIÁ SẢN PHẨM</h3>
     <div class="rating-box">
       <div class="rating-score">
-        <i class="fi fi-ss-star"></i><h1>{{formatRate productInfo.rate}}</h1>
+        <i class="fi fi-ss-star"></i><h1>{{productInfo.rate}}</h1>
       </div>
       <div class="rating-detail-score">
         <div>1<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> đánh giá</div>
@@ -71,11 +71,11 @@
   <div class="more-details">
     <h3>BÌNH LUẬN SẢN PHẨM</h3>
     <div class="comment-box">
-      {{#each comments}}
+      {{#each holderComments}}
         <div class="comment">
-          <p id="sender">Người dùng ẩn danh</p>
-          <p id="rate">{{this.rate}}<i class="fi fi-ss-star"></i> {{formatDate this.createdAt}}</p>
-          <p id="comment">{{this.comment}}</p>
+          <p id="sender"></p>
+          <p id="rate"></p><i class="fi fi-ss-star"></i> 
+          <p id="comment"></p>
         </div>
       {{/each}}
     </div>
@@ -87,7 +87,7 @@
     </div>
 
     <div class="products">
-    {{#each relatedProducts}}
+    {{#each holderRelatedProducts}}
       {{> product}}
     {{/each}}
   </div>
@@ -95,12 +95,6 @@
 </div>
 
 <script>
-  var productDetails = `{{productInfo.details}}`
-  var productStatus  = `{{productInfo.status}}`
-  var productId      = `{{productInfo._id}}`
-  var productName    = `{{productInfo.name}}`
-  var productPrice   = `{{productInfo.price}}`
-  var productImage   = `{{productInfo.img.path}}`
-  loadFile('/js/user/detailProduct.js')
+  importLinkCss('/css/user/detailProduct.css')
 </script>
-<script src="/js/user/product.js"></script>
+<script src='/js/user/detailProduct.js'></script>

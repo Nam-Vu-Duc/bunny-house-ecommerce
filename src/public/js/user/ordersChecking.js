@@ -1,5 +1,3 @@
-importLinkCss('/css/user/ordersChecking.css')
-
 var getOrderCheckingForm   = document.querySelector('form#form-5')
 var getSubmitButton        = getOrderCheckingForm.querySelector('button')
 var getOrderContainer      = document.querySelector('div.order-checking-container')

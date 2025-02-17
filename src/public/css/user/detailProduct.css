@@ -50,7 +50,7 @@
         h1 {
           color: #c73030;
         }
-        #product-price, #product-quantity {
+        #price, #quantity {
           background-color: #FFDFDF;
           padding: 5px;
           width: fit-content;

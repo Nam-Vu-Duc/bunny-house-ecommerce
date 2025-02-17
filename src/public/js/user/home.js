@@ -1,3 +1,4 @@
+// ok
 const flashSaleProductsDiv  = document.querySelector('div[class="flash-deal-board"][id="flash-deal"]').querySelectorAll('div.product')
 const topSaleProductsDiv    = document.querySelector('div[class="products-board"][id="top-sale"]').querySelectorAll('div.product')
 const hotSaleProductsDiv    = document.querySelector('div[class="products-board"][id="hot-sale"]').querySelectorAll('div.product')
@@ -19,20 +20,24 @@ async function getProducts(products, status) {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
-
   const data = json.data
 
-  products.forEach((product, index) => {
-    product.querySelector('img').setAttribute('src', data[index].img.path)
-    product.querySelector('img').setAttribute('alt', data[index].img.name)
-    product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
-    product.querySelector('p#price').textContent = formatNumber(data[index].price) 
-    product.querySelector('p#name').textContent = data[index].name
-    product.querySelector('span#rate-score').textContent = data[index].rateNumber
-    product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
-    product.classList.remove('loading')
-    product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
-  })
+  window.setTimeout(function() {
+    products.forEach((product, index) => {
+      product.querySelector('img').setAttribute('src', data[index].img.path)
+      product.querySelector('img').setAttribute('alt', data[index].img.name)
+      product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
+      product.querySelector('p#price').textContent = formatNumber(data[index].price) 
+      product.querySelector('p#name').textContent = data[index].name
+      product.querySelector('span#rate-score').textContent = data[index].rateNumber
+      product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
+      product.querySelector('div.loading').style.display = 'none'
+      product.querySelectorAll('i').forEach((star, i) => {
+        if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
+      })
+      product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
+    })
+  }, 2000)
 }
 
 async function getBrands(imgs) {
@@ -44,7 +49,6 @@ async function getBrands(imgs) {
   const json = await response.json()
 
   const data = json.data
-  console.log(data)
 
   imgs.forEach((img, index) => {
     img.setAttribute('src', data[index].img.path)
@@ -59,6 +63,5 @@ window.addEventListener('DOMContentLoaded', () => {
   getProducts(skincareProductsDiv, 'flash-sale')
   getProducts(makeupProductsDiv, 'flash-sale')
   getProducts(allProductsDiv, 'flash-sale')
-
   getBrands(allBrandsDiv)
 })

@@ -1,5 +1,3 @@
-importLinkCss('/css/user/allOrders.css')
-
 // display each process logic
 var getContactInfo   = document.querySelector('div.contact-info')
 var getPaymentMethod = document.querySelector('div.payment-method')

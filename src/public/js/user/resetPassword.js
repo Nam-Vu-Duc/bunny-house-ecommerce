@@ -1,5 +1,3 @@
-importLinkCss('/css/user/resetPassword.css')
-
 const form              = document.querySelector('form#form-5') 
 const submitButton      = document.querySelector('button')
 const resetPasswordContainer = document.querySelector('div.reset-password-container')
