@@ -8,7 +8,6 @@ router.get('/status/:slug', allProductsController.showAllProducts)
 router.get('/categories/:slug', allProductsController.showAllProducts)
 router.get('/skincare/:slug', allProductsController.showAllProducts)
 router.get('/makeup/:slug', allProductsController.showAllProducts)
-router.get('/brand/:slug', allProductsController.showAllBrand)
 
 router.get('/product/:id', allProductsController.productInfo)
 

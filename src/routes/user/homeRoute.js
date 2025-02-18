@@ -13,6 +13,7 @@ router.use(flash())
 router.get('/', homeController.show)
 router.post('/data/products', homeController.getProducts)
 router.post('/data/brands', homeController.getBrands)
+router.get('/data/user', homeController.getUsers)
 router.get('/search', homeController.searchInfo)
 
 module.exports = router

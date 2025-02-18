@@ -34,7 +34,7 @@ async function getBrands() {
       container.appendChild(href)
       brands.appendChild(container)
     })
-  }, 2000)
+  }, 1000)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {

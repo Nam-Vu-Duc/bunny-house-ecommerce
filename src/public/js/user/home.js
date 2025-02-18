@@ -37,7 +37,7 @@ async function getProducts(products, status) {
       })
       product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
     })
-  }, 2000)
+  }, 1000)
 }
 
 async function getBrands(imgs) {

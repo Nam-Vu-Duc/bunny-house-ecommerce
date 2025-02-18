@@ -56,60 +56,17 @@ class allProductsController {
   }
 
   async showAllProducts(req, res, next) {
-    const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.uid || null
     const holderProducts = Array(10).fill({})
-        
-    res.render('users/allProducts', { title: 'Toàn bộ sản phẩm', isUser, userId, holderProducts }) 
-  }
-  
-  async showAllBrand(req, res, next) {
-    const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.uid || null
-
-    const currentPage  = req.query.page || 1
-    const type         = req.params.slug
-    const queryList    = req.query
-    const itemsPerPage = 10
-    const skip         = (currentPage - 1) * itemsPerPage
-    const sortOptions  = {}
-    const filterOptions= { deletedAt: null, brand: type }
-
-    for (var key in queryList) {
-      if (queryList.hasOwnProperty(key) && key.includes('sort_')) {
-        sortOptions[key.slice(5)] = parseInt(queryList[key])
-      }
-      if (queryList.hasOwnProperty(key) && key.includes('filter_')) {
-        filterOptions[key.slice(7)] = { $gt: queryList[key].split('-')[0], $lt: queryList[key].split('-')[1] }
-      }
-    }
-
-    const [products, productLength, minPrice, maxPrice] = await Promise.all([
-      product
-        .find(filterOptions)
-        .sort(sortOptions)
-        .skip(skip)
-        .limit(itemsPerPage)
-        .lean(),
-      product.find(filterOptions).countDocuments(),
-      product.find({ deletedAt: null }).sort({ price: 1 }).limit(1).lean(),
-      product.find({ deletedAt: null }).sort({ price: -1 }).limit(1).lean()
-    ])
-
-    if (productLength === 0) return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
-
-    res.render('users/allProducts', { title: 'Sản phẩm Skincare', isUser, userId, products, type, productLength, currentPage, minPrice, maxPrice })
+    res.render('users/allProducts', { title: 'Toàn bộ sản phẩm', holderProducts }) 
   }
 
   async productInfo(req, res, next) {
-    const isUser = req.isUser === true ? true : false
-    const userId = req.cookies.uid || null
     const holderComments = Array(5).fill({})
     const holderRelatedProducts = Array(5).fill({})
 
     if (!checkForHexRegExp(req.params.id)) return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
         
-    return res.render('users/detailProduct', { isUser, userId, holderComments, holderRelatedProducts })
+    return res.render('users/detailProduct', { holderComments, holderRelatedProducts })
   }
 }
 module.exports = new allProductsController

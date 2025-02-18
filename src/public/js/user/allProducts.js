@@ -94,7 +94,7 @@ async function getProducts(products, sortOptions, filterOptions, currentPage) {
         product.style.display = 'none'
       }
     })
-  }, 2000)
+  }, 1000)
   
   return data_size
 }

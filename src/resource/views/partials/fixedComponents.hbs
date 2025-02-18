@@ -50,8 +50,4 @@
   <div class="not-logged-in"><p>Please <a href="/authentication/sign-in">Log in</a> to chat</p></div>
 </div>
 
-<script>
-  var uid = `{{userId}}`
-  if (uid) socket.emit('joinRoom', {id: uid, room: uid})
-</script>
 <script src="/js/partials/fixedComponents.js"></script>

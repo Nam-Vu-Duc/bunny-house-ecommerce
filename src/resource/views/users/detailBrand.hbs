@@ -1,44 +1,32 @@
 <div class="detail-brand-container">
   <div class="table">
     <div class="image-box">
-      <div class="image">
-        <img src="{{brandInfo.img.path}}" alt="{{brandInfo.name}}" loading="lazy"/>
-      </div>
+      <div class="image"><img loading="lazy"/></div>
     </div>
     
     <div class="details-box">
-      <div class="title"><h1>{{brandInfo.name}}</h1></div>
-      <div class="description"><p>{{brandInfo.description}}</p></div>
+      <h1 id="title"></h1>
+      <p id="description"></p>
     </div>
   </div>
 
   <div class="more-details">
     <h3>THÔNG TIN THƯƠNG HIỆU</h3>
-    <p>{{brandInfo.details}}</p>
+    <p id="details"></p>
   </div>
 
   <div class="related-products">
-    <div class="title">
-      <a href="/all-products/brand/{{brandInfo.name}}" class="main-title"><b>SẢN PHẨM</b></a>
-    </div>
+    <div class="title"><span class="main-title"><b>SẢN PHẨM</b></span></div>
 
     <div class="products">
-      {{#each products}}
-      <a href="/all-products/product/{{this._id}}">
-        <div class="product">
-          <img src="{{this.img.path}}" alt="{{this.name}}" id="product-1" loading="lazy">
-          <del><h4 id="product-old-price">{{formatNumber this.oldPrice}}</h4></del>
-          <h3 id="product-price">{{formatNumber this.price}}</h3>
-          <p id="product-details">{{this.name}}</p>
-        </div>
-      </a>
-      {{/each}}
+    {{#each holderRelatedProducts}}
+      {{> product}}
+    {{/each}}
     </div>
   </div>
 </div>
 
 <script>
-  brandDetails = `{{brandInfo.details}}`
   importLinkCss('/css/user/detailBrand.css')
 </script>
 <script src="/js/user/detailBrand.js"></script>

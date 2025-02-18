@@ -38,17 +38,21 @@ function updateTableBody(totalOrderPrice) {
     productImage.setAttribute('src', `${getProductInfo.productInfo[i].image}`)
     newProductImage.appendChild(productImage)
 
+    // create an input store the img value to submit the form
+    var newProductImgInput = document.createElement('input')
+    newProductImgInput.setAttribute('type', 'hidden')
+    newProductImgInput.setAttribute('name', 'productImg')
+    newProductImgInput.setAttribute('value', getProductInfo.productInfo[i].image)
+
     // create new element and get data from localStorage
     var newProductName = document.createElement('td')
-
-    // create a tag. Link to the product details page when user want to change the cart
     var newProductAnchorTag = document.createElement('a')
     newProductAnchorTag.setAttribute('href', `/all-products/product/${getProductInfo.productInfo[i].id}`)
     newProductAnchorTag.innerText = getProductInfo.productInfo[i].name
     newProductAnchorTag.style.paddingLeft = '5px'
     newProductName.appendChild(newProductAnchorTag)
 
-    // create an input store the name value to submit the form
+    // create an input store the id value to submit the form
     var newProductIdInput = document.createElement('input')
     newProductIdInput.setAttribute('type', 'hidden')
     newProductIdInput.setAttribute('name', 'productId')
@@ -102,6 +106,7 @@ function updateTableBody(totalOrderPrice) {
 
     // add each element to the row
     newProductRow.appendChild(newProductImage)
+    newProductRow.appendChild(newProductImgInput)
 
     newProductRow.appendChild(newProductIdInput)
 
