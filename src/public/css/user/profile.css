@@ -1,12 +1,14 @@
-.user-update-profile-container {
+.profile-container {
   display: flex;
   gap: 20px;
   .sidebar-menu {
     width: 200px;
+    max-width: 200px;
     background-color: white;
     border-radius: 10px;
     padding: 10px 0;
     height: fit-content;
+    box-sizing: border-box;
     .avatar {
       display: flex;
       align-items: center;
@@ -21,7 +23,7 @@
     .tag {
       padding: 5px;
       box-sizing: border-box;
-      a {
+      span {
         display: flex;
         align-items: center;
         justify-content: start;
@@ -34,8 +36,12 @@
         padding: 5px 10px;
         box-sizing: border-box;
         border: 1px solid white;
+        cursor: pointer;
+      };
+      span.current {
+        background-color: #FFDFDF;
       }
-      a:hover {
+      span:hover {
         border: 1px solid #FFDFDF;
       }
     }

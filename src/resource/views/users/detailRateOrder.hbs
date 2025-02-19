@@ -32,37 +32,19 @@
   <table class="all-products">
     <thead>
       <tr>
-        <td>Sản Phẩm  </td>
-        <td>Đơn Giá   </td>
-        <td>S/L       </td>
-        <td>Tổng      </td>
+        <td>Sản Phẩm</td>
+        <td>Đơn Giá </td>
+        <td>S/L     </td>
+        <td>Tổng    </td>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td colspan="4">
-          <input type="text" placeholder="Nhập đánh giá của bạn" id="productComment" name="productComment[]">
-          <div class="rate-star">
-            <input type="hidden" id="productRate" name="productRate[]" value="0">
-            <i class="fi fi-ss-star"></i>
-            <i class="fi fi-ss-star"></i>
-            <i class="fi fi-ss-star"></i>
-            <i class="fi fi-ss-star"></i>
-            <i class="fi fi-ss-star"></i>
-            <span class="rate-score">0</span>
-            <span>/</span>
-            <span>5</span>
-          </div>
-        </td>
-      </tr>
-    </tbody>
+    <tbody></tbody>
   </table>
   
   <div class="button"><button type="submit">Gửi</button></div>
 </div>
 
 <script>
-  const isRated = `{{orderInfo.isRated}}`
   const successful = `{{successful}}`
   importLinkCss('/css/user/detailRateOrder.css')
 </script>

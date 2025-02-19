@@ -1,4 +1,5 @@
 // ok
+import { format } from 'https://cdn.jsdelivr.net/npm/date-fns@latest/+esm';
 const submitButton   = document.querySelector('button')
 const orderContainer = document.querySelector('div.order-checking-container')
 const errorMessage   = document.querySelector('span.error-message')
@@ -12,11 +13,14 @@ async function getOrder(id) {
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
   const data = json.data
+  const status = json.status
 
-  return data
+  return {data: data, status: status}
 }
 
-function appendOrder(data) {
+function appendOrder(data, status) {
+  const table = document.querySelector('table')
+  if (table) table.remove()
   document.querySelector('span.error-message').textContent = ''
   const orderProcess = document.createElement('div')
   orderProcess.setAttribute('class', 'order-process')
@@ -32,9 +36,9 @@ function appendOrder(data) {
       </thead>
       <tbody>
         <tr>
-          <td>${data.createdAt}</td>
+          <td>${formatDate(data.createdAt)}</td>
           <td>${data.customerInfo.name}</td>
-          <td>${data.status}</td>
+          <td>${status.name}</td>
           <td><a href="/all-orders/order/${data._id}">Xem</td>
         </tr>
       </tbody>
@@ -44,14 +48,18 @@ function appendOrder(data) {
   submitButton.classList.remove('loading')
 }
 
+function formatDate(date) {
+  return format(new Date(date), 'dd/MM/yyyy')
+}
+
 // when submit, the form will push the input value from user to the URL for backend
 submitButton.onclick = async function () {
   submitButton.classList.add('loading')
   const orderCode = document.querySelector('input').value
   const regex = /^[a-f\d]{24}$/i
   if (regex.test(orderCode)) {
-    const data = await getOrder(orderCode)
-    if (data) return appendOrder(data)
+    const {data, status}  = await getOrder(orderCode)
+    if (data) return appendOrder(data, status)
     errorMessage.innerText = 'Không Tìm Thấy Đơn Hàng'
     errorMessage.style.color = 'red'
     const table = document.querySelector('table')

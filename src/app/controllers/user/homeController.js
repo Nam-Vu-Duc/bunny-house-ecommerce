@@ -12,10 +12,10 @@ class homeController {
 
   async getUsers(req, res, next) {
     const userId = req.cookies.uid || ''
-    if (!userId) return res.message({message: false})
+    if (!userId) return res.json({message: false})
     
     const userInfo = await user.findOne({ _id: userId }).lean()
-    if (!userInfo) return res.message({message: false})
+    if (!userInfo) return res.json({message: false})
     
     return res.json({message: true, uid: userId})
   }
@@ -32,15 +32,14 @@ class homeController {
   }
 
   async searchInfo(req, res, next) {
-    const chatId = req.cookies.chat_id || null
-    const query = req.query.q
-    const products = await product.find({
+    const query = req.body.query
+    const data = await product.find({
       $or: [
         { name: { $regex: query, $options: 'i'} },
         { brand: { $regex: query, $options: 'i'}}
       ]
     }).lean()
-    res.render('users/searchInfo', { title: 'Kết quả tìm kiếm', products, chatId, query });
+    return res.json({data: data})
   }
 }
 module.exports = new homeController

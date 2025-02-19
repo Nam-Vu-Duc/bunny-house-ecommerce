@@ -1,6 +1,5 @@
 // ok
 import { format } from 'https://cdn.jsdelivr.net/npm/date-fns@latest/+esm';
-
 const urlSlug = location.href.match(/([^\/]*)\/*$/)[1]
 
 function formatNumber(number) {
@@ -21,7 +20,6 @@ async function getOrder() {
   const json = await response.json()
   const data = json.data
   const status = json.status
-  console.log(data)
 
   document.querySelector('td#id').textContent = data._id || ''
   document.querySelector('td#date').textContent = formatDate(data.createdAt) || ''

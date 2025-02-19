@@ -1,14 +1,287 @@
-pushNotification(successful)
+// 
+import { format } from 'https://cdn.jsdelivr.net/npm/date-fns@latest/+esm';
+const content       = document.querySelector('div.profile-container').querySelector('div.content')
+const infoBtn       = document.querySelector('span.profile')
+const orderBtn      = document.querySelector('span.order')
+const rateOrderBtn  = document.querySelector('span.rate-order')
+const feedbackBtn   = document.querySelector('span.feedBack')
+const urlSlug       = location.href.match(/([^\/]*)\/*$/)[1]
 
-var maleGender = document.querySelector('input#male')
-var femaleGender = document.querySelector('input#female')
-if (gender === 'male') maleGender.checked = true
-if (gender === 'female') femaleGender.checked = true
+function formatNumber(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND'
+}
 
-// submit update profile form
-var updateProfileForm = document.querySelector('form.update-profile')
-var updateProfileButton = document.querySelector('div.submit-button').querySelector('button')
+function formatDate(date) {
+  return format(new Date(date), 'dd/MM/yyyy')
+}
 
-updateProfileButton.onclick = function() {
-  updateProfileForm.submit()
+function resetFormat(button) {
+  document.querySelector('div.tag').querySelectorAll('span').forEach((span) => {
+    span.classList.remove('current')
+  })
+  button.classList.add('current')
+}
+
+function resetContent() {
+  document.querySelector('div.content').querySelector('div').remove()
+}
+
+async function getUser() {
+  const response = await fetch('/profile/data/user', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ id: urlSlug})
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const json = await response.json()
+  const data = json.data
+  const member = json.member
+
+  const p = document.createElement('p')
+  p.textContent = 'Thông Tin Cá Nhân'
+
+  const form = document.createElement('form')
+  form.innerHTML = `
+    <div class="form-group">
+      <label for="name">Tên Khách Hàng</label>
+      <input type="text" name="name" value="${data.name}">
+    </div>
+
+    <div class="form-group">
+      <label for="gender">Giới tính</label>
+      <div>
+        <input type="radio" name="gender" value="male">
+        <label for="gender">Nam</label>
+        
+        <input type="radio" name="gender" value="female">
+        <label for="gender">Nữ</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Email khách hàng</label>
+      <input type="text" name="email" value="${data.email}">
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Số điện thoại</label>
+      <input type="text" name="phone" value="${data.phone}">
+    </div>
+
+    <div class="form-group">
+      <label for="address">Địa chỉ nhận hàng</label>
+      <input type="text" name="address" value="${data.address}">
+    </div>
+    
+    <div class="form-group">
+      <label for="address">Số lượng đơn hàng</label>
+      <input type="text" name="quantity" value="${data.quantity}" disabled>
+    </div>
+    
+    <div class="form-group">
+      <label for="address">Tổng chi tiêu</label>
+      <input type="text" name="revenue" value="${formatNumber(data.revenue) }" disabled>
+    </div>
+
+    <div class="form-group">
+      <label for="member">Hạng thành viên</label>
+      <input type="text" name="member" value="${member.name}" disabled>
+    </div>
+    
+    <div class="form-group">
+      <label for="address">Ngày tạo tài khoản</label>
+      <input type="text" name="createdAt" value="${formatDate(data.createdAt)}" disabled>
+    </div>
+  `
+  form.querySelectorAll('input[name="gender"]').forEach((input) => {
+    if (input.value === data.gender) input.checked = true
+  })
+
+  const submitButton = document.createElement('div')
+  submitButton.classList.add('submit-button')
+
+  const button = document.createElement('button')
+  button.type = 'submit'
+  button.textContent = 'Cập Nhật'
+  button.onclick = async function updateUser() {
+    const data = new FormData(form)
+    const response = await fetch('/profile/updated', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    })
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const json = await response.json()
+    console.log(json)
+  }
+  submitButton.appendChild(button)
+
+  const div = document.createElement('div')
+  div.appendChild(p)
+  div.appendChild(form)
+  div.appendChild(submitButton)
+
+  content.appendChild(div)
+
+  document.querySelector('span.user-name').textContent = data.name
+}
+
+async function getOrders() {
+  const response = await fetch('/profile/data/orders', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ id: urlSlug})
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const json = await response.json()
+  const data = json.data
+
+  const thead = document.createElement('thead')
+  thead.innerHTML = `
+    <tr>
+      <td style="width: 25%">Người Nhận</td>
+      <td style="width: 25%">Tổng Tiền</td>
+      <td style="width: 20%">Ngày</td>
+      <td style="width: 15%">Tình Trạng</td>
+      <td style="width: 15%"></td>
+    </tr>
+  `
+
+  const tbody = document.createElement('tbody')
+  data.forEach((order) => {
+    const tr = document.createElement('tr')
+    tr.innerHTML = `
+      <td>${order.customerInfo.name}</td>
+      <td>${formatNumber(order.totalOrderPrice)}</td>
+      <td>${formatDate(order.createdAt)}</td>
+      <td>${order.status}</td>
+      <td><a href="/all-orders/order/${order._id}">Chi Tiết</a></td>
+    `
+    tbody.appendChild(tr)
+  })
+
+  const table = document.createElement('table')
+  table.appendChild(thead)
+  table.appendChild(tbody)
+
+  const p = document.createElement('p')
+  p.textContent = 'Thông Tin Đơn Hàng'
+
+  const div = document.createElement('div')
+  div.appendChild(p)
+  div.appendChild(table)
+
+  content.appendChild(div)
+}
+
+async function getDoneOrders() {
+  const response = await fetch('/profile/data/done-orders', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ id: urlSlug})
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const json = await response.json()
+  const data = json.data
+
+  const thead = document.createElement('thead')
+  thead.innerHTML = `
+    <tr>
+      <td style="width: 25%">Người Nhận</td>
+      <td style="width: 25%">Tổng Tiền</td>
+      <td style="width: 20%">Ngày</td>
+      <td style="width: 15%">Tình Trạng</td>
+      <td style="width: 15%"></td>
+    </tr>
+  `
+
+  const tbody = document.createElement('tbody')
+  data.forEach((order) => {
+    const tr = document.createElement('tr')
+    tr.innerHTML = `
+      <td>${order.customerInfo.name}</td>
+      <td>${formatNumber(order.totalOrderPrice)}</td>
+      <td>${formatDate(order.createdAt)}</td>
+      <td>${order.status}</td>
+      <td><a href="/all-orders/order/rate/${order._id}">Chi Tiết</a></td>
+    `
+    tbody.appendChild(tr)
+  })
+
+  const table = document.createElement('table')
+  table.appendChild(thead)
+  table.appendChild(tbody)
+
+  const p = document.createElement('p')
+  p.textContent = 'Đánh giá Đơn Hàng'
+
+  const div = document.createElement('div')
+  div.appendChild(p)
+  div.appendChild(table)
+
+  content.appendChild(div)
+}
+
+async function getFeedback() {
+  const p = document.createElement('p')
+  p.textContent = 'Góp ý'
+
+  const form = document.createElement('form')
+  form.innerHTML = `
+    <div class="form-group">
+      <label for="phone">Bạn có góp ý gì cho mình thì điền vô đây nha</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="phone" 
+        name="phone" 
+      >
+    </div>
+  `
+
+  const submitButton = document.createElement('div')
+  submitButton.classList.add('submit-button')
+  submitButton.innerHTML = `
+    <button type="submit">Cập Nhật</button>
+  `
+
+  const div = document.createElement('div')
+  div.appendChild(p)
+  div.appendChild(form)
+  div.appendChild(submitButton)
+
+  content.appendChild(div)
+
+}
+
+window.addEventListener('DOMContentLoaded', async function loadData() {
+  getUser()
+  resetFormat(infoBtn)
+})
+
+infoBtn.onclick = function() {
+  if (infoBtn.classList.contains('current')) return
+  resetFormat(infoBtn)
+  resetContent()
+  getUser()
+}
+
+orderBtn.onclick = function() {
+  if (orderBtn.classList.contains('current')) return
+  resetContent()
+  resetFormat(orderBtn)
+  getOrders()
+}
+
+rateOrderBtn.onclick = function() {
+  if (rateOrderBtn.classList.contains('current')) return
+  getDoneOrders()
+  resetFormat(rateOrderBtn)
+  resetContent()
+}
+
+feedbackBtn.onclick = function() {
+  resetFormat(feedbackBtn)
+  resetContent()
+  getFeedback()
 }

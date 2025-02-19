@@ -8,8 +8,10 @@ const message = require('../../app/models/messageModel')
 router.use(express.json())
 router.get('/:id', async function(req, res) {
   const chatRoom = await chat.findOne({ userId: req.params.id }).lean()
+  if (!chatRoom) return res.json({data: []})
+
   const chatMessages = await message.find({ chatId: chatRoom._id }).sort({createdAt: 1}).lean()
-  res.json({data: chatMessages})
+  return res.json({data: chatMessages})
 })
 router.post('/create', async function(req, res) {
   const chatRoom = await chat.findOne({ userId: req.cookies.uid }).lean()
@@ -23,12 +25,15 @@ router.post('/create', async function(req, res) {
     lastMessage: req.body.value
   })
   await newMessage.save()
-  res.json({message: 'save successfully'})
+  return res.json({message: 'save successfully'})
 })
+
 router.get('/ai/:id', async function(req, res) {
   const chatRoom = await aiChat.findOne({ userId: req.params.id }).lean()
+  if (!chatRoom) return res.json({data: []})
+
   const chatMessages = await message.find({ chatId: chatRoom._id }).sort({createdAt: 1}).lean()
-  res.json({data: chatMessages})
+  return res.json({data: chatMessages})
 })
 router.post('/ai/create', async function(req, res) {
   const key = process.env.GEMINI_API_KEY
@@ -60,7 +65,7 @@ router.post('/ai/create', async function(req, res) {
   })
   await newMessage.save()
   await newAnswer.save()
-  res.json({answer: answer})
+  return res.json({answer: answer})
 })
 
 module.exports = router

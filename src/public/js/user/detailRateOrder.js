@@ -1,6 +1,6 @@
+// ok
 import { format } from 'https://cdn.jsdelivr.net/npm/date-fns@latest/+esm';
 const submitBtn = document.querySelector("button[type='submit']")
-const rateDiv = document.querySelectorAll('div.rate-star')
 const urlSlug = location.href.match(/([^\/]*)\/*$/)[1]
 
 function formatNumber(number) {
@@ -9,6 +9,60 @@ function formatNumber(number) {
 
 function formatDate(date) {
   return format(new Date(date), 'dd/MM/yyyy')
+}
+
+function rateStar() {
+  const rateDiv = document.querySelectorAll('div.rate-star')
+  rateDiv.forEach((div) => {
+    const stars = div.querySelectorAll('i')
+    const score = div.querySelector('span.rate-score')
+    stars.forEach((star, index) => {
+      star.addEventListener('click', function() {
+        score.innerText = index+1
+        for (var i = 0; i < stars.length; i++) {
+          if (i <= index) stars[i].style.color = 'orange'
+          else stars[i].style.color = 'black'
+        }
+      })
+    })
+  })
+}
+
+async function submitRate(data) {
+  submitBtn.onclick = async function() {
+    if (data.isRated) return
+
+    const rateProducts = document.querySelectorAll('td.rate-product')
+    const Ids = []
+    const comments = []
+    const rates = []
+    rateProducts.forEach((product) => {
+      Ids.push(product.querySelector('input').id)
+      comments.push(product.querySelector('input').value)
+      rates.push(product.querySelector('span.rate-score').innerText)
+    })
+
+    const response = await fetch('/all-orders/order/rate/updated', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        orderId: urlSlug,
+        senderId: data.customerInfo.userId,
+        productId: Ids, 
+        productComment: comments, 
+        productRate: rates})
+    })
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const json = await response.json()
+    const message = json.message
+
+    if (message) {
+      pushNotification('Successfully')
+      submitBtn.innerText = 'Đã đánh giá'
+      submitBtn.style.cursor = 'not-allowed'
+      submitBtn.style.opacity = '0.8'
+    } 
+  }
 }
 
 async function getOrder() {
@@ -31,7 +85,14 @@ async function getOrder() {
   document.querySelector('td#total-price').textContent = formatNumber(data.totalOrderPrice) 
   document.querySelector('td#status').textContent = status.name
 
+  if (data.isRated) {
+    submitBtn.innerText = 'Đã đánh giá'
+    submitBtn.style.cursor = 'not-allowed'
+    submitBtn.style.opacity = '0.8'
+  }
+
   data.products.forEach((product) => {
+    // tr1
     const tr = document.createElement('tr')
 
     const nameGroup = document.createElement('td')
@@ -59,47 +120,48 @@ async function getOrder() {
     tr.appendChild(quantity)
     tr.appendChild(totalPrice)
 
+    // tr2
     const tr2 = document.createElement('tr')
     const td = document.createElement('td')
     td.setAttribute('colspan', 4)
+    td.setAttribute('class', 'rate-product')
 
     const input = document.createElement('input')
     input.setAttribute('type', 'text')
     input.setAttribute('placeholder', 'Nhập đánh giá của bạn')
-    input.setAttribute('type', 'text')
+    input.setAttribute('id', product.id)
+    input.setAttribute('value', '')
+    input.oninput = function(event) {
+      input.value = event.target.value
+    }
+
+    const rateStar = document.createElement('div')
+    rateStar.innerHTML = `
+      <div class="rate-star">
+        <i class="fi fi-ss-star"></i>
+        <i class="fi fi-ss-star"></i>
+        <i class="fi fi-ss-star"></i>
+        <i class="fi fi-ss-star"></i>
+        <i class="fi fi-ss-star"></i>
+        <span class="rate-score">0</span>
+        <span>/</span>
+        <span>5</span>
+      </div>
+    `
+
+    td.appendChild(input)
+    td.appendChild(rateStar)
+    tr2.appendChild(td)
 
     document.querySelector('table.all-products').querySelector('tbody').appendChild(tr)
+    document.querySelector('table.all-products').querySelector('tbody').appendChild(tr2)
   })
 
-  return
+  return data
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getOrder()
+  const data = await getOrder()
+  await rateStar()
+  await submitRate(data)
 })
-
-if (isRated === 'true') {
-  submitBtn.innerText = 'Đã đánh giá'
-  submitBtn.style.cursor = 'not-allowed'
-  submitBtn.style.opacity = '0.8'
-}
-
-rateDiv.forEach((div) => {
-  const stars = div.querySelectorAll('i')
-  const score = div.querySelector('span.rate-score')
-  const input = div.querySelector('input#productRate')
-  stars.forEach((star, index) => {
-    star.addEventListener('click', function() {
-      score.innerText = index+1
-      input.setAttribute('value', index+1)
-      for (var i = 0; i < stars.length; i++) {
-        if (i <= index) stars[i].style.color = 'orange'
-        else stars[i].style.color = 'black'
-      }
-    })
-  })
-})
-
-submitBtn.onclick = function() {
-  if (isRated === 'true') return false
-}

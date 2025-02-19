@@ -96,7 +96,6 @@ class loginController {
   async resetPassword(req, res, next) {
     const error = req.flash('error')
     const successful = req.flash('successful')
-    console.log(verificationCode)
     res.render('users/resetPassword', { title: 'Quên mật khẩu', layout: 'empty', error, successful })
   }
 
@@ -127,7 +126,6 @@ class loginController {
     async function sendEmail(userEmail) {
       const resetCode = generateResetCode()
       verificationCode[userEmail] = resetCode
-      console.log(verificationCode)
 
       await transporter.sendMail({
         from: adminEmail, 
@@ -144,7 +142,6 @@ class loginController {
   async verifyingCode(req, res, next) {
     const email = req.body.email
     const code  = req.body.code
-    console.log(email, code)
     if (verificationCode[email] && verificationCode[email] === code) {
       delete verificationCode[email] // Remove code after verification
       return res.json({message: true})

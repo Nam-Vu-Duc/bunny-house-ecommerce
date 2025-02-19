@@ -24,12 +24,19 @@ class allOrderController {
   }
 
   async orderInfo(req, res, next) {
-    const successful = req.flash('successful')
+    const id = req.cookies.uid || null
+    console.log(id)
+    if (!id) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     
     const orderInfo = await order.findOne({ _id: req.params.id }).lean()
-    if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    if (!orderInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-    res.render('users/detailOrder', { title: `Đơn của ${orderInfo.customerInfo.name}`, successful })
+    const userInfo = await user.findOne({ _id: orderInfo.customerInfo.userId }).lean()
+    if (!userInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+
+    if (userInfo._id.toString() !== id ) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+
+    res.render('users/detailOrder', { title: `Đơn của ${orderInfo.customerInfo.name}` })
   }
 
   async ordersChecking(req, res, next) {
@@ -86,18 +93,24 @@ class allOrderController {
   }
 
   async rateOrder(req, res, next) {
-    const successful = req.flash('successful')
+    const id = req.cookies.uid || null
+    if (!id) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    
+    const orderInfo = await order.findOne({ _id: req.params.id }).lean()
+    if (!orderInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-    const orderInfo = await order.findOne({ _id: req.params.id, status: 'done' }).lean()
-    if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    const userInfo = await user.findOne({ _id: orderInfo.customerInfo.userId }).lean()
+    if (!userInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-    res.render('users/detailRateOrder', { title: 'Đánh giá đơn hàng', successful })
+    if (userInfo._id !== id ) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+
+    res.render('users/detailRateOrder', { title: 'Đánh giá đơn hàng' })
   }
   
   async orderRated(req, res, next) {
-    const senderId = req.cookies.uid || null
-    const orderId = req.params.id
     const {
+      orderId,
+      senderId,
       productId,
       productComment,
       productRate
@@ -141,8 +154,7 @@ class allOrderController {
     }));
     await product.bulkWrite(bulkOps)
 
-    req.flash('successful', 'Đánh giá đơn hàng thành công')
-    res.redirect(req.get('Referrer') || '/')
+    res.json({message: true})
   }
 }
 module.exports = new allOrderController

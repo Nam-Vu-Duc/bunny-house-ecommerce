@@ -1,38 +1,53 @@
 const user = require('../../models/userModel')
 const order = require('../../models/orderModel')
+const memberShip = require('../../models/memberModel')
 
 class profileController {
+  async getUser(req, res, next) {
+    const userId = req.body.id 
+    const userInfo = await user.findOne({ _id: userId }).lean()
+    if (!userId) return res.json({data: {}})
+
+    const userMemberShip = await memberShip.findOne({ code: userInfo.memberCode })
+
+    return res.json({data: userInfo, member: userMemberShip})
+  }
+
+  async getOrders(req, res, next) {
+    const userId = req.body.id 
+    const userInfo = await user.findOne({ _id: userId }).lean()
+    if (!userInfo) return res.json({data: {}})
+
+    const orderInfo = await order.find({ 'customerInfo.userId': userId }).lean()
+    if (!orderInfo) return res.json({data: {}})
+
+    return res.json({data: orderInfo})
+  }
+
+  async getDoneOrders(req, res, next) {
+    const userId = req.body.id 
+    const userInfo = await user.findOne({ _id: userId }).lean()
+    if (!userInfo) return res.json({data: {}})
+
+    const orderInfo = await order.find({ 'customerInfo.userId': userId, status: 'done' }).lean()
+    if (!orderInfo) return res.json({data: {}})
+
+    return res.json({data: orderInfo})
+  }
+
   async profileInfo(req, res, next) {
-    const userId = req.cookies.uid || null
-    const index  = 'profile'
-    const successful = req.flash('successful')
+    const userId = req.params.id || null
+    if (!userId) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-    const userInfo  = await user.findOne({ _id: userId }).lean()
-    if (!userInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    const userInfo = await user.findOne({ _id: userId }).lean()
+    if (!userInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     
-    res.render('users/profileInfo', { title: 'Thông tin cá nhân', index, successful, userInfo })
-  }
-
-  async orderInfo(req, res, next) {
-    const userId = req.cookies.uid || null
-    const index  = 'order'
-    const orderInfo = await order.find({ 'customerInfo.userId': userId, deletedAt: null }).lean()
-    if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
-
-    res.render('users/profileOrder', { title: 'Thông tin đơn hàng', index, orderInfo })
-  }
-
-  async rateOrderInfo(req, res, next) {
-    const userId = req.cookies.uid || null
-    const index  = 'rateOrder'
-    const orderInfo = await order.find({ 'customerInfo.userId': userId, deletedAt: null, status: 'done' }).lean()
-    if (!orderInfo) res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
-
-    res.render('users/profileRateOrder', { title: 'Đánh giá đơn hàng', index, orderInfo })
+    return res.render('users/profileInfo', { title: 'Thông tin cá nhân' })
   }
 
   async profileUpdate(req, res, next) {
-    const userId = req.cookies.uid || null
+    console.log(req.body)
+    return res.json({message: true})
 
     await user.updateOne({ _id: userId}, {
       name    : req.body.name,

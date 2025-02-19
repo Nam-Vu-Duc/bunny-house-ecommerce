@@ -18,12 +18,10 @@ const myObjFromStorage = JSON.parse(localStorage.getItem('product_cart_count')) 
   localCounting: 0,
   productInfo: []
 }
-
 const myObj = {
   localCounting: myObjFromStorage.localCounting || 0,
   productInfo: myObjFromStorage.productInfo || []
 } 
-
 const listProductLength = {length: myObj.productInfo.length}
 
 // set value to the myObj, stringify because localStorage only store string type
@@ -99,7 +97,6 @@ async function getRelatedProducts(productInfo) {
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
   const data = json.data
-  console.log(data)
 
   window.setTimeout(function() {
     relatedProducts.forEach((product, index) => {

@@ -1,69 +1,23 @@
-<div class="user-update-profile-container">
-  {{> userSidebar}}
+<div class="profile-container">
+  <div class="sidebar-menu">
+    <div class="avatar">
+      <img src="https://res.cloudinary.com/bunny-store/image/upload/v1711070727/web-img/logo_xkavlj.webp" loading="lazy">
+      <span class="user-name"></span>
+    </div>
+    <div class="tag">
+      <span class="profile"><i class="fi fi-br-circle-user"></i>Thông tin cá nhân</span>
+      <span class="order"><i class="fi fi-rr-piggy-bank"></i>Thông tin đơn hàng</span>
+      <span class="rate-order"><i class="fi fi-rr-piggy-bank"></i>Đánh giá đơn hàng</span>
+      <span class="feedBack"><i class="fi fi-rr-feedback-alt"></i>Góp ý</span>
+    </div>
+  </div>
 
   <div class="content">
-    <p>Thông Tin Cá Nhân</p>
 
-    <form class="update-profile" method="POST" action="/profile/updated/{{userInfo._id}}?_method=PUT">
-      <div class="form-group">
-        <label for="name">Tên Khách Hàng</label>
-        <input type="text" id="name" name="name" value="{{userInfo.name}}">
-      </div>
-
-      <div class="form-group">
-        <label for="gender">Giới tính</label>
-        <div>
-          <input type="radio" id="male" name="gender" value="male">
-          <label for="cash">Nam</label>
-          
-          <input type="radio" id="female" name="gender" value="female">
-          <label for="cashless">Nữ</label>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="name">Email khách hàng</label>
-        <input type="text" id="email" name="email" value="{{userInfo.email}}">
-      </div>
-
-      <div class="form-group">
-        <label for="phone">Số điện thoại</label>
-        <input type="text" id="phone" name="phone" value="{{userInfo.phone}}">
-      </div>
-
-      <div class="form-group">
-        <label for="address">Địa chỉ nhận hàng</label>
-        <input type="text" id="address" name="address" value="{{userInfo.address}}">
-      </div>
-      
-      <div class="form-group">
-        <label for="address">Số lượng đơn hàng</label>
-        <input type="text" id="quantity" name="quantity" value="{{userInfo.quantity}}" disabled>
-      </div>
-      
-      <div class="form-group">
-        <label for="address">Tổng chi tiêu</label>
-        <input type="text" id="revenue" name="revenue" value="{{userInfo.revenue}}" disabled>
-      </div>
-
-      <div class="form-group">
-        <label for="member">Hạng thành viên</label>
-        <input type="text" id="member" name="member" value="{{userInfo.member}}" disabled>
-      </div>
-      
-      <div class="form-group">
-        <label for="address">Ngày tạo tài khoản</label>
-        <input type="text" id="createdAt" name="createdAt" value="{{formatDate userInfo.createdAt}}" disabled>
-      </div>
-    </form> 
-
-    <div class="submit-button"><button type="submit">Cập Nhật</button></div>  
   </div>
 </div>   
 
 <script>
-  var gender = `{{userInfo.gender}}`
-  var successful = `{{successful}}`
   importLinkCss('/css/user/profile.css')
 </script>
-<script src="/js/user/profileInfo.js"></script>
+<script type="module" src="/js/user/profileInfo.js"></script>

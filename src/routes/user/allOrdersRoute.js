@@ -14,7 +14,7 @@ router.get('/', allOrderController.show)
 
 router.get('/order/:id', allOrderController.orderInfo)
 router.get('/order/rate/:id', allOrderController.rateOrder)
-router.put('/order/rate/updated/:id', allOrderController.orderRated)
+router.post('/order/rate/updated', allOrderController.orderRated)
 
 router.get('/checking', allOrderController.ordersChecking)
 

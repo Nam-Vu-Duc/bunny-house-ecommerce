@@ -1,10 +1,9 @@
+// ok
 const form              = document.querySelector('form#form-5') 
 const submitButton      = document.querySelector('button')
 const resetPasswordContainer = document.querySelector('div.reset-password-container')
 const messageElement    = document.querySelector('span.message')
 const inputEmail        = document.querySelector('input[name="email"]')
-
-if (error) formatMessage(error, 'red')
 
 function formatMessage(message, color) {
   messageElement.innerText = message
@@ -56,7 +55,6 @@ async function resettingPassword(email, password) {
 submitButton.onclick = async function() {
   form.onsubmit = function (e) { e.preventDefault() }
   submitButton.classList.add('loading')
-  console.log(submitButton.className)
   if (submitButton.className.includes('submit-email')) {
     const email = document.querySelector('input[name="email"]').value
     const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/

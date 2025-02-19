@@ -10,10 +10,12 @@ router.use(session({
   saveUninitialized: true,
 }))
 router.use(flash())
-router.get('/info', profileController.profileInfo)
-router.get('/order', profileController.orderInfo)
-router.get('/rate-order', profileController.rateOrderInfo)
-router.get('/feedback', profileController.feedBack)
-router.put('/updated/:id', profileController.profileUpdate)
+router.get('/info/:id', profileController.profileInfo)
+
+router.post('/updated', profileController.profileUpdate)
+
+router.post('/data/user', profileController.getUser)
+router.post('/data/orders', profileController.getOrders)
+router.post('/data/done-orders', profileController.getDoneOrders)
 
 module.exports = router
