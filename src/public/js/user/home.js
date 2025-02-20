@@ -1,4 +1,7 @@
 // ok
+importLinkCss('/css/user/home.css')
+importLinkCss('/css/user/advertise.css')
+
 const flashSaleProductsDiv  = document.querySelector('div[class="flash-deal-board"][id="flash-deal"]').querySelectorAll('div.product')
 const topSaleProductsDiv    = document.querySelector('div[class="products-board"][id="top-sale"]').querySelectorAll('div.product')
 const hotSaleProductsDiv    = document.querySelector('div[class="products-board"][id="hot-sale"]').querySelectorAll('div.product')
@@ -6,11 +9,6 @@ const skincareProductsDiv   = document.querySelector('div[class="products-board"
 const makeupProductsDiv     = document.querySelector('div[class="products-board"][id="makeup"]').querySelectorAll('div.product')
 const allProductsDiv        = document.querySelector('div[class="products-board"][id="all"]').querySelectorAll('div.product')
 const allBrandsDiv          = document.querySelector('div[class="famous-brand-board"][id="brand"]').querySelectorAll('img')
-
-
-function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND'
-}
 
 async function getProducts(products, status) {
   const response = await fetch('/data/products', {
@@ -29,7 +27,7 @@ async function getProducts(products, status) {
       product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
       product.querySelector('p#price').textContent = formatNumber(data[index].price) 
       product.querySelector('p#name').textContent = data[index].name
-      product.querySelector('span#rate-score').textContent = data[index].rateNumber
+      product.querySelector('span#rate-score').textContent = formatRate(data[index].rate) 
       product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
       product.querySelector('div.loading').style.display = 'none'
       product.querySelectorAll('i').forEach((star, i) => {
@@ -51,6 +49,7 @@ async function getBrands(imgs) {
   const data = json.data
 
   imgs.forEach((img, index) => {
+    img.parentElement.setAttribute('href', '/all-brands/brand/' + data[index]._id)
     img.setAttribute('src', data[index].img.path)
     img.setAttribute('alt', data[index].name)
   })

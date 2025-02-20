@@ -5,14 +5,12 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const nodemailer = require("nodemailer")
 
-const verificationCode = {}
+const verifyCheckingAccountCode = {}
+const verifyCreatingAccountCode = {}
 
 class loginController {  
   async signIn(req, res, next) {
-    const error = req.flash('error')
-    const successful = req.flash('successful')
-
-    res.render('users/signIn', { title: 'Đăng Nhập', layout: 'empty', message: error, error, successful})
+    res.render('users/signIn', { title: 'Đăng Nhập', layout: 'empty' })
   }
 
   async checkingAccount(req, res, next) {
@@ -20,10 +18,7 @@ class loginController {
     const password = req.body.password
 
     const getUser = await user.findOne({ email: email })
-    if (!getUser) {
-      req.flash('error', 'Email không đúng')
-      return res.redirect('/authentication/sign-in')
-    }
+    if (!getUser) return res.json({isValid: false, message: 'Email chưa đăng ký tài khoản'})
 
     bcrypt.compare(password, getUser.password, async function(err, result) {
       if (result) {
@@ -48,28 +43,69 @@ class loginController {
           secure: true,
         })
 
-        if (getUser.role === 'user') {
-          res.redirect('/')
-        }
+        if (getUser.role === 'user') return res.json({isValid: true, message: 'Đăng nhập thành công'})
+
       } else {
-        req.flash('error', 'Mật khẩu không đúng')
-        return res.redirect('/authentication/sign-in')
+        return res.json({isValid: false, message: 'Mật khẩu không đúng'})
       }
     })
   }
 
   async signUp(req, res, next) {
-    const error = req.flash('error')
-    res.render('users/signUp', { title: 'Đăng Ký', layout: 'empty', message: error, error })
+    res.render('users/signUp', { title: 'Đăng Ký', layout: 'empty' })
+  }
+
+  async verifyCreatingEmail(req, res, next) {
+    const userEmail     = req.body.email  
+    const adminEmail    = process.env.ADMIN_EMAIL
+    const adminPassword = process.env.GOOGLE_APP_EMAIL
+
+    const emailExist = await user.findOne({ email: userEmail})
+    if (emailExist) {
+      return res.json({isValid: false, message: 'Email đã tồn tại'})
+    }
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      secure: false, // true for port 465, false for other ports
+      auth: {
+        user: adminEmail,
+        pass: adminPassword,
+      },
+    })
+
+    function generateResetCode() {
+      return Math.floor(100000 + Math.random() * 900000).toString() // 6-digit code
+    }
+    
+    // async..await is not allowed in global scope, must use a wrapper
+    async function sendEmail(userEmail) {
+      const resetCode = generateResetCode()
+      verifyCreatingAccountCode[userEmail] = resetCode
+
+      await transporter.sendMail({
+        from: adminEmail, 
+        to: userEmail, 
+        subject: "Mã xác minh Email", 
+        text: 'Mã xác minh Email của bạn là: ' + resetCode, 
+      })
+    }
+
+    await sendEmail(userEmail)
+    res.json({isValid: true, message: 'Kiểm tra email thành công'})
+  }
+
+  async verifyCreatingCode(req, res, next) {
+    const email = req.body.email
+    const code  = req.body.code
+    if (verifyCreatingAccountCode[email] && verifyCreatingAccountCode[email] === code) {
+      delete verifyCreatingAccountCode[email] // Remove code after verification
+      return res.json({message: true})
+    }
+    return res.json({message: false})
   }
 
   async creatingAccount(req, res, next) {
-    const userExist = await user.findOne({ 'loginInfo.email': req.body.email })
-    if (userExist) {
-      req.flash('error', 'Email đã tồn tại')
-      return res.redirect('/authentication/sign-up')
-    }
-
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
@@ -89,17 +125,14 @@ class loginController {
     })
     await newChat.save()
 
-    req.flash('successful', 'Tạo tài khoản thành công')
-    res.redirect('/authentication/sign-in')
+    return res.json({isSuccessful: true, message: 'Đăng ký tài khoản thành công'})
   }
 
   async resetPassword(req, res, next) {
-    const error = req.flash('error')
-    const successful = req.flash('successful')
-    res.render('users/resetPassword', { title: 'Quên mật khẩu', layout: 'empty', error, successful })
+    res.render('users/resetPassword', { title: 'Quên mật khẩu', layout: 'empty' })
   }
 
-  async verifyingEmail(req, res, next) {
+  async verifyCheckingEmail(req, res, next) {
     const userEmail     = req.body.email  
     const adminEmail    = process.env.ADMIN_EMAIL
     const adminPassword = process.env.GOOGLE_APP_EMAIL
@@ -125,13 +158,13 @@ class loginController {
     // async..await is not allowed in global scope, must use a wrapper
     async function sendEmail(userEmail) {
       const resetCode = generateResetCode()
-      verificationCode[userEmail] = resetCode
+      verifyCheckingAccountCode[userEmail] = resetCode
 
       await transporter.sendMail({
         from: adminEmail, 
         to: userEmail, 
-        subject: "Mã xác nhận thay đổi mật khẩu", 
-        text: "Đây là mã thay đổi mật khẩu của bạn: " + resetCode, 
+        subject: "Mã xác nhận mật khẩu", 
+        text: 'Mã xác nhận lấy lại mật khẩu của bạn là: ' + resetCode,
       })
     }
 
@@ -139,11 +172,11 @@ class loginController {
     res.json({message: true})
   }
 
-  async verifyingCode(req, res, next) {
+  async verifyCheckingCode(req, res, next) {
     const email = req.body.email
     const code  = req.body.code
-    if (verificationCode[email] && verificationCode[email] === code) {
-      delete verificationCode[email] // Remove code after verification
+    if (verifyCheckingAccountCode[email] && verifyCheckingAccountCode[email] === code) {
+      delete verifyCheckingAccountCode[email] // Remove code after verification
       return res.json({message: true})
     }
     return res.json({message: false})

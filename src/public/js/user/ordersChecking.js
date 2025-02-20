@@ -1,5 +1,5 @@
 // ok
-import { format } from 'https://cdn.jsdelivr.net/npm/date-fns@latest/+esm';
+importLinkCss('/css/user/ordersChecking.css')
 const submitButton   = document.querySelector('button')
 const orderContainer = document.querySelector('div.order-checking-container')
 const errorMessage   = document.querySelector('span.error-message')
@@ -48,14 +48,11 @@ function appendOrder(data, status) {
   submitButton.classList.remove('loading')
 }
 
-function formatDate(date) {
-  return format(new Date(date), 'dd/MM/yyyy')
-}
-
 // when submit, the form will push the input value from user to the URL for backend
 submitButton.onclick = async function () {
   submitButton.classList.add('loading')
-  const orderCode = document.querySelector('input').value
+  const orderCode = document.querySelector('input#order-checking').value
+  console.log(orderCode)
   const regex = /^[a-f\d]{24}$/i
   if (regex.test(orderCode)) {
     const {data, status}  = await getOrder(orderCode)
@@ -67,7 +64,7 @@ submitButton.onclick = async function () {
   }
   else {
     // if not matched, prevent submit, enter again
-    errorMessage.innerText = 'Mã Sản Phẩm Không Đúng'
+    errorMessage.innerText = 'Mã đơn hàng Không Đúng'
     errorMessage.style.color = 'red'
     const table = document.querySelector('table')
     if (table) table.remove()

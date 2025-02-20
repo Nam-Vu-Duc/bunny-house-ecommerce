@@ -1,22 +1,27 @@
-// display each process logic
-var getContactInfo   = document.querySelector('div.contact-info')
-var getPaymentMethod = document.querySelector('div.payment-method')
-var getNextButton    = document.querySelector('button.next-button')
-var getSubmitButton  = document.querySelector('button.submit-button')
-var getTableBody     = document.querySelector('tbody')
-var getTableFooter   = document.querySelector('tfoot')
-var orderForm        = document.querySelector('form#form-4')
+// ok
+importLinkCss('/css/user/allOrders.css')
+const contactInfo     = document.querySelector('div.contact-info')
+const paymentMethod   = document.querySelector('div.payment-method')
+const nextButton      = document.querySelector('button.next-button')
+const submitButton    = document.querySelector('button.submit-button')
+const tableBody       = document.querySelector('tbody')
+const tableFooter     = document.querySelector('tfoot')
+const isUserOrder     = {message: false}
+const totalOrderPrice = {total: 0}
 
-// define a total order price, store as an object to change initial value through each function
-var totalOrderPrice = {
-  total: 0
+async function checkUser() {
+  const response = await fetch(`/data/user`)
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+
+  const json = await response.json()
+  isUser.message = json.message
+  isUser.uid = json.uid
 }
 
-// create table body
 function updateTableBody(totalOrderPrice) {
   var getProductInfo = JSON.parse(localStorage.getItem('product_cart_count')) || {};
   var productInfoLength = getProductInfo.productInfo.length 
-  var getTableBody = document.querySelector('tbody')
+  var tableBody = document.querySelector('tbody')
   totalOrderPrice.total = 0
 
   var newProductUserId = document.createElement('input')
@@ -24,7 +29,7 @@ function updateTableBody(totalOrderPrice) {
   newProductUserId.style.display = 'none'
 
   // var userId = `{{userId}}`
-  if (userId) newProductUserId.setAttribute('value', userId)
+  if (isUserOrder.message) newProductUserId.setAttribute('value', isUserOrder.uid)
   else newProductUserId.setAttribute('value', 'guest')
 
   // create new row for new product have name, price, quantity and totalPrice
@@ -125,52 +130,47 @@ function updateTableBody(totalOrderPrice) {
     newProductRow.appendChild(newProductDelete)
 
     // add each row to the table
-    getTableBody.appendChild(newProductRow)
-    getTableBody.appendChild(newProductUserId)
+    tableBody.appendChild(newProductRow)
+    tableBody.appendChild(newProductUserId)
   }
   deleteCart(totalOrderPrice)
 }
-updateTableBody(totalOrderPrice)
 
 function preCheckAllProducts() {
-  var allCurrentProducts = getTableBody.querySelectorAll('tr').length
+  var allCurrentProducts = tableBody.querySelectorAll('tr').length
   if (allCurrentProducts === 0) {
-    getNextButton.style.display = 'none'
+    nextButton.style.display = 'none'
     var emptyCartNotice = document.createElement('td')
     emptyCartNotice.setAttribute('colspan', '6')
     emptyCartNotice.style.color = 'red'
     emptyCartNotice.style.fontWeight = 'bolder'
     emptyCartNotice.innerText = 'Giỏ hàng của bạn đang trống'
-    getTableBody.appendChild(emptyCartNotice)
+    tableBody.appendChild(emptyCartNotice)
   }
 }
-preCheckAllProducts()
 
-// display each process for customer
 function displayProcess() {
-    // set default display to 'none' on start
-    getContactInfo.style.display = 'none'
-    getPaymentMethod.style.display = 'none'
-    getSubmitButton.style.display = 'none'
+  // set default display to 'none' on start
+  contactInfo.style.display = 'none'
+  paymentMethod.style.display = 'none'
+  submitButton.style.display = 'none'
 
-    getNextButton.onclick = function() {
-      if (getContactInfo.style.display === 'none') {
-        getContactInfo.style.display = 'grid'
-      } else {
-        getPaymentMethod.style.display = 'block'
-      }
+  nextButton.onclick = function() {
+    if (contactInfo.style.display === 'none') {
+      contactInfo.style.display = 'grid'
+    } else {
+      paymentMethod.style.display = 'block'
+    }
 
-      if (getPaymentMethod.style.display === 'block') {
-        getNextButton.style.display = 'none'
-        getSubmitButton.style.display = 'block'
-      }
+    if (paymentMethod.style.display === 'block') {
+      nextButton.style.display = 'none'
+      submitButton.style.display = 'block'
     }
   }
-displayProcess()
+}
 
-// create table footer
 function updateTableFooter(totalOrderPrice) {
-  var getTableFooter = document.querySelector('tfoot')
+  var tableFooter = document.querySelector('tfoot')
   var totalOrderTitle = document.createElement('td')
   totalOrderTitle.setAttribute('colspan', '4')
   totalOrderTitle.innerText = 'Tổng'
@@ -184,21 +184,18 @@ function updateTableFooter(totalOrderPrice) {
   totalOrderPrices.innerText = `${convertTotalOrderPricesToString} VND`
 
   // add each element to the total order row
-  getTableFooter.appendChild(totalOrderTitle)
-  getTableFooter.appendChild(totalOrderPricesInput)
-  getTableFooter.appendChild(totalOrderPrices)
-  getTableFooter.appendChild(document.createElement('td'))
+  tableFooter.appendChild(totalOrderTitle)
+  tableFooter.appendChild(totalOrderPricesInput)
+  tableFooter.appendChild(totalOrderPrices)
+  tableFooter.appendChild(document.createElement('td'))
 }
-updateTableFooter(totalOrderPrice)
 
-// delete all previous elements
 function deleteCartItem(tableElement) {
   while (tableElement.lastChild) {
     tableElement.removeChild(tableElement.lastChild)
   }
 }
 
-// delete item from cart 
 function deleteCart(totalOrderPrice) {
   var deleteButton = document.querySelectorAll('td.delete-button')
 
@@ -209,45 +206,103 @@ function deleteCart(totalOrderPrice) {
       getProductInfo.productInfo.splice(i,1)
       localStorage.setItem('product_cart_count', JSON.stringify(getProductInfo));
       document.dispatchEvent(new CustomEvent('cartUpdated'));
-      deleteCartItem(getTableBody)
+      deleteCartItem(tableBody)
       updateTableBody(totalOrderPrice)
-      deleteCartItem(getTableFooter)
+      deleteCartItem(tableFooter)
       updateTableFooter(totalOrderPrice)
       preCheckAllProducts()
     }
   }
 }
-deleteCart(totalOrderPrice)
 
-validator({
-  form: '#form-4',
-  errorSelector: '.form-message',
-  rules: [
-    isRequiredString('#name'),
-    isRequiredString('#phone'),
-    isRequiredString('#address'),
-  ]
-}, 3)
+function submitOrder() {
+  document.querySelector('button.submit-button').onclick = async function() {
+    const productId         = []
+    const productImg        = []
+    const productName       = []
+    const productPrice      = []
+    const productQuantity   = []
+    const productTotalPrice = []
+    const totalOrderPrice   = document.querySelector('input[name="totalOrderPrice"]').value
+    const paymentMethod     = document.querySelector('input[name="paymentMethod"]:checked')?.value
+    const userId            = document.querySelector('input[name="userId"]').value
+    const name              = document.querySelector('input[name="name"]').value
+    const phone             = document.querySelector('input[name="phone"]').value
+    const address           = document.querySelector('input[name="address"]').value
+    const note              = document.querySelector('input[name="note"]').value
+    document.querySelectorAll('input[name="productId"]').forEach((input) => {
+      productId.push(input.value)
+    })
+    document.querySelectorAll('input[name="productImg"]').forEach((input) => {
+      productImg.push(input.value)
+    })
+    document.querySelectorAll('input[name="productName"]').forEach((input) => {
+      productName.push(input.value)
+    })
+    document.querySelectorAll('input[name="productPrice"]').forEach((input) => {
+      productPrice.push(input.value)
+    })
+    document.querySelectorAll('input[name="productQuantity"]').forEach((input) => {
+      productQuantity.push(input.value)
+    })
+    document.querySelectorAll('input[name="productTotalPrice"]').forEach((input) => {
+      productTotalPrice.push(input.value)
+    })
 
-// create successfully message
-if (successful && newOrderId) {
-  socket.emit('order')
-  var orderSuccessfullyMessage = document.createElement('div')
-  orderSuccessfullyMessage.setAttribute('class', 'order-successfully-message')
-  orderSuccessfullyMessage.innerHTML = `
-    <i class="fi fi-ss-check-circle"></i>
-    <h3>Chúc mừng bạn đã đặt hàng thành công !!!</h3>
-    <h3>Mã đơn hàng của bạn là: ${newOrderId}</h3>
-    <h5>Nếu là người mới, bạn hãy lưu lại mã này để theo dõi đơn hàng ở mục 'Đơn hàng' nhé</h5>
-    <h5>Còn nếu bạn đã có tài khoản rồi thì có thể theo dõi đơn hàng ở mục 'Thông tin cá nhân' luôn nha</h5>
-    <a href="/"><button>OK</button></a>
-  `
-  document.body.appendChild(orderSuccessfullyMessage)
+    const response = await fetch('/all-orders/create-orders', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        productId         : productId,
+        productImg        : productImg,
+        productName       : productName,
+        productPrice      : productPrice,
+        productQuantity   : productQuantity,
+        productTotalPrice : productTotalPrice,
+        totalOrderPrice   : totalOrderPrice,
+        paymentMethod     : paymentMethod,
+        userId            : userId,
+        name              : name,
+        phone             : phone,
+        address           : address,
+        note              : note
+      })
+    })
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const json = await response.json()
+    const message = json.message
+    const id = json.id
+    if (!message) {
+      return
+    }
+
+    socket.emit('order')
+    const orderSuccessfullyMessage = document.createElement('div')
+    orderSuccessfullyMessage.setAttribute('class', 'order-successfully-message')
+    orderSuccessfullyMessage.innerHTML = `
+      <i class="fi fi-ss-check-circle"></i>
+      <h3>Chúc mừng bạn đã đặt hàng thành công !!!</h3>
+      <h3>Mã đơn hàng của bạn là: ${id}</h3>
+      <h5>Nếu là người mới, bạn hãy lưu lại mã này để theo dõi đơn hàng ở mục 'Đơn hàng' nhé</h5>
+      <h5>Còn nếu bạn đã có tài khoản rồi thì có thể theo dõi đơn hàng ở mục 'Thông tin cá nhân' luôn nha</h5>
+      <a href="/"><button>OK</button></a>
+    `
+    document.body.appendChild(orderSuccessfullyMessage)
+  }
 }
 
-// function reply_click() {
-//   orderForm.onsubmit = function(e) {
-//     e.preventDefault()
-//   }
-//   document.getElementById('id01').style.display='block'
-// }
+window.addEventListener('DOMContentLoaded', async function loadData() {
+  checkUser()
+
+  updateTableBody(totalOrderPrice)
+
+  updateTableFooter(totalOrderPrice)
+
+  preCheckAllProducts()
+
+  displayProcess()
+
+  deleteCart(totalOrderPrice)
+
+  submitOrder()
+})

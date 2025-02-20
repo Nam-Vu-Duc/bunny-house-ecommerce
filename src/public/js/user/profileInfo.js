@@ -1,19 +1,11 @@
-// 
-import { format } from 'https://cdn.jsdelivr.net/npm/date-fns@latest/+esm';
+// ok
+importLinkCss('/css/user/profile.css')
 const content       = document.querySelector('div.profile-container').querySelector('div.content')
 const infoBtn       = document.querySelector('span.profile')
 const orderBtn      = document.querySelector('span.order')
 const rateOrderBtn  = document.querySelector('span.rate-order')
 const feedbackBtn   = document.querySelector('span.feedBack')
 const urlSlug       = location.href.match(/([^\/]*)\/*$/)[1]
-
-function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND'
-}
-
-function formatDate(date) {
-  return format(new Date(date), 'dd/MM/yyyy')
-}
 
 function resetFormat(button) {
   document.querySelector('div.tag').querySelectorAll('span').forEach((span) => {
@@ -104,15 +96,30 @@ async function getUser() {
   button.type = 'submit'
   button.textContent = 'Cập Nhật'
   button.onclick = async function updateUser() {
-    const data = new FormData(form)
+    const name    = document.querySelector('input[name="name"]').value
+    const gender  = document.querySelector('input[name="gender"]:checked').value
+    const email   = document.querySelector('input[name="email"]').value
+    const phone   = document.querySelector('input[name="phone"]').value
+    const address = document.querySelector('input[name="address"]').value
+
     const response = await fetch('/profile/updated', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        id: data._id,
+        name: name,
+        gender: gender,
+        email: email,
+        phone: phone,
+        address: address
+      })
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
     const json = await response.json()
-    console.log(json)
+    const isValid = json.isValid
+    const message = json.message
+
+    pushNotification(message)
   }
   submitButton.appendChild(button)
 
@@ -154,7 +161,7 @@ async function getOrders() {
       <td>${order.customerInfo.name}</td>
       <td>${formatNumber(order.totalOrderPrice)}</td>
       <td>${formatDate(order.createdAt)}</td>
-      <td>${order.status}</td>
+      <td>${order.orderStatus.name}</td>
       <td><a href="/all-orders/order/${order._id}">Chi Tiết</a></td>
     `
     tbody.appendChild(tr)
@@ -202,7 +209,7 @@ async function getDoneOrders() {
       <td>${order.customerInfo.name}</td>
       <td>${formatNumber(order.totalOrderPrice)}</td>
       <td>${formatDate(order.createdAt)}</td>
-      <td>${order.status}</td>
+      <td>${order.orderStatus.name}</td>
       <td><a href="/all-orders/order/rate/${order._id}">Chi Tiết</a></td>
     `
     tbody.appendChild(tr)

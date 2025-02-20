@@ -1,9 +1,9 @@
 <div class="sign-in-container">
   <div class="sign-in-form">
     <img src="https://res.cloudinary.com/bunny-store/image/upload/v1737559909/web-img/377cb88c-c18e-40e4-b653-fc30a1dad316.png" loading="lazy">
-    <div class="form-input">
+    <div class="form">
       <p class="form-title">Đăng nhập</p>
-      <form id="form-1" method="post" action="/authentication/checking-account">
+      <form id="form-1">
         <div class="form-group">
           <input type="text" class="form-control" id="email" name="email" placeholder="Email">
           <span class="form-message"></span>
@@ -34,9 +34,4 @@
   </div>
 </div>
 
-<script>
-  var error = `{{error}}`
-  var successful = `{{successful}}`
-  importLinkCss('/css/empty/signIn.css')
-</script>
 <script src="/js/user/signIn.js"></script>

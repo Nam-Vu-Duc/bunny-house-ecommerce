@@ -14,11 +14,13 @@ router.get('/sign-in', authenticationController.signIn )
 router.post('/checking-account', authenticationController.checkingAccount )
 
 router.get('/sign-up', authenticationController.signUp )
+router.post('/sign-up/verifying-email', authenticationController.verifyCreatingEmail )
+router.post('/sign-up/verifying-code', authenticationController.verifyCreatingCode )
 router.post('/creating-account', authenticationController.creatingAccount )
 
 router.get('/reset-password', authenticationController.resetPassword )
-router.post('/reset-password/verifying-email', authenticationController.verifyingEmail )
-router.post('/reset-password/verifying-code', authenticationController.verifyingCode )
+router.post('/reset-password/verifying-email', authenticationController.verifyCheckingEmail )
+router.post('/reset-password/verifying-code', authenticationController.verifyCheckingCode )
 router.post('/resetting-password', authenticationController.resettingPassword )
 
 module.exports = router

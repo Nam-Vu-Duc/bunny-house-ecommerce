@@ -1,14 +1,6 @@
 // ok
-import { format } from 'https://cdn.jsdelivr.net/npm/date-fns@latest/+esm';
+importLinkCss('/css/user/detailOrder.css')
 const urlSlug = location.href.match(/([^\/]*)\/*$/)[1]
-
-function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND'
-}
-
-function formatDate(date) {
-  return format(new Date(date), 'dd/MM/yyyy')
-}
 
 async function getOrder() {
   const response = await fetch('/all-orders/data/order', {

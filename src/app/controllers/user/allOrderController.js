@@ -15,12 +15,7 @@ class allOrderController {
   }
   
   async show(req, res, next) {
-    const successful = req.flash('successful')
-    const newOrderId = req.flash('newOrderId')
-
-    const storeInfo = await store.find({}).lean()
-
-    res.render('users/allOrders', { title: 'Đơn hàng', successful, newOrderId, storeInfo })
+    res.render('users/allOrders', { title: 'Đơn hàng' })
   }
 
   async orderInfo(req, res, next) {
@@ -87,9 +82,8 @@ class allOrderController {
     })
 
     await newOrder.save()
-    req.flash('newOrderId', newOrder._id)
-    req.flash('successful', 'order successfully')
-    return res.redirect('/all-orders')
+
+    return res.json({message: true, id: newOrder._id})
   }
 
   async rateOrder(req, res, next) {
@@ -102,7 +96,7 @@ class allOrderController {
     const userInfo = await user.findOne({ _id: orderInfo.customerInfo.userId }).lean()
     if (!userInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-    if (userInfo._id !== id ) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    if (userInfo._id.toString() !== id ) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
     res.render('users/detailRateOrder', { title: 'Đánh giá đơn hàng' })
   }

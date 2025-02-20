@@ -1,98 +1,78 @@
 <div class="all-orders-container">
-  <form id="form-4" action="/all-orders/create-orders" method="post">
-    <div class="cart">
-      <p><i class="fi fi-rs-shopping-cart-check"></i>Giỏ Hàng</p>
+  <div class="cart">
+    <p><i class="fi fi-rs-shopping-cart-check"></i>Giỏ Hàng</p>
 
-      <div style="overflow-x: auto;">
-        <table>
-          <thead>
-            <tr>
-              <td style="width: 15%;"></td>
-              <td style="width: 50%;">Sản Phẩm</td>
-              <td style="width: 10%;">Đơn Giá</td>
-              <td style="width: 10%;">Số Lượng</td>
-              <td style="width: 10%;">Tổng Tiền</td>
-              <td style="width: 5%;"></td>
-            </tr>
-          </thead>
-          <tbody></tbody>
-          <tfoot></tfoot>
-        </table>
+    <div style="overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <td style="width: 15%;"></td>
+            <td style="width: 50%;">Sản Phẩm</td>
+            <td style="width: 10%;">Đơn Giá</td>
+            <td style="width: 10%;">Số Lượng</td>
+            <td style="width: 10%;">Tổng Tiền</td>
+            <td style="width: 5%;"></td>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="contact-info">
+    <p><i class="fi fi-rs-user-check"></i>Thông Tin Khách Hàng</p>
+
+    <div class="info">
+      <div class="form-group">
+        <label for="name">Tên Khách Hàng *</label>
+        <input type="text" id="name" name="name" required>
+        <span class="form-message"></span>
       </div>
-    </div>
-
-    <div class="contact-info">
-      <p><i class="fi fi-rs-user-check"></i>Thông Tin Khách Hàng</p>
-
-      <div class="info">
-        <div class="form-group">
-          <label for="name">Tên Khách Hàng *</label>
-          <input type="text" id="name" name="name" value="{{userInfo.name}}">
-          <span class="form-message"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="phone">Số Điện Thoại *</label>
-          <input type="text" id="phone" name="phone" value="{{userInfo.phone}}">
-          <span class="form-message"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="address">Địa Chỉ Nhận Hàng *</label>
-          <input type="text" id="address" name="address" value="{{userInfo.address}}">
-          <span class="form-message"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="note">Ghi Chú</label>
-          <input type="text" id="note" name="note">
-        </div>
-      </div> 
-    </div>
-
-    <div class="payment-method">
-      <p><i class="fi fi-rr-credit-card"></i>Hình Thức Thanh Toán</p>
 
       <div class="form-group">
-        <input type="radio" id="cash" name="paymentMethod" value="cash" checked>
-        <label for="cash">Trả Tiền Mặt</label><br>
+        <label for="phone">Số Điện Thoại *</label>
+        <input type="text" id="phone" name="phone" required>
+        <span class="form-message"></span>
+      </div>
 
-        <input type="radio" id="cashless" name="paymentMethod" value="transfer">
-        <label for="cashless">Chuyển Khoản</label>
+      <div class="form-group">
+        <label for="address">Địa Chỉ Nhận Hàng *</label>
+        <input type="text" id="address" name="address" required>
+        <span class="form-message"></span>
+      </div>
 
-        <div class="bank-account">
-          <div class="bank-info">
-            <span>19037654462013</span>
-            <span>Techcombank</span>
-            <span>Đặng Quỳnh Ly</span>
-          </div>
-          <img src="https://res.cloudinary.com/bunny-store/image/upload/v1711070720/web-img/fc4c4fd10517a949f006_ndjvt6.png" alt="loading" loading="lazy">
+      <div class="form-group">
+        <label for="note">Ghi Chú</label>
+        <input type="text" id="note" name="note">
+      </div>
+    </div> 
+  </div>
+
+  <div class="payment-method">
+    <p><i class="fi fi-rr-credit-card"></i>Hình Thức Thanh Toán</p>
+
+    <div class="form-group">
+      <input type="radio" id="cash" name="paymentMethod" value="cash" checked>
+      <label for="cash">Trả Tiền Mặt</label><br>
+
+      <input type="radio" id="cashless" name="paymentMethod" value="transfer">
+      <label for="cashless">Chuyển Khoản</label>
+
+      <div class="bank-account">
+        <div class="bank-info">
+          <span>19037654462013</span>
+          <span>Techcombank</span>
+          <span>Đặng Quỳnh Ly</span>
         </div>
+        <img src="https://res.cloudinary.com/bunny-store/image/upload/v1711070720/web-img/fc4c4fd10517a949f006_ndjvt6.png" alt="loading" loading="lazy">
       </div>
     </div>
+  </div>
 
-    <div class="button"><button title="submit" type="submit" class="submit-button">Hoàn tất đặt hàng</button></div>
-
-    <div id="id01" class="modal">
-      <div class="modal-content">
-        <div class="container">
-          <p><strong>Xác nhận đặt đơn !!!</strong></p>
-          <div class="clearfix">
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
-            <button title="submit" type="submit" class="submit-button">Đồng ý</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
+  <div class="button"><button class="submit-button">Hoàn tất đặt hàng</button></div>
 
   <div class="button"><button class="next-button">Tiếp tục</button></div>
 </div>
 
-<script>
-  var successful = `{{successful}}`
-  var newOrderId = `{{newOrderId}}`
-  var userId     = `{{userId}}`
-  importLinkCss('/css/user/allOrders.css')
-</script>
 <script src="/js/user/allOrders.js"></script>

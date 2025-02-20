@@ -1,4 +1,5 @@
 // ok
+importLinkCss('/css/user/allBrands.css')
 const brands = document.querySelector('div.all-brands')
 
 async function getBrands() {

@@ -54,11 +54,11 @@ function isConfirmPassword(selector, getPasswordValue) {
 }
 
 function validator(options, number) {
-  var formElement = document.querySelector(options.form)
-  var checkValidate = Array(number).fill(false)
+  const formElement = document.querySelector(options.form)
+  const checkValidate = Array(number).fill(false)
 
   options.rules.forEach(function (rule, index) {
-    var inputElement = formElement.querySelector(rule.selector)
+    const inputElement = formElement.querySelector(rule.selector)
     // input blur
     inputElement.onblur = function () {
       validating(inputElement, rule, checkValidate, index)
@@ -67,10 +67,10 @@ function validator(options, number) {
 
   formElement.onsubmit = function (e) {
     for (var i = 0; i < checkValidate.length; ++i) {
-      if(checkValidate[i] === false) {
+      if(!checkValidate[i]) {
         e.preventDefault()
         options.rules.forEach(function (rule, index) {
-          var inputElement = formElement.querySelector(rule.selector)
+          const inputElement = formElement.querySelector(rule.selector)
           validating(inputElement, rule, checkValidate, index)
         })
         break

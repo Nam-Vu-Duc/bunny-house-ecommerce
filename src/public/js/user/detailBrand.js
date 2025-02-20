@@ -1,4 +1,5 @@
 // ok
+importLinkCss('/css/user/detailBrand.css')
 const metaDescription     = document.querySelector("meta[name='description']")
 const brandElement        = document.querySelector('div.table')
 const relatedProducts     = document.querySelector('div.related-products').querySelectorAll('div.product')
@@ -61,10 +62,6 @@ async function getRelatedProducts(brandInfo) {
       }
     })
   }, 2000)
-}
-
-function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND'
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {

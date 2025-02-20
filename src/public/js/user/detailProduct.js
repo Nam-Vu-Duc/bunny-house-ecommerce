@@ -1,4 +1,5 @@
 // ok
+importLinkCss('/css/user/detailProduct.css')
 const getAddToCart        = document.querySelector('div.add-to-cart')
 const getBuyNow           = document.querySelector('div.buy-now')
 const getOutOfOrder       = document.querySelector('div.out-of-order')
@@ -119,10 +120,6 @@ async function getRelatedProducts(productInfo) {
       }
     })
   }, 2000)
-}
-
-function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND'
 }
 
 function increaseQuantity(productInfo) {

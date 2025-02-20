@@ -1,15 +1,7 @@
 // ok
-import { format } from 'https://cdn.jsdelivr.net/npm/date-fns@latest/+esm';
+importLinkCss('/css/user/detailRateOrder.css')
 const submitBtn = document.querySelector("button[type='submit']")
 const urlSlug = location.href.match(/([^\/]*)\/*$/)[1]
-
-function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND'
-}
-
-function formatDate(date) {
-  return format(new Date(date), 'dd/MM/yyyy')
-}
 
 function rateStar() {
   const rateDiv = document.querySelectorAll('div.rate-star')

@@ -1,4 +1,5 @@
 // ok
+importLinkCss('/css/user/allProducts.css')
 const mainTitle        = document.querySelector('div.main-title').querySelector('b')
 const skincareCategory = document.querySelector('div.all-category-skincare')
 const makeupCategory   = document.querySelector('div.all-category-makeup')
@@ -82,7 +83,7 @@ async function getProducts(products, sortOptions, filterOptions, currentPage) {
         product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
         product.querySelector('p#price').textContent = formatNumber(data[index].price) 
         product.querySelector('p#name').textContent = data[index].name
-        product.querySelector('span#rate-score').textContent = data[index].rateNumber
+        product.querySelector('span#rate-score').textContent = formatRate(data[index].rate) 
         product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
         product.querySelector('div.loading').style.display = 'none'
         product.querySelectorAll('i').forEach((star, i) => {
@@ -101,10 +102,6 @@ async function getProducts(products, sortOptions, filterOptions, currentPage) {
 
 function calcLeftPosition(value) {
   return (value - minPrice)/(maxPrice - minPrice) * 100
-}
-
-function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND'
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
