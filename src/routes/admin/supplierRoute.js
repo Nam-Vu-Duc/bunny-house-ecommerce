@@ -10,12 +10,16 @@ router.use(session({
   saveUninitialized: true,
 }))
 router.use(flash())
-router.get('/', supplierController.allSuppliers)
+router.get('/'                    , supplierController.allSuppliers)
 
-router.get('/supplier/create', supplierController.supplierCreate)
-router.post('/supplier/created', supplierController.supplierCreated)
+router.get('/supplier/create'     , supplierController.supplierCreate)
+router.post('/supplier/created'   , supplierController.supplierCreated)
 
-router.get('/supplier/:id', supplierController.supplierInfo)
+router.get('/supplier/:id'        , supplierController.supplierInfo)
 router.put('/supplier/updated/:id', supplierController.supplierUpdate)
+
+router.post('/data/suppliers'     , supplierController.getSuppliers)
+router.post('/data/supplier'      , supplierController.getSupplier)
+router.post('/data/filter'        , supplierController.getFilter)
 
 module.exports = router

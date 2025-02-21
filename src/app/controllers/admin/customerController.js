@@ -7,41 +7,40 @@ const member = require('../../models/memberModel')
 const bcrypt = require('bcryptjs')
 
 class allCustomersController {
-  async allCustomers(req, res, next) {
-    const index        = 'customers'
-    const successful   = req.flash('successful')
-
-    const currentPage  = req.query.page || 1
+  async getCustomers(req, res, next) {
+    const currentPage  = req.body.page
+    const sort         = req.body.sort
+    const filter       = req.body.filter
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
-    
-    const queryList    = req.query
-    const sortOptions  = {}
-    const filterOptions= {}
 
-    for (var key in queryList) {
-      if (queryList.hasOwnProperty(key) && key.includes('sort_')) {
-        sortOptions[key.slice(5)] = parseInt(queryList[key])
-      }
-      if (queryList.hasOwnProperty(key) && key.includes('filter_')) {
-        filterOptions[key.slice(7)] = queryList[key]
-      }
-    }
-
-    if (filterOptions['name']) filterOptions['name'] = { $regex: filterOptions['name'], $options: 'i'}
-
-    const [customers, totalCustomer, members] = await Promise.all([
+    const [data, dataSize] = await Promise.all([
       user
-        .find(filterOptions)
-        .sort(sortOptions)
+        .find(filter)
+        .sort(sort)
         .skip(skip)
         .limit(itemsPerPage)
         .lean(),
-      user.find(filterOptions).countDocuments(),
-      member.find({}).lean()
-    ])
+        user.find(filter).countDocuments(),
+    ]) 
+    if (!data) res.status(404).json({data: [], data_size: 0})
+    
+    return res.json({data: data, data_size: dataSize})
+  }
 
-    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin', index, successful, customers, totalCustomer, members, currentPage });
+  async getCustomer(req, res, next) {
+    
+  }
+
+  async getFilter(req, res, next) {
+    const memberShip = await member.find().lean()
+    res.json({data: memberShip})
+  }
+
+  async allCustomers(req, res, next) {
+    const holderData = Array(10).fill({})
+
+    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin', holderData });
   }
 
   async customerInfo(req, res, next) {
@@ -93,7 +92,7 @@ class allCustomersController {
     res.redirect(req.get('Referrer') || '/admin')
   }
 
-  createCustomer(req, res, next) {
+  async createCustomer(req, res, next) {
     const index = 'customers'
     const error = req.flash('error')
     

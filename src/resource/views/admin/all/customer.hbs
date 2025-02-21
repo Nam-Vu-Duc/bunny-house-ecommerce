@@ -1,6 +1,6 @@
 <div class="admin-all-customers-container">  
   <div class="board-title">
-    <p>Khách Hàng: {{totalCustomer}}</p>
+    <p>Khách Hàng: </p>
   </div>
 
   <div class="control-bar">
@@ -30,9 +30,6 @@
 
         <select id="memberCode" class="filter-btn">
           <option value="">Hạng thành viên</option>
-          {{#each members}}
-            <option value="{{this.code}}">{{this.name}}</option>
-          {{/each}}
         </select>
       </div>
       <button id="clear-filter" style="display: none">Xoá bộ lọc</button>
@@ -61,17 +58,17 @@
       </thead>
 
       <tbody>
-        {{#each customers}}
-          <tr>
-            <td>{{addIndex @index 1}}</td>
-            <td>{{this._id}}</td>
-            <td>{{this.name}}</td>
-            <td>{{this.address}}</td>
-            <td>{{this.quantity}}</td>
-            <td>{{formatNumber this.revenue}}</td>
-            <td><a href="/admin/all-customers/customer/{{this._id}}">Xem</a></td>
+        {{#each holderData}}
+          <tr class="loading">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
-          {{/each}}
+        {{/each}}
       </tbody>
     </table>
   </div>

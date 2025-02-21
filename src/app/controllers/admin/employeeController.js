@@ -4,6 +4,18 @@ const position = require('../../models/positionModel')
 const bcrypt = require('bcryptjs')
 
 class allEmployeesController {
+  async getEmployees(req, res, next) {
+    
+  }
+
+  async getEmployee(req, res, next) {
+    
+  }
+
+  async getFilter(req, res, next) {
+  
+  }
+
   async allEmployees(req, res, next) {
     const index        = 'employees'
     const successful   = req.flash('message')

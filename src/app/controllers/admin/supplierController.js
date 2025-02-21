@@ -2,6 +2,18 @@ const supplier = require('../../models/supplierModel')
 const purchase = require('../../models/purchaseModel')
 
 class allSuppliersController {
+  async getSuppliers(req, res, next) {
+    
+  }
+
+  async getSupplier(req, res, next) {
+    
+  }
+
+  async getFilter(req, res, next) {
+  
+  }
+
   async allSuppliers(req, res, next) {
     const index        = 'suppliers'
     const successful   = req.flash('message')

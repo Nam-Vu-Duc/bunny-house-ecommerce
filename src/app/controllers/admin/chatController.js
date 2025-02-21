@@ -3,6 +3,10 @@ const user = require('../../models/userModel')
 const message = require('../../models/messageModel')
 
 class allChatsController {
+  async getChats(req, res, next) {
+    
+  }
+
   async allChats(req, res, next) {
     const index = 'chats'
     const uid = req.cookies.uid

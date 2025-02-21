@@ -10,7 +10,9 @@ router.use(session({
   saveUninitialized: true,
 }))
 router.use(flash())
-router.get('/', profileController.updateProfile)
-router.put('/updated/:id', profileController.profileUpdated)
+router.get('/'             , profileController.updateProfile)
+router.put('/updated/:id'  , profileController.profileUpdated)
+
+router.post('/data/profile', profileController.getProfile)
 
 module.exports = router

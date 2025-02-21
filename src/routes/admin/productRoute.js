@@ -11,17 +11,21 @@ router.use(session({
   saveUninitialized: true,
 }))
 router.use(flash())
-router.get('/', productController.allProducts)
-router.get('/trash', productController.trash)
+router.get('/'                          , productController.allProducts)
+router.get('/trash'                     , productController.trash)
 
-router.get('/product/create', productController.createProduct)
-router.post('/product/created', upload.single('img'), productController.productCreated)
+router.get('/product/create'            , productController.createProduct)
+router.post('/product/created'          , upload.single('img'), productController.productCreated)
 
-router.get('/product/:id', productController.productInfo)
-router.put('/product/updated/:id', upload.single('img'), productController.productUpdated)
+router.get('/product/:id'               , productController.productInfo)
+router.put('/product/updated/:id'       , upload.single('img'), productController.productUpdated)
 
 router.delete('/product/soft-delete/:id', productController.softDelete)
-router.delete('/product/delete/:id', productController.deleteProduct)
-router.get('/product/restore/:id', productController.restore)
+router.delete('/product/delete/:id'     , productController.deleteProduct)
+router.get('/product/restore/:id'       , productController.restore)
+
+router.post('/data/products'            , productController.getProducts)
+router.post('/data/product'             , productController.getProduct)
+router.post('/data/filter'              , productController.getFilter)
 
 module.exports = router

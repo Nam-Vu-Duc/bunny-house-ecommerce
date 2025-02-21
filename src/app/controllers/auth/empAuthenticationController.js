@@ -9,7 +9,7 @@ const verificationCode = {}
 class loginController {
   signIn(req, res, next) {
     const error = req.flash('error')
-    res.render('admin/signIn', { title: 'Đăng Nhập nhân viên', layout: 'empty', message: error, error})
+    res.render('admin/signIn', { title: 'Đăng nhập nhân viên', layout: 'empty', message: error, error})
   }
 
   async checkingAccount(req, res, next) {

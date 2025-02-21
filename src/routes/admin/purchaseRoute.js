@@ -10,12 +10,16 @@ router.use(session({
   saveUninitialized: true,
 }))
 router.use(flash())
-router.get('/', purchaseController.allPurchases)
+router.get('/'                    , purchaseController.allPurchases)
 
-router.get('/purchase/create', purchaseController.purchaseCreate)
-router.post('/purchase/created', purchaseController.purchaseCreated)
+router.get('/purchase/create'     , purchaseController.purchaseCreate)
+router.post('/purchase/created'   , purchaseController.purchaseCreated)
 
-router.get('/purchase/:id', purchaseController.purchaseInfo)
+router.get('/purchase/:id'        , purchaseController.purchaseInfo)
 router.put('/purchase/updated/:id', purchaseController.purchaseUpdate)
+
+router.post('/data/purchases'     , purchaseController.getPurchases)
+router.post('/data/purchase'      , purchaseController.getPurchase)
+router.post('/data/filter'        , purchaseController.getFilter)
 
 module.exports = router

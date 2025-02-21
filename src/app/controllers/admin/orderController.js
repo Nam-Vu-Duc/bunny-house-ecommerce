@@ -6,6 +6,18 @@ const orderStatus = require('../../models/orderStatusModel')
 const paymentMethod = require('../../models/paymentMethodModel')
 
 class allOrdersController {
+  async getOrders(req, res, next) {
+    
+  }
+
+  async getOrder(req, res, next) {
+    
+  }
+
+  async getFilter(req, res, next) {
+  
+  }
+
   async allOrders(req, res, next) {
     const index        = 'orders'
     const successful   = req.flash('successful')

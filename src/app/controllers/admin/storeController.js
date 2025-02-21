@@ -2,6 +2,18 @@ const store = require('../../models/storeModel')
 const employee = require('../../models/employeeModel')
 
 class allStoresController {
+  async getStores(req, res, next) {
+    
+  }
+
+  async getStore(req, res, next) {
+    
+  }
+
+  async getFilter(req, res, next) {
+  
+  }
+
   async allStores(req, res, next) {
     const index        = 'stores'
     const successful   = req.flash('successful')

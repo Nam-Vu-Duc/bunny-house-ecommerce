@@ -1,12 +1,13 @@
-function sortAndFilter() {
+function sortAndFilter(getDataFunction, sortOptions, filterOptions, currentPage) {
   const sortButton = document.querySelector('div.sort').querySelectorAll('select')
   sortButton.forEach((button) => {
     button.onchange = function () {
-      const sortType = 'sort_' + button.id
-      const sortValue = button.value
-      const urlParams = new URLSearchParams(window.location.search)
-      urlParams.set(sortType, sortValue)
-      window.location.search = urlParams
+      const sortType = button.id
+      const sortValue = parseInt(button.value)
+      sortOptions[sortType] = sortValue
+      if (!sortValue) delete sortOptions[sortType]
+      console.log(sortOptions)
+      getDataFunction(sortOptions, filterOptions, currentPage)
     }
     
     const options = button.querySelectorAll('option')
@@ -42,13 +43,6 @@ function sortAndFilter() {
       } 
     })
   }) 
-  
-  const url = new URL(window.location.href)
-  const clearBtn = document.querySelector('button#clear-filter')
-  if (url.search.length > 0) clearBtn.style.display = ''
-  clearBtn.onclick = function() {
-    window.location.href = `${url.pathname}`
-  }
 
   const searchInput = document.querySelector('input#search-input')
   searchInput.addEventListener('input', function(e) {

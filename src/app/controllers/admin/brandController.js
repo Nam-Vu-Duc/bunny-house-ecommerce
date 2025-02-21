@@ -2,6 +2,18 @@ const brand = require('../../models/brandModel')
 const product = require('../../models/productModel')
 
 class allBrandsController {
+  async getBrands(req, res, next) {
+    
+  }
+
+  async getBrand(req, res, next) {
+    
+  }
+
+  async getFilter(req, res, next) {
+  
+  }
+  
   async allBrands(req, res, next) {
     const index        = 'brands'
     const successful   = req.flash('successful')

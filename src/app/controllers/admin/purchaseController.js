@@ -3,6 +3,18 @@ const purchase = require('../../models/purchaseModel')
 const supplier = require('../../models/supplierModel')
 
 class adminController {
+  async getPurchases(req, res, next) {
+    
+  }
+
+  async getPurchase(req, res, next) {
+    
+  }
+
+  async getFilter(req, res, next) {
+  
+  }
+
   async allPurchases(req, res, next) {
     const index  = 'purchases'
     const successful = req.flash('successful')

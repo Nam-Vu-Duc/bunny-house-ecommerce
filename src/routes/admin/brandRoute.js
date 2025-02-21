@@ -10,12 +10,16 @@ router.use(session({
   saveUninitialized: true,
 }))
 router.use(flash())
-router.get('/', brandController.allBrands)
+router.get('/'                  , brandController.allBrands)
 
-router.get('/brand/create', brandController.brandCreate)
-router.post('/brand/created', brandController.brandCreated)
+router.get('/brand/create'      , brandController.brandCreate)
+router.post('/brand/created'    , brandController.brandCreated)
 
-router.get('/brand/:id', brandController.brandInfo)
-router.put('/brand/updated/:id', brandController.brandUpdate)
+router.get('/brand/:id'         , brandController.brandInfo)
+router.put('/brand/updated/:id' , brandController.brandUpdate)
+
+router.post('/data/brands'      , brandController.getBrands)
+router.post('/data/brand'       , brandController.getBrand)
+router.post('/data/filter'      , brandController.getFilter)
 
 module.exports = router

@@ -1,6 +1,10 @@
 const emp = require('../../models/employeeModel')
 
 class profileController {
+  async getProfile(req, res, next) {
+    
+  }
+
   async updateProfile(req, res, next) {
     const index      = 'profile'
     const successful = req.flash('successful')

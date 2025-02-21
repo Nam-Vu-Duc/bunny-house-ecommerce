@@ -4,6 +4,18 @@ const productStatus = require('../../models/productStatusModel')
 const cloudinary = require('cloudinary').v2
 
 class allProductsController {
+  async getProducts(req, res, next) {
+    
+  }
+
+  async getProduct(req, res, next) {
+    
+  }
+
+  async getFilter(req, res, next) {
+  
+  }
+
   async allProducts(req, res, next) {
     const index        = 'products'
     const successful   = req.flash('successful')
@@ -40,23 +52,6 @@ class allProductsController {
     res.render('admin/all/product', { title: 'Danh sách sản phẩm', layout: 'admin', index, successful, totalProduct, products, brands, currentPage })
   }
 
-  createProduct(req, res, next) {
-    const index = 'products'
-    res.render('admin/create/product', { title: 'Thêm sản phẩm mới', layout: 'admin', index })
-  }
-
-  async productCreated(req, res, next) {
-    let newProduct = new product(req.body)
-    if (req.file) {
-      newProduct.img.path = req.file.path
-      newProduct.img.filename = req.file.filename
-    }
-    await newProduct.save()
-
-    req.flash('successful', 'Thêm sản phẩm thành công')
-    res.redirect('/admin/all-products')
-  }
-
   async productInfo(req, res, next) {
     const index = 'products'
     const successful = req.flash('successful')
@@ -69,9 +64,8 @@ class allProductsController {
     res.render('admin/detail/product', { title: productInfo.name, layout: 'admin', index, successful, productInfo, brands, productStatuses })
 
   }
-  
+
   async productUpdated(req, res, next) {    
-    
     function deFormatNumber(number) {
       return parseInt(number.replace(/\./g, ''))
     }
@@ -97,6 +91,23 @@ class allProductsController {
 
     req.flash('successful', 'Cập nhật sản phẩm thành công')
     res.redirect(req.get('Referrer') || '/admin')
+  }
+
+  async createProduct(req, res, next) {
+    const index = 'products'
+    res.render('admin/create/product', { title: 'Thêm sản phẩm mới', layout: 'admin', index })
+  }
+
+  async productCreated(req, res, next) {
+    let newProduct = new product(req.body)
+    if (req.file) {
+      newProduct.img.path = req.file.path
+      newProduct.img.filename = req.file.filename
+    }
+    await newProduct.save()
+
+    req.flash('successful', 'Thêm sản phẩm thành công')
+    res.redirect('/admin/all-products')
   }
 
   async softDelete(req, res, next) {

@@ -10,12 +10,16 @@ router.use(session({
   saveUninitialized: true,
 }))
 router.use(flash())
-router.get('/', customerController.allCustomers)
+router.get('/'                    , customerController.allCustomers)
 
-router.get('/customer/create', customerController.createCustomer)
-router.post('/customer/created', customerController.customerCreated)
+router.get('/customer/create'     , customerController.createCustomer)
+router.post('/customer/created'   , customerController.customerCreated)
 
-router.get('/customer/:id', customerController.customerInfo)
+router.get('/customer/:id'        , customerController.customerInfo)
 router.put('/customer/updated/:id', customerController.customerUpdate)
+
+router.post('/data/customers'     , customerController.getCustomers)
+router.post('/data/customer'      , customerController.getCustomer)
+router.post('/data/filter'        , customerController.getFilter)
 
 module.exports = router

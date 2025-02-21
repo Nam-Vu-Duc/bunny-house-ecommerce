@@ -24,7 +24,7 @@ class allProductsController {
         .lean(),
       product.find(filter).countDocuments(),
     ]) 
-    if (!data) res.status(404).json({ error: "No products found" })
+    if (!data) res.status(404).json({data: [], data_size: 0})
     
     return res.json({data: data, data_size: productLength})
   }
