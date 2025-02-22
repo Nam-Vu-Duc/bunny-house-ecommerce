@@ -36,15 +36,6 @@ body::-webkit-scrollbar {display: none}
   opacity: 0;
   pointer-events: none;
 }
-.loading {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #D1A6A6;
-  border-top-color: transparent;
-  border-bottom-color: transparent;
-  border-radius: 50%;
-  animation: 1s reloader infinite linear;
-}
 input[type="text"], input[type="password"], input[type="date"] {
   font-family: 'Roboto', sans-serif;
   width: 100%;
@@ -76,6 +67,18 @@ button {
   border: 1px solid #D1A6A6;
   border-radius: 5px;
   cursor: pointer;
+}
+button.loading {
+  width: 50px !important;
+  height: 50px !important;
+  border: 5px solid #D1A6A6 !important;
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
+  border-radius: 50% !important;
+  background-color: transparent !important;
+  color: transparent !important;
+  user-select: none !important;
+  animation: 1s reloader infinite linear;
 }
 button:hover {
   background-color: #D1A6A6;
@@ -130,7 +133,6 @@ div.control-bar {
 table {
   width: 100%;
   border-spacing: 0px 10px;
-  padding: 0px 5px;
   border-radius: 10px;
   thead {
     background-color: #D1A6A6;
@@ -173,8 +175,8 @@ div.table {
   margin-top: 20px;
   background-color: #F0F0F0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 5px;
-  padding: 5px;
+  border-radius: 10px;
+  padding: 10px;
   box-sizing: border-box;
   div.table-button {
     display: flex;
@@ -186,10 +188,22 @@ div.table {
       tr {
         background-color: white;
         height: 50px;
+        position: relative;
       }
       tr:hover {filter: brightness(80%)}
     }
     td {text-align: center};
+    td.loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: white;
+      border-radius: 10px;
+      z-index: 99;
+      animation: flicker 1s infinite;
+    }
   }
 }
 div.submit-button {
@@ -212,6 +226,13 @@ span.pagination {
     width: 20px;
     color: black;
     cursor: pointer;
+  }
+  p.current {
+    border-color: #D1A6A6;
+    background-color: #D1A6A6;
+    color: white;
+    width: 25px;
+    height: 25px;
   }
 }
 div.notification {
@@ -388,6 +409,11 @@ div.clearfix::after {
 }
 @keyframes reloader {
   to { transform: rotate(360deg); }
+}
+@keyframes flicker {
+  0% { background-color: #eeeeee; }
+  50% { background-color: #ffffff; }
+  100% { background-color: #eeeeee; }
 }
 @media screen and (max-width: 700px) {
   main {margin-left: 70px;}

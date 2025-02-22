@@ -1,28 +1,19 @@
-function pagination(length, currentPage) {
-  var pagination = document.querySelector('span.pagination')
+function pagination(getDataFunction, sortOptions, filterOptions,currentPage, data_size) {
+  document.querySelector('span.pagination').querySelectorAll('p').forEach(p => p.remove())
   var totalPage = 1
-
-  for (var i = 0; i < length; i += 10) {
-    var newPage = document.createElement('p')
+  for (var i = 0; i < data_size; i += 10) {
+    const newPage = document.createElement('p')
+    if (i === 0) newPage.classList.add('current')
     newPage.innerText = `${totalPage}`
-    pagination.appendChild(newPage)
+    document.querySelector('span.pagination').appendChild(newPage)
+    newPage.onclick = function() {
+      document.querySelector('span.pagination').querySelectorAll('p').forEach(t => t.classList.remove('current'))
+      currentPage = parseInt(newPage.innerText) 
+      console.log(currentPage)
+      newPage.classList.add('current')
+
+      getDataFunction(sortOptions, filterOptions, currentPage)
+    }
     totalPage++
   }
-
-  // Style the current selected page
-  var allPagesTag = pagination.querySelectorAll('p')
-  allPagesTag.forEach((tag, index) => {
-    if (tag.innerText === currentPage) {
-      tag.style.borderColor = '#D1A6A6'
-      tag.style.backgroundColor = '#D1A6A6'
-      tag.style.color = 'white'
-      tag.style.width = '25px'
-      tag.style.height = '25px'
-    }
-    tag.onclick = function() {
-      const urlParams = new URLSearchParams(window.location.search)
-      urlParams.set('page', index+1)
-      window.location.search = urlParams
-    }
-  })
 }
