@@ -1,6 +1,6 @@
 <div class="admin-all-stores-container">  
   <div class="board-title">
-    <p>Cửa hàng: {{totalStore}}</p>
+    <p></p>
   </div>
 
   <div class="control-bar">
@@ -15,11 +15,11 @@
       </div>
 
       <div class="filter">
-        <label>Sắp xếp theo:</label>
+        <label>Lọc theo:</label>
         <select id="revenue" class="filter-btn">
-          <option value="">Doanh thu mặc định</option>
+          {{!-- <option value="">Doanh thu mặc định</option>
           <option value="1">Doanh thu tăng dần</option>
-          <option value="-1">Doanh thu giảm dần</option>
+          <option value="-1">Doanh thu giảm dần</option> --}}
         </select>
       </div>
 
@@ -48,14 +48,15 @@
       </thead>
 
       <tbody>
-        {{#each stores}}
+        {{#each (holderData 10)}}
         <tr>
-          <td>{{addIndex @index 1}}</td>
-          <td>{{this._id}}</td>
-          <td>{{this.name}}</td>
-          <td>{{this.address}}</td>
-          <td>{{formatNumber this.revenue}}</td>
-          <td><a href="/admin/all-stores/store/{{this._id}}">Xem</a></td>
+          <td></td>
+          <td class="loading"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
         {{/each}}
       </tbody>

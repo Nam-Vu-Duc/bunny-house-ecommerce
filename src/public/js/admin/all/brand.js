@@ -28,7 +28,7 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
     tr.querySelector('td.loading').style.display = ''
   })
 
-  const response = await fetch('/admin/all-customers/data/customers', {
+  const response = await fetch('/admin/all-brands/data/brands', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({sort: sortOptions, filter: filterOptions, page: currentPage})
@@ -38,7 +38,7 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
   const data = json.data
   dataSize.size = json.data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Khách Hàng: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Thương hiệu: ' + dataSize.size
 
   window.setTimeout(function() {
     tbody.querySelectorAll('tr').forEach((tr, index) => {
@@ -50,18 +50,20 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
       newTr.innerHTML = `
         <td></td>
         <td class="loading" style="display:none"></td>
-        <td>${item._id}</td>
-        <td>${item.name}</td>
-        <td>${item.address}</td>
-        <td>${item.quantity}</td>
-        <td>${formatNumber(item.revenue)}</td>
-        <td><a href="/admin/all-customers/customer/${item._id}">Xem</a></td>
+        <td style="display: flex; justify-content: start;align-items: center;gap: 5px">
+          <img src="${item.img.path}" alt="${item.name}" loading="lazy" loading="lazy"> 
+          <p>${item.name}</p>
+        </td> 
+        <td>${item.totalProduct}</td>
+        <td>${item.totalProduct}</td>
+        <td>${formatNumber(item.totalRevenue)}</td>
+        <td><a href="/admin/all-brands/brand/${item._id}">Xem</a></td>
       `
       tbody.appendChild(newTr)
     })
   }, 1000)
   
-  pagination(getCustomers, sortOptions, filterOptions, currentPage.page, dataSize.size)
+  pagination(getCustomers, sortOptions, filterOptions, currentPage, dataSize.size)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {

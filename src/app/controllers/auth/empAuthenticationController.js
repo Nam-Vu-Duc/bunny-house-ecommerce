@@ -7,27 +7,26 @@ const nodemailer = require("nodemailer")
 const verificationCode = {}
 
 class loginController {
-  signIn(req, res, next) {
-    const error = req.flash('error')
-    res.render('admin/signIn', { title: 'Đăng nhập nhân viên', layout: 'empty', message: error, error})
+  async signIn(req, res, next) {
+    res.render('admin/signIn', { title: 'Đăng nhập nhân viên', layout: 'empty'})
   }
 
   async checkingAccount(req, res, next) {
     const email = req.body.email
     const password = req.body.password
 
-    const getEmp = await emp.findOne({ 'email': email })
-    if (!getEmp) {
-      req.flash('error', 'Email không đúng')
-      return res.redirect('/emp/authentication/sign-in')
-    }
+    const getEmp = await emp.findOne({ email: email })
+    if (!getEmp) return res.json({isValid: false, message: 'Email chưa đăng ký tài khoản'})
 
-    bcrypt.compare(password, getEmp.password, function(err, result) {
+    bcrypt.compare(password, getEmp.password, async function(err, result) {
       if (result) {
         const payload = { email: getEmp.email }; // Payload with only essential data
         const rt = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '1d' })
         const at = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '7d' })
         const userId = getEmp._id.toString()
+        await emp.updateOne({ _id: userId}, {
+          isActive: true
+        })
 
         res.cookie('rt', rt, {
           httpOnly: true,
@@ -41,20 +40,16 @@ class loginController {
           httpOnly: true,
           secure: true,
         })
-        req.flash('successful', 'Đăng nhập thành công')
-        return res.redirect('/admin')
+
+        return res.json({isValid: true, message: 'Đăng nhập thành công'})
       } else {
-        req.flash('error', 'Mật khẩu không đúng')
-        return res.redirect('/emp/authentication/sign-in')
+        return res.json({isValid: false, message: 'Mật khẩu không đúng'})
       }
     })
   }
 
   async resetPassword(req, res, next) {
-    const error = req.flash('error')
-    const successful = req.flash('successful')
-    console.log(verificationCode)
-    res.render('admin/resetPassword', { title: 'Quên mật khẩu', layout: 'empty', error, successful })
+    res.render('admin/resetPassword', { title: 'Quên mật khẩu', layout: 'empty' })
   }
 
   async verifyingEmail(req, res, next) {

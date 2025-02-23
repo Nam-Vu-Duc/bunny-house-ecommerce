@@ -7,7 +7,7 @@ const currentPage   = { page: 1 }
 const dataSize      = { size: 0 }
 
 async function getFilter() {
-  const response = await fetch('/admin/all-customers/data/filter', {
+  const response = await fetch('/admin/all-purchases/data/filter', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
   })
@@ -23,12 +23,12 @@ async function getFilter() {
   })
 }
 
-async function getCustomers(sortOptions, filterOptions, currentPage) {
+async function getPurchases(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
     tr.querySelector('td.loading').style.display = ''
   })
 
-  const response = await fetch('/admin/all-customers/data/customers', {
+  const response = await fetch('/admin/all-purchases/data/purchases', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({sort: sortOptions, filter: filterOptions, page: currentPage})
@@ -38,7 +38,7 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
   const data = json.data
   dataSize.size = json.data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Khách Hàng: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Đơn nhập: ' + dataSize.size
 
   window.setTimeout(function() {
     tbody.querySelectorAll('tr').forEach((tr, index) => {
@@ -51,22 +51,21 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
         <td></td>
         <td class="loading" style="display:none"></td>
         <td>${item._id}</td>
-        <td>${item.name}</td>
-        <td>${item.address}</td>
-        <td>${item.quantity}</td>
-        <td>${formatNumber(item.revenue)}</td>
-        <td><a href="/admin/all-customers/customer/${item._id}">Xem</a></td>
+        <td>${formatDate(item.purchaseDate)}</td>
+        <td>${item.totalProducts}</td>
+        <td>${formatNumber(item.totalPurchasePrice)}</td>
+        <td><a href="/admin/all-purchases/purchase/${item._id}">Xem</a></td>
       `
       tbody.appendChild(newTr)
     })
   }, 1000)
   
-  pagination(getCustomers, sortOptions, filterOptions, currentPage.page, dataSize.size)
+  pagination(getPurchases, sortOptions, filterOptions, currentPage, dataSize.size)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getFilter()
-  getCustomers(sortOptions, filterOptions, currentPage.page)
-  sortAndFilter(getCustomers, sortOptions, filterOptions, currentPage.page)
+  // getFilter()
+  getPurchases(sortOptions, filterOptions, currentPage.page)
+  sortAndFilter(getPurchases, sortOptions, filterOptions, currentPage.page)
   exportJs()
 })

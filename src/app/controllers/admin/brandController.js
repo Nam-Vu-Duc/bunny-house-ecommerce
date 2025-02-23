@@ -3,7 +3,24 @@ const product = require('../../models/productModel')
 
 class allBrandsController {
   async getBrands(req, res, next) {
+    const currentPage  = req.body.page
+    const sort         = req.body.sort
+    const filter       = req.body.filter
+    const itemsPerPage = 10
+    const skip         = (currentPage - 1) * itemsPerPage
+
+    const [data, dataSize] = await Promise.all([
+      brand
+        .find(filter)
+        .sort(sort)
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      brand.find(filter).countDocuments(),
+    ]) 
+    if (!data) res.status(404).json({data: [], data_size: 0})
     
+    return res.json({data: data, data_size: dataSize})
   }
 
   async getBrand(req, res, next) {
@@ -15,9 +32,7 @@ class allBrandsController {
   }
   
   async allBrands(req, res, next) {
-    const holderData = Array(10).fill({})
-
-    res.render('admin/all/brand', { title: 'Danh sách cửa hàng', layout: 'admin', holderData })
+    res.render('admin/all/brand', { title: 'Danh sách cửa hàng', layout: 'admin' })
   }
 
   async brandInfo(req, res, next) {
@@ -32,10 +47,8 @@ class allBrandsController {
 
   }
 
-  async brandCreate(req, res, next) {
-    const index = 'brands'
-    
-    res.render('admin/create/brand', { title: 'Thêm thương hiệu mới', layout: 'admin', index })
+  async brandCreate(req, res, next) {    
+    res.render('admin/create/brand', { title: 'Thêm thương hiệu mới', layout: 'admin' })
   }
 
   async brandCreated(req, res, next) {

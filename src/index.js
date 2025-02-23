@@ -54,7 +54,8 @@ app.engine('hbs', handlebars.engine({
     },
     getLength: (a) => a.length,
     getIndexed: (a, b, c) => a[b],
-  }
+    holderData: (a) => Array(a).fill({})
+  } 
 }))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'resource', 'views'))

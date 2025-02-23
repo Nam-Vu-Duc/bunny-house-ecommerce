@@ -1,16 +1,3 @@
-validator({
-  form: '#form-1',
-  errorSelector: '.form-message',
-  rules: [
-    isRequiredString('#brand'),
-    isRequiredString('#name'),
-    isRequiredNumber('#oldPrice'),
-    isRequiredNumber('#price'),
-    isRequiredString('#description'),
-    isRequiredString('#details'),
-  ]
-}, 6)
-
 importLinkCss('/css/admin/createProduct.css')
 
 // skincare and makeup visibility

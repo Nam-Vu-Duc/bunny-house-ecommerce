@@ -1,6 +1,6 @@
 <div class="admin-all-suppliers-container">  
   <div class="board-title">
-    <p>Đối Tác: {{totalSupplier}}</p>
+    <p></p>
   </div>
 
   <div class="control-bar">
@@ -17,6 +17,15 @@
           <option value="">Tổng chi phí</option>
           <option value="1">Tổng chi phí tăng dần</option>
           <option value="-1">Tổng chi phí giảm dần</option>
+        </select>
+      </div>
+
+      <div class="filter">
+        <label>Lọc theo:</label>
+        <select id="revenue" class="filter-btn">
+          {{!-- <option value="">Doanh thu mặc định</option>
+          <option value="1">Doanh thu tăng dần</option>
+          <option value="-1">Doanh thu giảm dần</option> --}}
         </select>
       </div>
 
@@ -46,15 +55,16 @@
       </thead>
 
       <tbody>
-        {{#each suppliers}}
+        {{#each (holderData 10)}}
           <tr>
-            <td>{{addIndex @index 1}}</td>
-            <td>{{this._id}}</td>
-            <td>{{this.name}}</td>
-            <td>{{this.address}}</td>
-            <td>{{this.quantity}}</td>
-            <td>{{formatNumber this.totalCost}}</td>
-            <td><a href="/admin/all-suppliers/supplier/{{this._id}}">Xem</a></td>
+            <td></td>
+            <td class="loading"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
           {{/each}}
       </tbody>

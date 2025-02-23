@@ -23,12 +23,12 @@ async function getFilter() {
   })
 }
 
-async function getCustomers(sortOptions, filterOptions, currentPage) {
+async function getSuppliers(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
     tr.querySelector('td.loading').style.display = ''
   })
 
-  const response = await fetch('/admin/all-customers/data/customers', {
+  const response = await fetch('/admin/all-suppliers/data/suppliers', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({sort: sortOptions, filter: filterOptions, page: currentPage})
@@ -38,7 +38,7 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
   const data = json.data
   dataSize.size = json.data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Khách Hàng: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Nhà cung cấp: ' + dataSize.size
 
   window.setTimeout(function() {
     tbody.querySelectorAll('tr').forEach((tr, index) => {
@@ -54,19 +54,19 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
         <td>${item.name}</td>
         <td>${item.address}</td>
         <td>${item.quantity}</td>
-        <td>${formatNumber(item.revenue)}</td>
-        <td><a href="/admin/all-customers/customer/${item._id}">Xem</a></td>
+        <td>${formatNumber(item.totalCost)}</td>
+        <td><a href="/admin/all-suppliers/supplier/${item._id}">Xem</a></td>
       `
       tbody.appendChild(newTr)
     })
   }, 1000)
   
-  pagination(getCustomers, sortOptions, filterOptions, currentPage.page, dataSize.size)
+  pagination(getSuppliers, sortOptions, filterOptions, currentPage, dataSize.size)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getFilter()
-  getCustomers(sortOptions, filterOptions, currentPage.page)
-  sortAndFilter(getCustomers, sortOptions, filterOptions, currentPage.page)
+  // getFilter()
+  getSuppliers(sortOptions, filterOptions, currentPage.page)
+  sortAndFilter(getSuppliers, sortOptions, filterOptions, currentPage.page)
   exportJs()
 })

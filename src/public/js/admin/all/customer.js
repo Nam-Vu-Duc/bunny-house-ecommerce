@@ -61,7 +61,7 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
     })
   }, 1000)
   
-  pagination(getCustomers, sortOptions, filterOptions, currentPage.page, dataSize.size)
+  pagination(getCustomers, sortOptions, filterOptions, currentPage, dataSize.size)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {

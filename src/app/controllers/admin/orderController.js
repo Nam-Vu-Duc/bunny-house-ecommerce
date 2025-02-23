@@ -7,63 +7,50 @@ const paymentMethod = require('../../models/paymentMethodModel')
 
 class allOrdersController {
   async getOrders(req, res, next) {
+    const currentPage  = req.body.page
+    const sort         = req.body.sort
+    const filter       = req.body.filter
+    const itemsPerPage = 10
+    const skip         = (currentPage - 1) * itemsPerPage
+
+    const [data, dataSize] = await Promise.all([
+      order
+        .find(filter)
+        .sort(sort)
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      order.find(filter).countDocuments(),
+    ]) 
+    if (!data) res.status(404).json({data: [], data_size: 0})
     
+    return res.json({data: data, data_size: dataSize})
   }
 
   async getOrder(req, res, next) {
-    
-  }
-
-  async getFilter(req, res, next) {
-  
-  }
-
-  async allOrders(req, res, next) {
-    const index        = 'orders'
-    const successful   = req.flash('successful')
-
-    const currentPage  = req.query.page || 1
-    const queryList    = req.query
-    const itemsPerPage = 10
-    const skip         = (currentPage - 1) * itemsPerPage
-    const sortOptions  = {}
-    const filterOptions= { deletedAt: null }
-
-    for (var key in queryList) {
-      if (queryList.hasOwnProperty(key) && key.includes('sort_')) {
-        sortOptions[key.slice(5)] = parseInt(queryList[key])
-      }
-      if (queryList.hasOwnProperty(key) && key.includes('filter_')) {
-        filterOptions[key.slice(7)] = queryList[key]
-      }
-    }
-
-    const [orders, totalOrder, orderStatuses, paymentMethods] = await Promise.all([
-      order
-      .find(filterOptions)
-      .sort(sortOptions)
-      .skip(skip)
-      .limit(itemsPerPage)
-      .lean(),
-      order.find(filterOptions).countDocuments(),
-      orderStatus.find({}).lean(),
-      paymentMethod.find({}).lean()
-    ])
-
-    res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin', index, successful, orders, orderStatuses, paymentMethods, totalOrder, currentPage })
-  }
-
-  async orderInfo(req, res, next) {
-    const index = 'orders'
-    const successful = req.flash('successful')
-
     const [orderInfo, orderStatuses, paymentMethods] = await Promise.all([
       order.findOne({ _id: req.params.id }).lean(),
       orderStatus.find({}).lean(),
       paymentMethod.find({}).lean()
     ])
+  }
 
-    res.render('admin/detail/order', { title: `Đơn hàng ${orderInfo.customerInfo.name}`, layout: 'admin', index, successful, orderInfo, orderStatuses, paymentMethods })
+  async getFilter(req, res, next) {
+    const [orderStatuses, paymentMethods] = await Promise.all([
+      orderStatus.find().lean(),
+      paymentMethod.find().lean(),
+    ]) 
+
+    console.log(orderStatuses, paymentMethods)
+    res.json({ orderStatus: orderStatuses, paymentMethod: paymentMethods })
+  }
+
+  async allOrders(req, res, next) {
+    res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin' })
+  }
+
+  async orderInfo(req, res, next) {
+    res.render('admin/detail/order', { layout: 'admin' })
   }
 
   async orderUpdate(req, res, next) {
@@ -104,13 +91,9 @@ class allOrdersController {
         })
       }
     }
-
-    req.flash('successful', 'Cập nhật đơn hàng thành công')
-    res.redirect(req.get('Referrer') || '/admin')
   }
 
   async orderCreate(req, res, next) {
-    const index = 'orders'
     const [users, products, stores, paymentMethods] = await Promise.all([
       user.find({}).lean(),
       product.find({ deletedAt: null }).lean(),
@@ -118,7 +101,7 @@ class allOrdersController {
       paymentMethod.find({}).lean()
     ]) 
   
-    res.render('admin/create/order', { title: 'Thêm đơn hàng mới', layout: 'admin', index, users, products, stores, paymentMethods })
+    res.render('admin/create/order', { title: 'Thêm đơn hàng mới', layout: 'admin', users, products, stores, paymentMethods })
   }
 
   async orderCreated(req, res, next) {
@@ -165,8 +148,6 @@ class allOrdersController {
     });
 
     await newOrder.save()
-    req.flash('successful', 'Thêm đơn hàng thành công')
-    return res.redirect('/admin/all-orders')
   }
 }
 module.exports = new allOrdersController

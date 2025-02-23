@@ -1,5 +1,5 @@
 <div class="admin-create-product-container">
-  <form id="form-1" method="post" action="/admin/all-products/product/created" enctype="multipart/form-data">
+  <div id="form">
     <div class="form-title">
       <p>Thêm sản phẩm mới</p>
     </div>
@@ -47,37 +47,31 @@
     <div class="form-group">
       <label for="brand">Hãng sản phẩm</label>
       <input type="text" class="form-control" id="brand" name="brand" placeholder="VD: PRETTYSKIN">
-      <span class="form-message"></span>
     </div>
 
     <div class="form-group">
       <label for="name">Tên sản phẩm</label>
       <input type="text" class="form-control" id="name" name="name" placeholder="VD: TINH CHẤT PHỤC HỒI, DƯỠNG TRẮNG HYDRA B5 MAX SERUM PRETTYSKIN">
-      <span class="form-message"></span>
     </div>
 
     <div class="form-group">
       <label for="oldPrice">Giá sản phẩm (cũ)</label>
       <input type="text" class="form-control" id="oldPrice" name="oldPrice" placeholder="VD: 1.000.000">
-      <span class="form-message"></span>
     </div>
 
     <div class="form-group">
       <label for="price">Giá sản phẩm (mới)</label>
       <input type="text" class="form-control" id="price" name="price" placeholder="VD: 250.000">
-      <span class="form-message"></span>
     </div>
 
     <div class="form-group">
       <label for="description">Mô tả sản phẩm</label>
       <input type="text" class="form-control" id="description" name="description" placeholder="VD: TINH CHẤT PHỤC HỒI, DƯỠNG TRẮNG HYDRA B5 MAX SERUM PRETTYSKIN">
-      <span class="form-message"></span>
     </div>
 
     <div class="form-group">
       <label for="details">Chi tiết sản phẩm</label>
       <input type="text" class="form-control" id="details" name="details" placeholder="VD: Dưỡng ẩm chuyên sâu với axit Hyaluronic: Axit Hyaluronic giúp bổ sung độ ẩm...">
-      <span class="form-message"></span>
     </div>
 
     <div class="form-group">
@@ -97,7 +91,7 @@
     </div>
 
     <div class="submit-button"><button title="submit" type="submit">Hoàn thành</button></div>
-  </form>
+  </div>
 </div>
 
 <script src="/js/admin/create/product.js"></script>

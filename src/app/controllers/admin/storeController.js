@@ -3,11 +3,31 @@ const employee = require('../../models/employeeModel')
 
 class allStoresController {
   async getStores(req, res, next) {
+    const currentPage  = req.body.page
+    const sort         = req.body.sort
+    const filter       = req.body.filter
+    const itemsPerPage = 10
+    const skip         = (currentPage - 1) * itemsPerPage
+
+    const [data, dataSize] = await Promise.all([
+      store
+        .find(filter)
+        .sort(sort)
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      store.find(filter).countDocuments(),
+    ]) 
+    if (!data) res.status(404).json({data: [], data_size: 0})
     
+    return res.json({data: data, data_size: dataSize})
   }
 
   async getStore(req, res, next) {
-    
+    const [storeInfo, employeesInfo] = await Promise.all([
+      store.findOne({ _id: req.params.id }).lean(),
+      employee.find({ 'userInfo.storeId': req.params.id }).lean(),
+    ])
   }
 
   async getFilter(req, res, next) {
@@ -15,47 +35,11 @@ class allStoresController {
   }
 
   async allStores(req, res, next) {
-    const index        = 'stores'
-    const successful   = req.flash('successful')
-
-    const currentPage  = req.query.page || 1
-    const queryList    = req.query
-    const itemsPerPage = 10
-    const skip         = (currentPage - 1) * itemsPerPage
-    const sortOptions  = {}
-    const filterOptions= {}
-
-    for (var key in queryList) {
-      if (queryList.hasOwnProperty(key) && key.includes('sort_')) {
-        sortOptions[key.slice(5)] = parseInt(queryList[key])
-      }
-      if (queryList.hasOwnProperty(key) && key.includes('filter_')) {
-        filterOptions[key.slice(7)] = queryList[key]
-      }
-    }
-
-    const [stores, totalStore] = await Promise.all([  
-      store
-      .find(filterOptions)
-      .sort(sortOptions)
-      .skip(skip)
-      .limit(itemsPerPage)
-      .lean(),
-      store.find(filterOptions).countDocuments()
-    ])
-
-    res.render('admin/all/store', { title: 'Danh sách cửa hàng', layout: 'admin', index, successful, stores, totalStore, currentPage })
+    res.render('admin/all/store', { title: 'Danh sách cửa hàng', layout: 'admin' })
   }
 
   async storeInfo(req, res, next) {
-    const index = 'stores'
-    const successful = req.flash('successful')
-    
-    const [storeInfo, employeesInfo] = await Promise.all([
-      store.findOne({ _id: req.params.id }).lean(),
-      employee.find({ 'userInfo.storeId': req.params.id }).lean(),
-    ]);
-    res.render('admin/detail/store', { title: storeInfo.name, layout: 'admin', index, successful, storeInfo, employeesInfo })
+    res.render('admin/detail/store', { layout: 'admin' })
   }
 
   async storeUpdate(req, res, next) {
@@ -70,23 +54,17 @@ class allStoresController {
       address: address,
       details: details
     })
-
-    req.flash('successful', 'Cập nhật cửa hàng thành công')
-    res.redirect(req.get('Referrer') || '/admin')
   }
 
   async storeCreate(req, res, next) {
-    const index = 'stores'
-    
-    res.render('admin/create/store', { title: 'Thêm cửa hàng mới', layout: 'admin', index })
+    res.render('admin/create/store', { title: 'Thêm cửa hàng mới', layout: 'admin' })
   }
 
   async storeCreated(req, res, next) {
     const newStore = new store(req.body)
 
     await newStore.save()
-    req.flash('successful', 'Thêm cửa hàng thành công')
-    res.redirect('/admin/all-stores')
+
   }
 }
 module.exports = new allStoresController

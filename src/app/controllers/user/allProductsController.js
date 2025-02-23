@@ -56,8 +56,7 @@ class allProductsController {
   }
 
   async showAllProducts(req, res, next) {
-    const holderProducts = Array(10).fill({})
-    res.render('users/allProducts', { title: 'Toàn bộ sản phẩm', holderProducts }) 
+    res.render('users/allProducts', { title: 'Toàn bộ sản phẩm' }) 
   }
 
   async productInfo(req, res, next) {

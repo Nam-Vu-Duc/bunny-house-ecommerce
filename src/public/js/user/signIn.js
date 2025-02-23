@@ -26,7 +26,8 @@ async function checkingAccount() {
   pushNotification(message)
 
   setTimeout(() => {
-    window.location.replace("http://localhost:3000/home")
+    const path = window.location.origin
+    window.location.replace(path + '/home')
   }, 1000)
   
   return

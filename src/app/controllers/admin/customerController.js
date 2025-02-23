@@ -29,24 +29,6 @@ class allCustomersController {
   }
 
   async getCustomer(req, res, next) {
-    
-  }
-
-  async getFilter(req, res, next) {
-    const memberShip = await member.find().lean()
-    res.json({data: memberShip})
-  }
-
-  async allCustomers(req, res, next) {
-    const holderData = Array(10).fill({})
-
-    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin', holderData });
-  }
-
-  async customerInfo(req, res, next) {
-    const index = 'customers'
-    const successful = req.flash('successful')
-
     const customerInfo = await user.findOne({ _id: req.params.id }).lean()
     const [memberInfo, orderInfo] = await Promise.all([
       member.findOne({ code: customerInfo.memberCode}).lean(),
@@ -67,8 +49,19 @@ class allCustomersController {
         }
       ])
     ])
-    
-    res.render('admin/detail/customer', { title: customerInfo.name, layout: 'admin', index, successful, customerInfo, memberInfo, orderInfo })
+  }
+
+  async getFilter(req, res, next) {
+    const memberShip = await member.find().lean()
+    res.json({data: memberShip})
+  }
+
+  async allCustomers(req, res, next) {
+    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin' });
+  }
+
+  async customerInfo(req, res, next) {
+    res.render('admin/detail/customer', { title: customerInfo.name, layout: 'admin' })
   }
 
   async customerUpdate(req, res, next) {
@@ -87,23 +80,16 @@ class allCustomersController {
         address: address ,
         gender : gender  ,
     })
-
-    req.flash('successful', 'Cập nhật khách hàng thành công')
-    res.redirect(req.get('Referrer') || '/admin')
   }
 
   async createCustomer(req, res, next) {
-    const index = 'customers'
-    const error = req.flash('error')
-    
-    res.render('admin/create/customer', { title: 'Thêm khách hàng mới', layout: 'admin', index, error })
+    res.render('admin/create/customer', { title: 'Thêm khách hàng mới', layout: 'admin' })
   }
 
   async customerCreated(req, res, next) {
     const userExist = await user.findOne({ email: req.body.email })
     if (userExist) {
-      req.flash('error', 'Email đã tồn tại')
-      return res.redirect('/admin/all-customers/customer/create')
+
     }
 
     const salt = await bcrypt.genSalt(10)
@@ -129,9 +115,6 @@ class allCustomersController {
     })
     await newChat.save()
     await newAIChat.save()
-
-    req.flash('successful', 'Thêm khách hàng thành công')
-    res.redirect('/admin/all-customers')
   }
 }
 module.exports = new allCustomersController

@@ -1,6 +1,6 @@
 <div class="admin-trash-products-container">
   <div class="board-title">
-    <p>Sản phẩm đã xoá: {{totalDeletedProduct}}</p>
+    <p></p>
   </div>
 
   <div class="table">
@@ -12,25 +12,20 @@
           <td style="width: 30%">Tên     </td>
           <td style="width: 15%">Loại    </td>
           <td style="width: 25%">Giá     </td>
-          <td style="width: 10%">Thao tác</td>
+          <td style="width: 10%"></td>
         </tr>
       </thead>
 
       <tbody>
-        {{#each product}}
+        {{#each (holderData 10)}}
         <tr>
-          <td>{{addIndex @index 1}}</td>
-          <td>{{this.brand}}</td>
-          <td style="display: flex; justify-content: center;align-items: center">
-            <img src="{{this.img.path}}" alt="{{this.name}}" loading="lazy">
-            <p>{{this.name}}</p>
-          </td>
-          <td>{{this.categories}}</td>
-          <td>{{formatNumber this.price}}</td>
-          <td>
-            <button id="{{this._id}}" onclick="clickToRestore(this.id)">Khôi Phục</button>
-            <button id="{{this._id}}" onclick="clickToDelete(this.id)">Xoá</button>
-          </td>
+          <td></td>
+          <td class="loading"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
         {{/each}}
       </tbody>
@@ -60,6 +55,8 @@
       </form>
     </div>
   </div>
+
+  <span class="pagination"></span>
 </div>
 
 <form style="display: none" name="delete-form" method="post"></form>

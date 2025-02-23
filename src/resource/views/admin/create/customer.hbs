@@ -1,5 +1,5 @@
 <div class="admin-create-customer-container">
-  <form id="form-1" method="post" action="/admin/all-customers/customer/created">
+  <div id="form">
     <div class="form-title">
       <p>Thêm khách hàng mới</p>
     </div>
@@ -7,41 +7,35 @@
     <div class="form-group">
       <label for="name">Họ tên</label>
       <input type="text" class="form-control" id="name" name="name" placeholder="VD: Mai Hồng Vũ">
-      <span class="form-message"></span>
     </div>
 
     <div class="form-group">
       <label for="email">Email</label>
       <input type="text" class="form-control" id="email" name="email" placeholder="VD: mhv@gmail.com">
-      <span class="form-message"></span>
     </div>
 
     <div class="form-group">
       <label for="phone">Số điện thoại</label>
       <input type="text" class="form-control" id="phone" name="phone" placeholder="VD: 0987654321">
-      <span class="form-message"></span>
     </div>
 
     <div class="form-group">
       <label for="address">Địa chỉ</label>
       <input type="text" class="form-control" id="address" name="address" placeholder="VD: Hà Nội">
-      <span class="form-message"></span>
     </div>
 
     <div class="form-group">
       <label for="password">Mật Khẩu</label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="Aa">
-      <span class="form-message"></span> 
+      <input type="password" class="form-control" id="password" name="password" placeholder="Aa"> 
     </div>
 
     <div class="form-group">
       <label for="password-confirm">Xác Nhận Mật Khẩu</label>
       <input type="password" class="form-control" id="password-confirm" name="password-confirm" placeholder="Aa">
-      <span class="form-message"></span>
     </div>
 
     <div class="submit-button"><button title="submit" type="submit">Hoàn thành</button></div>
-  </form>
+  </div>
 </div>
 
 <script src="/js/admin/create/customer.js"></script>

@@ -24,9 +24,7 @@ class allBrandsController {
   }
 
   async showAllBrands(req, res, next) {
-    const holderBrands = Array(8).fill({})
-
-    res.render('users/allBrands', { title: 'Toàn bộ thương hiệu', holderBrands }) 
+    res.render('users/allBrands', { title: 'Toàn bộ thương hiệu' }) 
   }
 
   async brandInfo(req, res, next) {

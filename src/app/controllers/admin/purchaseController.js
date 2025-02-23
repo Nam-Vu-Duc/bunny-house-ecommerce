@@ -4,54 +4,27 @@ const supplier = require('../../models/supplierModel')
 
 class adminController {
   async getPurchases(req, res, next) {
-    
-  }
-
-  async getPurchase(req, res, next) {
-    
-  }
-
-  async getFilter(req, res, next) {
-  
-  }
-
-  async allPurchases(req, res, next) {
-    const index  = 'purchases'
-    const successful = req.flash('successful')
-
-    const currentPage  = req.query.page || 1
-    const queryList    = req.query
+    const currentPage  = req.body.page
+    const sort         = req.body.sort
+    const filter       = req.body.filter
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
-    const sortOptions  = {}
-    const filterOptions= { deletedAt: null }
 
-    for (var key in queryList) {
-      if (queryList.hasOwnProperty(key) && key.includes('sort_')) {
-        sortOptions[key.slice(5)] = parseInt(queryList[key])
-      }
-      if (queryList.hasOwnProperty(key) && key.includes('filter_')) {
-        filterOptions[key.slice(7)] = queryList[key]
-      }
-    }
-
-    const [purchases, totalPurchase] = await Promise.all([
+    const [data, dataSize] = await Promise.all([
       purchase
-        .find(filterOptions)
-        .sort(sortOptions)
+        .find(filter)
+        .sort(sort)
         .skip(skip)
         .limit(itemsPerPage)
         .lean(),
-      purchase.find(filterOptions).countDocuments()
-    ])
-
-    res.render('admin/all/purchase', { title: 'Danh sách phiếu nhập', layout: 'admin', index, successful, purchases, totalPurchase, currentPage })
+      purchase.find(filter).countDocuments(),
+    ]) 
+    if (!data) res.status(404).json({data: [], data_size: 0})
+    
+    return res.json({data: data, data_size: dataSize})
   }
 
-  async purchaseInfo(req, res, next) {
-    const index        = 'purchases'
-    const successful   = req.flash('successful')
-
+  async getPurchase(req, res, next) {
     const purchaseInfo = await purchase.findOne({ _id: req.params.id }).lean()
     const supplierInfo = await supplier.findOne({ _id: purchaseInfo.supplierId }).lean()
 
@@ -61,8 +34,18 @@ class adminController {
       const quantity = purchaseInfo.products.find(p => p.id == product._id).quantity
       return { product: product, purchaseQuantity: quantity }
     })
+  }
 
-    res.render('admin/detail/purchase', { title: 'Phiếu nhập', layout: 'admin', index, successful, purchaseInfo, supplierInfo, productInfoWithQuantity })
+  async getFilter(req, res, next) {
+  
+  }
+
+  async allPurchases(req, res, next) {
+    res.render('admin/all/purchase', { title: 'Danh sách phiếu nhập', layout: 'admin' })
+  }
+
+  async purchaseInfo(req, res, next) {
+    res.render('admin/detail/purchase', { title: 'Phiếu nhập', layout: 'admin' })
   }
 
   async purchaseUpdate(req, res, next) {
@@ -70,13 +53,12 @@ class adminController {
   }
 
   async purchaseCreate(req, res, next) {
-    const index = 'purchases'
     const [products, suppliers] = await Promise.all([
       product.find({deletedAt: null}).lean(),
       supplier.find().lean()
     ])
 
-    res.render('admin/create/purchase', { title: 'Thêm đơn nhập mới', layout: 'admin', index, products, suppliers })
+    res.render('admin/create/purchase', { title: 'Thêm đơn nhập mới', layout: 'admin', products, suppliers })
   }
 
   async purchaseCreated(req, res, next) {
@@ -128,9 +110,7 @@ class adminController {
       },
     }))
     await product.bulkWrite(bulkOps)
-    
-    req.flash('successful', 'Thêm đơn nhập thành công')
-    return res.redirect('/admin/all-purchases')
+
   }
 }
 module.exports = new adminController

@@ -1,6 +1,6 @@
 <div class="admin-all-purchases-container">  
   <div class="board-title">
-    <p>Đơn nhập: {{totalPurchase}}</p>
+    <p></p>
   </div>
 
   <div class="control-bar">
@@ -14,7 +14,7 @@
         </select>
 
         <select id="totalPurchasePrice" class="filter-btn">
-          <option value="">Giá trị đơn mặc định</option>
+          <option value="">Giá trị mặc định</option>
           <option value="1">Giá trị tăng dần</option>
           <option value="-1">Giá trị giảm dần</option>
         </select>
@@ -55,22 +55,22 @@
       </thead>
 
       <tbody>
-        {{#each purchases}}
+        {{#each (holderData 10)}}
         <tr>
-          <td>{{addIndex @index 1}}</td>
-          <td>{{this._id}}</td>
-          <td>{{formatDate this.purchaseDate}}</td>
-          <td>{{this.totalProducts}}</td>
-          <td>{{formatNumber this.totalPurchasePrice}}</td>
-          <td><a href="/admin/all-purchases/purchase/{{this._id}}">Xem</a></td>
+          <td></td>
+          <td class="loading"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
         {{/each}}
       </tbody>
     </table>
   </div>
 
-  <span class="pagination">
-  </span>
+  <span class="pagination"></span>
 </div>
 
 <script src="/js/admin/all/purchase.js"></script>

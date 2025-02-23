@@ -48,7 +48,6 @@
       <thead>
         <tr>
           <td style="width: 5% ">STT           </td>
-          <td class="loading" style="display: none;"></td>
           <td style="width: 15%">Mã Khách hàng </td>
           <td style="width: 15%">Tên Khách Hàng</td>
           <td style="width: 25%">Địa chỉ       </td>
@@ -59,7 +58,7 @@
       </thead>
 
       <tbody>
-        {{#each holderData}}
+        {{#each (holderData 10)}}
           <tr>
             <td></td>
             <td class="loading"></td>

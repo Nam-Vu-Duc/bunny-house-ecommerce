@@ -1,6 +1,6 @@
 <div class="admin-all-products-container">  
   <div class="board-title">
-    <p>Sản phẩm: {{totalProduct}}</p>
+    <p></p>
   </div>
 
   <div class="control-bar">
@@ -35,9 +35,6 @@
         </select>
          <select id="brand" class="filter-btn">
           <option value="">Thương hiệu</option>
-          {{#each brands}}
-          <option value="{{this.name}}">{{this.name}}</option>
-          {{/each}}
         </select>
       </div>
       <button id="clear-filter" style="display: none">Xoá bộ lọc</button>
@@ -66,26 +63,16 @@
       </thead>
 
       <tbody>
-        {{#each products}}
+        {{#each (holderData 10)}}
         <tr>
-          <td>{{addIndex @index 1}}</td>
-          <td>{{this.brand}}</td>
-          <td style="
-                display: flex; 
-                justify-content: start;
-                align-items: center;
-                "
-          >
-            <img src="{{this.img.path}}" alt="{{this.name}}" loading="lazy" loading="lazy"> 
-            <p>{{this.name}}</p>
-          </td>  
-          <td>{{formatNumber this.purchasePrice}}</td>
-          <td>{{formatNumber this.price}}</td>
-          <td>{{this.quantity}}</td>
-          <td>
-            <a href="/admin/all-products/product/{{this._id}}" class="update-button">Xem</a>
-            <button id="{{this._id}}" name="{{this.name}}" onclick="reply_click(this.id, this.name)">Xoá</button> 
-          </td>
+          <td></td>
+          <td class="loading"></td>
+          <td></td>
+          <td></td>  
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
         {{/each}}
       </tbody>

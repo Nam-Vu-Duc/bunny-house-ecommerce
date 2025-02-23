@@ -5,63 +5,63 @@ const cloudinary = require('cloudinary').v2
 
 class allProductsController {
   async getProducts(req, res, next) {
-    
-  }
-
-  async getProduct(req, res, next) {
-    
-  }
-
-  async getFilter(req, res, next) {
-  
-  }
-
-  async allProducts(req, res, next) {
-    const index        = 'products'
-    const successful   = req.flash('successful')
-    
-    const currentPage  = req.query.page || 1
-    const queryList    = req.query
+    const currentPage  = req.body.page
+    const sort         = req.body.sort
+    const filter       = req.body.filter
     const itemsPerPage = 10
     const skip         = (currentPage - 1) * itemsPerPage
-    const sortOptions  = {}
-    const filterOptions= { deletedAt: null }
 
-    for (var key in queryList) {
-      if (queryList.hasOwnProperty(key) && key.includes('sort_')) {
-        sortOptions[key.slice(5)] = parseInt(queryList[key])
-      }
-      if (queryList.hasOwnProperty(key) && key.includes('filter_')) {
-        filterOptions[key.slice(7)] = queryList[key]
-      }
-    }
-
-    if (filterOptions['name']) filterOptions['name'] = { $regex: filterOptions['name'], $options: 'i'}
-
-    const [products, totalProduct, brands] = await Promise.all([
+    const [data, dataSize] = await Promise.all([
       product
-        .find(filterOptions)
-        .sort(sortOptions)
+        .find(filter)
+        .sort(sort)
         .skip(skip)
         .limit(itemsPerPage)
         .lean(),
-      product.find(filterOptions).countDocuments(),
-      brand.find().lean()
-    ])
-
-    res.render('admin/all/product', { title: 'Danh sách sản phẩm', layout: 'admin', index, successful, totalProduct, products, brands, currentPage })
+      product.find(filter).countDocuments(),
+    ]) 
+    if (!data) res.status(404).json({data: [], data_size: 0})
+    
+    return res.json({data: data, data_size: dataSize})
   }
 
-  async productInfo(req, res, next) {
-    const index = 'products'
-    const successful = req.flash('successful')
+  async getDeletedProducts(req, res, next) {
+    const currentPage  = req.body.page
+    const itemsPerPage = 10
+    const skip         = (currentPage - 1) * itemsPerPage
 
+    const [data, dataSize] = await Promise.all([
+      product
+        .find({ deletedAt: { $ne: null }})
+        .skip(skip)
+        .limit(itemsPerPage)
+        .lean(),
+      product.find({ deletedAt: { $ne: null }}).countDocuments(),
+    ]) 
+    if (!data) res.status(404).json({data: [], data_size: 0})
+    
+    return res.json({data: data, data_size: dataSize})
+  }
+
+  async getProduct(req, res, next) {
     const [productInfo, brands, productStatuses] = await Promise.all([
       product.findOne({ _id: req.params.id }).lean(),
       brand.find().lean(),
       productStatus.find().lean()
     ]) 
-    res.render('admin/detail/product', { title: productInfo.name, layout: 'admin', index, successful, productInfo, brands, productStatuses })
+  }
+
+  async getFilter(req, res, next) {
+    const brands = await brand.find().lean()
+    res.json({brand: brands})
+  }
+
+  async allProducts(req, res, next) {
+    res.render('admin/all/product', { title: 'Danh sách sản phẩm', layout: 'admin' })
+  }
+
+  async productInfo(req, res, next) {
+    res.render('admin/detail/product', { layout: 'admin' })
 
   }
 
@@ -88,14 +88,10 @@ class allProductsController {
       quantity      : req.body.quantity,
       status        : req.body.status,
     })
-
-    req.flash('successful', 'Cập nhật sản phẩm thành công')
-    res.redirect(req.get('Referrer') || '/admin')
   }
 
   async createProduct(req, res, next) {
-    const index = 'products'
-    res.render('admin/create/product', { title: 'Thêm sản phẩm mới', layout: 'admin', index })
+    res.render('admin/create/product', { title: 'Thêm sản phẩm mới', layout: 'admin' })
   }
 
   async productCreated(req, res, next) {
@@ -105,16 +101,10 @@ class allProductsController {
       newProduct.img.filename = req.file.filename
     }
     await newProduct.save()
-
-    req.flash('successful', 'Thêm sản phẩm thành công')
-    res.redirect('/admin/all-products')
   }
 
   async softDelete(req, res, next) {
     await product.updateOne({ _id: req.params.id}, { deletedAt: Date.now() })
-    
-    req.flash('successful', 'Thêm sản phẩm vào kho thành công')
-    res.redirect('/admin/all-products')
   }
 
   async deleteProduct(req, res, next) {
@@ -123,32 +113,14 @@ class allProductsController {
     
     await cloudinary.uploader.destroy(deleteImg)
     await product.deleteOne({ _id: req.params.id })
-
-    req.flash('successful', 'Xoá sản phẩm thành công')
-    res.redirect('/admin/all-products')
   }
 
   async restore(req, res, next) {
     await product.updateOne({ _id: req.params.id}, { deletedAt: null })
-    
-    req.flash('successful', 'Phục hồi sản phẩm thành công')
-    res.redirect('/admin/all-products')
   }
 
   async trash(req, res, next) {
-    const index = 'trash'
-    const successful = req.flash('successful')
-
-    const currentPage  = req.query.page || 1
-    const itemsPerPage = 10
-    const skip         = (currentPage - 1) * itemsPerPage
-
-    const [products, totalDeletedProduct] = await Promise.all([
-      product.find({ deletedAt: { $ne: null } }).sort({ deletedAt: -1, name: 1 }).skip(skip).limit(itemsPerPage).lean(),
-      product.find({ deletedAt: { $ne: null } }).countDocuments()
-    ])
-
-    res.render('admin/all/trash', { title: 'Kho', layout: 'admin', index, successful, products, totalDeletedProduct, currentPage })
+    res.render('admin/all/trash', { title: 'Kho', layout: 'admin' })
   }
 }
 module.exports = new allProductsController

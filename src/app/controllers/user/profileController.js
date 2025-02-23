@@ -84,8 +84,6 @@ class profileController {
   }
 
   async profileUpdate(req, res, next) {
-    console.log(req.body)
-
     const userExist = await user.findOne({ email: req.body.email })
     if (userExist) return res.json({isValid: false, message: 'Email đã tồn tại'})
 
@@ -98,12 +96,6 @@ class profileController {
     })
 
     return res.json({isValid: false, message: 'Cập nhật thông tin thành công'})
-  }
-  
-  async feedBack(req, res, next) {
-    const index  = 'feedback'
-
-    res.render('users/profileFeedback', { title: 'Góp ý cửa hàng', index })
   }
 }
 module.exports = new profileController

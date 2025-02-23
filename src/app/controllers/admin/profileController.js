@@ -6,11 +6,8 @@ class profileController {
   }
 
   async updateProfile(req, res, next) {
-    const index      = 'profile'
-    const successful = req.flash('successful')
-
     const userInfo = await emp.findOne({ _id: req.cookies.uid }).lean()
-    res.render('admin/detail/profile', { title: 'Thông tin cá nhân', layout: 'admin', index, successful, userInfo } )
+    res.render('admin/detail/profile', { title: 'Thông tin cá nhân', layout: 'admin', userInfo } )
   }
 
   async profileUpdated(req, res, next) {
@@ -27,9 +24,6 @@ class profileController {
       gender : gender ,
       address: address,
     })
-    
-    req.flash('successful', 'Cập nhật thông tin thành công')
-    res.redirect(req.get('Referrer') || '/admin')
   }
 }
 module.exports = new profileController

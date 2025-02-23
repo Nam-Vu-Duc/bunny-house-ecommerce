@@ -27,5 +27,6 @@ router.get('/product/restore/:id'       , productController.restore)
 router.post('/data/products'            , productController.getProducts)
 router.post('/data/product'             , productController.getProduct)
 router.post('/data/filter'              , productController.getFilter)
+router.post('/data/deleted-products'    , productController.getDeletedProducts)
 
 module.exports = router

@@ -1,10 +1,9 @@
 <div class="admin-create-purchase-container">
-  <form id="form-1" method="post" action="/admin/all-purchases/purchase/created">
+  <div id="form">
     <div class="form-title"><p>Thêm đơn nhập mới</p></div>
     <div class="form-group">
       <label for="purchaseDate">Ngày nhập *</label>
       <input type="date" id="purchaseDate" name="purchaseDate" required>
-      <span class="form-message"></span>
     </div>
     <div class="form-group">
       <label for="name">Chọn nhà cung cấp</label>
@@ -18,12 +17,10 @@
     <div class="form-group">
       <label for="note">Ghi chú</label>
       <input type="text" id="note" name="note">
-      <span class="form-message"></span>
     </div>
     <div class="form-group">
       <label>Chọn sản phẩm</label>
       <input type="text"  id="product-search" placeholder="Nhập tên sản phẩm">
-      <span class="form-message"></span>
     </div>
     <div class="products-match">
       {{#each products}}
@@ -67,7 +64,7 @@
     </table>  
 
     <div class="submit-button"><button title="submit" type="submit">Hoàn thành</button></div>
-  </form>
+  </div>
 </div>
 
 <script src="/js/admin/create/purchase.js"></script>

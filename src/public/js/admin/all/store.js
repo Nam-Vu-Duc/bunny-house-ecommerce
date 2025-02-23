@@ -28,7 +28,7 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
     tr.querySelector('td.loading').style.display = ''
   })
 
-  const response = await fetch('/admin/all-customers/data/customers', {
+  const response = await fetch('/admin/all-stores/data/stores', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({sort: sortOptions, filter: filterOptions, page: currentPage})
@@ -38,7 +38,7 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
   const data = json.data
   dataSize.size = json.data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Khách Hàng: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Cửa hàng: ' + dataSize.size
 
   window.setTimeout(function() {
     tbody.querySelectorAll('tr').forEach((tr, index) => {
@@ -53,15 +53,14 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
         <td>${item._id}</td>
         <td>${item.name}</td>
         <td>${item.address}</td>
-        <td>${item.quantity}</td>
         <td>${formatNumber(item.revenue)}</td>
-        <td><a href="/admin/all-customers/customer/${item._id}">Xem</a></td>
+        <td><a href="/admin/all-stores/store/${item._id}">Xem</a></td>
       `
       tbody.appendChild(newTr)
     })
   }, 1000)
   
-  pagination(getCustomers, sortOptions, filterOptions, currentPage.page, dataSize.size)
+  pagination(getCustomers, sortOptions, filterOptions, currentPage, dataSize.size)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {

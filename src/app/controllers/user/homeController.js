@@ -26,9 +26,7 @@ class homeController {
   }
 
   async show(req, res, next) {
-    const holderProducts = Array(5).fill({})
-    const holderBrands = Array(15).fill({})
-    res.render('users/home', { title: 'Bunny House - Cửa hàng mỹ phẩm chính hãng', holderProducts, holderBrands})
+    res.render('users/home', { title: 'Bunny House - Cửa hàng mỹ phẩm chính hãng' })
   }
 
   async searchInfo(req, res, next) {

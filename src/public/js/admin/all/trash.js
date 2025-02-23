@@ -12,12 +12,12 @@ const restoreButton = document.getElementById('restore-button')
 var productId;
 
 
-async function getCustomers(sortOptions, filterOptions, currentPage) {
+async function getDeletedProducts(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
     tr.querySelector('td.loading').style.display = ''
   })
 
-  const response = await fetch('/admin/all-customers/data/customers', {
+  const response = await fetch('/admin/all-products/data/deleted-products', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({sort: sortOptions, filter: filterOptions, page: currentPage})
@@ -27,7 +27,7 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
   const data = json.data
   dataSize.size = json.data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Khách Hàng: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Sản phẩm đã xoá: ' + dataSize.size
 
   window.setTimeout(function() {
     tbody.querySelectorAll('tr').forEach((tr, index) => {
@@ -38,19 +38,23 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
       const newTr = document.createElement('tr')
       newTr.innerHTML = `
         <td></td>
-        <td class="loading" style="display:none"></td>
-        <td>${item._id}</td>
-        <td>${item.name}</td>
-        <td>${item.address}</td>
-        <td>${item.quantity}</td>
-        <td>${formatNumber(item.revenue)}</td>
-        <td><a href="/admin/all-customers/customer/${item._id}">Xem</a></td>
+        <td>${item.brand}</td>
+        <td style="display: flex; justify-content: center;align-items: center">
+          <img src="${item.img.path}" alt="${item.name}" loading="lazy">
+          <p>${item.name}</p>
+        </td>
+        <td>${item.categories}</td>
+        <td>${formatNumber(item.price)}</td>
+        <td>
+          <button id="${item._id}" onclick="clickToRestore(this.id)">Khôi Phục</button>
+          <button id="${item._id}" onclick="clickToDelete(this.id)">Xoá</button>
+        </td>
       `
       tbody.appendChild(newTr)
     })
   }, 1000)
   
-  pagination(getCustomers, sortOptions, filterOptions, currentPage.page, dataSize.size)
+  pagination(getDeletedProducts , sortOptions, filterOptions, currentPage, dataSize.size)
 }
 
 function clickToDelete(clicked_id) {
@@ -75,7 +79,5 @@ restoreButton.onclick = function () {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getCustomers(sortOptions, filterOptions, currentPage.page)
-  sortAndFilter(getCustomers, sortOptions, filterOptions, currentPage.page)
-  exportJs()
+  getDeletedProducts(sortOptions, filterOptions, currentPage.page)
 })
