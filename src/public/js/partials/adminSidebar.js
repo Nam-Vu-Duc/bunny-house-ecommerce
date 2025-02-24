@@ -2,7 +2,6 @@ const resizeButton        = document.querySelector('button.resize-button')
 const currentTime         = new Date().getHours()
 const checkDay            = {message: ''}
 const index               =  new URL(window.location).pathname.split('/').find(el => el.includes('all'))
-console.log(index)
 
 document.querySelector('div.admin-button').querySelectorAll('a').forEach((a) => {
   if (a.id === index) a.style.backgroundColor = '#FFDFDF'

@@ -15,10 +15,10 @@ router.get('/'                          , productController.allProducts)
 router.get('/trash'                     , productController.trash)
 
 router.get('/product/create'            , productController.createProduct)
-router.post('/product/created'          , upload.single('img'), productController.productCreated)
+router.post('/product/created'          , productController.productCreated)
 
 router.get('/product/:id'               , productController.productInfo)
-router.put('/product/updated/:id'       , upload.single('img'), productController.productUpdated)
+router.put('/product/updated/:id'       , productController.productUpdated)
 
 router.delete('/product/soft-delete/:id', productController.softDelete)
 router.delete('/product/delete/:id'     , productController.deleteProduct)

@@ -53,7 +53,7 @@ class allCustomersController {
 
   async getFilter(req, res, next) {
     const memberShip = await member.find().lean()
-    res.json({data: memberShip})
+    res.json({memberShip: memberShip})
   }
 
   async allCustomers(req, res, next) {
@@ -88,9 +88,7 @@ class allCustomersController {
 
   async customerCreated(req, res, next) {
     const userExist = await user.findOne({ email: req.body.email })
-    if (userExist) {
-
-    }
+    if (userExist) return res.json({isValid: false, message: 'Email đã tồn tại'})
 
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
@@ -115,6 +113,7 @@ class allCustomersController {
     })
     await newChat.save()
     await newAIChat.save()
+    return res.json({isValid: true, message: 'Tạo tài khoản thành công'})
   }
 }
 module.exports = new allCustomersController

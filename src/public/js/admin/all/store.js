@@ -15,12 +15,12 @@ async function getFilter() {
   const json = await response.json()
   const data = json.data
 
-  data.forEach((element, index) => {
-    const option = document.createElement('option')
-    option.value = element.code
-    option.textContent = element.name
-    document.querySelector('select#memberCode').appendChild(option)
-  })
+  // data.forEach((element, index) => {
+  //   const option = document.createElement('option')
+  //   option.value = element.code
+  //   option.textContent = element.name
+  //   document.querySelector('select#memberCode').appendChild(option)
+  // })
 }
 
 async function getCustomers(sortOptions, filterOptions, currentPage) {

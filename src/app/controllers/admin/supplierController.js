@@ -62,13 +62,11 @@ class allSuppliersController {
 
   async supplierCreated(req, res, next) {
     const userExist = await supplier.findOne({ phone: req.body.phone })
-    if (userExist) {
-      req.flash('message', 'SĐT đã tồn tại')
-      return res.redirect('/admin/all-suppliers/supplier/create')
-    }
-    const newSupplier = new supplier(req.body)
+    if (userExist) return res.json({isValid: false, message: 'Sđt đã tồn tại'})
 
+    const newSupplier = new supplier(req.body)
     await newSupplier.save()
+    return res.json({isValid: true, message: 'Tạo tài khoản thành công'})
   }
 }
 module.exports = new allSuppliersController

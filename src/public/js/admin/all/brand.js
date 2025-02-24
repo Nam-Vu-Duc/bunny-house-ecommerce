@@ -67,7 +67,7 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getFilter()
+  // getFilter()
   getCustomers(sortOptions, filterOptions, currentPage.page)
   sortAndFilter(getCustomers, sortOptions, filterOptions, currentPage.page)
   exportJs()

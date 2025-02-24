@@ -7,9 +7,27 @@ const input       = document.querySelector('textarea.input')
 const sendBtn     = document.querySelector('div.send-btn')
 const form        = document.querySelector('form.input-form')
 const chatList    = document.querySelector('div.chat-list').querySelectorAll('div.item')
-let chatId = ''
+const chatId      = {id: ''}
+const adminId     = {id: ''}
 
-socket.emit('joinRoom', {id: uid, room: 'admin-room'})
+async function getUser() {
+  try {
+    const response = await fetch('/admin/all-chats/data/user')
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+
+    const {isValid, message} = await response.json()
+
+    if (isValid) {
+      adminId.id = message
+      socket.emit('joinRoom', {id: adminId.id, room: 'admin-room'})
+      console.log(adminId.id + ' join room successful')
+    }
+  } catch (error) {
+    console.error("Error fetching chat data:", error)
+  }
+}
+
+getUser()
 
 async function getChatData(adminId, userId, userName, chatContent) {
   try {
@@ -19,7 +37,7 @@ async function getChatData(adminId, userId, userName, chatContent) {
     const json = await response.json();
     const messages = json.data
     const userStatus = json.userStatus
-    chatId = json.chatId
+    chatId.id = json.chatId
     
     chatHeader.querySelector('div.name').textContent = userName
     chatHeader.querySelector('div.last-active').textContent = userStatus ? 'Active now' : 'Offline'
@@ -66,7 +84,7 @@ async function reOrderChatSidebar(id, room) {
       const lastMessage = await updateLastMessage(room)
       const lastMessageElement = chat.querySelector('div.last-message')
       lastMessageElement.textContent = lastMessage
-      if (id !== uid) lastMessageElement.style.fontWeight = 'bold'
+      if (id !== adminId.id) lastMessageElement.style.fontWeight = 'bold'
 
       break // Stop loop after finding the chat
     }
@@ -80,18 +98,18 @@ chatList.forEach((chat, index) => {
     const lastMessage = chat.querySelector('div.last-message')
     if (lastMessage.style.fontWeight === 'bold') lastMessage.style.fontWeight = ''
     input.id = userId
-    getChatData(uid, userId, userName, chatContent)
+    getChatData(adminId.id, userId, userName, chatContent)
     checkCurrentIndex(index)
   }
 })
 
 sendBtn.onclick = async function() {
   if (input.value.trim() !== '') {
-    socket.emit('privateMessage', { room: input.id, message: `${uid}:${input.value}` })
+    socket.emit('privateMessage', { room: input.id, message: `${adminId.id}:${input.value}` })
     const response = await fetch('/admin/all-chats/create', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({value: input.value, chatId: chatId})
+      body: JSON.stringify({value: input.value, chatId: chatId.id})
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
     input.value = ''
@@ -116,7 +134,7 @@ input.addEventListener("keypress", function(event) {
 socket.on('chat-message', (id, msg, room) => {
   const chat = document.createElement('li')
   chat.textContent = msg
-  if (id.trim() === uid) {
+  if (id.trim() === adminId.id) {
     chat.setAttribute('class', 'right-content') 
   }
   reOrderChatSidebar(id, room)

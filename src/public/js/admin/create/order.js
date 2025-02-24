@@ -9,14 +9,6 @@ const productNameNormalize  = Array.from(document.querySelectorAll('p#product-na
 
 importLinkCss('/css/admin/createOrder.css')
 
-function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-}
-
-function deFormatNumber(number) {
-  return parseInt(number.replace(/\./g, ''))
-}
-
 const totalOrderPrice = document.createElement('input')
 totalOrderPrice.setAttribute('type', 'hidden')
 totalOrderPrice.setAttribute('name', 'totalOrderPrice')
@@ -112,7 +104,7 @@ product.forEach((item,index) => {
   }
 })
 
-updateProductTotalPrice = function() {
+function updateProductTotalPrice() {
   productAdded.forEach((item, index) => {
     const input = item.querySelector('input#productQuantity')
     const remove = item.querySelector('td:last-child')
@@ -130,7 +122,7 @@ updateProductTotalPrice = function() {
   })
 }
 
-updatePurchaseTotalPrice = function() {
+function updatePurchaseTotalPrice() {
   var total = 0
   Array.from(document.querySelectorAll('tbody td:nth-child(6)')).forEach((item) => {
     total += deFormatNumber(item.innerText)

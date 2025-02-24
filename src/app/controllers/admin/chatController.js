@@ -1,5 +1,6 @@
 const chat = require('../../models/chatModel')
 const user = require('../../models/userModel')
+const emp  = require('../../models/employeeModel')
 const message = require('../../models/messageModel')
 
 class allChatsController {
@@ -7,8 +8,14 @@ class allChatsController {
     
   }
 
+  async getUser(req, res, next) {
+    const empInfo = await emp.findOne({ _id: req.cookies.uid }).lean()
+    if (!empInfo) return res.json({isValid: false, message: 'not found'})
+
+    return res.json({isValid: true, message: empInfo._id})
+  }
+
   async allChats(req, res, next) {
-    const index = 'chats'
     const uid = req.cookies.uid
     const [chats, totalChat] = await Promise.all([
       chat.aggregate([
@@ -38,7 +45,7 @@ class allChatsController {
       chat.find().countDocuments(),
     ])
 
-    res.render('admin/all/chat', { title: 'Danh sách chat', layout: 'admin', uid, index, chats, totalChat })
+    res.render('admin/all/chat', { title: 'Danh sách chat', layout: 'admin', uid, chats, totalChat })
   }
 
   async chatInfo(req, res) {

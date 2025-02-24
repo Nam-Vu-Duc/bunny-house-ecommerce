@@ -3,6 +3,7 @@ const purchase = require('../../models/purchaseModel')
 const supplier = require('../../models/supplierModel')
 
 class adminController {
+  // all
   async getPurchases(req, res, next) {
     const currentPage  = req.body.page
     const sort         = req.body.sort
@@ -24,6 +25,15 @@ class adminController {
     return res.json({data: data, data_size: dataSize})
   }
 
+  async getFilter(req, res, next) {
+  
+  }
+
+  async allPurchases(req, res, next) {
+    res.render('admin/all/purchase', { title: 'Danh sách phiếu nhập', layout: 'admin' })
+  }
+
+  // update
   async getPurchase(req, res, next) {
     const purchaseInfo = await purchase.findOne({ _id: req.params.id }).lean()
     const supplierInfo = await supplier.findOne({ _id: purchaseInfo.supplierId }).lean()
@@ -36,14 +46,6 @@ class adminController {
     })
   }
 
-  async getFilter(req, res, next) {
-  
-  }
-
-  async allPurchases(req, res, next) {
-    res.render('admin/all/purchase', { title: 'Danh sách phiếu nhập', layout: 'admin' })
-  }
-
   async purchaseInfo(req, res, next) {
     res.render('admin/detail/purchase', { title: 'Phiếu nhập', layout: 'admin' })
   }
@@ -52,13 +54,22 @@ class adminController {
 
   }
 
+  // create
+  async getSuppliers(req, res, next) {
+    const suppliers = await supplier.find().lean()
+    return res.json({data: suppliers})
+  }
+  
+  async getProducts(req, res, next) {
+    const query = req.body.query
+    const products = await product.find({
+      name: { $regex: query, $options: 'i'}
+    }).lean()
+    return res.json({data: products})
+  }
+  
   async purchaseCreate(req, res, next) {
-    const [products, suppliers] = await Promise.all([
-      product.find({deletedAt: null}).lean(),
-      supplier.find().lean()
-    ])
-
-    res.render('admin/create/purchase', { title: 'Thêm đơn nhập mới', layout: 'admin', products, suppliers })
+    res.render('admin/create/purchase', { title: 'Thêm đơn nhập mới', layout: 'admin' })
   }
 
   async purchaseCreated(req, res, next) {

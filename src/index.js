@@ -16,6 +16,7 @@ const server = createServer(app)
 const port = process.env.PORT
 
 db.connect()
+app.use(express.json({ limit: '50mb' }))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())

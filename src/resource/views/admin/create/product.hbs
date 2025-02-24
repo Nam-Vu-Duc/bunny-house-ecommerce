@@ -45,8 +45,13 @@
     </div>
 
     <div class="form-group">
-      <label for="brand">Hãng sản phẩm</label>
-      <input type="text" class="form-control" id="brand" name="brand" placeholder="VD: PRETTYSKIN">
+      <label></label>
+      <select name="brand">
+        <option value="">-- Chọn hãng --</option>
+        {{#each brands}}
+        <option value="{{this.name}}">{{this.name}}</option>
+        {{/each}}
+      </select>
     </div>
 
     <div class="form-group">
@@ -72,6 +77,11 @@
     <div class="form-group">
       <label for="details">Chi tiết sản phẩm</label>
       <input type="text" class="form-control" id="details" name="details" placeholder="VD: Dưỡng ẩm chuyên sâu với axit Hyaluronic: Axit Hyaluronic giúp bổ sung độ ẩm...">
+    </div>
+    
+    <div class="form-group">
+      <label for="guide">Hướng dẫn sử dụng</label>
+      <input type="text" class="form-control" id="guide" name="guide" placeholder="VD: Bước 1: Làm sạch daDùng sữa rửa mặt nhẹ nhàng phù hợp để làm sạch sâu lỗ chân lông, giúp tinh chất dễ dàng thẩm thấu....">
     </div>
 
     <div class="form-group">

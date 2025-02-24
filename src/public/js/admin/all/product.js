@@ -16,8 +16,7 @@ async function getFilter() {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  const brand = json.brand
+  const {brand} = await response.json()
 
   brand.forEach((element, index) => {
     const option = document.createElement('option')

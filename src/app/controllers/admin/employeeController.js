@@ -80,9 +80,7 @@ class allEmployeesController {
 
   async employeeCreated(req, res, next) {
     const empExist = await employee.findOne({ email: req.body.email })
-    if (empExist) {
-
-    }
+    if (empExist) return res.json({isValid: false, message: 'Email đã tồn tại'})
 
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
@@ -97,6 +95,7 @@ class allEmployeesController {
       storeCode : req.body.storeCode
     })
     await newEmp.save()
+    return res.json({isValid: true, message: 'Tạo tài khoản thành công'})
   }
 }
 module.exports = new allEmployeesController

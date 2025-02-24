@@ -1,7 +1,14 @@
+require('dotenv').config()
 const product = require('../../models/productModel')
 const brand = require('../../models/brandModel')
 const productStatus = require('../../models/productStatusModel')
 const cloudinary = require('cloudinary').v2
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key   : process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+})
 
 class allProductsController {
   async getProducts(req, res, next) {
@@ -91,16 +98,35 @@ class allProductsController {
   }
 
   async createProduct(req, res, next) {
-    res.render('admin/create/product', { title: 'Thêm sản phẩm mới', layout: 'admin' })
+    const brands = await brand.find().lean()
+    res.render('admin/create/product', { title: 'Thêm sản phẩm mới', layout: 'admin', brands })
   }
 
   async productCreated(req, res, next) {
-    let newProduct = new product(req.body)
-    if (req.file) {
-      newProduct.img.path = req.file.path
-      newProduct.img.filename = req.file.filename
-    }
+    const result = await cloudinary.uploader.upload(req.body.img, {
+      folder: 'products',
+      use_filename: true
+    })
+
+    const newProduct = new product({
+      categories  : req.body.categories,
+      skincare    : req.body.skincare,
+      makeup      : req.body.makeup,
+      brand       : req.body.brand,
+      name        : req.body.name,
+      oldPrice    : req.body.oldPrice,
+      price       : req.body.price,
+      description : req.body.description,
+      details     : req.body.details,
+      guide       : req.body.guide,
+      status      : req.body.status,
+      'img.path'  : result.secure_url,
+      'img.filename' : result.public_id
+    })
+
     await newProduct.save()
+
+    return res.json({isValid: true, message: 'Tạo sản phẩn mới thành công'})
   }
 
   async softDelete(req, res, next) {

@@ -7,7 +7,7 @@ const currentPage   = { page: 1 }
 const dataSize      = { size: 0 }
 
 async function getFilter() {
-  const response = await fetch('/admin/all-customers/data/filter', {
+  const response = await fetch('/admin/all-suppliers/data/filter', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
   })

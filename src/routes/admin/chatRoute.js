@@ -7,6 +7,7 @@ router.get('/:id'               , chatController.chatInfo)
 router.post('/create'           , chatController.chatCreated)
 router.post('/get-last-message' , chatController.chatLastMessage)
 
-router.post('/data/chats'       , chatController.getChats)
+router.get('/data/chats'        , chatController.getChats)
+router.get('/data/user'         , chatController.getUser)
 
 module.exports = router

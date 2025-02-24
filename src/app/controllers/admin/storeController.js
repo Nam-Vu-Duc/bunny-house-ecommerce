@@ -64,7 +64,7 @@ class allStoresController {
     const newStore = new store(req.body)
 
     await newStore.save()
-
+    return res.json({isValid: true, message: 'Tạo cửa hàng thành công'})
   }
 }
 module.exports = new allStoresController

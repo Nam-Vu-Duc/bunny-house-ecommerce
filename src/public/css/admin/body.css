@@ -36,7 +36,7 @@ body::-webkit-scrollbar {display: none}
   opacity: 0;
   pointer-events: none;
 }
-input[type="text"], input[type="password"], input[type="date"] {
+input[type="text"], input[type="password"], input[type="date"], input[type="number"] {
   font-family: 'Roboto', sans-serif;
   width: 100%;
   text-indent: 10px;
