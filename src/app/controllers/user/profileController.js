@@ -84,18 +84,14 @@ class profileController {
   }
 
   async profileUpdate(req, res, next) {
-    const userExist = await user.findOne({ email: req.body.email })
-    if (userExist) return res.json({isValid: false, message: 'Email đã tồn tại'})
-
     await user.updateOne({ _id: req.body.id}, {
       name    : req.body.name,
-      email   : req.body.email,
       phone   : req.body.phone,
       gender  : req.body.gender,
       address : req.body.address,
     })
 
-    return res.json({isValid: false, message: 'Cập nhật thông tin thành công'})
+    return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
   }
 }
 module.exports = new profileController

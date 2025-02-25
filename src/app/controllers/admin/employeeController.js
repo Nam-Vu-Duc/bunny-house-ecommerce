@@ -4,6 +4,7 @@ const position = require('../../models/positionModel')
 const bcrypt = require('bcryptjs')
 
 class allEmployeesController {
+  // all
   async getEmployees(req, res, next) {
     const currentPage  = req.body.page
     const sort         = req.body.sort
@@ -25,14 +26,6 @@ class allEmployeesController {
     return res.json({data: data, data_size: dataSize})
   }
 
-  async getEmployee(req, res, next) {
-    const [employeeInfo, stores, positions] = await Promise.all([
-      employee.findOne({ _id: req.params.id }).lean(),
-      store.find().lean(),
-      position.find().lean()
-    ])
-  }
-
   async getFilter(req, res, next) {
     const [positions, stores] = await Promise.all([
       position.find().lean(),
@@ -44,6 +37,18 @@ class allEmployeesController {
 
   async allEmployees(req, res, next) {
     res.render('admin/all/employee', { title: 'Danh sách nhân sự', layout: 'admin' })
+  }
+
+  // update
+  async getEmployee(req, res, next) {
+    const [employeeInfo, storesInfo, positionsInfo] = await Promise.all([
+      employee.findOne({ _id: req.body.id }).lean(),
+      store.find().lean(),
+      position.find().lean()
+    ])
+    if (!employeeInfo) return res.json({employeeInfo: null})
+
+    return res.json({employeeInfo: employeeInfo, storesInfo: storesInfo, positionsInfo: positionsInfo})
   }
 
   async employeeInfo(req, res, next) {
@@ -72,6 +77,7 @@ class allEmployeesController {
     })
   }
 
+  // create
   async employeeCreate(req, res, next) {
     const stores = await store.find().lean()
     

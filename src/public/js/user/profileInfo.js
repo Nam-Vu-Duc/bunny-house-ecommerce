@@ -52,7 +52,7 @@ async function getUser() {
 
     <div class="form-group">
       <label for="name">Email khách hàng</label>
-      <input type="text" name="email" value="${data.email}">
+      <input type="text" name="email" value="${data.email}" disabled>
     </div>
 
     <div class="form-group">
@@ -98,7 +98,6 @@ async function getUser() {
   button.onclick = async function updateUser() {
     const name    = document.querySelector('input[name="name"]').value
     const gender  = document.querySelector('input[name="gender"]:checked').value
-    const email   = document.querySelector('input[name="email"]').value
     const phone   = document.querySelector('input[name="phone"]').value
     const address = document.querySelector('input[name="address"]').value
 
@@ -109,7 +108,6 @@ async function getUser() {
         id: data._id,
         name: name,
         gender: gender,
-        email: email,
         phone: phone,
         address: address
       })
@@ -118,8 +116,10 @@ async function getUser() {
     const json = await response.json()
     const isValid = json.isValid
     const message = json.message
-
     pushNotification(message)
+
+    if (!isValid) return
+    setTimeout(() => window.location.reload(), 3000)
   }
   submitButton.appendChild(button)
 

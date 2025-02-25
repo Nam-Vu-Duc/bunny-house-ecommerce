@@ -1,3 +1,4 @@
+// ok
 importLinkCss('/css/admin/createStore.css')
 
 const submitButton = document.querySelector('button[type="submit"]')

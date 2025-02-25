@@ -1,5 +1,6 @@
 <div class="detail-product-container">
   <div class="table">
+    <div class="loading"></div>
     <div class="image-box">
       <div class="image"><img loading="lazy"/></div>
     </div>
@@ -41,16 +42,19 @@
   </div>
 
   <div class="more-details">
+    <div class="loading"></div>
     <h3>THÔNG TIN SẢN PHẨM</h3>
     <p id="details">{{productInfo.details}}</p>
   </div>
   
   <div class="more-details">
+    <div class="loading"></div>
     <h3>HƯỚNG DẪN SỬ DỤNG</h3>
     <p id="guide">{{productInfo.guide}}</p>
   </div>
 
   <div class="more-details">
+    <div class="loading"></div>
     <h3>ĐÁNH GIÁ SẢN PHẨM</h3>
     <div class="rating-box">
       <div class="rating-score">
@@ -67,6 +71,7 @@
   </div>
   
   <div class="more-details">
+    <div class="loading"></div>
     <h3>BÌNH LUẬN SẢN PHẨM</h3>
     <div class="comment-box">
       {{#each holderComments}}

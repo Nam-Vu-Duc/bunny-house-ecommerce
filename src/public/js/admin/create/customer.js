@@ -1,3 +1,4 @@
+// ok
 importLinkCss('/css/admin/createCustomer.css')
 
 const submitButton = document.querySelector('button[type="submit"]')
@@ -31,7 +32,7 @@ async function createCustomer() {
   pushNotification(message)
   
   if (!isValid) return 
-  setTimeout(() => window.location.reload(), 3000)
+  setTimeout(() => window.location.reload(), 2000)
 }
 
 submitButton.onclick = function() {

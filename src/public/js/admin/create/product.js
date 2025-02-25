@@ -1,3 +1,4 @@
+// ok
 importLinkCss('/css/admin/createProduct.css')
 
 const selectBox    = document.querySelector('select[name="categories"]')

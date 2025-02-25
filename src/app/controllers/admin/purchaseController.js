@@ -35,7 +35,7 @@ class adminController {
 
   // update
   async getPurchase(req, res, next) {
-    const purchaseInfo = await purchase.findOne({ _id: req.params.id }).lean()
+    const purchaseInfo = await purchase.findOne({ _id: req.body.id }).lean()
     const supplierInfo = await supplier.findOne({ _id: purchaseInfo.supplierId }).lean()
 
     const productId = purchaseInfo.products.map(product => product.id)
@@ -47,7 +47,7 @@ class adminController {
   }
 
   async purchaseInfo(req, res, next) {
-    res.render('admin/detail/purchase', { title: 'Phiếu nhập', layout: 'admin' })
+    res.render('admin/detail/purchase', { layout: 'admin' })
   }
 
   async purchaseUpdate(req, res, next) {
@@ -63,6 +63,7 @@ class adminController {
   async getProducts(req, res, next) {
     const query = req.body.query
     const products = await product.find({
+      deletedAt: null,
       name: { $regex: query, $options: 'i'}
     }).lean()
     return res.json({data: products})
@@ -73,55 +74,59 @@ class adminController {
   }
 
   async purchaseCreated(req, res, next) {
-    let { 
-      purchaseDate, 
-      supplierId,
-      note,
-      productId, 
-      productQuantity,
-      totalPurchasePrice
-    } = req.body
-
-    // if the req.body has only 1 record, convert 1 record to array
-    if(!Array.isArray(productId)) {
-      productId       = [productId]
-      productQuantity = [productQuantity]
+    try {
+      let { 
+        purchaseDate, 
+        supplierId,
+        note,
+        productId, 
+        productQuantity,
+        totalPurchasePrice
+      } = req.body
+  
+      // if the req.body has only 1 record, convert 1 record to array
+      if(!Array.isArray(productId)) {
+        productId       = [productId]
+        productQuantity = [productQuantity]
+      }
+  
+      const newPurchase = new purchase({
+        products: productId.map((product, index) => ({
+          id        : productId[index],
+          quantity  : productQuantity[index],
+        })),
+        supplierId: supplierId,
+        note: note,
+        purchaseDate: purchaseDate,
+        totalProducts: productQuantity.reduce((acc, curr) => acc + parseInt(curr), 0),
+        totalPurchasePrice: totalPurchasePrice
+      });
+  
+      const productUpdates = []
+      productId.forEach((id, index) => {
+        productUpdates.push({ productId: id, quantity: productQuantity[index] })
+      })
+      
+      await newPurchase.save()
+      await supplier.updateOne({ _id: supplierId }, {
+        $inc: { 
+          totalCost: totalPurchasePrice,
+          quantity: 1
+         }
+      })
+  
+      const bulkOps = productUpdates.map(({ productId, quantity }) => ({
+        updateOne: {
+          filter: { _id: productId },
+          update: { $inc: { quantity: quantity } }, 
+          upsert: true,
+        },
+      }))
+      await product.bulkWrite(bulkOps)
+      return res.json({isValid: true, message: 'Tạo đơn nhập mới thành công'})
+    } catch (error) {
+      console.log(error)
     }
-
-    const newPurchase = new purchase({
-      products: productId.map((product, index) => ({
-        id        : productId[index],
-        quantity  : productQuantity[index],
-      })),
-      supplierId: supplierId,
-      note: note,
-      purchaseDate: purchaseDate,
-      totalProducts: productQuantity.reduce((acc, curr) => acc + parseInt(curr), 0),
-      totalPurchasePrice: totalPurchasePrice
-    });
-
-    const productUpdates = []
-    productId.forEach((id, index) => {
-      productUpdates.push({ productId: id, quantity: productQuantity[index] })
-    })
-    
-    await newPurchase.save()
-    await supplier.updateOne({ _id: supplierId }, {
-      $inc: { 
-        totalCost: totalPurchasePrice,
-        quantity: 1
-       }
-    })
-
-    const bulkOps = productUpdates.map(({ productId, quantity }) => ({
-      updateOne: {
-        filter: { _id: productId },
-        update: { $inc: { quantity: quantity } }, 
-        upsert: true,
-      },
-    }))
-    await product.bulkWrite(bulkOps)
-
   }
 }
 module.exports = new adminController

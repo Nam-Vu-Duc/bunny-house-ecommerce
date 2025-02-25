@@ -6,6 +6,7 @@ const orderStatus = require('../../models/orderStatusModel')
 const paymentMethod = require('../../models/paymentMethodModel')
 
 class allOrdersController {
+  // all
   async getOrders(req, res, next) {
     const currentPage  = req.body.page
     const sort         = req.body.sort
@@ -27,14 +28,6 @@ class allOrdersController {
     return res.json({data: data, data_size: dataSize})
   }
 
-  async getOrder(req, res, next) {
-    const [orderInfo, orderStatuses, paymentMethods] = await Promise.all([
-      order.findOne({ _id: req.params.id }).lean(),
-      orderStatus.find({}).lean(),
-      paymentMethod.find({}).lean()
-    ])
-  }
-
   async getFilter(req, res, next) {
     const [orderStatuses, paymentMethods] = await Promise.all([
       orderStatus.find().lean(),
@@ -47,6 +40,18 @@ class allOrdersController {
 
   async allOrders(req, res, next) {
     res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin' })
+  }
+
+  // update
+  async getOrder(req, res, next) {
+    const [orderInfo, orderStatuses, paymentMethods] = await Promise.all([
+      order.findOne({ _id: req.body.id }).lean(),
+      orderStatus.find({}).lean(),
+      paymentMethod.find({}).lean()
+    ])
+    if (!orderInfo) return res.json({orderInfo: null})
+
+    return res.json({orderInfo: orderInfo, orderStatuses: orderStatuses, paymentMethods: paymentMethods})
   }
 
   async orderInfo(req, res, next) {
@@ -93,15 +98,33 @@ class allOrdersController {
     }
   }
 
-  async orderCreate(req, res, next) {
-    const [users, products, stores, paymentMethods] = await Promise.all([
-      user.find({}).lean(),
-      product.find({ deletedAt: null }).lean(),
-      store.find({}).lean(),
-      paymentMethod.find({}).lean()
-    ]) 
+  // create
+  async getCustomers(req, res, next) {
+    const customers = await user.find().lean()
+    return res.json({data: customers})
+  }
+
+  async getStores(req, res, next) {
+    const stores = await store.find().lean()
+    return res.json({data: stores})
+  }
+
+  async getPaymentMethod(req, res, next) {
+    const paymentMethods = await paymentMethod.find().lean()
+    return res.json({data: paymentMethods})
+  }
   
-    res.render('admin/create/order', { title: 'Thêm đơn hàng mới', layout: 'admin', users, products, stores, paymentMethods })
+  async getProducts(req, res, next) {
+    const query = req.body.query
+    const products = await product.find({
+      deletedAt: null,
+      name: { $regex: query, $options: 'i'}
+    }).lean()
+    return res.json({data: products})
+  }
+
+  async orderCreate(req, res, next) {  
+    res.render('admin/create/order', { title: 'Thêm đơn hàng mới', layout: 'admin' })
   }
 
   async orderCreated(req, res, next) {
@@ -113,6 +136,7 @@ class allOrdersController {
       storeId,
       productId, 
       productName,
+      productImg,
       productPrice,
       productQuantity,
       totalOrderPrice
@@ -121,6 +145,9 @@ class allOrdersController {
     // if the req.body has only 1 record, convert 1 record to array
     if(!Array.isArray(productId)) {
       productId       = [productId]
+      productName     = [productName]
+      productImg      = [productImg]
+      productPrice    = [productPrice]
       productQuantity = [productQuantity]
     }
 
@@ -130,15 +157,16 @@ class allOrdersController {
       products: productId.map((product, index) => ({
         id        : productId[index],
         name      : productName[index],
+        image     : productImg[index],
         price     : productPrice[index],
         quantity  : productQuantity[index], 
         totalPrice: productPrice[index] * productQuantity[index]
       })),
       customerInfo: {
         userId  : userId,
-        name    : userInfo.userInfo.name,
-        phone   : userInfo.userInfo.phone,
-        address : userInfo.userInfo.address,
+        name    : userInfo.name,
+        phone   : userInfo.phone,
+        address : userInfo.address,
         note    : note
       },
       paymentMethod   : paymentMethod,
@@ -148,6 +176,7 @@ class allOrdersController {
     });
 
     await newOrder.save()
+    return res.json({isValid: true, message: 'Tạo đơn hàng mới thành công'})
   }
 }
 module.exports = new allOrdersController

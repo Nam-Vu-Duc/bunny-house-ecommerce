@@ -1,122 +1,53 @@
-const input                 = document.querySelector('input[type="text"][id="product-search"]')
-const tbody                 = document.querySelector('tbody')
-const tfoot                 = document.querySelector('tfoot')
-const product               = Array.from(document.querySelectorAll('div.product')) 
-const productId             = Array.from(document.querySelectorAll('p#product-id')).map((item) => item.innerText)
-const productPrice          = Array.from(document.querySelectorAll('p#product-price'))
-const productName           = Array.from(document.querySelectorAll('p#product-name')).map((item) => item.innerText)
-const productNameNormalize  = Array.from(document.querySelectorAll('p#product-name')).map((item) => item.innerText.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase())
-
+// ok
 importLinkCss('/css/admin/createOrder.css')
 
-const totalOrderPrice = document.createElement('input')
-totalOrderPrice.setAttribute('type', 'hidden')
-totalOrderPrice.setAttribute('name', 'totalOrderPrice')
-totalOrderPrice.setAttribute('id', 'totalOrderPrice')
-tfoot.appendChild(totalOrderPrice)
+const input              = document.querySelector('input[type="text"][id="product-search"]')
+const tbody              = document.querySelector('tbody')
+const tfoot              = document.querySelector('tfoot')
+const submitButton       = document.querySelector('button[type="submit"]')
+const productId          = []
+const productName        = []
+const productImg         = []
+const productQuantity    = []
+const productPrice       = []
+const totalPurchasePrice = { value: 0 }
 
-productPrice.forEach((item, index) => {
-  item.innerText = formatNumber(item.innerText)
-})
-
-input.addEventListener('input', function() {
-  const value = input.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase() 
-  productNameNormalize.forEach((item, index) => {
-    if (value === '') {
-      product[index].style.display = 'none'
-      return
-    } 
-    if (item.includes(value)) {
-      product[index].style.display = ''
-      return
-    }
-    product[index].style.display = 'none'
-  })
-})
-
-product.forEach((item,index) => {
-  item.onclick = function() {
-    const newRow = document.createElement('tr')
-
-    const name  = productName[index]
-    const price = deFormatNumber(productPrice[index].innerText)
-    const img   = productPrice[index]
-
-    const prdStt = document.createElement('td')
-
-    const prdId = document.createElement('input')
-    prdId.setAttribute('type', 'hidden')
-    prdId.setAttribute('name', 'productId[]')
-    prdId.setAttribute('id', 'productId')
-    prdId.setAttribute('value', productId[index])
-
-    const prdName = document.createElement('td')
-    const valueName = document.createElement('input')
-    valueName.setAttribute('type', 'hidden')
-    valueName.setAttribute('name', 'productName[]')
-    valueName.setAttribute('id', 'productName')
-    valueName.setAttribute('value', name)
-    prdName.append(valueName)
-    prdName.append(name)
-
-    const prdPrice = document.createElement('td')
-    const valuePrice = document.createElement('input')
-    valuePrice.setAttribute('type', 'hidden')
-    valuePrice.setAttribute('name', 'productPrice[]')
-    valuePrice.setAttribute('id', 'productPrice')
-    valuePrice.setAttribute('value', price)
-    prdPrice.append(valuePrice)
-    prdPrice.append(formatNumber(price))
-    prdPrice.style.textAlign = 'right'
-
-    const prdQty = document.createElement('td')
-    const valueQty = document.createElement('input')
-    valueQty.setAttribute('type', 'number')
-    valueQty.setAttribute('name', 'productQuantity[]')
-    valueQty.setAttribute('id', 'productQuantity')
-    valueQty.setAttribute('min', 1)
-    valueQty.style.width = '40px'
-    valueQty.style.textAlign = 'center' 
-    valueQty.value = 1
-    prdQty.append(valueQty)
-
-    const prdTotalPrice = document.createElement('td')
-    prdTotalPrice.append(formatNumber(price))
-    prdTotalPrice.style.textAlign = 'right'
-
-    const prdDelete = document.createElement('td')
-    prdDelete.append('x')
-
-    newRow.appendChild(prdStt)
-    newRow.appendChild(prdId)
-    newRow.appendChild(prdName)
-    newRow.appendChild(prdPrice)
-    newRow.appendChild(prdQty)
-    newRow.appendChild(prdTotalPrice)
-    newRow.appendChild(prdDelete)
-
-    tbody.appendChild(newRow)
-
-    item.style.display = 'none'
-    updatePurchaseTotalPrice()
-    productAdded = tbody.querySelectorAll('tr')
-    updateProductTotalPrice()
-  }
-})
+function checkIsAddedProduct(id) {
+  return productId.some((element) => element === id)
+}
 
 function updateProductTotalPrice() {
-  productAdded.forEach((item, index) => {
-    const input = item.querySelector('input#productQuantity')
-    const remove = item.querySelector('td:last-child')
+  tbody.querySelectorAll('tr').forEach((tr) => {
+    const input  = tr.querySelector('input#productQuantity')
+    const remove = tr.querySelector('td:last-child')
+    const id     = tr.querySelector('input#productId').value
   
     input.addEventListener('input', function() {
-      const price = deFormatNumber(item.querySelector('td:nth-child(4)').innerText)
-      const qty = input.value
-      item.querySelector('td:nth-child(6)').innerText = formatNumber(price * qty)
+      const price = deFormatNumber(tr.querySelector('td:nth-child(4)').innerText)
+      const qty   = input.value
+      
+      productId.forEach((element, index) => {
+        if (element === id) {
+          productQuantity[index] = qty
+        }
+      })
+
+      tr.querySelector('td:nth-child(6)').innerText = formatNumber(price * qty)
       updatePurchaseTotalPrice()
     })
     remove.addEventListener('click', function() {
-      item.remove()
+      productId.forEach((element, index) => {
+        if (element === id) {
+          productId.splice(index, 1)
+          productName.splice(index, 1)
+          productImg.splice(index, 1)
+          productQuantity.splice(index, 1)
+          productPrice.splice(index, 1)
+        }
+      })
+
+      tr.remove()
+
       updatePurchaseTotalPrice()
     })
   })
@@ -124,9 +55,185 @@ function updateProductTotalPrice() {
 
 function updatePurchaseTotalPrice() {
   var total = 0
-  Array.from(document.querySelectorAll('tbody td:nth-child(6)')).forEach((item) => {
-    total += deFormatNumber(item.innerText)
+  tbody.querySelectorAll('td:nth-child(6)').forEach((td) => {
+    total += deFormatNumber(td.innerText)
   })
   document.querySelector('tfoot td:nth-child(5)').innerText = formatNumber(total)
-  totalOrderPrice.setAttribute('value', total)
+  totalPurchasePrice.value = total
 }
+
+async function getCustomers() {
+  const response = await fetch('/admin/all-orders/data/customers', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {data} = await response.json()
+
+  data.forEach((element) => {
+    const option = document.createElement('option')
+    option.value = element._id
+    option.textContent = element.name + ': ' + element.phone
+    document.querySelector('select[name="userId"]').appendChild(option) 
+  })
+
+  return
+}
+
+async function getStores() {
+  const response = await fetch('/admin/all-orders/data/stores', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {data} = await response.json()
+
+  data.forEach((element) => {
+    const option = document.createElement('option')
+    option.value = element._id
+    option.textContent = element.name
+    document.querySelector('select[name="storeId"]').appendChild(option) 
+  })
+
+  return
+}
+
+async function getPaymentMethod() {
+  const response = await fetch('/admin/all-orders/data/paymentMethod', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {data} = await response.json()
+
+  data.forEach((element) => {
+    const option = document.createElement('option')
+    option.value = element.code
+    option.textContent = element.name
+    document.querySelector('select[name="paymentMethod"]').appendChild(option) 
+  })
+
+  return
+}
+
+async function getProducts(query) {
+  document.querySelector('div.products-match').querySelectorAll('div').forEach(element => element.remove())
+
+  if (query === '') return
+
+  const response = await fetch('/admin/all-orders/data/products', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ query: query })
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {data} = await response.json()
+
+  data.forEach((element) => {
+    const isAddedProduct = checkIsAddedProduct(element._id)
+    if (isAddedProduct) return
+
+    const div = document.createElement('div')
+    div.classList.add('product')
+    div.innerHTML = `
+      <p style="display: none" id="product-id">${element._id}</p>
+      <p style="width: 15%">${element.brand}</p>
+      <p 
+        style="width: 65%; display:flex; align-items:center; justify-content:start; gap:5px"
+        id="product-name"
+      >
+        <img src="${element.img.path}" alt="${element.name}" loading="lazy" loading="lazy"> 
+        ${element.name}
+      </p>  
+      <p style="width: 10%;">${element.categories}</p>
+      <p style="width: 10%; text-align:right" id="product-price">${formatNumber(element.price)}</p>
+    `
+
+    div.addEventListener('click', function() {
+      productId.push(element._id)
+      productName.push(element.name)
+      productImg.push(element.img.path)
+      productQuantity.push('1')
+      productPrice.push(element.price)
+
+      div.remove()
+
+      const newRow = document.createElement('tr')
+      newRow.innerHTML = `
+        <td></td>
+        <td style="display: none"><input type="hidden" id="productId" value="${element._id}"></td>
+        <td style="display:flex; align-items:center; justify-content:start; gap:5px">
+          <img src="${element.img.path}" alt="${element.name}" loading="lazy" loading="lazy"> 
+          ${element.name}
+        </td>
+        <td style="text-align: right;">${formatNumber(element.price)}</td>
+        <td><input type="number" id="productQuantity" min="1" value="1" style="max-width: 50px; text-align: center;"></td>
+        <td style="text-align: right;">${formatNumber(element.price)}</td>
+        <td>x</td>
+      `
+
+      tbody.appendChild(newRow)
+
+      updateProductTotalPrice()
+
+      updatePurchaseTotalPrice()
+    })
+
+    document.querySelector('div.products-match').appendChild(div)
+  })
+
+  return
+}
+
+async function createOrder() {
+  const orderDate     = document.querySelector('input#orderDate').value
+  const userId        = document.querySelector('select#userId').value
+  const storeId       = document.querySelector('select#storeId').value
+  const paymentMethod = document.querySelector('select#paymentMethod').value
+  const note          = document.querySelector('input#note').value
+
+  if (!orderDate || !userId || !storeId || !paymentMethod || !productId || !productQuantity || !totalPurchasePrice) {
+    pushNotification("Hãy điền đầy đủ các thông tin!")
+    return
+  }
+
+  const response = await fetch('/admin/all-orders/order/created', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      orderDate         : orderDate,
+      userId            : userId,
+      storeId           : storeId,
+      paymentMethod     : paymentMethod,
+      note              : note,
+      productId         : productId,
+      productName       : productName,
+      productImg        : productImg,
+      productQuantity   : productQuantity,
+      productPrice      : productPrice,
+      totalPurchasePrice: totalPurchasePrice.value
+    })
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const { isValid, message } = await response.json()
+
+  pushNotification(message)
+  
+  if (!isValid) return 
+  setTimeout(() => window.location.reload(), 2000)
+}
+
+input.addEventListener('input', function() {
+  const value = input.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase() 
+  getProducts(value)
+})
+
+submitButton.onclick = function() {
+  createOrder()
+}
+
+window.addEventListener('DOMContentLoaded', async function loadData() {
+  getCustomers()
+  getStores()
+  getPaymentMethod()
+})

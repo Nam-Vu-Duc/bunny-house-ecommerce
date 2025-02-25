@@ -2,6 +2,7 @@ const store = require('../../models/storeModel')
 const employee = require('../../models/employeeModel')
 
 class allStoresController {
+  // all
   async getStores(req, res, next) {
     const currentPage  = req.body.page
     const sort         = req.body.sort
@@ -23,19 +24,23 @@ class allStoresController {
     return res.json({data: data, data_size: dataSize})
   }
 
-  async getStore(req, res, next) {
-    const [storeInfo, employeesInfo] = await Promise.all([
-      store.findOne({ _id: req.params.id }).lean(),
-      employee.find({ 'userInfo.storeId': req.params.id }).lean(),
-    ])
-  }
-
   async getFilter(req, res, next) {
   
   }
 
   async allStores(req, res, next) {
     res.render('admin/all/store', { title: 'Danh sách cửa hàng', layout: 'admin' })
+  }
+
+  // update
+  async getStore(req, res, next) {
+    const [storeInfo, employeesInfo] = await Promise.all([
+      store.findOne({ _id: req.body.id }).lean(),
+      employee.find({ 'userInfo.storeId': req.body.id }).lean(),
+    ])
+    if (!storeInfo) return res.json({storeInfo: null})
+
+    return res.json({storeInfo: storeInfo, employeesInfo: employeesInfo})
   }
 
   async storeInfo(req, res, next) {
@@ -56,6 +61,7 @@ class allStoresController {
     })
   }
 
+  // create
   async storeCreate(req, res, next) {
     res.render('admin/create/store', { title: 'Thêm cửa hàng mới', layout: 'admin' })
   }

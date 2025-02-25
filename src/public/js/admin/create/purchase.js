@@ -1,3 +1,4 @@
+// ok
 importLinkCss('/css/admin/createPurchase.css')
 
 const input              = document.querySelector('input[type="text"][id="product-search"]')
@@ -8,20 +9,40 @@ const productId          = []
 const productQuantity    = []
 const totalPurchasePrice = { value: 0 }
 
+function checkIsAddedProduct(id) {
+  return productId.some((element) => element === id)
+}
+
 function updateProductTotalPrice() {
   tbody.querySelectorAll('tr').forEach((tr) => {
     const input  = tr.querySelector('input#productQuantity')
     const remove = tr.querySelector('td:last-child')
+    const id     = tr.querySelector('input#productId').value
 
     input.addEventListener('input', function() {
       const price = deFormatNumber(tr.querySelector('td:nth-child(4)').innerText)
       const qty = input.value
+      
+      productId.forEach((element, index) => {
+        if (element === id) {
+          productQuantity[index] = qty
+        }
+      })
+
       tr.querySelector('td:nth-child(6)').innerText = formatNumber(price * qty)
       updatePurchaseTotalPrice()
     })
 
     remove.addEventListener('click', function() {
+      productId.forEach((element, index) => {
+        if (element === id) {
+          productId.splice(index, 1)
+          productQuantity.splice(index, 1)
+        }
+      })
+
       tr.remove()
+
       updatePurchaseTotalPrice()
     })
   })
@@ -66,9 +87,11 @@ async function getProducts(query) {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {data} = await response.json()
-  console.log(data)
 
   data.forEach((element) => {
+    const isAddedProduct = checkIsAddedProduct(element._id)
+    if (isAddedProduct) return
+
     const div = document.createElement('div')
     div.classList.add('product')
     div.innerHTML = `
@@ -87,19 +110,23 @@ async function getProducts(query) {
 
     div.addEventListener('click', function() {
       productId.push(element._id)
+      productQuantity.push('1')
+      div.remove()
+
       const newRow = document.createElement('tr')
       newRow.innerHTML = `
         <td></td>
-        <td style="display: none"><input type="hidden" name="productId[]" id="productId" value="${element._id}"></td>
+        <td style="display: none"><input type="hidden" id="productId" value="${element._id}"></td>
         <td style="display:flex; align-items:center; justify-content:start; gap:5px">
           <img src="${element.img.path}" alt="${element.name}" loading="lazy" loading="lazy"> 
           ${element.name}
         </td>
         <td style="text-align: right;">${formatNumber(element.purchasePrice)}</td>
-        <td><input type="number" name="productQuantity[]" id="productQuantity" min="1" value="1" style="max-width: 50px; text-align: center;"></td>
+        <td><input type="number" id="productQuantity" min="1" value="1" style="max-width: 50px; text-align: center;"></td>
         <td style="text-align: right;">${formatNumber(element.purchasePrice)}</td>
         <td>x</td>
       `
+
       tbody.appendChild(newRow)
 
       updateProductTotalPrice()
@@ -123,15 +150,16 @@ async function createPurchase() {
     return
   }
 
-  const response = await fetch('/admin/all-customers/customer/created', {
+  const response = await fetch('/admin/all-purchases/purchase/created', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
-      name    : name,
-      email   : email,
-      phone   : phone,
-      address : address,
-      password: password,
+      purchaseDate      : purchaseDate,
+      supplierId        : supplierId,
+      note              : note,
+      productId         : productId,
+      productQuantity   : productQuantity,
+      totalPurchasePrice: totalPurchasePrice.value
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)

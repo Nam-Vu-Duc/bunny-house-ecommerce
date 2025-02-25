@@ -1,16 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const flash = require('connect-flash')
-const session = require('express-session')
 const productController = require('../../app/controllers/admin/productController')
-const upload = require('../../app/middleware/cloudinary');
 
-router.use(session({ 
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-}))
-router.use(flash())
 router.get('/'                          , productController.allProducts)
 router.get('/trash'                     , productController.trash)
 

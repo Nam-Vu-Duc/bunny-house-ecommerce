@@ -2,6 +2,8 @@
 importLinkCss('/css/empty/signIn.css')
 
 async function checkingAccount() {
+  document.querySelector('button').classList.add('loading')
+
   const email = document.querySelector('input#email').value
   const password = document.querySelector('input#password').value
   const response = await fetch("/authentication/checking-account", {
@@ -16,7 +18,8 @@ async function checkingAccount() {
   const json = await response.json()
   const isValid = json.isValid
   const message = json.message
-  
+
+  document.querySelector('button').classList.remove('loading')
   if (!isValid) {
     document.querySelector('p.wrong-info').textContent = message
     document.querySelector('p.wrong-info').style.color = 'red'
@@ -33,14 +36,14 @@ async function checkingAccount() {
   return
 }
 
-validator({
-  form: '#form-1',
-  errorSelector: '.form-message',
-  rules: [
-    isEmail('#email'),
-    isRequiredString('#password'),
-  ]
-}, 2)
+// validator({
+//   form: '#form-1',
+//   errorSelector: '.form-message',
+//   rules: [
+//     isEmail('#email'),
+//     isRequiredString('#password'),
+//   ]
+// }, 2)
 
 document.querySelector("form").addEventListener("submit", function(event) {
   event.preventDefault() // Prevents form submission

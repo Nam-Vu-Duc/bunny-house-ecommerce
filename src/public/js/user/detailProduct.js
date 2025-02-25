@@ -1,5 +1,6 @@
 // ok
 importLinkCss('/css/user/detailProduct.css')
+
 const getAddToCart        = document.querySelector('div.add-to-cart')
 const getBuyNow           = document.querySelector('div.buy-now')
 const getOutOfOrder       = document.querySelector('div.out-of-order')
@@ -47,7 +48,7 @@ async function getProduct() {
 
   productElement.querySelector('img').setAttribute('src', data.img.path)
   productElement.querySelector('img').setAttribute('alt', data.name)
-  productElement.querySelector('span#rate-score').textContent = data.rate
+  productElement.querySelector('span#rate-score').textContent = formatRate(data.rate) 
   productElement.querySelector('h3#brand').textContent = data.brand
   productElement.querySelector('h1#name').textContent = data.name
   productElement.querySelector('h4#old-price').textContent = formatNumber(data.oldPrice) 
@@ -55,10 +56,12 @@ async function getProduct() {
   productElement.querySelector('h4#quantity').textContent = 'Số lượng: ' + data.quantity
   productElement.querySelector('h5#sale-number').textContent = 'Đã bán: ' + data.saleNumber
   productElement.querySelector('p#description').textContent = data.description
+  productElement.querySelector('div.loading').remove()
 
   document.querySelector('p#details').textContent = data.details
   document.querySelector('p#guide').textContent = data.guide
-  document.querySelector('div.rating-score').querySelector('h1').textContent = data.rate
+  document.querySelector('div.rating-score').querySelector('h1').textContent = formatRate(data.rate)
+  document.querySelectorAll('div.more-details').forEach(div => div.querySelector('div.loading').remove())
 
   return data
 }

@@ -1,3 +1,4 @@
+// ok
 importLinkCss('/css/admin/createSupplier.css')
 
 const submitButton = document.querySelector('button[type="submit"]')

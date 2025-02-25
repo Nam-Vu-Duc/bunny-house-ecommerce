@@ -2,6 +2,7 @@ const brand = require('../../models/brandModel')
 const product = require('../../models/productModel')
 
 class allBrandsController {
+  // all
   async getBrands(req, res, next) {
     const currentPage  = req.body.page
     const sort         = req.body.sort
@@ -23,10 +24,6 @@ class allBrandsController {
     return res.json({data: data, data_size: dataSize})
   }
 
-  async getBrand(req, res, next) {
-    
-  }
-
   async getFilter(req, res, next) {
   
   }
@@ -35,18 +32,25 @@ class allBrandsController {
     res.render('admin/all/brand', { title: 'Danh sách cửa hàng', layout: 'admin' })
   }
 
-  async brandInfo(req, res, next) {
-    const index = 'brands'
-    const brandInfo = await brand.findOne({ _id: req.params.id }).lean()
+  // update
+  async getBrand(req, res, next) {
+    const brandInfo = await brand.findOne({ _id: req.body.id }).lean()
+    if (!brandInfo) return res.json({brandInfo: null})
+
     const productsInfo = await product.find({ brand: brandInfo.name }).lean()
 
-    res.render('admin/detail/brand', { title: brandInfo.name, layout: 'admin', index, brandInfo, productsInfo })
+    res.json({brandInfo: brandInfo, productsInfo: productsInfo})
+  }
+
+  async brandInfo(req, res, next) {
+    res.render('admin/detail/brand', { layout: 'admin' })
   }
 
   async brandUpdate(req, res, next) {
 
   }
 
+  // create
   async brandCreate(req, res, next) {    
     res.render('admin/create/brand', { title: 'Thêm thương hiệu mới', layout: 'admin' })
   }

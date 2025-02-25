@@ -11,6 +11,7 @@ cloudinary.config({
 })
 
 class allProductsController {
+  // all
   async getProducts(req, res, next) {
     const currentPage  = req.body.page
     const sort         = req.body.sort
@@ -50,14 +51,6 @@ class allProductsController {
     return res.json({data: data, data_size: dataSize})
   }
 
-  async getProduct(req, res, next) {
-    const [productInfo, brands, productStatuses] = await Promise.all([
-      product.findOne({ _id: req.params.id }).lean(),
-      brand.find().lean(),
-      productStatus.find().lean()
-    ]) 
-  }
-
   async getFilter(req, res, next) {
     const brands = await brand.find().lean()
     res.json({brand: brands})
@@ -65,6 +58,22 @@ class allProductsController {
 
   async allProducts(req, res, next) {
     res.render('admin/all/product', { title: 'Danh sách sản phẩm', layout: 'admin' })
+  }
+
+  async trash(req, res, next) {
+    res.render('admin/all/trash', { title: 'Kho', layout: 'admin' })
+  }
+
+  // update
+  async getProduct(req, res, next) {
+    const [productInfo, brands, productStatuses] = await Promise.all([
+      product.findOne({ _id: req.body.id }).lean(),
+      brand.find().lean(),
+      productStatus.find().lean()
+    ]) 
+    if (!productInfo) return res.json({productInfo: null})
+
+    return res.json({productInfo: productInfo, brands: brands, productStatuses: productStatuses})
   }
 
   async productInfo(req, res, next) {
@@ -97,6 +106,23 @@ class allProductsController {
     })
   }
 
+  async softDelete(req, res, next) {
+    await product.updateOne({ _id: req.params.id}, { deletedAt: Date.now() })
+  }
+
+  async deleteProduct(req, res, next) {
+    const newProduct = await product.findOne({ _id: req.params.id })
+    const deleteImg = newProduct.img.filename
+    
+    await cloudinary.uploader.destroy(deleteImg)
+    await product.deleteOne({ _id: req.params.id })
+  }
+
+  async restore(req, res, next) {
+    await product.updateOne({ _id: req.params.id}, { deletedAt: null })
+  }
+
+  // create
   async createProduct(req, res, next) {
     const brands = await brand.find().lean()
     res.render('admin/create/product', { title: 'Thêm sản phẩm mới', layout: 'admin', brands })
@@ -127,26 +153,6 @@ class allProductsController {
     await newProduct.save()
 
     return res.json({isValid: true, message: 'Tạo sản phẩn mới thành công'})
-  }
-
-  async softDelete(req, res, next) {
-    await product.updateOne({ _id: req.params.id}, { deletedAt: Date.now() })
-  }
-
-  async deleteProduct(req, res, next) {
-    const newProduct = await product.findOne({ _id: req.params.id })
-    const deleteImg = newProduct.img.filename
-    
-    await cloudinary.uploader.destroy(deleteImg)
-    await product.deleteOne({ _id: req.params.id })
-  }
-
-  async restore(req, res, next) {
-    await product.updateOne({ _id: req.params.id}, { deletedAt: null })
-  }
-
-  async trash(req, res, next) {
-    res.render('admin/all/trash', { title: 'Kho', layout: 'admin' })
   }
 }
 module.exports = new allProductsController

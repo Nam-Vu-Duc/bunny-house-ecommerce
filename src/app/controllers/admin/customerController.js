@@ -7,6 +7,7 @@ const member = require('../../models/memberModel')
 const bcrypt = require('bcryptjs')
 
 class allCustomersController {
+  // all
   async getCustomers(req, res, next) {
     const currentPage  = req.body.page
     const sort         = req.body.sort
@@ -28,13 +29,25 @@ class allCustomersController {
     return res.json({data: data, data_size: dataSize})
   }
 
+  async getFilter(req, res, next) {
+    const memberShip = await member.find().lean()
+    res.json({memberShip: memberShip})
+  }
+
+  async allCustomers(req, res, next) {
+    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin' });
+  }
+
+  // update
   async getCustomer(req, res, next) {
-    const customerInfo = await user.findOne({ _id: req.params.id }).lean()
+    const customerInfo = await user.findOne({ _id: req.body.id }).lean()
+    if (!customerInfo) return res.json({customerInfo: null})
+
     const [memberInfo, orderInfo] = await Promise.all([
       member.findOne({ code: customerInfo.memberCode}).lean(),
       order.aggregate([
         {
-          $match: { 'customerInfo.userId': req.params.id }
+          $match: { 'customerInfo.userId': req.body.id }
         },
         {
           $lookup: {
@@ -49,19 +62,12 @@ class allCustomersController {
         }
       ])
     ])
-  }
-
-  async getFilter(req, res, next) {
-    const memberShip = await member.find().lean()
-    res.json({memberShip: memberShip})
-  }
-
-  async allCustomers(req, res, next) {
-    res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin' });
+    
+    return res.json({customerInfo: customerInfo, memberInfo: memberInfo, orderInfo: orderInfo})
   }
 
   async customerInfo(req, res, next) {
-    res.render('admin/detail/customer', { title: customerInfo.name, layout: 'admin' })
+    res.render('admin/detail/customer', { layout: 'admin' })
   }
 
   async customerUpdate(req, res, next) {
@@ -82,6 +88,7 @@ class allCustomersController {
     })
   }
 
+  // create
   async createCustomer(req, res, next) {
     res.render('admin/create/customer', { title: 'Thêm khách hàng mới', layout: 'admin' })
   }

@@ -2,6 +2,7 @@ const supplier = require('../../models/supplierModel')
 const purchase = require('../../models/purchaseModel')
 
 class allSuppliersController {
+  // all
   async getSuppliers(req, res, next) {
     const currentPage  = req.body.page
     const sort         = req.body.sort
@@ -23,17 +24,22 @@ class allSuppliersController {
     return res.json({data: data, data_size: dataSize})
   }
 
-  async getSupplier(req, res, next) {
-    const supplierInfo =  await supplier.findOne({ _id: req.params.id }).lean()
-    const purchaseInfo = await purchase.find({ 'supplierId': req.params.id }).lean()
-  }
-
   async getFilter(req, res, next) {
   
   }
 
   async allSuppliers(req, res, next) {
     res.render('admin/all/supplier', { title: 'Danh sách đối tác', layout: 'admin' })
+  }
+
+  // update
+  async getSupplier(req, res, next) {
+    const supplierInfo = await supplier.findOne({ _id: req.body.id }).lean()
+    if (!supplierInfo) return res.json({supplierInfo: null})
+
+    const purchaseInfo = await purchase.find({ 'supplierId': req.body.id }).lean()
+
+    return res.json({supplierInfo: supplierInfo, purchaseInfo: purchaseInfo})
   }
 
   async supplierInfo(req, res, next) {
@@ -56,6 +62,7 @@ class allSuppliersController {
     })
   }
 
+  // create
   async supplierCreate(req, res, next) {
     res.render('admin/create/supplier', { title: 'Thêm đối tác mới', layout: 'admin' })
   }

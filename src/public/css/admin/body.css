@@ -3,7 +3,6 @@
 /* all pages */
 main {
   margin-left: 200px;
-  padding: 5px;
   box-sizing: border-box;
 }
 body {
@@ -367,7 +366,7 @@ div.clearfix::after {
   justify-content: center;
   flex-direction: column;
   gap: 10px;
-  form#form-2 {
+  div#form {
     width: 100%;
     table {
       tbody {

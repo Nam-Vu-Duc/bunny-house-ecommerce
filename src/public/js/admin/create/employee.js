@@ -1,4 +1,6 @@
+// ok
 importLinkCss('/css/admin/createEmployee.css')
+
 const submitButton = document.querySelector('button[type="submit"]')
 
 async function createEmployee() {

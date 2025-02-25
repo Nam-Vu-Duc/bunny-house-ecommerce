@@ -1,25 +1,21 @@
 const express = require('express')
 const router = express.Router()
-const flash = require('connect-flash')
-const session = require('express-session')
 const orderController = require('../../app/controllers/admin/orderController')
 
-router.use(session({ 
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-}))
-router.use(flash())
-router.get('/'                 , orderController.allOrders)
+router.get('/'                    , orderController.allOrders)
 
-router.get('/order/create'     , orderController.orderCreate)
-router.post('/order/created'   , orderController.orderCreated)
+router.get('/order/create'        , orderController.orderCreate)
+router.post('/order/created'      , orderController.orderCreated)
 
-router.get('/order/:id'        , orderController.orderInfo)
-router.put('/order/updated/:id', orderController.orderUpdate)
+router.get('/order/:id'           , orderController.orderInfo)
+router.put('/order/updated/:id'   , orderController.orderUpdate)
 
-router.post('/data/orders'     , orderController.getOrders)
-router.post('/data/order'      , orderController.getOrder)
-router.post('/data/filter'     , orderController.getFilter)
+router.post('/data/orders'        , orderController.getOrders)
+router.post('/data/order'         , orderController.getOrder)
+router.post('/data/filter'        , orderController.getFilter)
+router.post('/data/customers'     , orderController.getCustomers)
+router.post('/data/stores'        , orderController.getStores)
+router.post('/data/paymentMethod' , orderController.getPaymentMethod)
+router.post('/data/products'      , orderController.getProducts)
 
 module.exports = router

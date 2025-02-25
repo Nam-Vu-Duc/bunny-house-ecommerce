@@ -1,8 +1,9 @@
+// ok
 importLinkCss('/css/admin/allChats.css')
 
 const chatBody    = document.querySelector('div.chat-body')
 const chatHeader  = chatBody.querySelector('div.chat-header')
-const chatContent = document.querySelector('ul.chat-content')
+const chatContent = document.querySelector('div.chat-content')
 const input       = document.querySelector('textarea.input')
 const sendBtn     = document.querySelector('div.send-btn')
 const form        = document.querySelector('form.input-form')
@@ -20,7 +21,6 @@ async function getUser() {
     if (isValid) {
       adminId.id = message
       socket.emit('joinRoom', {id: adminId.id, room: 'admin-room'})
-      console.log(adminId.id + ' join room successful')
     }
   } catch (error) {
     console.error("Error fetching chat data:", error)
@@ -34,7 +34,7 @@ async function getChatData(adminId, userId, userName, chatContent) {
     const response = await fetch(`/admin/all-chats/${userId}`)
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
 
-    const json = await response.json();
+    const json = await response.json()
     const messages = json.data
     const userStatus = json.userStatus
     chatId.id = json.chatId
@@ -42,14 +42,18 @@ async function getChatData(adminId, userId, userName, chatContent) {
     chatHeader.querySelector('div.name').textContent = userName
     chatHeader.querySelector('div.last-active').textContent = userStatus ? 'Active now' : 'Offline'
     chatHeader.style.opacity = 1
+
+    const ul = document.createElement('ul')
     chatContent.replaceChildren()
+    chatContent.appendChild(ul)
+
     messages.forEach((message) => {
       const chat = document.createElement('li')
       chat.textContent = message.content 
       if (message.senderId === adminId) chat.setAttribute('class', 'right-content')
-      chatContent.appendChild(chat)
+      ul.appendChild(chat)
     })
-    chatContent.scrollTo(0, chatContent.scrollHeight)
+    ul.scrollTo(0, ul.scrollHeight)
   } catch (error) {
     console.error("Error fetching chat data:", error)
   }
@@ -138,6 +142,10 @@ socket.on('chat-message', (id, msg, room) => {
     chat.setAttribute('class', 'right-content') 
   }
   reOrderChatSidebar(id, room)
-  chatContent.appendChild(chat)
-  chatContent.scrollTo(0, chatContent.scrollHeight)
+
+  const ul = chatContent.querySelector('ul')
+  if (ul) {
+    ul.appendChild(chat)
+    ul.scrollTo(0, ul.scrollHeight)
+  }
 })
