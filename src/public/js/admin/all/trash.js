@@ -14,7 +14,7 @@ var productId;
 
 async function getDeletedProducts(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
-    tr.querySelector('td.loading').style.display = ''
+    tr.querySelector('td:nth-child(1)').classList.add('loading')
   })
 
   const response = await fetch('/admin/all-products/data/deleted-products', {

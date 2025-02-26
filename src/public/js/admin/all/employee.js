@@ -31,7 +31,7 @@ async function getFilter() {
 
 async function getCustomers(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
-    tr.querySelector('td.loading').style.display = ''
+    tr.querySelector('td:nth-child(1)').classList.add('loading')
   })
 
   const response = await fetch('/admin/all-employees/data/employees', {
@@ -55,7 +55,6 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
       const newTr = document.createElement('tr')
       newTr.innerHTML = `
         <td></td>
-        <td class="loading" style="display:none"></td>
         <td>${item._id}</td>
         <td>${item.name}</td>
         <td>${item.email}</td>

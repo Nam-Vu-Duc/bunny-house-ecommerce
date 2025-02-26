@@ -10,7 +10,6 @@ async function getCustomer() {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {customerInfo, memberInfo, orderInfo} = await response.json()
-  console.log(orderInfo)
 
   document.title = customerInfo.name
 
@@ -27,7 +26,7 @@ async function getCustomer() {
   document.querySelector('input#member').value   = memberInfo.name
 
   orderInfo.forEach((order) => {
-    const tr = document.querySelector('tr')
+    const tr = document.createElement('tr')
     tr.innerHTML = `
       <td></td>
       <td>${formatNumber(order.totalOrderPrice)}</td>

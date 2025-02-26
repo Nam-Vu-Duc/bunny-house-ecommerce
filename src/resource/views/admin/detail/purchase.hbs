@@ -6,59 +6,49 @@
       </thead>
       <tr>
         <td>Mã Đơn</td>
-        <td>{{purchaseInfo._id}}</td>
+        <td><input type="text" id="id" disabled></td>
       </tr>
       <tr>
         <td>Ngày Nhập</td>
-        <td>{{formatDate purchaseInfo.purchaseDate}}</td>
+        <td><input type="text" id="date" disabled></td>
       </tr>
       <tr>
         <td>NCC</td>
-        <td>{{supplierInfo.name}}</td>
+        <td><input type="text" id="supplier" disabled></td>
       </tr>
       <tr>
         <td>SĐT</td>
-        <td>{{supplierInfo.phone}}</td>
+        <td><input type="text" id="phone" disabled></td>
       </tr>
       <tr>
         <td>Địa Chỉ</td>
-        <td>{{supplierInfo.address}}</td>
+        <td><input type="text" id="address" disabled></td>
       </tr>
       <tr>
         <td>Ghi Chú</td>
-        <td>{{purchaseInfo.note}}</td>
+        <td><input type="text" id="note" disabled></td>
       </tr>
       <tr>
         <td>Tổng Tiền</td>
-        <td>{{formatNumber purchaseInfo.totalPurchasePrice}}</td>
+        <td><input type="text" id="total" disabled></td>
       </tr>
     </table>
 
     <table id="table-2">
       <thead>
-        <tr><td colspan="4">SẢN PHẨM</td></tr>
+        <tr><td colspan="5">SẢN PHẨM</td></tr>
       </thead>
       <thead>
         <tr>
           <td>STT</td>
           <td>Tên Sản Phẩm</td>
-          <td>S/L Nhập</td>
+          <td>Số Lượng</td>
           <td>Giá</td>
+          <td>Chi tiết</td>
         </tr>
       </thead>
-      <tbody>
-        {{#each productInfoWithQuantity}}
-          <tr>
-            <td>{{addIndex @index 1 }}</td>
-            <td>{{this.product.name}}</td>
-            <td>{{this.purchaseQuantity}}</td>
-            <td>{{formatNumber this.product.purchasePrice}}</td>
-          </tr>
-        {{/each}}
-      </tbody>
+      <tbody></tbody>
     </table>
-
-    <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>
   </div>
 </div>
 

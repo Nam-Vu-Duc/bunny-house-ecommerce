@@ -6,31 +6,31 @@
       </thead>
       <tr>
         <td>Mã Nhà Cung Cấp</td>
-        <td>{{supplierInfo._id}}</td>
+        <td><input type="text" id="id" disabled></td>
       </tr>
       <tr>
         <td>Tên Nhà Cung Cấp</td>
-        <td><input type="text" id="name" name="name" value="{{supplierInfo.name}}"></td>
+        <td><input type="text" id="name"></td>
       </tr>
       <tr>
         <td>Email</td>
-        <td><input type="text" id="email" name="email" value="{{supplierInfo.email}}"></td>
+        <td><input type="text" id="email"></td>
       </tr>
       <tr>
         <td>SĐT</td>
-        <td><input type="text" id="phone" name="phone" value="{{supplierInfo.phone}}"></td>
+        <td><input type="text" id="phone"></td>
       </tr>
       <tr>
         <td>Địa Chỉ</td>
-        <td><input type="text" id="address" name="address" value="{{supplierInfo.address}}"></td>
+        <td><input type="text" id="address"></td>
       </tr>
       <tr>
         <td>Tổng đơn nhập</td>
-        <td>{{supplierInfo.quantity}}</td>
+        <td><input type="text" id="quantity" disabled></td>
       </tr>
       <tr>
         <td>Tổng chi phí</td>
-        <td>{{formatNumber supplierInfo.totalCost}}</td>
+        <td><input type="text" id="total" disabled></td>
       </tr>
     </table>
 
@@ -46,16 +46,7 @@
           <td style="width: 10%">Chi tiết  </td>
         </tr>
       </thead>
-      <tbody>
-        {{#each purchaseInfo}}
-          <tr>
-            <td>{{addIndex @index 1}}</td>
-            <td>{{formatNumber this.totalPurchasePrice}}</td>
-            <td>{{formatDate this.purchaseDate}}</td>
-            <td><a href="/admin/all-purchases/purchase/{{this._id}}">Xem</a></td>
-          </tr>
-        {{/each}}
-      </tbody>
+      <tbody></tbody>
     </table>
 
     <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>

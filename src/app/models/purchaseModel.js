@@ -5,8 +5,12 @@ const Schema = mongoose.Schema
 const purchase = new Schema({
   products: [
     {
-      id       : { type: String, default: '' },
-      quantity : { type: Number, default: 0 },
+      id          : { type: String, default: '' },
+      image       : { type: String, default: '' },
+      name        : { type: String, default: '' },
+      price       : { type: Number, default: 0 },
+      quantity    : { type: Number, default: 0 },
+      totalPrice  : { type: Number, default: 0 }
     }
   ],
   supplierId          : { type: String, default: '' },

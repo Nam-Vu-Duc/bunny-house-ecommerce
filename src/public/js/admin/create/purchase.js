@@ -6,7 +6,10 @@ const tbody              = document.querySelector('tbody')
 const tfoot              = document.querySelector('tfoot')
 const submitButton       = document.querySelector('button[type="submit"]')
 const productId          = []
+const productName        = []
+const productImg         = []
 const productQuantity    = []
+const productPrice       = []
 const totalPurchasePrice = { value: 0 }
 
 function checkIsAddedProduct(id) {
@@ -37,7 +40,10 @@ function updateProductTotalPrice() {
       productId.forEach((element, index) => {
         if (element === id) {
           productId.splice(index, 1)
+          productName.splice(index, 1)
+          productImg.splice(index, 1)
           productQuantity.splice(index, 1)
+          productPrice.splice(index, 1)
         }
       })
 
@@ -110,7 +116,11 @@ async function getProducts(query) {
 
     div.addEventListener('click', function() {
       productId.push(element._id)
+      productName.push(element.name)
+      productImg.push(element.img.path)
       productQuantity.push('1')
+      productPrice.push(element.price)
+
       div.remove()
 
       const newRow = document.createElement('tr')
@@ -158,7 +168,10 @@ async function createPurchase() {
       supplierId        : supplierId,
       note              : note,
       productId         : productId,
+      productName       : productName,
+      productImg        : productImg,
       productQuantity   : productQuantity,
+      productPrice      : productPrice,
       totalPurchasePrice: totalPurchasePrice.value
     })
   })

@@ -28,7 +28,7 @@ async function getFilter() {
 
 async function getProducts(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
-    tr.querySelector('td.loading').style.display = ''
+    tr.querySelector('td:nth-child(1)').classList.add('loading')
   })
 
   const response = await fetch('/admin/all-products/data/products', {
@@ -52,7 +52,6 @@ async function getProducts(sortOptions, filterOptions, currentPage) {
       const newTr = document.createElement('tr')
       newTr.innerHTML = `
         <td></td>
-        <td class="loading" style="display:none"></td>
         <td>${item.brand}</td>
         <td style="
           display: flex; 
@@ -60,7 +59,7 @@ async function getProducts(sortOptions, filterOptions, currentPage) {
           align-items: center;
           "
         >
-          <img src="${item.img.path}" alt="${item.name}" loading="lazy" loading="lazy"> 
+          <img src="${item.img.path}" alt="${item.name}" loading="lazy"> 
           <p>${item.name}</p>
         </td>  
         <td>${formatNumber(item.purchasePrice)}</td>

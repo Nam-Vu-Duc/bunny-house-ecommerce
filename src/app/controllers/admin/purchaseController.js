@@ -36,14 +36,11 @@ class adminController {
   // update
   async getPurchase(req, res, next) {
     const purchaseInfo = await purchase.findOne({ _id: req.body.id }).lean()
-    const supplierInfo = await supplier.findOne({ _id: purchaseInfo.supplierId }).lean()
+    if (!purchaseInfo) return res.json({purchaseInfo: null})
 
-    const productId = purchaseInfo.products.map(product => product.id)
-    const productInfo = await product.find({ _id: { $in: productId }, deletedAt: null }).lean()
-    const productInfoWithQuantity = productInfo.map(product => {
-      const quantity = purchaseInfo.products.find(p => p.id == product._id).quantity
-      return { product: product, purchaseQuantity: quantity }
-    })
+    const supplierInfo = await supplier.findOne({ _id: purchaseInfo.supplierId}).lean()
+    
+    return res.json({purchaseInfo: purchaseInfo, supplierInfo: supplierInfo})
   }
 
   async purchaseInfo(req, res, next) {
@@ -80,6 +77,9 @@ class adminController {
         supplierId,
         note,
         productId, 
+        productName,
+        productImg,
+        productPrice,
         productQuantity,
         totalPurchasePrice
       } = req.body
@@ -87,13 +87,20 @@ class adminController {
       // if the req.body has only 1 record, convert 1 record to array
       if(!Array.isArray(productId)) {
         productId       = [productId]
+        productName     = [productName]
+        productImg      = [productImg]
+        productPrice    = [productPrice]
         productQuantity = [productQuantity]
       }
   
       const newPurchase = new purchase({
         products: productId.map((product, index) => ({
           id        : productId[index],
-          quantity  : productQuantity[index],
+          name      : productName[index],
+          image     : productImg[index],
+          price     : productPrice[index],
+          quantity  : productQuantity[index], 
+          totalPrice: productPrice[index] * productQuantity[index]
         })),
         supplierId: supplierId,
         note: note,

@@ -9,45 +9,63 @@ async function getOrder() {
     body: JSON.stringify({id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {customerInfo, memberInfo, orderInfo} = await response.json()
-  console.log(orderInfo)
+  const {orderInfo, orderStatuses, paymentMethods} = await response.json()
 
-  document.title = customerInfo.name
+  document.title = 'Đơn hàng ' + orderInfo.customerInfo.name
 
-  document.querySelector('input#id').value       = customerInfo._id
-  document.querySelector('input#name').value     = customerInfo.name
-  document.querySelector('input#email').value    = customerInfo.email
-  document.querySelector('input#phone').value    = customerInfo.phone
-  document.querySelector('input#address').value  = customerInfo.address
-  document.querySelectorAll('input[name="gender"]').forEach((input) => {
-    if (input.value === customerInfo.gender) input.checked = true
-  })
-  document.querySelector('select#paymentMethod').querySelectorAll('option').forEach(option => {
-    if (option.value === paymentMethod) option.selected = true
+  document.querySelector('input#id').value      = orderInfo._id
+  document.querySelector('input#date').value    = formatDate(orderInfo.createdAt) 
+  document.querySelector('input#name').value    = orderInfo.customerInfo.name
+  document.querySelector('input#phone').value   = orderInfo.customerInfo.phone
+  document.querySelector('input#address').value = orderInfo.customerInfo.address
+  document.querySelector('input#note').value    = orderInfo.customerInfo.note
+
+  orderStatuses.forEach((element, index) => {
+    const option = document.createElement('option')
+    option.value = element.code
+    option.textContent = element.name
+    if (element.code === orderInfo.status) option.selected = true
+    
+    document.querySelector('select#status').appendChild(option)
   })
   
-  document.querySelector('select#status').querySelectorAll('option').forEach(option => {
-    if (option.value === orderStatus) option.selected = true
+  paymentMethods.forEach((element, index) => {
+    const option = document.createElement('option')
+    option.value = element.code
+    option.textContent = element.name
+    if (element.code === orderInfo.paymentMethod) option.selected = true
+    
+    document.querySelector('select#paymentMethod').appendChild(option)
   })
+
+  document.querySelector('input#total').value   = formatNumber(orderInfo.totalOrderPrice)
   
-  var submitButton = document.querySelector('button[type="submit"]')
-  if (orderStatus === 'done') {
-    selectStatus.disabled = true
-    selectStatus.style.cursor = 'not-allowed'
+  const submitButton = document.querySelector('button[type="submit"]')
+  if (orderInfo.status === 'done') {
+    document.querySelector('select#paymentMethod').disabled = true
+    document.querySelector('select#paymentMethod').style.cursor = 'not-allowed'
+    
+    document.querySelector('select#status').disabled = true
+    document.querySelector('select#status').style.cursor = 'not-allowed'
     submitButton.style.display = 'none'
   }
-  document.querySelector('input#quantity').value = customerInfo.quantity
-  document.querySelector('input#revenue').value  = formatNumber(customerInfo.revenue)
-  document.querySelector('input#member').value   = memberInfo.name
 
-  orderInfo.forEach((order) => {
-    const tr = document.querySelector('tr')
+  orderInfo.products.forEach((product) => {
+    const tr = document.createElement('tr')
     tr.innerHTML = `
       <td></td>
-      <td>${formatNumber(order.totalOrderPrice)}</td>
-      <td>${order.paymentMethod}</td>
-      <td>${order.orderStatus.name}</td>
-      <td><a href="/admin/all-orders/order/${order._id}">Xem</a></td>
+      <td style="
+        display: flex; 
+        justify-content: start;
+        align-items: center;
+        gap: 5px"
+      >
+        <img src="${product.image}" alt="${product.name}" loading="lazy">
+        ${product.name}
+      </td>
+      <td>${product.quantity}</td>
+      <td>${formatNumber(product.price)}</td>
+      <td><a href="/admin/all-products/product/${product.id}">Xem</a></td>
     `
     document.querySelector('table#table-2').querySelector('tbody').appendChild(tr)
   })

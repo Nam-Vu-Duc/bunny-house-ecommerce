@@ -6,33 +6,27 @@
       </thead>
       <tr>
         <td>Mã Nhân Viên</td>
-        <td>{{employeeInfo._id}}</td>
+        <td><input type="text" id="id" disabled></td>
       </tr>
       <tr>
         <td>Tên Nhân Viên</td>
-        <td><input type="text" id="name" name="name" value="{{employeeInfo.name}}"></td>
+        <td><input type="text" id="name"></td>
       </tr>
       <tr>
         <td>Vị trí</td>
-        <td>
-          <select name="role" id="role">
-            {{#each positions}}
-            <option value="{{this.code}}">{{this.name}}</option>
-            {{/each}}
-          </select>
-        </td>
+        <td><select name="role" id="role"></select></td>
       </tr>
       <tr>
         <td>Email</td>
-        <td><input type="text" id="email" name="email" value="{{employeeInfo.email}}"></td>
+        <td><input type="text" id="email" name="email"></td>
       </tr>
       <tr>
         <td>SĐT</td>
-        <td><input type="text" id="phone" name="phone" value="{{employeeInfo.phone}}"></td>
+        <td><input type="text" id="phone" name="phone"></td>
       </tr>
       <tr>
         <td>Địa Chỉ</td>
-        <td><input type="text" id="address" name="address" value="{{employeeInfo.address}}"></td>
+        <td><input type="text" id="address" name="address"></td>
       </tr>
       <tr>
         <td>Giới tính</td>
@@ -43,17 +37,11 @@
       </tr>
       <tr>
         <td>Cửa hàng làm việc</td>
-        <td>
-          <select name="store" id="store">
-            {{#each stores}}
-              <option value="{{this.code}}">{{this.name}}</option>
-            {{/each}}
-          </select>
-        </td>
+        <td><select name="store" id="store"></select></td>
       </tr>
       <tr>
         <td>Ngày vào làm</td>
-        <td>{{formatDate employeeInfo.createdAt }}</td>
+        <td><input type="text" id="date" name="date" disabled></td>
       </tr>
     </table>
     

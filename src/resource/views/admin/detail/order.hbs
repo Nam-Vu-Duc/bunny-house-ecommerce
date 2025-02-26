@@ -6,57 +6,45 @@
       </thead>
       <tr>
         <td>Mã Đơn</td>
-        <td>{{orderInfo._id}}</td>
+        <td><input type="text" id="id" disabled></td>
       </tr>
       <tr>
         <td>Ngày Đặt</td>
-        <td>{{formatDate orderInfo.createdAt}}</td>
+        <td><input type="text" id="date" disabled></td>
       </tr>
       <tr>
         <td>Khách Hàng</td>
-        <td>{{orderInfo.customerInfo.name}}</td>
+        <td><input type="text" id="name" disabled></td>
       </tr>
       <tr>
         <td>SĐT</td>
-        <td>{{orderInfo.customerInfo.phone}}</td>
+        <td><input type="text" id="phone" disabled></td>
       </tr>
       <tr>
         <td>Địa Chỉ</td>
-        <td>{{orderInfo.customerInfo.address}}</td>
+        <td><input type="text" id="address" disabled></td>
       </tr>
       <tr>
         <td>Ghi Chú</td>
-        <td>{{orderInfo.customerInfo.note}}</td>
+        <td><input type="text" id="note" disabled></td>
       </tr>
       <tr>
         <td>Phương thức thanh toán</td>
-        <td>
-          <select name="paymentMethod" id="paymentMethod">
-            {{#each paymentMethods}}
-            <option value="{{this.code}}">{{this.name}}</option>
-            {{/each}}
-          </select>
-        </td>
+        <td><select name="paymentMethod" id="paymentMethod"></select></td>
       </tr>
       <tr>
         <td>Tổng Tiền</td>
-        <td>{{formatNumber orderInfo.totalOrderPrice}}</td>
+        <td><input type="text" id="total" disabled></td>
       </tr>
       <tr>
         <td>Trạng thái đơn</td>
-        <td>
-          <select name="status" id="status">
-            {{#each orderStatuses}}
-            <option value="{{this.code}}">{{this.name}}</option>
-            {{/each}}
-          </select>
-        </td>
+        <td><select name="status" id="status"></select></td>
       </tr>
     </table>
 
     <table id="table-2">
       <thead>
-        <tr><td colspan="4">CHI TIẾT ĐƠN HÀNG</td></tr>
+        <tr><td colspan="5">CHI TIẾT ĐƠN HÀNG</td></tr>
       </thead>
       <thead>
         <tr>
@@ -64,18 +52,10 @@
           <td>Tên Sản Phẩm</td>
           <td>Số Lượng</td>
           <td>Giá</td>
+          <td>Chi tiết</td>
         </tr>
       </thead>
-      <tbody>
-        {{#each orderInfo.products}}
-        <tr>
-          <td>{{addIndex @index 1 }}</td>
-          <td>{{this.name}}</td>
-          <td>{{this.quantity}}</td>
-          <td>{{formatNumber this.price}}</td>
-        </tr>
-        {{/each}}
-      </tbody>
+      <tbody></tbody>
     </table>
     
     <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>

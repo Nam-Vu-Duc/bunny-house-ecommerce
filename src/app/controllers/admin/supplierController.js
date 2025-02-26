@@ -34,10 +34,11 @@ class allSuppliersController {
 
   // update
   async getSupplier(req, res, next) {
-    const supplierInfo = await supplier.findOne({ _id: req.body.id }).lean()
+    const [supplierInfo, purchaseInfo] = await Promise.all([
+      supplier.findOne({ _id: req.body.id }).lean(),
+      purchase.find({ supplierId: req.body.id }).lean()
+    ]) 
     if (!supplierInfo) return res.json({supplierInfo: null})
-
-    const purchaseInfo = await purchase.find({ 'supplierId': req.body.id }).lean()
 
     return res.json({supplierInfo: supplierInfo, purchaseInfo: purchaseInfo})
   }

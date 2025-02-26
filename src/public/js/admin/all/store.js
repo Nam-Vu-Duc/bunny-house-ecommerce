@@ -15,17 +15,11 @@ async function getFilter() {
   const json = await response.json()
   const data = json.data
 
-  // data.forEach((element, index) => {
-  //   const option = document.createElement('option')
-  //   option.value = element.code
-  //   option.textContent = element.name
-  //   document.querySelector('select#memberCode').appendChild(option)
-  // })
 }
 
 async function getCustomers(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
-    tr.querySelector('td.loading').style.display = ''
+    tr.querySelector('td:nth-child(1)').classList.add('loading')
   })
 
   const response = await fetch('/admin/all-stores/data/stores', {
@@ -49,7 +43,6 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
       const newTr = document.createElement('tr')
       newTr.innerHTML = `
         <td></td>
-        <td class="loading" style="display:none"></td>
         <td>${item._id}</td>
         <td>${item.name}</td>
         <td>${item.address}</td>

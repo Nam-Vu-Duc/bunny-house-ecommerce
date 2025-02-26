@@ -9,37 +9,39 @@ async function getEmployee() {
     body: JSON.stringify({id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {customerInfo, memberInfo, orderInfo} = await response.json()
-  console.log(orderInfo)
+  const {employeeInfo, storesInfo, positionsInfo} = await response.json()
 
-  document.title = customerInfo.name
+  document.title = employeeInfo.name
 
-  document.querySelector('input#id').value       = customerInfo._id
-  document.querySelector('input#name').value     = customerInfo.name
-  document.querySelector('input#email').value    = customerInfo.email
-  document.querySelector('input#phone').value    = customerInfo.phone
-  document.querySelector('input#address').value  = customerInfo.address
+  document.querySelector('input#id').value       = employeeInfo._id
+  document.querySelector('input#name').value     = employeeInfo.name
+
+  positionsInfo.forEach((element, index) => {
+    const option = document.createElement('option')
+    option.value = element.code
+    option.textContent = element.name
+    if (element.code === employeeInfo.role) option.selected = true
+
+    document.querySelector('select#role').appendChild(option)
+  })
+
+  document.querySelector('input#email').value    = employeeInfo.email
+  document.querySelector('input#phone').value    = employeeInfo.phone
+  document.querySelector('input#address').value  = employeeInfo.address
   document.querySelectorAll('input[name="gender"]').forEach((input) => {
-    if (input.value === customerInfo.gender) input.checked = true
+    if (input.value === employeeInfo.gender) input.checked = true
   })
-  document.querySelector('select#store').querySelectorAll('option').forEach(option => {
-    if (option.value === storeCode) option.selected = true
-  })
-  document.querySelector('input#quantity').value = customerInfo.quantity
-  document.querySelector('input#revenue').value  = formatNumber(customerInfo.revenue)
-  document.querySelector('input#member').value   = memberInfo.name
 
-  orderInfo.forEach((order) => {
-    const tr = document.querySelector('tr')
-    tr.innerHTML = `
-      <td></td>
-      <td>${formatNumber(order.totalOrderPrice)}</td>
-      <td>${order.paymentMethod}</td>
-      <td>${order.orderStatus.name}</td>
-      <td><a href="/admin/all-orders/order/${order._id}">Xem</a></td>
-    `
-    document.querySelector('table#table-2').querySelector('tbody').appendChild(tr)
+  storesInfo.forEach((element, index) => {
+    const option = document.createElement('option')
+    option.value = element.code
+    option.textContent = element.name
+    if (element.code === employeeInfo.storeCode) option.selected = true
+    
+    document.querySelector('select#store').appendChild(option)
   })
+
+  document.querySelector('input#date').value = formatDate(employeeInfo.createdAt)
 
   return
 }

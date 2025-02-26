@@ -34,12 +34,11 @@ class allStoresController {
 
   // update
   async getStore(req, res, next) {
-    const [storeInfo, employeesInfo] = await Promise.all([
-      store.findOne({ _id: req.body.id }).lean(),
-      employee.find({ 'userInfo.storeId': req.body.id }).lean(),
-    ])
+    const storeInfo = await store.findOne({ _id: req.body.id }).lean()
     if (!storeInfo) return res.json({storeInfo: null})
 
+    const employeesInfo = await employee.find({ storeCode: storeInfo.code }).lean()
+    
     return res.json({storeInfo: storeInfo, employeesInfo: employeesInfo})
   }
 
