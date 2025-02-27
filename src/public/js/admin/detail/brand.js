@@ -9,42 +9,67 @@ async function getBrand() {
     body: JSON.stringify({id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {customerInfo, memberInfo, orderInfo} = await response.json()
-  console.log(orderInfo)
+  const {brandInfo, productsInfo} = await response.json()
 
-  document.title = customerInfo.name
+  document.title = brandInfo.name
 
-  document.querySelector('input#id').value       = customerInfo._id
-  document.querySelector('input#name').value     = customerInfo.name
-  document.querySelector('input#email').value    = customerInfo.email
-  document.querySelector('input#phone').value    = customerInfo.phone
-  document.querySelector('input#address').value  = customerInfo.address
-  document.querySelectorAll('input[name="gender"]').forEach((input) => {
-    if (input.value === customerInfo.gender) input.checked = true
-  })
-  document.querySelector('input#quantity').value = customerInfo.quantity
-  document.querySelector('input#revenue').value  = formatNumber(customerInfo.revenue)
-  document.querySelector('input#member').value   = memberInfo.name
+  document.querySelector('input#id').value        = brandInfo._id
+  document.querySelector('input#name').value      = brandInfo.name
+  document.querySelector('input#quantity').value  = brandInfo.totalProduct
+  document.querySelector('input#total').value     = brandInfo.totalRevenue
+  document.querySelector('input#details').value   = brandInfo.details
 
-  orderInfo.forEach((order) => {
-    const tr = document.querySelector('tr')
+  productsInfo.forEach((product) => {
+    const tr = document.createElement('tr')
     tr.innerHTML = `
       <td></td>
-      <td>${formatNumber(order.totalOrderPrice)}</td>
-      <td>${order.paymentMethod}</td>
-      <td>${order.orderStatus.name}</td>
-      <td><a href="/admin/all-orders/order/${order._id}">Xem</a></td>
-    `
+      <td style="
+        display: flex; 
+        justify-content: start;
+        align-items: center;
+        gap: 5px"
+      >
+        <img src="${product.img.path}" alt="${product.name}" loading="lazy">
+        ${product.name}
+      </td>
+      <td>${product.quantity}</td>
+      <td>${formatNumber(product.price)}</td>
+      <td><a href="/admin/all-products/product/${product._id}">Xem</a></td>
+  `
     document.querySelector('table#table-2').querySelector('tbody').appendChild(tr)
   })
 
-  return
+  return brandInfo
 }
 
-async function updateBrand() {
+async function updateBrand(brandInfo) {
+  const details = document.querySelector('input#details').value
 
+  if (
+    details === brandInfo.details
+  ) return pushNotification('Hãy cập nhật thông tin')
+
+  const response = await fetch('/admin/all-brands/brand/updated', {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      id      : urlSlug,
+      details : details,
+    })
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {isValid, message} = await response.json()
+
+  pushNotification(message)
+
+  if (!isValid) return
+  setTimeout(() => window.location.reload(), 3000)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getBrand()
+  const brandInfo = await getBrand()
+
+  document.querySelector('button[type="submit"]').onclick = function() {
+    updateBrand(brandInfo)
+  }
 })

@@ -59,16 +59,13 @@ class allOrdersController {
   }
 
   async orderUpdate(req, res, next) {
-    const status = req.body.status
-    const paymentMethod = req.body.paymentMethod
-
-    await order.updateOne({ _id: req.params.id }, { 
-      status: status,
-      paymentMethod: paymentMethod
+    await order.updateOne({ _id: req.body.id }, { 
+      status        : req.body.status,
+      paymentMethod : req.body.paymentMethod
     })
 
-    if (status === 'done') {
-      const orderInfo = await order.findOne({ _id: req.params.id }).lean()
+    if (req.body.status === 'done') {
+      const orderInfo = await order.findOne({ _id: req.body.id }).lean()
       const userId = orderInfo.customerInfo.userId
       const storeId = orderInfo.storeId
 
@@ -96,6 +93,8 @@ class allOrdersController {
         })
       }
     }
+
+    return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
   }
 
   // create

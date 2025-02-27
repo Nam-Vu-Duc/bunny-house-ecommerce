@@ -11,7 +11,6 @@ const deleteButton  = document.getElementById('delete-button')
 const restoreButton = document.getElementById('restore-button')
 var productId;
 
-
 async function getDeletedProducts(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
     tr.querySelector('td:nth-child(1)').classList.add('loading')
@@ -62,9 +61,19 @@ function clickToDelete(clicked_id) {
   productId = clicked_id
 }
 
-deleteButton.onclick = function () {
-  deleteForm.action = '/admin/all-products/product/delete/' + productId + '?_method=DELETE'
-  deleteForm.submit()
+deleteButton.onclick = async function () {
+  const response = await fetch('/admin/all-products/product/delete', {
+    method: 'DELETE',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({id: productId})
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {isValid, message} = await response.json()
+
+  pushNotification(message)
+  
+  if (!isValid) return
+  setTimeout(() => window.location.reload(), 3000)
 }
 
 //restore button
@@ -73,9 +82,19 @@ function clickToRestore(clicked_id) {
   productId = clicked_id
 }
 
-restoreButton.onclick = function () {
-  restoreForm.action = '/admin/all-products/product/restore/' + productId 
-  restoreForm.submit()
+restoreButton.onclick = async function () {
+  const response = await fetch('/admin/all-products/product/restore', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({id: productId})
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {isValid, message} = await response.json()
+
+  pushNotification(message)
+  
+  if (!isValid) return
+  setTimeout(() => window.location.reload(), 3000)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {

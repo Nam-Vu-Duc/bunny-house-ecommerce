@@ -10,7 +10,13 @@ async function createCustomer() {
   const address  = document.querySelector('input#address').value
   const password = document.querySelector('input#password').value
 
-  if (!name || !email || !phone || !address || !password) {
+  if (
+    !name     || 
+    !email    || 
+    !phone    || 
+    !address  || 
+    !password
+  ) {
     pushNotification("Hãy điền đầy đủ các thông tin!")
     return
   }

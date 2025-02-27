@@ -8,7 +8,7 @@ router.get('/order/create'        , orderController.orderCreate)
 router.post('/order/created'      , orderController.orderCreated)
 
 router.get('/order/:id'           , orderController.orderInfo)
-router.put('/order/updated/:id'   , orderController.orderUpdate)
+router.put('/order/updated'       , orderController.orderUpdate)
 
 router.post('/data/orders'        , orderController.getOrders)
 router.post('/data/order'         , orderController.getOrder)

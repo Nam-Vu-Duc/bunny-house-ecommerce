@@ -1,5 +1,6 @@
 // ok
 importLinkCss('/css/user/allOrders.css')
+
 const contactInfo     = document.querySelector('div.contact-info')
 const paymentMethod   = document.querySelector('div.payment-method')
 const nextButton      = document.querySelector('button.next-button')
@@ -13,9 +14,9 @@ async function checkUser() {
   const response = await fetch(`/data/user`)
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
 
-  const json = await response.json()
-  isUser.message = json.message
-  isUser.uid = json.uid
+  const {message, uid} = await response.json()
+  isUser.message = message
+  isUser.uid = uid
 }
 
 function updateTableBody(totalOrderPrice) {

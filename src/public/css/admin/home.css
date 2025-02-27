@@ -1,9 +1,10 @@
 .admin-home-container {
-  div.info-table {
-    gap: 10px;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    td {border-radius: 5px}
+  padding: 0 5px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 10px;
+  div.table {
+    margin-top: 0 !important;
     tbody {
       tr {
         height: 50px;
@@ -25,10 +26,7 @@
       }
     }
   }
-  div.info-table > div {
-    background-color: white;
-    border-radius: 10px;
-  }
+  
 }
 @media screen and (max-width: 700px) {
   .admin-home-container {

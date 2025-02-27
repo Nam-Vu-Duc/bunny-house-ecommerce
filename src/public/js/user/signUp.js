@@ -1,5 +1,6 @@
 // ok
 importLinkCss('/css/empty/signIn.css')
+
 const submitButton = document.querySelector('button')
 
 async function verifyingEmail(email) {
@@ -40,15 +41,14 @@ async function creatingAccount(email, name, password) {
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  return { isSuccessful: json.isSuccessful, message: json.message }
+  const {isSuccessful, message} = await response.json()
+  return { isSuccessful: isSuccessful, message: message }
 }
 
 submitButton.onclick = async function() {
   submitButton.classList.add('loading')
   if (submitButton.className.includes('email')) {
     const email = document.querySelector('input#email').value
-    console.log(email)
     const {isValid, message} = await verifyingEmail(email) 
     if (!isValid) {
       document.querySelector('p.wrong-info').textContent = message

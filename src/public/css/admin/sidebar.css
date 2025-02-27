@@ -3,8 +3,7 @@
   right: auto;
   width: 200px;
   height: 98%;
-  /* transform: translateX(-50%); */
-  z-index: 999;
+  z-index: 3;
   position: fixed;
   background-color: #D1A6A6;
   overflow-y: scroll;

@@ -19,19 +19,14 @@ class profileController {
   }
 
   async profileUpdated(req, res, next) {
-    const {
-      name,
-      phone,
-      address,
-      gender,
-    } = req.body
-
-    await emp.updateOne({ _id: req.params.id}, {
-      name   : name   ,
-      phone  : phone  ,
-      gender : gender ,
-      address: address,
+    await emp.updateOne({ _id: req.cookies.uid}, {
+      name   : req.body.name   ,
+      phone  : req.body.phone  ,
+      address: req.body.address,
+      gender : req.body.gender ,
     })
+
+    return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
   }
 }
 module.exports = new profileController

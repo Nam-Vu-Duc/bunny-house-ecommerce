@@ -32,13 +32,43 @@ async function getSupplier() {
     document.querySelector('table#table-2').querySelector('tbody').appendChild(tr)
   })
 
-  return
+  return supplierInfo
 }
 
-async function updateSupplier() {
+async function updateSupplier(supplierInfo) {
+  const name    = document.querySelector('input#name').value
+  const phone   = document.querySelector('input#phone').value
+  const address = document.querySelector('input#address').value
 
+  if (
+    name    === supplierInfo.name    &&
+    phone   === supplierInfo.phone   &&
+    address === supplierInfo.address
+  ) return pushNotification('Hãy cập nhật thông tin')
+
+  const response = await fetch('/admin/all-suppliers/supplier/updated', {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      id      : urlSlug,
+      name    : name,
+      phone   : phone,
+      address : address,
+    })
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {isValid, message} = await response.json()
+
+  pushNotification(message)
+
+  if (!isValid) return
+  setTimeout(() => window.location.reload(), 3000)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getSupplier()
+  const supplierInfo = await getSupplier()
+
+  document.querySelector('button[type="submit"]').onclick = function() {
+    updateSupplier(supplierInfo)
+  }
 })

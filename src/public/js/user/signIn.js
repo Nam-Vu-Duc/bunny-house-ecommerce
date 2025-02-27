@@ -14,10 +14,9 @@ async function checkingAccount() {
       password: password
     })
   })
+  
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  const isValid = json.isValid
-  const message = json.message
+  const {isValid, message} = await response.json()
 
   document.querySelector('button').classList.remove('loading')
   if (!isValid) {

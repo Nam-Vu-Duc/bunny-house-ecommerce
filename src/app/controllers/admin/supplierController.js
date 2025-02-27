@@ -48,19 +48,13 @@ class allSuppliersController {
   }
 
   async supplierUpdate(req, res, next) {
-    const {
-      name,
-      email,
-      phone,
-      address
-    } = req.body
-
-    await supplier.updateOne({ _id: req.params.id }, {
-      name    : name    ,
-      phone   : phone   ,
-      email   : email   ,
-      address : address ,
+    await supplier.updateOne({ _id: req.body.id }, {
+      name    : req.body.name    ,
+      phone   : req.body.phone   ,
+      address : req.body.address ,
     })
+
+    return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
   }
 
   // create

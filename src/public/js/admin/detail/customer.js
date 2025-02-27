@@ -37,13 +37,46 @@ async function getCustomer() {
     document.querySelector('table#table-2').querySelector('tbody').appendChild(tr)
   })
 
-  return
+  return customerInfo
 }
 
-async function updateCustomer() {
+async function updateCustomer(customerInfo) {
+  const name    = document.querySelector('input#name').value
+  const phone   = document.querySelector('input#phone').value
+  const address = document.querySelector('input#address').value
+  const gender  = document.querySelector('input[name="gender"]:checked').value
 
+  if (
+    name    === customerInfo.name    &&
+    phone   === customerInfo.phone   &&
+    address === customerInfo.address &&
+    gender  === customerInfo.gender
+  ) return pushNotification('Hãy cập nhật thông tin')
+
+  const response = await fetch('/admin/all-customers/customer/updated', {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      id      : urlSlug,
+      name    : name,
+      phone   : phone,
+      address : address,
+      gender  : gender
+    })
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {isValid, message} = await response.json()
+
+  pushNotification(message)
+
+  if (!isValid) return
+  setTimeout(() => window.location.reload(), 3000)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getCustomer()
+  const customerInfo = await getCustomer()
+
+  document.querySelector('button[type="submit"]').onclick = function() {
+    updateCustomer(customerInfo)
+  }
 })

@@ -1,5 +1,6 @@
 // ok
 importLinkCss('/css/user/profile.css')
+
 const content       = document.querySelector('div.profile-container').querySelector('div.content')
 const infoBtn       = document.querySelector('span.profile')
 const orderBtn      = document.querySelector('span.order')
@@ -112,10 +113,9 @@ async function getUser() {
         address: address
       })
     })
+
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    const json = await response.json()
-    const isValid = json.isValid
-    const message = json.message
+    const {isValid, message} = await response.json()
     pushNotification(message)
 
     if (!isValid) return

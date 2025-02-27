@@ -1,5 +1,6 @@
 // ok
 importLinkCss('/css/user/detailBrand.css')
+
 const metaDescription     = document.querySelector("meta[name='description']")
 const brandElement        = document.querySelector('div.table')
 const relatedProducts     = document.querySelector('div.related-products').querySelectorAll('div.product')
@@ -13,9 +14,7 @@ async function getBrand() {
     body: JSON.stringify({id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  const data = json.data
-  console.log(data)
+  const {data} = await response.json()
 
   metaDescription.setAttribute("content", data.description)
   document.title = data.name

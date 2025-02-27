@@ -40,13 +40,45 @@ async function getProfile() {
 
   document.querySelector('input#date').value = formatDate(userInfo.createdAt)
 
-  return
+  return userInfo
 }
 
-async function updateProfile() {
+async function updateProfile(userInfo) {
+  const name    = document.querySelector('input#name').value
+  const phone   = document.querySelector('input#phone').value
+  const address = document.querySelector('input#address').value
+  const gender  = document.querySelector('input[name="gender"]:checked').value
 
+  if (
+    name    === userInfo.name    &&
+    phone   === userInfo.phone   &&
+    address === userInfo.address &&
+    gender  === userInfo.gender
+  ) return pushNotification('Hãy cập nhật thông tin')
+
+  const response = await fetch('/admin/profile/updated', {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      name    : name,
+      phone   : phone,
+      address : address,
+      gender  : gender
+    })
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {isValid, message} = await response.json()
+
+  pushNotification(message)
+
+  if (!isValid) return
+  setTimeout(() => window.location.reload(), 3000)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getProfile()
+  const userInfo = await getProfile()
+
+  document.querySelector('button[type="submit"]').onclick = function() {
+    updateProfile(userInfo)
+  }
 })

@@ -37,7 +37,24 @@ class allStoresController {
     const storeInfo = await store.findOne({ _id: req.body.id }).lean()
     if (!storeInfo) return res.json({storeInfo: null})
 
-    const employeesInfo = await employee.find({ storeCode: storeInfo.code }).lean()
+    const employeesInfo = await employee.aggregate([
+      {
+        $match: { storeCode: storeInfo.code }
+      },
+      {
+        $lookup: {
+          from: 'stores',
+          localField: 'storeCode',
+          foreignField: 'code',
+          as: 'storeName'
+        }
+      },
+      {
+        $unwind: '$storeName'
+      }
+    ])
+
+    console.log(employeesInfo)
     
     return res.json({storeInfo: storeInfo, employeesInfo: employeesInfo})
   }
@@ -47,17 +64,13 @@ class allStoresController {
   }
 
   async storeUpdate(req, res, next) {
-    const {
-      name,
-      address,
-      details
-    } = req.body
-
-    await store.updateOne({ _id: req.params.id }, {
-      name   : name,
-      address: address,
-      details: details
+    await store.updateOne({ _id: req.body.id }, {
+      name   : req.body.name,
+      address: req.body.address,
+      details: req.body.details
     })
+
+    return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
   }
 
   // create

@@ -71,21 +71,14 @@ class allCustomersController {
   }
 
   async customerUpdate(req, res, next) {
-    const {
-      name,
-      email,
-      phone,
-      address,
-      gender
-    } = req.body
-
-    await user.updateOne({ _id: req.params.id }, {
-        email  : email   ,
-        name   : name    ,
-        phone  : phone   ,
-        address: address ,
-        gender : gender  ,
+    await user.updateOne({ _id: req.body.id }, {
+      name   : req.body.name    ,
+      phone  : req.body.phone   ,
+      address: req.body.address ,
+      gender : req.body.gender  ,
     })
+
+    return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
   }
 
   // create

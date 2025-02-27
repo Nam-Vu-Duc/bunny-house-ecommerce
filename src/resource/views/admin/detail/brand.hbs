@@ -6,23 +6,23 @@
       </thead>
       <tr>
         <td>Mã thương hiệu</td>
-        <td>{{brandInfo._id}}</td>
+        <td><input type="text" id="id" disabled></td>
       </tr>
       <tr>
         <td>Tên thương hiệu</td>
-        <td>{{brandInfo.name}}</td>
+        <td><input type="text" id="name" disabled></td>
       </tr>
       <tr>
         <td>Số lượng sản phẩm</td>
-        <td>{{brandInfo.totalProduct}}</td>
+        <td><input type="text" id="quantity" disabled></td>
       </tr>
       <tr>
         <td>Tổng doanh thu </td>
-        <td>{{formatNumber brandInfo.totalRevenue}}</td>
+        <td><input type="text" id="total" disabled></td>
       </tr>
       <tr>
         <td>Mô tả chi tiết</td>
-        <td>{{brandInfo.description}}</td>
+        <td><input type="text" id="details"></td>
       </tr>
     </table>
 
@@ -39,17 +39,7 @@
           <td style="width: 10%">Chi tiết    </td>
         </tr>
       </thead>
-      <tbody>
-        {{#each productsInfo}}
-        <tr>
-          <td>{{addIndex @index 1}}</td>
-          <td>{{this.name}}</td>
-          <td>{{formatNumber this.price}}</td>
-          <td>{{this.quantity}}</td>
-          <td><a href="/admin/all-products/product/{{this._id}}">Xem</a></td>
-        </tr>
-        {{/each}}
-      </tbody>
+      <tbody></tbody>
     </table>
 
     <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>

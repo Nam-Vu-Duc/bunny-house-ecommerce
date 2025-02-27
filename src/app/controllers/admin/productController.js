@@ -85,15 +85,11 @@ class allProductsController {
     function deFormatNumber(number) {
       return parseInt(number.replace(/\./g, ''))
     }
-    let skincare = ''
-    let makeup = ''
-    if (req.body.categories === 'skincare') skincare = req.body.skincare
-    if (req.body.categories === 'makeup') makeup = req.body.makeup
 
-    await product.updateOne({ _id: req.params.id }, {
+    await product.updateOne({ _id: req.body.id }, {
       categories    : req.body.categories,
-      skincare      : skincare,
-      makeup        : makeup,
+      skincare      : req.body.skincare,
+      makeup        : req.body.makeup,
       brand         : req.body.brand,
       name          : req.body.name,
       purchasePrice : deFormatNumber(req.body.purchasePrice),
@@ -101,25 +97,34 @@ class allProductsController {
       price         : deFormatNumber(req.body.price),
       description   : req.body.description,
       details       : req.body.details,
+      guide         : req.body.guide,
       quantity      : req.body.quantity,
       status        : req.body.status,
     })
+
+    return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
   }
 
   async softDelete(req, res, next) {
-    await product.updateOne({ _id: req.params.id}, { deletedAt: Date.now() })
+    await product.updateOne({ _id: req.body.id}, { deletedAt: Date.now() })
+
+    return res.json({isValid: true, message: 'Xoá sản phẩm thành công'})
   }
 
   async deleteProduct(req, res, next) {
-    const newProduct = await product.findOne({ _id: req.params.id })
+    const newProduct = await product.findOne({ _id: req.body.id })
     const deleteImg = newProduct.img.filename
     
     await cloudinary.uploader.destroy(deleteImg)
-    await product.deleteOne({ _id: req.params.id })
+    await product.deleteOne({ _id: req.body.id })
+
+    return res.json({isValid: true, message: 'Xoá sản phẩm thành công'})
   }
 
   async restore(req, res, next) {
-    await product.updateOne({ _id: req.params.id}, { deletedAt: null })
+    await product.updateOne({ _id: req.body.id}, { deletedAt: null })
+
+    return res.json({isValid: true, message: 'Khôi phục sản phẩm thành công'})
   }
 
   // create

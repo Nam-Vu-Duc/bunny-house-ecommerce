@@ -23,7 +23,7 @@ async function getFilter() {
   })
 }
 
-async function getCustomers(sortOptions, filterOptions, currentPage) {
+async function getBrands(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
     tr.querySelector('td:nth-child(1)').classList.add('loading')
   })
@@ -62,12 +62,12 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
     })
   }, 1000)
   
-  pagination(getCustomers, sortOptions, filterOptions, currentPage, dataSize.size)
+  pagination(getBrands, sortOptions, filterOptions, currentPage, dataSize.size)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
   // getFilter()
-  getCustomers(sortOptions, filterOptions, currentPage.page)
-  sortAndFilter(getCustomers, sortOptions, filterOptions, currentPage.page)
+  getBrands(sortOptions, filterOptions, currentPage.page)
+  sortAndFilter(getBrands, sortOptions, filterOptions, currentPage.page)
   exportJs()
 })

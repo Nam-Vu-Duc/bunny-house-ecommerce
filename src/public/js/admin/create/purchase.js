@@ -155,7 +155,14 @@ async function createPurchase() {
   const supplierId          = document.querySelector('select#supplierId').value
   const note                = document.querySelector('input#note').value
 
-  if (!purchaseDate || !supplierId || !note || !productId || !productQuantity || !totalPurchasePrice) {
+  if (
+    !purchaseDate       || 
+    !supplierId         || 
+    !note               || 
+    !productId          || 
+    !productQuantity    || 
+    !totalPurchasePrice
+  ) {
     pushNotification("Hãy điền đầy đủ các thông tin!")
     return
   }

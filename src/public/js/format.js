@@ -2,6 +2,10 @@ function formatNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND'
 }
 
+function formatQuantity(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+}
+
 function formatRate(number) {
   return number.toFixed(1).toString()
 }
@@ -26,10 +30,6 @@ function formatInputNumber(input) {
     // Định dạng số với dấu chấm (.) phân tách hàng nghìn
     e.target.value = Number(value).toLocaleString('de-DE') // 'de-DE' dùng dấu chấm
   })
-}
-
-function formatNumber(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND'
 }
 
 function deFormatNumber(number) {

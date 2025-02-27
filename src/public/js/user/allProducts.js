@@ -1,5 +1,6 @@
 // ok
 importLinkCss('/css/user/allProducts.css')
+
 const mainTitle        = document.querySelector('div.main-title').querySelector('b')
 const skincareCategory = document.querySelector('div.all-category-skincare')
 const makeupCategory   = document.querySelector('div.all-category-makeup')
@@ -71,9 +72,7 @@ async function getProducts(products, sortOptions, filterOptions, currentPage) {
     body: JSON.stringify({sort: sortOptions, filter: filterOptions, page: currentPage})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  const data = json.data
-  const data_size = json.data_size
+  const {data, data_size} = await response.json()
 
   window.setTimeout(function() {
     products.forEach((product, index) => {

@@ -8,8 +8,7 @@ async function getBrands() {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  const data = json.data
+  const {data} = await response.json()
 
   window.setTimeout(function() {
     brands.querySelectorAll('div.brand').forEach((brand, index) => {

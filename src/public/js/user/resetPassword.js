@@ -1,5 +1,6 @@
 // ok
 importLinkCss('/css/user/resetPassword.css')
+
 const form              = document.querySelector('form#form-5') 
 const submitButton      = document.querySelector('button')
 const resetPasswordContainer = document.querySelector('div.reset-password-container')
@@ -34,8 +35,8 @@ async function verifyingCode(email, code) {
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  return json.message
+  const {message} = await response.json()
+  return message
 }
 
 async function resettingPassword(email, password) {
@@ -48,8 +49,8 @@ async function resettingPassword(email, password) {
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  return json.message
+  const {message} = await response.json()
+  return message
 }
 
 submitButton.onclick = async function() {

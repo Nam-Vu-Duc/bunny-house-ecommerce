@@ -1,5 +1,6 @@
 // ok
 importLinkCss('/css/user/detailOrder.css')
+
 const urlSlug = location.href.match(/([^\/]*)\/*$/)[1]
 
 async function getOrder() {
@@ -9,9 +10,7 @@ async function getOrder() {
     body: JSON.stringify({id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  const data = json.data
-  const status = json.status
+  const {data, status} = await response.json()
 
   document.querySelector('td#id').textContent = data._id || ''
   document.querySelector('td#date').textContent = formatDate(data.createdAt) || ''

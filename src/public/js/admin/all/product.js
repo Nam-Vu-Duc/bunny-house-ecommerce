@@ -66,7 +66,7 @@ async function getProducts(sortOptions, filterOptions, currentPage) {
         <td>${formatNumber(item.price)}</td>
         <td>${item.quantity}</td>
         <td>
-          <a href="/admin/all-products/product/${item._id}" class="update-button">Xem</a>
+          <button><a href="/admin/all-products/product/${item._id}" class="update-button">Xem</a></button>
           <button id="${item._id}" name="${item.name}" onclick="reply_click(this.id, this.name)">Xoá</button> 
         </td>
       `
@@ -86,9 +86,19 @@ function reply_click(clicked_id, clicked_name) {
 }
 
 // delete action
-deleteButton.onclick = function () {
-  deleteForm.action = '/admin/all-products/product/soft-delete/' + courseId + '?_method=DELETE'
-  deleteForm.submit()
+deleteButton.onclick = async function () {
+  const response = await fetch('/admin/all-products/product/soft-delete', {
+    method: 'DELETE',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({id: courseId})
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {isValid, message} = await response.json()
+
+  pushNotification(message)
+  
+  if (!isValid) return
+  setTimeout(() => window.location.reload(), 3000)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {

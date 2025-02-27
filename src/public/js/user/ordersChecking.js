@@ -1,5 +1,6 @@
 // ok
 importLinkCss('/css/user/ordersChecking.css')
+
 const submitButton   = document.querySelector('button')
 const orderContainer = document.querySelector('div.order-checking-container')
 const errorMessage   = document.querySelector('span.error-message')
@@ -11,9 +12,7 @@ async function getOrder(id) {
     body: JSON.stringify({id: id})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  const data = json.data
-  const status = json.status
+  const {data, status} = await response.json()
 
   return {data: data, status: status}
 }
@@ -52,7 +51,6 @@ function appendOrder(data, status) {
 submitButton.onclick = async function () {
   submitButton.classList.add('loading')
   const orderCode = document.querySelector('input#order-checking').value
-  console.log(orderCode)
   const regex = /^[a-f\d]{24}$/i
   if (regex.test(orderCode)) {
     const {data, status}  = await getOrder(orderCode)

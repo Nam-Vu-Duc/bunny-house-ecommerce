@@ -56,25 +56,16 @@ class allEmployeesController {
   }
 
   async employeeUpdate(req, res, next) {
-    const {
-      role,
-      name,
-      email,
-      phone,
-      address,
-      gender,
-      store
-    } = req.body
-
-    await employee.updateOne({ _id: req.params.id }, {
-      email    : email   ,
-      role     : role    ,
-      name     : name    ,
-      phone    : phone   ,
-      address  : address ,
-      gender   : gender  ,
-      storeCode: store   ,
+    await employee.updateOne({ _id: req.body.id }, {
+      name     : req.body.name    ,
+      role     : req.body.role    ,
+      phone    : req.body.phone   ,
+      address  : req.body.address ,
+      gender   : req.body.gender  ,
+      storeCode: req.body.store   ,
     })
+
+    return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
   }
 
   // create

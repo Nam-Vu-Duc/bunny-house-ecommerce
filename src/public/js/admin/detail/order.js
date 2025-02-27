@@ -70,13 +70,40 @@ async function getOrder() {
     document.querySelector('table#table-2').querySelector('tbody').appendChild(tr)
   })
 
-  return
+  return orderInfo
 }
 
-async function updateOrder() {
+async function updateOrder(orderInfo) {
+  const paymentMethod  = document.querySelector('select#paymentMethod').value
+  const status         = document.querySelector('select#status').value
 
+  if (
+    paymentMethod === orderInfo.paymentMethod    &&
+    status        === orderInfo.status 
+  ) return pushNotification('Hãy cập nhật thông tin')
+
+  const response = await fetch('/admin/all-orders/order/updated', {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      id            : urlSlug,
+      paymentMethod : paymentMethod,
+      status        : status
+    })
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {isValid, message} = await response.json()
+
+  pushNotification(message)
+
+  if (!isValid) return
+  setTimeout(() => window.location.reload(), 3000)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getOrder()
+  const orderInfo = await getOrder()
+
+  document.querySelector('button[type="submit"]').onclick = function() {
+    updateOrder(orderInfo)
+  }
 })

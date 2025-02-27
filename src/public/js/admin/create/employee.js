@@ -12,7 +12,15 @@ async function createEmployee() {
   const address   = document.querySelector('input#address').value
   const password  = document.querySelector('input#password').value
 
-  if (!name || !email || !phone || !address || !password || !role || !storeCode) {
+  if (
+    !name     || 
+    !email    || 
+    !phone    || 
+    !address  || 
+    !password || 
+    !role     || 
+    !storeCode
+  ) {
     pushNotification("Hãy điền đầy đủ các thông tin!")
     return
   }

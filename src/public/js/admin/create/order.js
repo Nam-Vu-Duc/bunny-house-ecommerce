@@ -10,7 +10,7 @@ const productName        = []
 const productImg         = []
 const productQuantity    = []
 const productPrice       = []
-const totalPurchasePrice = { value: 0 }
+const totalOrderPrice    = { value: 0 }
 
 function checkIsAddedProduct(id) {
   return productId.some((element) => element === id)
@@ -59,7 +59,7 @@ function updatePurchaseTotalPrice() {
     total += deFormatNumber(td.innerText)
   })
   document.querySelector('tfoot td:nth-child(5)').innerText = formatNumber(total)
-  totalPurchasePrice.value = total
+  totalOrderPrice.value = total
 }
 
 async function getCustomers() {
@@ -192,7 +192,15 @@ async function createOrder() {
   const paymentMethod = document.querySelector('select#paymentMethod').value
   const note          = document.querySelector('input#note').value
 
-  if (!orderDate || !userId || !storeId || !paymentMethod || !productId || !productQuantity || !totalPurchasePrice) {
+  if (
+    !orderDate        || 
+    !userId           || 
+    !storeId          || 
+    !paymentMethod    || 
+    !productId        || 
+    !productQuantity  || 
+    !totalOrderPrice
+  ) {
     pushNotification("Hãy điền đầy đủ các thông tin!")
     return
   }
@@ -211,7 +219,7 @@ async function createOrder() {
       productImg        : productImg,
       productQuantity   : productQuantity,
       productPrice      : productPrice,
-      totalPurchasePrice: totalPurchasePrice.value
+      totalOrderPrice   : totalOrderPrice.value
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)

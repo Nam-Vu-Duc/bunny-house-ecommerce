@@ -8,7 +8,11 @@ async function createStore() {
   const address  = document.querySelector('input#address').value
   const details  = document.querySelector('input#details').value
 
-  if (!name || !address || !details) {
+  if (
+    !name     || 
+    !address  || 
+    !details
+  ) {
     pushNotification("Hãy điền đầy đủ các thông tin!")
     return
   }

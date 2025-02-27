@@ -17,8 +17,7 @@ async function getProducts(products, status) {
     body: JSON.stringify({status: status})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  const data = json.data
+  const {data} = await response.json()
 
   window.setTimeout(function() {
     products.forEach((product, index) => {
@@ -44,9 +43,7 @@ async function getBrands(imgs) {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-
-  const data = json.data
+  const {data} = await response.json()
 
   imgs.forEach((img, index) => {
     img.parentElement.setAttribute('href', '/all-brands/brand/' + data[index]._id)

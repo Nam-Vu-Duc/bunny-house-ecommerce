@@ -1,163 +1,42 @@
 <div class="admin-home-container">
-  <div class="info-table">  
-    <div class="customer-info">
-      <table>
-        <thead>
-          <tr><td colspan="3">QUẢN LÝ KHÁCH HÀNG</td></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Số lượng khách hàng</td>
-            <td>{{totalCustomer}}</td>
-            <td><a href="/admin/all-customers">Chi tiết</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="purchase-info">
-      <table>
-        <thead>
-          <tr><td colspan="3">QUẢN LÝ NHẬP HÀNG</td></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Số lượng đơn nhập</td>
-            <td>{{totalPurchase}}</td>
-            <td><a href="/admin/all-purchases">Chi tiết</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="order-info">
-      <table>
-        <thead>
-          <tr><td colspan="3">QUẢN LÝ BÁN HÀNG</td></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Số lượng đơn hàng</td>
-            <td>{{totalOrder}}</td>
-            <td><a href="/admin/all-orders">Chi tiết</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="store-info">
-      <table>
-        <thead>
-          <tr><td colspan="3">QUẢN LÝ CỬA HÀNG</td></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Số lượng cửa hàng</td>
-            <td>{{totalStore}}</td>
-            <td><a href="/admin/all-stores">Chi tiết</a></td>
-          </tr>
-          <tr>
-            <td>Cửa hàng có doanh thu cao nhất</td>
-            <td>{{preparingOrders}}</td>
-            <td><a href="/admin/stores">Chi tiết</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="product-info">
-      <table>
-        <thead>
-          <tr><td colspan="3">QUẢN LÝ SẢN PHẨM</td></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Số lượng sản phẩm</td>
-            <td>{{totalProduct}}</td>
-            <td><a href="/admin/all-products/?page=&type=">Chi tiết</a></td>
-          </tr>
-          <tr>
-            <td>Sản phẩm Skincare</td>
-            <td>{{allSkincareProducts}}</td>
-            <td><a href="/admin/all-products/?page=1&type=skincare">Chi tiết</a></td>
-          </tr>
-          <tr>
-            <td>Sản phẩm Makeup</td>
-            <td>{{allMakeupProducts}}</td>
-            <td><a href="/admin/all-products/?page=1&type=makeup">Chi tiết</a></td>
-          </tr>
-          <tr>
-            <td>Sản phẩm đã xoá</td>
-            <td>{{deletedProducts}}</td>
-            <td><a href="/admin/trash">Chi tiết</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="finance-info">
-      <table>
-        <thead>
-          <tr><td colspan="3">QUẢN LÝ DOANH THU</td></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Tổng doanh thu</td>
-            <td>{{formatNumber totalRevenue}}</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Đơn có giá trị cao nhất</td>
-            <td>{{formatNumber maxValueOrderNumber}}</td>
-            <td><a href="/admin/all-orders/order/{{maxValueOrderId}}">Chi tiết</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="employee-info">
-      <table>
-        <thead>
-          <tr><td colspan="3">QUẢN LÝ NHÂN SỰ</td></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Số lượng nhân sự</td>
-            <td>{{totalEmployee}}</td>
-            <td><a href="/admin/all-employees">Chi tiết</a></td>
-          </tr>
-          <tr>
-            <td>Bảng lương</td>
-            <td></td>
-            <td><a href="/admin/">Chi tiết</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="brand-info">
-      <table>
-        <thead>
-          <tr><td colspan="3">QUẢN LÝ ĐỐI TÁC</td></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Số lượng đối tác</td>
-            <td>{{totalBrand}}</td>
-            <td><a href="/admin/all-brands">Chi tiết</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
+  <div class="table">
+    <div class="customer"></div>
     <div><canvas id="customer"></canvas></div>
-    <div><canvas id="purchase"></canvas></div>
+  </div> 
+
+  <div class="table">
+    <div class="order"></div>
     <div><canvas id="order"></canvas></div>
-    <div><canvas id="store"></canvas></div>
-    <div><canvas id="product"></canvas></div>
-    <div><canvas id="employee"></canvas></div>
+  </div>
+
+  <div class="table">
+    <div class="supplier"></div>
     <div><canvas id="supplier"></canvas></div>
+  </div>
+
+  <div class="table">
+    <div class="purchase"></div>
+    <div><canvas id="purchase"></canvas></div>
+  </div> 
+
+  <div class="table">
+    <div class="product"></div>
+    <div><canvas id="product"></canvas></div>
+  </div>
+
+  <div class="table">
+    <div class="brand"></div>
     <div><canvas id="brand"></canvas></div>
+  </div> 
+
+  <div class="table">
+    <div class="store"></div>
+    <div><canvas id="store"></canvas></div>
+  </div>
+
+  <div class="table">
+    <div class="employee"></div>
+    <div><canvas id="employee"></canvas></div>
   </div>
 </div>
 

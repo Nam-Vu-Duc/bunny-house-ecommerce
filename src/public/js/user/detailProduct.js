@@ -40,8 +40,7 @@ async function getProduct() {
     body: JSON.stringify({productId: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  const data = json.data
+  const {data} = await response.json()
 
   metaDescription.setAttribute("content", data.description)
   document.title = data.name
@@ -73,14 +72,13 @@ async function getComment() {
     body: JSON.stringify({productId: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  const comments = json.data
+  const {data} = await response.json()
 
   commentElement.querySelectorAll('div.comment').forEach((comment, index) => {
-    if (index < comments.length) {
-      comment.querySelector('p#sender').textContent = comments[index].senderId
-      comment.querySelector('p#rate').textContent = comments[index].rate 
-      comment.querySelector('p#comment').textContent = comments[index].comment 
+    if (index < data.length) {
+      comment.querySelector('p#sender').textContent = data[index].senderId
+      comment.querySelector('p#rate').textContent = data[index].rate 
+      comment.querySelector('p#comment').textContent = data[index].comment 
     } else {
       comment.remove()
     }
@@ -99,8 +97,7 @@ async function getRelatedProducts(productInfo) {
       type: productInfo.skincare || productInfo.makeup})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  const data = json.data
+  const {data} = await response.json()
 
   window.setTimeout(function() {
     relatedProducts.forEach((product, index) => {

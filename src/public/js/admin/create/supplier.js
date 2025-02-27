@@ -9,7 +9,12 @@ async function createSupplier() {
   const phone    = document.querySelector('input#phone').value
   const address  = document.querySelector('input#address').value
 
-  if (!name || !email || !phone || !address) {
+  if (
+    !name     || 
+    !email    || 
+    !phone    || 
+    !address
+  ) {
     pushNotification("Hãy điền đầy đủ các thông tin!")
     return
   }

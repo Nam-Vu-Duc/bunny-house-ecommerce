@@ -43,13 +43,52 @@ async function getEmployee() {
 
   document.querySelector('input#date').value = formatDate(employeeInfo.createdAt)
 
-  return
+  return employeeInfo
 }
 
-async function updateEmployee() {
+async function updateEmployee(employeeInfo) {
+  const name    = document.querySelector('input#name').value
+  const role    = document.querySelector('select#role').value
+  const phone   = document.querySelector('input#phone').value
+  const address = document.querySelector('input#address').value
+  const gender  = document.querySelector('input[name="gender"]:checked').value
+  const store   = document.querySelector('select#store').value
 
+  if (
+    name    === employeeInfo.name    &&
+    role    === employeeInfo.role    &&
+    phone   === employeeInfo.phone   &&
+    address === employeeInfo.address &&
+    gender  === employeeInfo.gender  &&
+    store   === employeeInfo.storeCode
+  ) return pushNotification('Hãy cập nhật thông tin')
+
+  const response = await fetch('/admin/all-employees/employee/updated', {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      id      : urlSlug,
+      name    : name,
+      role    : role,
+      phone   : phone,
+      address : address,
+      gender  : gender,
+      store   : store
+    })
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {isValid, message} = await response.json()
+
+  pushNotification(message)
+
+  if (!isValid) return
+  setTimeout(() => window.location.reload(), 3000)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getEmployee()
+  const employeeInfo = await getEmployee()
+
+  document.querySelector('button[type="submit"]').onclick = function() {
+    updateEmployee(employeeInfo)
+  }
 })

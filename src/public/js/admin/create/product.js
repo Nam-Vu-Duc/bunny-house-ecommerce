@@ -46,7 +46,18 @@ async function createProduct() {
   const guide       = document.querySelector('input#guide ').value
   const status      = document.querySelector('select[name="status"]').value
 
-  if (!categories || !brand || !name || !oldPrice || !price || !description || !details || !guide || !status || !img ) {
+  if (
+    !categories   || 
+    !brand        || 
+    !name         || 
+    !oldPrice     || 
+    !price        || 
+    !description  || 
+    !details      || 
+    !guide        || 
+    !status       || 
+    !img 
+  ) {
     pushNotification("Hãy điền đầy đủ các thông tin!")
     return
   }
