@@ -10,11 +10,11 @@ const makeupProductsDiv     = document.querySelector('div[class="products-board"
 const allProductsDiv        = document.querySelector('div[class="products-board"][id="all"]').querySelectorAll('div.product')
 const allBrandsDiv          = document.querySelector('div[class="famous-brand-board"][id="brand"]').querySelectorAll('img')
 
-async function getProducts(products, status) {
+async function getProducts(products, filter) {
   const response = await fetch('/data/products', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({status: status})
+    body: JSON.stringify(filter)
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {data} = await response.json()
@@ -53,11 +53,11 @@ async function getBrands(imgs) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  getProducts(flashSaleProductsDiv, 'flash-sale')
-  getProducts(topSaleProductsDiv, 'flash-sale')
-  getProducts(hotSaleProductsDiv, 'hot')
-  getProducts(skincareProductsDiv, 'flash-sale')
-  getProducts(makeupProductsDiv, 'flash-sale')
-  getProducts(allProductsDiv, 'flash-sale')
+  getProducts(flashSaleProductsDiv, {deletedAt: null, status: 'flash-sale'})
+  getProducts(topSaleProductsDiv  , {deletedAt: null})
+  getProducts(hotSaleProductsDiv  , {deletedAt: null, status: 'hot'})
+  getProducts(skincareProductsDiv , {deletedAt: null, categories: 'skincare'})
+  getProducts(makeupProductsDiv   , {deletedAt: null, categories: 'makeup'})
+  getProducts(allProductsDiv      , {deletedAt: null})
   getBrands(allBrandsDiv)
 })

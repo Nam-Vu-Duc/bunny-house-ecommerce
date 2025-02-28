@@ -10,8 +10,10 @@
 .flash-deal-board {
   background: linear-gradient(168.12deg, #ffb0a4 0%, #ff6b7f 100%);
   border-radius: 20px;
-  i.fi-sr-bolt, a {
-    animation: bling 1s infinite
+  .title {
+    i.fi-sr-bolt, a {
+      animation: bling 1s infinite
+    }
   }
 }
 .products-board {

@@ -86,6 +86,9 @@ async function getProducts(products, sortOptions, filterOptions, currentPage) {
         product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
         product.querySelector('div.loading').style.display = 'none'
         product.querySelectorAll('i').forEach((star, i) => {
+          star.style.color = 'black'
+        })
+        product.querySelectorAll('i').forEach((star, i) => {
           if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
         })
         product.style.display = ''

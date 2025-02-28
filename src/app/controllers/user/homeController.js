@@ -4,8 +4,14 @@ const user = require('../../models/userModel')
 
 class homeController {
   async getProducts(req, res, next) {
-    const status = req.body.status
-    const data = await product.find({deletedAt: null, status: status}).sort({ saleNumber: -1 }).limit(5).lean()
+    const filter = req.body
+    const data = await product.find(filter).sort({ saleNumber: -1 }).limit(5).lean()
+    
+    return res.json({data: data})
+  }
+  
+  async getOutOfOrderProducts(req, res, next) {
+    const data = await product.find({ status: 'out-of-order' }).lean()
     
     return res.json({data: data})
   }
@@ -17,7 +23,7 @@ class homeController {
     const userInfo = await user.findOne({ _id: userId }).lean()
     if (!userInfo) return res.json({message: false})
     
-    return res.json({message: true, uid: userId})
+    return res.json({message: true, uid: userId, data: userInfo})
   }
 
   async getBrands(req, res, next) {

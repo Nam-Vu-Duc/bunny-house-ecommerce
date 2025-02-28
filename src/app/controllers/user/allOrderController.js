@@ -20,7 +20,6 @@ class allOrderController {
 
   async orderInfo(req, res, next) {
     const id = req.cookies.uid || null
-    console.log(id)
     if (!id) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     
     const orderInfo = await order.findOne({ _id: req.params.id }).lean()
