@@ -19,6 +19,7 @@ async function getFilter() {
 
 async function getCustomers(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
+    tr.querySelector('td:nth-child(1)').textContent = ''
     tr.querySelector('td:nth-child(1)').classList.add('loading')
   })
 
@@ -39,10 +40,12 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
       tr.remove()
     })
 
+    let productIndex = (currentPage - 1) * 10 + 1
+
     data.forEach((item, index) => {
       const newTr = document.createElement('tr')
       newTr.innerHTML = `
-        <td></td>
+        <td>${productIndex}</td>
         <td>${item._id}</td>
         <td>${item.name}</td>
         <td>${item.address}</td>
@@ -50,6 +53,7 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
         <td><a href="/admin/all-stores/store/${item._id}">Xem</a></td>
       `
       tbody.appendChild(newTr)
+      productIndex++
     })
   }, 1000)
   

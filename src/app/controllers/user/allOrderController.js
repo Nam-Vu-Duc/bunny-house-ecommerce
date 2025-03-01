@@ -24,13 +24,14 @@ class allOrderController {
     
     const orderInfo = await order.findOne({ _id: req.params.id }).lean()
     if (!orderInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    if (orderInfo.customerInfo.userId === 'guest') return res.render('users/detailOrder', { title: `Đơn của khách` })
 
     const userInfo = await user.findOne({ _id: orderInfo.customerInfo.userId }).lean()
     if (!userInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
     if (userInfo._id.toString() !== id ) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-    res.render('users/detailOrder', { title: `Đơn của ${orderInfo.customerInfo.name}` })
+    return res.render('users/detailOrder', { title: `Đơn của ${orderInfo.customerInfo.name}` })
   }
 
   async ordersChecking(req, res, next) {
@@ -38,36 +39,41 @@ class allOrderController {
   }
 
   async createOrders(req, res, next) {
-    let { 
-      productId,
-      productImg,
-      productName, 
-      productPrice, 
-      productQuantity,  
-      productTotalPrice, 
-      totalOrderPrice, 
-      paymentMethod, 
+    const { 
+      productInfo,
+      paymentMethod,
       ...customerInfo 
     } = req.body
 
-    // if the req.body has only 1 record, then convert the productName % productQuantity to an array
-    if(!Array.isArray(productName)) {
-      productId         = [productId]
-      productImg        = [productImg]
-      productName       = [productName]
-      productPrice      = [productPrice]
-      productQuantity   = [productQuantity]
-      productTotalPrice = [productTotalPrice]
-    }
+    let totalOrderPrice = 0
+
+    const productIds = productInfo.map(item => item.id)
+    const products = await product.find({ _id: { $in: productIds }, status: { $ne: 'out-of-order' } }).lean()
+
+    const finalProductInfo = productInfo.map(cartItem => {
+      const product = products.find(p => p._id.toString() === cartItem.id)
+      if (!product) return null
+
+      totalOrderPrice += product.price * cartItem.quantity
+  
+      return {
+        id        : cartItem.id,
+        image     : product.img.path,
+        name      : product.name,
+        price     : product.price,
+        quantity  : cartItem.quantity,
+        totalPrice: product.price * cartItem.quantity
+      }
+    }).filter(Boolean)
 
     const newOrder = new order({
-      products: productName.map((product, index) => ({
-        id        : productId[index],   
-        image     : productImg[index],
-        name      : productName[index],
-        price     : productPrice[index],
-        quantity  : productQuantity[index],
-        totalPrice: productTotalPrice[index]
+      products: finalProductInfo.map((product, index) => ({
+        id        : product.id,   
+        image     : product.image,
+        name      : product.name,
+        price     : product.price,
+        quantity  : product.quantity,
+        totalPrice: product.totalPrice
       })),
       customerInfo: {
         userId  : customerInfo.userId,

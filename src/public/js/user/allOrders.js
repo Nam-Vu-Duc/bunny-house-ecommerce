@@ -25,86 +25,51 @@ async function checkUser() {
   }
 }
 
-function updateTableBody(totalOrderPrice) {
-  const getProductInfo = JSON.parse(localStorage.getItem('product_cart_count')) || {}
-  const productInfoLength = getProductInfo.productInfo.length 
-  const tableBody = document.querySelector('tbody')
+async function updateTableBody() {
+  const getProductInfo  = JSON.parse(localStorage.getItem('product_cart_count')) || {}
+  const productIds      = getProductInfo.productInfo.map(product => product.id)
+  const tableBody       = document.querySelector('tbody')
   totalOrderPrice.total = 0
 
-  const newProductUserId = document.createElement('input')
-  newProductUserId.setAttribute('name', 'userId')
-  newProductUserId.style.display = 'none'
+  const response = await fetch('/data/order-products', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({productIds: productIds})
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
 
-  if (isUserOrder.message) newProductUserId.setAttribute('value', isUserOrder.uid)
-  else newProductUserId.setAttribute('value', 'guest')
+  const {data} = await response.json()
 
-  // create new row for new product have name, price, quantity and totalPrice
-  for (let i = 0; i < productInfoLength; ++i) {
-    // create new row
-    const newProductRow = document.createElement('tr') 
+  data.forEach((product, index) => {
+    const newProductRow = document.createElement('tr')
 
-    // create img link 
     const newProductImage = document.createElement('td')
     const productImage = document.createElement('img')
-    productImage.setAttribute('src', `${getProductInfo.productInfo[i].image}`)
+    productImage.setAttribute('src', `${product.img.path}`)
     newProductImage.appendChild(productImage)
 
-    // create an input store the img value to submit the form
-    const newProductImgInput = document.createElement('input')
-    newProductImgInput.setAttribute('type', 'hidden')
-    newProductImgInput.setAttribute('name', 'productImg')
-    newProductImgInput.setAttribute('value', getProductInfo.productInfo[i].image)
-
-    // create new element and get data from localStorage
     const newProductName = document.createElement('td')
     const newProductAnchorTag = document.createElement('a')
-    newProductAnchorTag.setAttribute('href', `/all-products/product/${getProductInfo.productInfo[i].id}`)
-    newProductAnchorTag.innerText = getProductInfo.productInfo[i].name
+    newProductAnchorTag.setAttribute('href', `/all-products/product/${product._id}`)
+    newProductAnchorTag.innerText = product.name
     newProductAnchorTag.style.paddingLeft = '5px'
     newProductName.appendChild(newProductAnchorTag)
 
-    // create an input store the id value to submit the form
-    const newProductIdInput = document.createElement('input')
-    newProductIdInput.setAttribute('type', 'hidden')
-    newProductIdInput.setAttribute('name', 'productId')
-    newProductIdInput.setAttribute('value', getProductInfo.productInfo[i].id)
-    
-    // create an input store the name value to submit the form
-    const newProductNameInput = document.createElement('input')
-    newProductNameInput.setAttribute('type', 'hidden')
-    newProductNameInput.setAttribute('name', 'productName')
-    newProductNameInput.setAttribute('value', getProductInfo.productInfo[i].name)
-
     // create product price element
     const newProductPrice = document.createElement('td')
-    newProductPrice.innerText = `${getProductInfo.productInfo[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} VND`
-
-    // create an input store the price value to submit the form
-    const newProductPriceInput = document.createElement('input')
-    newProductPriceInput.setAttribute('type', 'hidden')
-    newProductPriceInput.setAttribute('name', 'productPrice')
-    newProductPriceInput.setAttribute('value', getProductInfo.productInfo[i].price)
+    newProductPrice.innerText = formatNumber(product.price)
 
     // create product quantity element
-    const newProductQuantity = document.createElement('td')
-    newProductQuantity.innerText = getProductInfo.productInfo[i].quantity
-
-    // create an input store the quantity value to submit the form
-    const newProductQuantityInput = document.createElement('input')
-    newProductQuantityInput.setAttribute('type', 'hidden')
-    newProductQuantityInput.setAttribute('name', 'productQuantity')
-    newProductQuantityInput.setAttribute('value', getProductInfo.productInfo[i].quantity)
-
-    // create product total price element
+    const newProductQuantity   = document.createElement('td')
     const newProductTotalPrice = document.createElement('td')
-    const convertNewProductTotalPriceToString = (getProductInfo.productInfo[i].price * getProductInfo.productInfo[i].quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') 
-    newProductTotalPrice.innerText = `${convertNewProductTotalPriceToString} VND`
-    
-    // create an input store the total price value to submit the form
-    const newProductTotalPriceInput = document.createElement('input')
-    newProductTotalPriceInput.setAttribute('type', 'hidden')
-    newProductTotalPriceInput.setAttribute('name', 'productTotalPrice')
-    newProductTotalPriceInput.setAttribute('value', getProductInfo.productInfo[i].price * getProductInfo.productInfo[i].quantity)
+    getProductInfo.productInfo.forEach((localProduct, index) => {
+      if (localProduct.id === product._id) {
+        const quantity = parseInt(localProduct.quantity)
+        newProductQuantity.innerText   = quantity        
+        newProductTotalPrice.innerText = formatNumber(quantity * product.price)
+        if (product.status !== 'out-of-order') totalOrderPrice.total += product.price * quantity
+      } 
+    })
 
     const newProductDelete = document.createElement('td')
     newProductDelete.setAttribute('class', 'delete-button')
@@ -112,39 +77,41 @@ function updateTableBody(totalOrderPrice) {
       <i class="fi fi-tr-trash-slash"></i>
     `
 
-    // calculate all product prices
-    totalOrderPrice.total += (getProductInfo.productInfo[i].price) * getProductInfo.productInfo[i].quantity
+    newProductDelete.onclick = function() {
+      getProductInfo.localCounting--
+      getProductInfo.productInfo.forEach((localProduct, index) => {
+        if (localProduct.id === product._id) getProductInfo.productInfo.splice(index, 1)
+      })
+      localStorage.setItem('product_cart_count', JSON.stringify(getProductInfo))
+      document.dispatchEvent(new CustomEvent('cartUpdated'))
+      deleteCartItem(tableBody)
+      updateTableBody()
+      preCheckAllProducts()
+    }    
 
     // add each element to the row
+    newProductRow.appendChild(document.createElement('td'))
     newProductRow.appendChild(newProductImage)
-    newProductRow.appendChild(newProductImgInput)
-
-    newProductRow.appendChild(newProductIdInput)
-
     newProductRow.appendChild(newProductName)
-    newProductRow.appendChild(newProductNameInput)
-
     newProductRow.appendChild(newProductPrice)
-    newProductRow.appendChild(newProductPriceInput)
-
     newProductRow.appendChild(newProductQuantity)
-    newProductRow.appendChild(newProductQuantityInput)
-
     newProductRow.appendChild(newProductTotalPrice)
-    newProductRow.appendChild(newProductTotalPriceInput)
-
     newProductRow.appendChild(newProductDelete)
 
-    // add each row to the table
+    if (product.status === 'out-of-order') {
+      newProductRow.querySelector('td:first-child').classList.add('unavailable')
+      newProductRow.querySelector('td:first-child').textContent = 'Ui hết hàng rùiii'
+    }
+
     tableBody.appendChild(newProductRow)
-    tableBody.appendChild(newProductUserId)
-  }
-  deleteCart(totalOrderPrice)
+  })
+
+  updateTableFooter()
 }
 
 function preCheckAllProducts() {
-  const allCurrentProducts = tableBody.querySelectorAll('tr').length
-  if (allCurrentProducts === 0) {
+  const getProductInfo = JSON.parse(localStorage.getItem('product_cart_count')) || {}
+  if (getProductInfo.localCounting === 0) {
     nextButton.style.display = 'none'
     const emptyCartNotice = document.createElement('td')
     emptyCartNotice.setAttribute('colspan', '6')
@@ -175,25 +142,9 @@ function displayProcess() {
   }
 }
 
-function updateTableFooter(totalOrderPrice) {
-  var tableFooter = document.querySelector('tfoot')
-  var totalOrderTitle = document.createElement('td')
-  totalOrderTitle.setAttribute('colspan', '4')
-  totalOrderTitle.innerText = 'Tổng'
-
-  var totalOrderPrices = document.createElement('td')
-  var totalOrderPricesInput = document.createElement('input')
-  totalOrderPricesInput.setAttribute('type', 'hidden')
-  totalOrderPricesInput.setAttribute('name', 'totalOrderPrice')
-  totalOrderPricesInput.setAttribute('value', totalOrderPrice.total)
-  var convertTotalOrderPricesToString = totalOrderPrice.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') 
-  totalOrderPrices.innerText = `${convertTotalOrderPricesToString} VND`
-
-  // add each element to the total order row
-  tableFooter.appendChild(totalOrderTitle)
-  tableFooter.appendChild(totalOrderPricesInput)
-  tableFooter.appendChild(totalOrderPrices)
-  tableFooter.appendChild(document.createElement('td'))
+function updateTableFooter() {
+  const totalOrderPriceElement = document.querySelector('tfoot').querySelector('td.total')
+  totalOrderPriceElement.textContent = formatNumber(totalOrderPrice.total)
 }
 
 function deleteCartItem(tableElement) {
@@ -202,103 +153,46 @@ function deleteCartItem(tableElement) {
   }
 }
 
-function deleteCart(totalOrderPrice) {
-  const deleteButton = document.querySelectorAll('td.delete-button')
-
-  for (let i = 0; i < deleteButton.length; ++i) {
-    deleteButton[i].onclick = function() {
-      const getProductInfo = JSON.parse(localStorage.getItem('product_cart_count')) || {};
-      getProductInfo.localCounting--
-      getProductInfo.productInfo.splice(i,1)
-      localStorage.setItem('product_cart_count', JSON.stringify(getProductInfo));
-      document.dispatchEvent(new CustomEvent('cartUpdated'));
-      deleteCartItem(tableBody)
-      updateTableBody(totalOrderPrice)
-      deleteCartItem(tableFooter)
-      updateTableFooter(totalOrderPrice)
-      preCheckAllProducts()
-    }
-  }
-}
-
-async function checkOutOfOrderProduct(totalOrderPrice) {
+async function checkOutOfOrderProduct() {
   const response = await fetch('/data/out-of-order-products')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
 
   const {data} = await response.json()
   const outOfOrderProductIds = data.map(data => data._id)
-
-  console.log(outOfOrderProductIds)
   
   const getProductInfo = JSON.parse(localStorage.getItem('product_cart_count')) || {}
   getProductInfo.productInfo.forEach((productInfo, index) => {
     if (outOfOrderProductIds.includes(productInfo.id)) {
-      getProductInfo.localCounting--
-      getProductInfo.productInfo.splice(index,1)
-      localStorage.setItem('product_cart_count', JSON.stringify(getProductInfo));
-      document.dispatchEvent(new CustomEvent('cartUpdated'));
-      deleteCartItem(tableBody)
-      updateTableBody(totalOrderPrice)
-      deleteCartItem(tableFooter)
-      updateTableFooter(totalOrderPrice)
-      preCheckAllProducts()
+      productInfo.status = false
     }
   })
 }
 
 function submitOrder() {
   document.querySelector('button.submit-button').onclick = async function() {
-    const productId         = []
-    const productImg        = []
-    const productName       = []
-    const productPrice      = []
-    const productQuantity   = []
-    const productTotalPrice = []
-    const totalOrderPrice   = document.querySelector('input[name="totalOrderPrice"]').value
+    const getProductInfo  = JSON.parse(localStorage.getItem('product_cart_count')) || {}
+
+    if (!getProductInfo.productInfo) return pushNotification('Hãy thêm sản phẩm vào giỏ nha')
+
     const paymentMethod     = document.querySelector('input[name="paymentMethod"]:checked')?.value
-    const userId            = document.querySelector('input[name="userId"]').value
     const name              = document.querySelector('input[name="name"]').value
     const phone             = document.querySelector('input[name="phone"]').value
     const address           = document.querySelector('input[name="address"]').value
     const note              = document.querySelector('input[name="note"]').value
-    document.querySelectorAll('input[name="productId"]').forEach((input) => {
-      productId.push(input.value)
-    })
-    document.querySelectorAll('input[name="productImg"]').forEach((input) => {
-      productImg.push(input.value)
-    })
-    document.querySelectorAll('input[name="productName"]').forEach((input) => {
-      productName.push(input.value)
-    })
-    document.querySelectorAll('input[name="productPrice"]').forEach((input) => {
-      productPrice.push(input.value)
-    })
-    document.querySelectorAll('input[name="productQuantity"]').forEach((input) => {
-      productQuantity.push(input.value)
-    })
-    document.querySelectorAll('input[name="productTotalPrice"]').forEach((input) => {
-      productTotalPrice.push(input.value)
-    })
 
-    if (!name || !phone || !address) return pushNotification('Hãy điền thông tin cá nhân')
+    if (!name || !phone || !address) return pushNotification('Hãy thêm thông tin cá nhân nha')
 
     const response = await fetch('/all-orders/create-orders', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        productId         : productId,
-        productImg        : productImg,
-        productName       : productName,
-        productPrice      : productPrice,
-        productQuantity   : productQuantity,
-        productTotalPrice : productTotalPrice,
-        totalOrderPrice   : totalOrderPrice,
-        paymentMethod     : paymentMethod,
-        userId            : userId,
-        name              : name,
-        phone             : phone,
-        address           : address,
-        note              : note
+        productInfo   : getProductInfo.productInfo,
+        paymentMethod : paymentMethod,
+        userId        : isUserOrder.uid || 'guest',
+        name          : name,
+        phone         : phone,
+        address       : address,
+        note          : note
       })
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
@@ -320,20 +214,16 @@ function submitOrder() {
   }
 }
 
-checkOutOfOrderProduct(totalOrderPrice)
+preCheckAllProducts()
+
+checkOutOfOrderProduct()
 
 checkUser()
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  updateTableBody(totalOrderPrice)
-
-  updateTableFooter(totalOrderPrice)
-
-  preCheckAllProducts()
+  updateTableBody()
 
   displayProcess()
-
-  deleteCart(totalOrderPrice)
 
   submitOrder()
 })

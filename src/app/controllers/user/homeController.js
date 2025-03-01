@@ -16,6 +16,14 @@ class homeController {
     return res.json({data: data})
   }
 
+  async getOrderProducts(req, res, next) {
+    const productIds = req.body.productIds
+    const data = await product.find({ _id: { $in: productIds } }).lean()
+    
+    return res.json({data: data})
+  }
+
+
   async getUsers(req, res, next) {
     const userId = req.cookies.uid || ''
     if (!userId) return res.json({message: false})

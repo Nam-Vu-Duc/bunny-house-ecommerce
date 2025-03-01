@@ -6,8 +6,7 @@ const index               = new URL(window.location).pathname.split('/').find(el
 console.log(index)
 
 document.querySelector('div.admin-button').querySelectorAll('a').forEach((a) => {
-  if (a.id === index) a.style.backgroundColor = '#FFDFDF'
-  // if (!index) 
+  if (index.includes(a.id)) return a.style.backgroundColor = '#FFDFDF'
 })
 
 if      (currentTime <= 9) checkDay.message  = 'buổi sáng'

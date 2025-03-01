@@ -240,6 +240,7 @@ div.notification {
   position: fixed;
   opacity: 0;
   left: 50%;
+  transform: translate(-50%);
   height: 50px;
   width: 300px;
   z-index: 9999;

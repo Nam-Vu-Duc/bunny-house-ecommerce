@@ -34,7 +34,6 @@ class allOrdersController {
       paymentMethod.find().lean(),
     ]) 
 
-    console.log(orderStatuses, paymentMethods)
     res.json({ orderStatus: orderStatuses, paymentMethod: paymentMethods })
   }
 

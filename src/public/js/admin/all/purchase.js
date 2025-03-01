@@ -25,6 +25,7 @@ async function getFilter() {
 
 async function getPurchases(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
+    tr.querySelector('td:nth-child(1)').textContent = ''
     tr.querySelector('td:nth-child(1)').classList.add('loading')
   })
 
@@ -45,10 +46,12 @@ async function getPurchases(sortOptions, filterOptions, currentPage) {
       tr.remove()
     })
 
+    let productIndex = (currentPage - 1) * 10 + 1
+
     data.forEach((item, index) => {
       const newTr = document.createElement('tr')
       newTr.innerHTML = `
-        <td></td>
+        <td>${productIndex}</td>
         <td>${item._id}</td>
         <td>${formatDate(item.purchaseDate)}</td>
         <td>${item.totalProducts}</td>
@@ -56,6 +59,7 @@ async function getPurchases(sortOptions, filterOptions, currentPage) {
         <td><a href="/admin/all-purchases/purchase/${item._id}">Xem</a></td>
       `
       tbody.appendChild(newTr)
+      productIndex++
     })
   }, 1000)
   

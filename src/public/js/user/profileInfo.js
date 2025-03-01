@@ -26,9 +26,7 @@ async function getUser() {
     body: JSON.stringify({ id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  const data = json.data
-  const member = json.member
+  const {data, member} = await response.json()
 
   const p = document.createElement('p')
   p.textContent = 'Thông Tin Cá Nhân'
@@ -67,7 +65,7 @@ async function getUser() {
     </div>
     
     <div class="form-group">
-      <label for="address">Số lượng đơn hàng</label>
+      <label for="address">Số lượng đơn hàng hoàn thành</label>
       <input type="text" name="quantity" value="${data.quantity}" disabled>
     </div>
     
@@ -102,15 +100,22 @@ async function getUser() {
     const phone   = document.querySelector('input[name="phone"]').value
     const address = document.querySelector('input[name="address"]').value
 
+    if (
+      name    === data.name    &&
+      phone   === data.phone   &&
+      address === data.address &&
+      gender  === data.gender
+    ) return pushNotification('Hãy cập nhật thông tin')
+
     const response = await fetch('/profile/updated', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        id: data._id,
-        name: name,
-        gender: gender,
-        phone: phone,
-        address: address
+        id      : data._id,
+        name    : name,
+        gender  : gender,
+        phone   : phone,
+        address : address
       })
     })
 

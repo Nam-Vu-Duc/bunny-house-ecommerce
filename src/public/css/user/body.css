@@ -71,6 +71,7 @@ div.notification {
   opacity: 0;
   top: 50px;
   left: 50%;
+  transform: translate(-50%);
   height: 50px;
   width: 300px;
   z-index: 9999;
@@ -227,6 +228,7 @@ table {
       height: fit-content;
       border-bottom: 1px solid black;
       padding: 10px;
+      box-sizing: border-box;
     }
     a {
       width: fit-content; 

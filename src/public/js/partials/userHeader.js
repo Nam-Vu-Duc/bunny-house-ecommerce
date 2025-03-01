@@ -70,13 +70,16 @@ setDisplay(width, menu)
 
 // create input element
 searchIcon.onclick = function() {
-  searchInput.style.display    === 'none' ? searchInput.style.display    = '' : searchInput.style.display    = 'none'
-  searchProducts.style.display === 'none' ? searchProducts.style.display = '' : searchProducts.style.display = 'none'
+  if(searchInput.style.display === 'none') return searchInput.style.display = ''
+   
+  searchProducts.style.display = 'none' 
+  searchInput.style.display = 'none'
 }
 
 let timer
 searchInput.oninput = async function(event) {
-  document.querySelector('div#search-products').querySelectorAll('div').forEach(element => element.remove())
+  searchProducts.style.display = 'none'
+  searchProducts.querySelectorAll('div').forEach(element => element.remove())
   if (event.target.value.trim() === '') return
 
   clearTimeout(timer)
@@ -89,19 +92,21 @@ searchInput.oninput = async function(event) {
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
     const {data} = await response.json()
 
+    searchProducts.style.display = ''
+
     data.forEach((element) => {
       const div = document.createElement('div')
       div.classList.add('product')
       div.innerHTML = `
-        <p style="display: none" id="product-id">${element._id}</p>
         <p style="width: 15%">${element.brand}</p>
-        <p 
+        <a 
           style="width: 65%; display:flex; align-items:center; justify-content:start; gap:5px"
           id="product-name"
+          href="/all-products/product/${element._id}"
         >
           <img src="${element.img.path}" alt="${element.name}" loading="lazy" loading="lazy"> 
           ${element.name}
-        </p>  
+        </a>  
         <p style="width: 10%;">${element.categories}</p>
         <p style="width: 10%; text-align:right" id="product-price">${formatNumber(element.price)}</p>
       `

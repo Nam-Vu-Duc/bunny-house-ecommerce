@@ -53,8 +53,6 @@ class allStoresController {
         $unwind: '$storeName'
       }
     ])
-
-    console.log(employeesInfo)
     
     return res.json({storeInfo: storeInfo, employeesInfo: employeesInfo})
   }

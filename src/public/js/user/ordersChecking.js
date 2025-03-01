@@ -27,17 +27,15 @@ function appendOrder(data, status) {
     <table>
       <thead>
         <tr>
-          <td style="width: 20%">Ngày Đặt</td>
-          <td style="width: 20%">Người Đặt</td>
-          <td style="width: 50%">Tiến Độ</td>
-          <td style="width: 10%">Chi tiết</td>
+          <td style="width: 40%">Ngày đặt</td>
+          <td style="width: 40%">Mã đơn hàng</td>
+          <td style="width: 20%">Chi tiết</td>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>${formatDate(data.createdAt)}</td>
-          <td>${data.customerInfo.name}</td>
-          <td>${status.name}</td>
+          <td>${data._id}</td>
           <td><a href="/all-orders/order/${data._id}">Xem</td>
         </tr>
       </tbody>

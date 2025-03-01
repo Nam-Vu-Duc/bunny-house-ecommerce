@@ -25,6 +25,7 @@ async function getFilter() {
 
 async function getBrands(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
+    tr.querySelector('td:nth-child(1)').textContent = ''
     tr.querySelector('td:nth-child(1)').classList.add('loading')
   })
 
@@ -45,10 +46,12 @@ async function getBrands(sortOptions, filterOptions, currentPage) {
       tr.remove()
     })
 
+    let productIndex = (currentPage - 1) * 10 + 1
+
     data.forEach((item, index) => {
       const newTr = document.createElement('tr')
       newTr.innerHTML = `
-        <td></td>
+        <td>${productIndex}</td>
         <td style="display: flex; justify-content: start;align-items: center;gap: 5px">
           <img src="${item.img.path}" alt="${item.name}" loading="lazy" loading="lazy"> 
           <p>${item.name}</p>
@@ -59,6 +62,7 @@ async function getBrands(sortOptions, filterOptions, currentPage) {
         <td><a href="/admin/all-brands/brand/${item._id}">Xem</a></td>
       `
       tbody.appendChild(newTr)
+      productIndex++
     })
   }, 1000)
   

@@ -170,9 +170,6 @@ function addToCart(productInfo) {
       // create new added product 
       const newProductInfo = {
         id      : productInfo._id,
-        name    : productInfo.name,
-        price   : productInfo.price,
-        image   : productInfo.img.path,
         quantity: getQuantityValue.innerText
       };
   
@@ -213,11 +210,8 @@ function buyNow(productInfo) {
   
       const newProductInfo = {
         id      : productInfo._id,
-        name    : productInfo.name,
-        price   : productInfo.price,
-        image   : productInfo.img.path,
         quantity: getQuantityValue.innerText
-      };
+      }
   
       myObj.productInfo.push(newProductInfo)
       localStorage.setItem('product_cart_count', JSON.stringify(myObj));

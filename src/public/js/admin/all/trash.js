@@ -13,6 +13,7 @@ var productId;
 
 async function getDeletedProducts(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
+    tr.querySelector('td:nth-child(1)').textContent = ''
     tr.querySelector('td:nth-child(1)').classList.add('loading')
   })
 
@@ -33,10 +34,12 @@ async function getDeletedProducts(sortOptions, filterOptions, currentPage) {
       tr.remove()
     })
 
+    let productIndex = (currentPage - 1) * 10 + 1
+
     data.forEach((item, index) => {
       const newTr = document.createElement('tr')
       newTr.innerHTML = `
-        <td></td>
+        <td>${productIndex}</td>
         <td>${item.brand}</td>
         <td style="display: flex; justify-content: center;align-items: center">
           <img src="${item.img.path}" alt="${item.name}" loading="lazy">
@@ -50,6 +53,7 @@ async function getDeletedProducts(sortOptions, filterOptions, currentPage) {
         </td>
       `
       tbody.appendChild(newTr)
+      productIndex++
     })
   }, 1000)
   
