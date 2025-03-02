@@ -1,6 +1,7 @@
 require('dotenv').config()
 const user = require('../../models/userModel')
 const chat = require('../../models/chatModel')
+const aiChat = require('../../models/aiChatModel')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const nodemailer = require("nodemailer")
@@ -118,12 +119,18 @@ class loginController {
     const savedUser = await newUser.save()
 
     const adminId = process.env.ADMIN_ID
-    let newChat = new chat({
+    const newChat = new chat({
       adminId: adminId,
       userId: savedUser._id,
       lastMessage: ''
     })
+
+    const newAIChat = new aiChat({
+      userId: savedUser._id,
+      lastMessage: ''
+    })
     await newChat.save()
+    await newAIChat.save()
 
     return res.json({isSuccessful: true, message: 'Đăng ký tài khoản thành công'})
   }
