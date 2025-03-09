@@ -41,7 +41,7 @@ async function getOrder() {
   document.querySelector('input#total').value   = formatNumber(orderInfo.totalOrderPrice)
   
   const submitButton = document.querySelector('button[type="submit"]')
-  if (orderInfo.status === 'done') {
+  if (orderInfo.status === 'done' || orderInfo.status === 'cancel') {
     document.querySelector('select#paymentMethod').disabled = true
     document.querySelector('select#paymentMethod').style.cursor = 'not-allowed'
     

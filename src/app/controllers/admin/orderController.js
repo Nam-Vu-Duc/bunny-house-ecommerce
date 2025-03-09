@@ -63,7 +63,7 @@ class allOrdersController {
       paymentMethod : req.body.paymentMethod
     })
 
-    if (req.body.status === 'done') {
+    if (req.body.status === 'cancel') {
       const orderInfo = await order.findOne({ _id: req.body.id }).lean()
       const userId = orderInfo.customerInfo.userId
       const storeId = orderInfo.storeId
@@ -73,21 +73,21 @@ class allOrdersController {
       const bulkOps = productInfo.map(({ id, quantity }) => ({
         updateOne: {
           filter: { _id: id },
-          update: { $inc: { quantity: -quantity, saleNumber: quantity }}, 
+          update: { $inc: { quantity: +quantity, saleNumber: -quantity }}, 
           upsert: true,
         },
       }))
       await product.bulkWrite(bulkOps)
 
       await store.updateOne({ _id: storeId }, {
-        $inc: { revenue: orderInfo.totalOrderPrice }
+        $inc: { revenue: -orderInfo.totalOrderPrice }
       })
 
       if(userId !== 'guest') {
         await user.updateOne({ _id: userId }, {
           $inc: { 
-            revenue: orderInfo.totalOrderPrice,
-            quantity: 1
+            revenue: -orderInfo.totalOrderPrice,
+            quantity: -1
           }
         })
       }
@@ -116,6 +116,7 @@ class allOrdersController {
     const query = req.body.query
     const products = await product.find({
       deletedAt: null,
+      status: { $ne: 'out-of-order' },
       name: { $regex: query, $options: 'i'}
     }).lean()
     return res.json({data: products})
@@ -126,7 +127,7 @@ class allOrdersController {
   }
 
   async orderCreated(req, res, next) {
-    let { 
+    const { 
       orderDate, 
       userId,
       paymentMethod,
@@ -174,6 +175,30 @@ class allOrdersController {
     });
 
     await newOrder.save()
+    const productInfo = productId.map((id, index) => ({id: id, quantity: productQuantity[index]}))
+
+    const bulkOps = productInfo.map(({ id, quantity }) => ({
+      updateOne: {
+        filter: { _id: id },
+        update: { $inc: { quantity: -quantity, saleNumber: quantity }}, 
+        upsert: true,
+      },
+    }))
+    await product.bulkWrite(bulkOps)
+
+    await store.updateOne({ _id: storeId }, {
+      $inc: { revenue: totalOrderPrice }
+    })
+
+    if(userId !== 'guest') {
+      await user.updateOne({ _id: userId }, {
+        $inc: { 
+          revenue: totalOrderPrice,
+          quantity: 1
+        }
+      })
+    }
+
     return res.json({isValid: true, message: 'Tạo đơn hàng mới thành công'})
   }
 }

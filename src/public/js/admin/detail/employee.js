@@ -20,10 +20,14 @@ async function getEmployee() {
     const option = document.createElement('option')
     option.value = element.code
     option.textContent = element.name
-    if (element.code === employeeInfo.role) option.selected = true
+    if (element.code === employeeInfo.role) {
+      option.selected = true
+      document.querySelector('input#wage').value = formatNumber(element.wage)
+    } 
 
     document.querySelector('select#role').appendChild(option)
   })
+
 
   document.querySelector('input#email').value    = employeeInfo.email
   document.querySelector('input#phone').value    = employeeInfo.phone
