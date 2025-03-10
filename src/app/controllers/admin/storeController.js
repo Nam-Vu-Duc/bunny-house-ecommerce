@@ -1,27 +1,33 @@
 const store = require('../../models/storeModel')
 const employee = require('../../models/employeeModel')
+const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 
 class allStoresController {
   // all
   async getStores(req, res, next) {
-    const currentPage  = req.body.page
-    const sort         = req.body.sort
-    const filter       = req.body.filter
-    const itemsPerPage = 10
-    const skip         = (currentPage - 1) * itemsPerPage
-
-    const [data, dataSize] = await Promise.all([
-      store
-        .find(filter)
-        .sort(sort)
-        .skip(skip)
-        .limit(itemsPerPage)
-        .lean(),
-      store.find(filter).countDocuments(),
-    ]) 
-    if (!data) res.status(404).json({data: [], data_size: 0})
-    
-    return res.json({data: data, data_size: dataSize})
+    try {
+      const currentPage  = req.body.page
+      const sort         = req.body.sort
+      const filter       = req.body.filter
+      const itemsPerPage = 10
+      const skip         = (currentPage - 1) * itemsPerPage
+  
+      const [data, dataSize] = await Promise.all([
+        store
+          .find(filter)
+          .sort(sort)
+          .skip(skip)
+          .limit(itemsPerPage)
+          .lean(),
+        store.find(filter).countDocuments(),
+      ]) 
+      if (!data) res.status(404).json({data: [], data_size: 0})
+      
+      return res.json({data: data, data_size: dataSize})
+      
+    } catch (error) {
+      return res.json({error: error})
+    }
   }
 
   async getFilter(req, res, next) {
@@ -29,36 +35,49 @@ class allStoresController {
   }
 
   async allStores(req, res, next) {
-    res.render('admin/all/store', { title: 'Danh sách cửa hàng', layout: 'admin' })
+    return res.render('admin/all/store', { title: 'Danh sách cửa hàng', layout: 'admin' })
   }
 
   // update
   async getStore(req, res, next) {
-    const storeInfo = await store.findOne({ _id: req.body.id }).lean()
-    if (!storeInfo) return res.json({storeInfo: null})
-
-    const employeesInfo = await employee.aggregate([
-      {
-        $match: { storeCode: storeInfo.code }
-      },
-      {
-        $lookup: {
-          from: 'stores',
-          localField: 'storeCode',
-          foreignField: 'code',
-          as: 'storeName'
+    try {
+      const storeInfo = await store.findOne({ _id: req.body.id }).lean()
+      if (!storeInfo) return res.json({storeInfo: null})
+  
+      const employeesInfo = await employee.aggregate([
+        {
+          $match: { storeCode: storeInfo.code }
+        },
+        {
+          $lookup: {
+            from: 'stores',
+            localField: 'storeCode',
+            foreignField: 'code',
+            as: 'storeName'
+          }
+        },
+        {
+          $unwind: '$storeName'
         }
-      },
-      {
-        $unwind: '$storeName'
-      }
-    ])
-    
-    return res.json({storeInfo: storeInfo, employeesInfo: employeesInfo})
+      ])
+      
+      return res.json({storeInfo: storeInfo, employeesInfo: employeesInfo})
+      
+    } catch (error) {
+      return res.json({error: error})
+    }
   }
 
   async storeInfo(req, res, next) {
-    res.render('admin/detail/store', { layout: 'admin' })
+    try {
+      if (!checkForHexRegExp(req.params.id)) throw new Error('error')
+      if (!(await store.findOne({ _id: req.params.id }).lean())) throw new Error('error')
+
+      return res.render('admin/detail/store', { layout: 'admin' })
+
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
+    }
   }
 
   async storeUpdate(req, res, next) {
@@ -73,14 +92,19 @@ class allStoresController {
 
   // create
   async storeCreate(req, res, next) {
-    res.render('admin/create/store', { title: 'Thêm cửa hàng mới', layout: 'admin' })
+    return res.render('admin/create/store', { title: 'Thêm cửa hàng mới', layout: 'admin' })
   }
 
   async storeCreated(req, res, next) {
-    const newStore = new store(req.body)
-
-    await newStore.save()
-    return res.json({isValid: true, message: 'Tạo cửa hàng thành công'})
+    try {
+      const newStore = new store(req.body)
+  
+      await newStore.save()
+      return res.json({isValid: true, message: 'Tạo cửa hàng thành công'})
+      
+    } catch (error) {
+      return res.json({error: error})
+    }
   }
 }
 module.exports = new allStoresController

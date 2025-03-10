@@ -6,10 +6,11 @@ const brand = require('../../models/brandModel')
 const employee = require('../../models/employeeModel')
 const purchase = require('../../models/purchaseModel')
 const supplier = require('../../models/supplierModel')
+const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 
 class homeController {
   async show(req, res, next) {
-    res.render('admin/home', { title: 'Trang chủ', layout: 'admin' })
+    return res.render('admin/home', { title: 'Trang chủ', layout: 'admin' })
   }
 
   async getBrands(req, res, next) {

@@ -8,17 +8,16 @@ module.exports = async function checkAdmin(req, res, next) {
 
     if (rt && uid) {
       const decoded = jwt.verify(rt, 'SECRET_KEY')
-      if (!decoded) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+      if (!decoded) throw new Error('error')
       
       const empInfo = await emp.findOne({ _id: uid })
-      if (!empInfo) return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
-      if (empInfo.role !== 'admin') return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
+      if (!empInfo) throw new Error('error')
+      if (empInfo.role !== 'admin') throw new Error('error')
       next()
     } else {
-      return res.status(403).render('partials/denyUserAccess', { title: 'Warning', layout: 'empty' })
+      throw new Error('error')
     }
   } catch (error) {
-    console.error('Authentication Error:', error)
-    return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
   }
 }

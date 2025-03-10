@@ -1,0 +1,24 @@
+.admin-attribute-container {
+  padding: 0 5px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 10px;
+  div.table {
+    margin-top: 0 !important;
+    tbody {
+      tr {
+        height: 50px;
+        td {
+          padding: 10px;
+          text-align: center;
+        }
+      }
+    }
+  }
+  
+}
+@media screen and (max-width: 700px) {
+  .admin-home-container {
+    .info-table {grid-template-columns: auto !important}
+  }
+}
