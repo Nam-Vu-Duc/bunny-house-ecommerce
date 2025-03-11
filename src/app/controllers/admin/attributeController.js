@@ -9,6 +9,7 @@ class attributeController {
     return res.render('admin/attribute', { title: 'Chỉnh sửa thuộc tính', layout: 'admin' })
   }
 
+  // read
   async getMembership(req, res, next) {
     const membership = await member.find().lean()
     return res.json({data: membership})
@@ -32,6 +33,162 @@ class attributeController {
   async getProductStatus(req, res, next) {
     const productStatuses = await productStatus.find().lean()
     return res.json({data: productStatuses})
+  }
+
+  // create
+  async createMembership(req, res, next) {
+    try {
+      await member.create(req.body)
+      return res.json({isValid: true, message: 'Thêm thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  async createOrderStatus(req, res, next) {
+    try {
+      await orderStatus.create(req.body)
+      return res.json({isValid: true, message: 'Thêm thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  async createPaymentMethod(req, res, next) {
+    try {
+      await paymentMethod.create(req.body)
+      return res.json({isValid: true, message: 'Thêm thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  async createPosition(req, res, next) {
+    try {
+      await position.create(req.body)
+      return res.json({isValid: true, message: 'Thêm thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  async createProductStatus(req, res, next) {
+
+    try {
+      await productStatus.create(req.body)
+      return res.json({isValid: true, message: 'Thêm thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  // update
+  async updateMembership(req, res, next) {
+    try {
+      await member.create(req.body)
+      return res.json({isValid: true, message: 'Thêm thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  async updateOrderStatus(req, res, next) {
+    try {
+      await orderStatus.create(req.body)
+      return res.json({isValid: true, message: 'Thêm thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  async updatePaymentMethod(req, res, next) {
+    try {
+      await paymentMethod.create(req.body)
+      return res.json({isValid: true, message: 'Thêm thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  async updatePosition(req, res, next) {
+    try {
+      await position.create(req.body)
+      return res.json({isValid: true, message: 'Thêm thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  async updateProductStatus(req, res, next) {
+
+    try {
+      await productStatus.create(req.body)
+      return res.json({isValid: true, message: 'Thêm thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  // delete
+  async deleteMembership(req, res, next) {
+    try {
+      await member.deleteOne({ code: req.body.code})
+      return res.json({isValid: true, message: 'Xoá thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  async deleteOrderStatus(req, res, next) {
+    try {
+      await orderStatus.deleteOne({ code: req.body.code})
+      return res.json({isValid: true, message: 'Xoá thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  async deletePaymentMethod(req, res, next) {
+    try {
+      await paymentMethod.deleteOne({ code: req.body.code})
+      return res.json({isValid: true, message: 'Xoá thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  async deletePosition(req, res, next) {
+    try {
+      await position.deleteOne({ code: req.body.code})
+      return res.json({isValid: true, message: 'Xoá thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
+  }
+
+  async deleteProductStatus(req, res, next) {
+
+    try {
+      await productStatus.deleteOne({ code: req.body.code})
+      return res.json({isValid: true, message: 'Xoá thành công'})
+      
+    } catch (error) {
+      return res.json({isValid: false, message: error.message})
+    } 
   }
 }
 module.exports = new attributeController

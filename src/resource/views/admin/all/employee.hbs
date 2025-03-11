@@ -7,13 +7,7 @@
     <div class="filter-and-create">
       <div class="sort">
         <label for="price">Sắp xếp theo:</label>
-        <select id="price" class="filter-btn">
-          <option value="">Mức lương</option>
-          <option value="1">Mức lương tăng dần</option>
-          <option value="-1">Mức lương giảm dần</option>
-        </select>
-
-        <select id="rate" class="filter-btn">
+        <select id="createdAt" class="filter-btn">
           <option value="">Thâm niên</option>
           <option value="1">Thâm niên tăng dần</option>
           <option value="-1">Thâm niên giảm dần</option>
@@ -28,6 +22,12 @@
 
         <select id="storeCode" class="filter-btn">
           <option value="">Cửa hàng</option>
+        </select>
+        
+        <select id="isActive" class="filter-btn">
+          <option value="">Hoạt động</option>
+          <option value="true">Online</option>
+          <option value="false">Offline</option>
         </select>
       </div>
       <button id="clear-filter" style="display: none">Xoá bộ lọc</button>
