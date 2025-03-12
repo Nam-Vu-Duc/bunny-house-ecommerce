@@ -90,8 +90,10 @@ class attributeController {
   // update
   async updateMembership(req, res, next) {
     try {
-      await member.create(req.body)
-      return res.json({isValid: true, message: 'Thêm thành công'})
+      await member.updateOne({ code: req.body.code}, {
+        name: req.body.name
+      })
+      return res.json({isValid: true, message: 'Cập nhật thành công'})
       
     } catch (error) {
       return res.json({isValid: false, message: error.message})
@@ -100,8 +102,10 @@ class attributeController {
 
   async updateOrderStatus(req, res, next) {
     try {
-      await orderStatus.create(req.body)
-      return res.json({isValid: true, message: 'Thêm thành công'})
+      await orderStatus.updateOne({ code: req.body.code}, {
+        name: req.body.name
+      })
+      return res.json({isValid: true, message: 'Cập nhật thành công'})
       
     } catch (error) {
       return res.json({isValid: false, message: error.message})
@@ -110,8 +114,10 @@ class attributeController {
 
   async updatePaymentMethod(req, res, next) {
     try {
-      await paymentMethod.create(req.body)
-      return res.json({isValid: true, message: 'Thêm thành công'})
+      await paymentMethod.updateOne({ code: req.body.code}, {
+        name: req.body.name
+      })
+      return res.json({isValid: true, message: 'Cập nhật thành công'})
       
     } catch (error) {
       return res.json({isValid: false, message: error.message})
@@ -120,8 +126,10 @@ class attributeController {
 
   async updatePosition(req, res, next) {
     try {
-      await position.create(req.body)
-      return res.json({isValid: true, message: 'Thêm thành công'})
+      await position.updateOne({ code: req.body.code}, {
+        name: req.body.name
+      })
+      return res.json({isValid: true, message: 'Cập nhật thành công'})
       
     } catch (error) {
       return res.json({isValid: false, message: error.message})
@@ -131,8 +139,10 @@ class attributeController {
   async updateProductStatus(req, res, next) {
 
     try {
-      await productStatus.create(req.body)
-      return res.json({isValid: true, message: 'Thêm thành công'})
+      await productStatus.updateOne({ code: req.body.code}, {
+        name: req.body.name
+      })
+      return res.json({isValid: true, message: 'Cập nhật thành công'})
       
     } catch (error) {
       return res.json({isValid: false, message: error.message})
@@ -181,7 +191,6 @@ class attributeController {
   }
 
   async deleteProductStatus(req, res, next) {
-
     try {
       await productStatus.deleteOne({ code: req.body.code})
       return res.json({isValid: true, message: 'Xoá thành công'})

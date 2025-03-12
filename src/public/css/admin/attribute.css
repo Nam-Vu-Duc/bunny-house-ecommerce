@@ -11,6 +11,17 @@
         td {
           padding: 10px;
           text-align: center;
+          box-sizing: border-box;
+        }
+        td:nth-child(2) {
+          position: relative;
+          button {
+            position: absolute;
+            right: 15px;
+            left: auto;
+            top: 50%;
+            transform: translateY(-50%);
+          }
         }
       }
     }
