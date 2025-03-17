@@ -124,6 +124,10 @@ submitButton.onclick = async function() {
   if (submitButton.className.includes('submit-password')) {
     const email     = document.querySelector('input[name="email"]').value
     const password  = document.querySelector('input[name="password"]').value
+    const confirmPassword = document.querySelector('input[name="confirm-password"]').value
+
+    if (confirmPassword != password) return pushNotification('Mật khẩu không trùng khớp')
+
     const isSuccessful = await resettingPassword(email, password)
     if (isSuccessful) {
       window.location.replace(window.location.origin + '/authentication/sign-in')

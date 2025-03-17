@@ -98,11 +98,19 @@ submitButton.onclick = async function() {
     password.placeholder = 'Nhập mật khẩu mới'
     password.name  = 'password'
 
+    const confirmPassword = document.createElement('input')
+    confirmPassword.type  = 'password'
+    confirmPassword.placeholder = 'Xác nhận mật khẩu'
+    confirmPassword.name  = 'confirm-password'
+
     document.querySelector('div[class="form-group name"]').style.display = ''
     document.querySelector('div[class="form-group name"]').appendChild(name)
 
     document.querySelector('div[class="form-group password"]').style.display = ''
     document.querySelector('div[class="form-group password"]').appendChild(password)
+    
+    document.querySelector('div[class="form-group confirm-password"]').style.display = ''
+    document.querySelector('div[class="form-group confirm-password"]').appendChild(confirmPassword)
 
     submitButton.innerText = 'Xác nhận'
     submitButton.className = 'submit-password'
@@ -115,6 +123,10 @@ submitButton.onclick = async function() {
     const email    = document.querySelector('input[name="email"]').value
     const name     = document.querySelector('input[name="name"]').value
     const password = document.querySelector('input[name="password"]').value
+    const confirmPassword = document.querySelector('input[name="confirm-password"]').value
+
+    if (password !== confirmPassword) return pushNotification('Mật khẩu không khớp')
+
     const {isSuccessful, message} = await creatingAccount(email, name, password)
     if (isSuccessful) {
       document.querySelector('p.wrong-info').textContent = ''

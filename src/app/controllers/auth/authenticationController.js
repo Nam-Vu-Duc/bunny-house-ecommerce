@@ -67,9 +67,7 @@ class loginController {
       const adminPassword = process.env.GOOGLE_APP_EMAIL
 
       const emailExist = await user.findOne({ email: userEmail})
-      if (emailExist) {
-        return res.json({isValid: false, message: 'Email đã tồn tại'})
-      }
+      if (emailExist) return res.json({isValid: false, message: 'Email đã tồn tại'})
 
       const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -101,7 +99,7 @@ class loginController {
       return res.json({isValid: true, message: 'Kiểm tra email thành công'})
 
     } catch (error) {
-       return res.json({error: error})
+      return res.json({error: error})
     }
   }
 
