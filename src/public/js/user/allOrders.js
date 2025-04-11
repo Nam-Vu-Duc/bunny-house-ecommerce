@@ -9,6 +9,8 @@ const tableBody       = document.querySelector('tbody')
 const tableFooter     = document.querySelector('tfoot')
 const isUserOrder     = {message: false}
 const totalOrderPrice = {total: 0}
+const img             = document.querySelector('input#img')
+const imgPath         = {path: ''}
 
 async function checkUser() {
   const response = await fetch('/data/user')
@@ -170,49 +172,75 @@ async function checkOutOfOrderProduct() {
 
 function submitOrder() {
   document.querySelector('button.submit-button').onclick = async function() {
-    const getProductInfo  = JSON.parse(localStorage.getItem('product_cart_count')) || {}
+    const preloader = document.querySelector('div.preloader')
+    try {
+      preloader.classList.remove('inactive')
 
-    if (!getProductInfo.productInfo) return pushNotification('Hãy thêm sản phẩm vào giỏ nha')
-
-    const paymentMethod     = document.querySelector('input[name="paymentMethod"]:checked')?.value
-    const name              = document.querySelector('input[name="name"]').value
-    const phone             = document.querySelector('input[name="phone"]').value
-    const address           = document.querySelector('input[name="address"]').value
-    const note              = document.querySelector('input[name="note"]').value
-
-    if (!name || !phone || !address) return pushNotification('Hãy thêm thông tin cá nhân nha')
-
-    const response = await fetch('/all-orders/create-orders', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        productInfo   : getProductInfo.productInfo,
-        paymentMethod : paymentMethod,
-        userId        : isUserOrder.uid || 'guest',
-        name          : name,
-        phone         : phone,
-        address       : address,
-        note          : note
+      const getProductInfo  = JSON.parse(localStorage.getItem('product_cart_count')) || {}
+      if (!getProductInfo.productInfo) throw Error('Giỏ hàng của bạn đang trống')  
+  
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value
+      const name          = document.querySelector('input[name="name"]').value
+      const phone         = document.querySelector('input[name="phone"]').value
+      const address       = document.querySelector('input[name="address"]').value
+      const note          = document.querySelector('input[name="note"]').value
+      if (
+        !name     || 
+        !phone    || 
+        !address 
+      ) throw Error('Hãy điền đầy đủ thông tin cá nhân nha')  
+  
+      if (!paymentMethod) throw Error('Hãy chọn phương thức thanh toán nha')
+      if (paymentMethod === 'transfer' & !imgPath.path) throw Error('Hãy up bill chuyển khoản lên nha')
+  
+      const response = await fetch('/all-orders/create-orders', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          productInfo   : getProductInfo.productInfo,
+          paymentMethod : paymentMethod,
+          userId        : isUserOrder.uid || 'guest',
+          name          : name,
+          phone         : phone,
+          address       : address,
+          note          : note,
+          img           : imgPath.path,
+        })
       })
-    })
-    if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    const {message, id} = await response.json()
-    if (!message) return
-
-    socket.emit('order')
-    const orderSuccessfullyMessage = document.createElement('div')
-    orderSuccessfullyMessage.setAttribute('class', 'order-successfully-message')
-    orderSuccessfullyMessage.innerHTML = `
-      <i class="fi fi-ss-check-circle"></i>
-      <h3>Chúc mừng bạn đã đặt hàng thành công !!!</h3>
-      <h3>Mã đơn hàng của bạn là: ${id}</h3>
-      <h5>Nếu là người mới, bạn hãy lưu lại mã này để theo dõi đơn hàng ở mục 'Đơn hàng' nhé</h5>
-      <h5>Còn nếu bạn đã có tài khoản rồi thì có thể theo dõi đơn hàng ở mục 'Thông tin cá nhân' luôn nha</h5>
-      <a href="/all-orders/order/${id}"><button>OK</button></a>
-    `
-    document.body.appendChild(orderSuccessfullyMessage)
+      if (!response.ok) throw new Error(`Response status: ${response.status}`)
+      const {message, id} = await response.json()
+      if (!message) throw Error('Có lỗi xảy ra, hãy thử lại sau')
+  
+      socket.emit('order')
+      const orderSuccessfullyMessage = document.createElement('div')
+      orderSuccessfullyMessage.setAttribute('class', 'order-successfully-message')
+      orderSuccessfullyMessage.innerHTML = `
+        <i class="fi fi-ss-check-circle"></i>
+        <h3>Chúc mừng bạn đã đặt hàng thành công !!!</h3>
+        <h3>Mã đơn hàng của bạn là: ${id}</h3>
+        <h5>Nếu là người mới, bạn hãy lưu lại mã này để theo dõi đơn hàng ở mục 'Đơn hàng' nhé</h5>
+        <h5>Còn nếu bạn đã có tài khoản rồi thì có thể theo dõi đơn hàng ở mục 'Thông tin cá nhân' luôn nha</h5>
+        <a href="/all-orders/order/${id}"><button>OK</button></a>
+      `
+      document.body.appendChild(orderSuccessfullyMessage)
+      preloader.classList.add('inactive')
+      return
+    }
+    catch (error) {
+      preloader.classList.add('inactive')
+      return pushNotification(error)
+    }
   }
 }
+
+img.addEventListener('change', function () {
+  const file = img.files[0]; // Get the selected file
+  const reader = new FileReader()
+  reader.onload = function () {
+    imgPath.path = reader.result; // Base64-encoded string
+  }
+  reader.readAsDataURL(file)
+})
 
 preCheckAllProducts()
 

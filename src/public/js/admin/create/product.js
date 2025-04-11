@@ -57,10 +57,7 @@ async function createProduct() {
     !guide        || 
     !status       || 
     !img 
-  ) {
-    pushNotification("Hãy điền đầy đủ các thông tin!")
-    return
-  }
+  ) return pushNotification("Hãy điền đầy đủ các thông tin!")
 
   const response = await fetch('/admin/all-products/product/created', {
     method: 'POST',

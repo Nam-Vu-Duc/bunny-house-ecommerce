@@ -1,3 +1,4 @@
+require('dotenv').config()
 const order = require('../../models/orderModel')
 const user = require('../../models/userModel')
 const store = require('../../models/storeModel')
@@ -5,6 +6,13 @@ const product = require('../../models/productModel')
 const comment = require('../../models/commentModel')
 const orderStatus = require('../../models/orderStatusModel')
 const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
+const cloudinary = require('cloudinary').v2
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key   : process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+})
 
 class allOrderController {
   async getOrder(req, res, next) {
@@ -51,6 +59,11 @@ class allOrderController {
 
   async createOrders(req, res, next) {
     try {
+      const result = await cloudinary.uploader.upload(req.body.img, {
+        folder: 'bills',
+        use_filename: true
+      })
+
       const { 
         productInfo,
         paymentMethod,
@@ -91,7 +104,7 @@ class allOrderController {
           name    : customerInfo.name,
           phone   : customerInfo.phone,
           address : customerInfo.address,
-          note    : customerInfo.note
+          note    : `note: ${customerInfo.note}, link bill: ${result.secure_url}`
         },
         totalOrderPrice: totalOrderPrice,
         paymentMethod: paymentMethod
