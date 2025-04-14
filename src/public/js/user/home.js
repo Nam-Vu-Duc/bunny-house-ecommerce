@@ -52,12 +52,12 @@ async function getBrands(imgs) {
   })
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  getProducts(flashSaleProductsDiv, {deletedAt: null, status: 'flash-sale'})
-  getProducts(topSaleProductsDiv  , {deletedAt: null})
-  getProducts(hotSaleProductsDiv  , {deletedAt: null, status: 'hot'})
-  getProducts(skincareProductsDiv , {deletedAt: null, categories: 'skincare'})
-  getProducts(makeupProductsDiv   , {deletedAt: null, categories: 'makeup'})
-  getProducts(allProductsDiv      , {deletedAt: null})
-  getBrands(allBrandsDiv)
+window.addEventListener('DOMContentLoaded', async function loadData() {
+  await getProducts(flashSaleProductsDiv, {deletedAt: null, status: 'flash-sale'})
+  await getProducts(topSaleProductsDiv  , {deletedAt: null})
+  await getProducts(hotSaleProductsDiv  , {deletedAt: null, status: 'hot'})
+  await getProducts(skincareProductsDiv , {deletedAt: null, categories: 'skincare'})
+  await getProducts(makeupProductsDiv   , {deletedAt: null, categories: 'makeup'})
+  await getProducts(allProductsDiv      , {deletedAt: null})
+  await getBrands(allBrandsDiv)
 })

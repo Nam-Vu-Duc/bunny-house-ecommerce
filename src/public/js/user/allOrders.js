@@ -228,6 +228,7 @@ function submitOrder() {
     }
     catch (error) {
       preloader.classList.add('inactive')
+      console.log(error)
       return pushNotification(error)
     }
   }

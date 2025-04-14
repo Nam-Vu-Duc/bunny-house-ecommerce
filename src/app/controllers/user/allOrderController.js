@@ -59,7 +59,7 @@ class allOrderController {
 
   async createOrders(req, res, next) {
     try {
-      const result = await cloudinary.uploader.upload(req.body.img, {
+      const result = req.body.img === '' ? '' : await cloudinary.uploader.upload(req.body.img, {
         folder: 'bills',
         use_filename: true
       })
