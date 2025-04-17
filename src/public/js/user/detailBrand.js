@@ -1,4 +1,3 @@
-// ok
 importLinkCss('/css/user/detailBrand.css')
 
 const metaDescription     = document.querySelector("meta[name='description']")
@@ -38,7 +37,6 @@ async function getRelatedProducts(brandInfo) {
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
   const data = json.data
-  console.log(data)
 
   window.setTimeout(function() {
     relatedProducts.forEach((product, index) => {
@@ -64,9 +62,14 @@ async function getRelatedProducts(brandInfo) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  const data = await getBrand()
-  for (let key in data) {
-    brandInfo[key] = data[key]
+  try {
+    const data = await getBrand()
+    for (let key in data) {
+      brandInfo[key] = data[key]
+    }
+    getRelatedProducts(brandInfo)
+  } catch (err){
+    console.error("Failed to fetch products:", err)
+    setTimeout(() => loadData(), 2000)
   }
-  getRelatedProducts(brandInfo)
 })

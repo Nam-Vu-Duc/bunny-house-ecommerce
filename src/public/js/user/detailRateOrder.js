@@ -151,7 +151,12 @@ async function getOrder() {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  const data = await getOrder()
-  await rateStar()
-  await submitRate(data)
+  try {
+    const data = await getOrder()
+    await rateStar()
+    await submitRate(data)
+  } catch (err){
+    console.error("Failed to fetch products:", err)
+    setTimeout(() => loadData(), 2000)
+  }
 })

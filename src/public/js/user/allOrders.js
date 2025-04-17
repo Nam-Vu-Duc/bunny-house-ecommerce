@@ -1,4 +1,3 @@
-// ok
 importLinkCss('/css/user/allOrders.css')
 
 const contactInfo     = document.querySelector('div.contact-info')
@@ -250,9 +249,14 @@ checkOutOfOrderProduct()
 checkUser()
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  updateTableBody()
+  try {
+    updateTableBody()
 
-  displayProcess()
+    displayProcess()
 
-  submitOrder()
+    submitOrder()
+  } catch (err){
+    console.error("Failed to fetch products:", err)
+    setTimeout(() => loadData(), 2000)
+  }
 })

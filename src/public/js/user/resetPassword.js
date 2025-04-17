@@ -1,4 +1,3 @@
-// ok
 importLinkCss('/css/user/resetPassword.css')
 
 const form              = document.querySelector('form#form-5') 

@@ -266,11 +266,6 @@ async function getFeedback() {
 
 }
 
-window.addEventListener('DOMContentLoaded', async function loadData() {
-  getUser()
-  resetFormat(infoBtn)
-})
-
 infoBtn.onclick = function() {
   if (infoBtn.classList.contains('current')) return
   resetFormat(infoBtn)
@@ -297,3 +292,13 @@ feedbackBtn.onclick = function() {
   resetContent()
   getFeedback()
 }
+
+window.addEventListener('DOMContentLoaded', async function loadData() {
+  try {
+    getUser()
+    resetFormat(infoBtn)
+  } catch (err){
+    console.error("Failed to fetch products:", err)
+    setTimeout(() => loadData(), 2000)
+  }
+})

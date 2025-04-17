@@ -1,4 +1,3 @@
-// ok
 importLinkCss('/css/user/allProducts.css')
 
 const mainTitle        = document.querySelector('div.main-title').querySelector('b')
@@ -47,7 +46,6 @@ async function paginatingProducts(data_size) {
     newPage.onclick = function() {
       pagination.querySelectorAll('p').forEach(t => t.classList.remove('current'))
       currentPage.page = parseInt(newPage.innerText) 
-      console.log(currentPage)
       newPage.classList.add('current')
 
       getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
@@ -105,11 +103,6 @@ async function getProducts(products, sortOptions, filterOptions, currentPage) {
 function calcLeftPosition(value) {
   return (value - minPrice)/(maxPrice - minPrice) * 100
 }
-
-window.addEventListener('DOMContentLoaded', async function loadData() {
-  const data_size = await getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
-  paginatingProducts(data_size)
-})
 
 if (titles[urlSlug[0]]) mainTitle.innerText = titles[urlSlug[0]]
 
@@ -224,3 +217,13 @@ clearFilterBtn.onclick = async function() {
   const data_size = await getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
   paginatingProducts(data_size)
 }
+
+window.addEventListener('DOMContentLoaded', async function loadData() {
+  try {
+    const data_size = await getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
+    paginatingProducts(data_size)
+  } catch (err){
+    console.error("Failed to fetch products:", err)
+    setTimeout(() => loadData(), 2000)
+  }
+})

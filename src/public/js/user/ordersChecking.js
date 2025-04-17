@@ -1,4 +1,3 @@
-// ok
 importLinkCss('/css/user/ordersChecking.css')
 
 const submitButton   = document.querySelector('button')

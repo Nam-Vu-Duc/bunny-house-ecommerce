@@ -1,4 +1,3 @@
-// ok
 importLinkCss('/css/empty/signIn.css')
 
 async function checkingAccount() {
@@ -34,15 +33,6 @@ async function checkingAccount() {
   
   return
 }
-
-// validator({
-//   form: '#form-1',
-//   errorSelector: '.form-message',
-//   rules: [
-//     isEmail('#email'),
-//     isRequiredString('#password'),
-//   ]
-// }, 2)
 
 document.querySelector("form").addEventListener("submit", function(event) {
   event.preventDefault() // Prevents form submission

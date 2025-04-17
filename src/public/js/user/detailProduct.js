@@ -1,4 +1,3 @@
-// ok
 importLinkCss('/css/user/detailProduct.css')
 
 const getAddToCart        = document.querySelector('div.add-to-cart')
@@ -267,16 +266,21 @@ function rateProduct() {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  const data = await getProduct()
-  for (let key in data) {
-    productInfo[key] = data[key]
+  try {
+    const data = await getProduct()
+    for (let key in data) {
+      productInfo[key] = data[key]
+    }
+    checkExistedProduct(productInfo)
+    checkStatusProduct(productInfo)
+    addToCart(productInfo)
+    buyNow(productInfo)
+    increaseQuantity(productInfo)
+    decreaseQuantity(productInfo)
+    getComment()
+    getRelatedProducts(productInfo)
+  } catch (err){
+    console.error("Failed to fetch products:", err)
+    setTimeout(() => loadData(), 2000)
   }
-  checkExistedProduct(productInfo)
-  checkStatusProduct(productInfo)
-  addToCart(productInfo)
-  buyNow(productInfo)
-  increaseQuantity(productInfo)
-  decreaseQuantity(productInfo)
-  getComment()
-  getRelatedProducts(productInfo)
 })

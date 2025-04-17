@@ -1,4 +1,3 @@
-// ok
 importLinkCss('/css/user/allBrands.css')
 const brands = document.querySelector('div.all-brands')
 
@@ -38,5 +37,10 @@ async function getBrands() {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getBrands()
+  try {
+    getBrands()
+  } catch (err){
+    console.error("Failed to fetch products:", err)
+    setTimeout(() => loadData(), 2000)
+  }
 })

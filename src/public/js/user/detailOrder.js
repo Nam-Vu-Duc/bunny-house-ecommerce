@@ -1,4 +1,3 @@
-// ok
 importLinkCss('/css/user/detailOrder.css')
 
 const urlSlug = location.href.match(/([^\/]*)\/*$/)[1]
@@ -56,5 +55,10 @@ async function getOrder() {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getOrder()
+  try {
+    getOrder()
+  } catch (err){
+    console.error("Failed to fetch products:", err)
+    setTimeout(() => loadData(), 2000)
+  }
 })

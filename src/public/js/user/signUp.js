@@ -1,4 +1,3 @@
-// ok
 importLinkCss('/css/empty/signIn.css')
 
 const submitButton = document.querySelector('button')
@@ -141,16 +140,3 @@ submitButton.onclick = async function() {
     return
   }
 }
-
-// validator({
-//   form: '#form-1',
-//   errorSelector: '.form-message',
-//   rules: [
-//     isRequiredString('#name'),
-//     isEmail('#email'),
-//     isRequiredString('#password'),
-//     isConfirmPassword('#password-confirm', function() {
-//       return document.querySelector('#form-1 #password').value
-//     })
-//   ]
-// }, 4)
