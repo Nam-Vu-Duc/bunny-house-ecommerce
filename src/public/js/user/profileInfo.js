@@ -299,6 +299,5 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     resetFormat(infoBtn)
   } catch (err){
     console.error("Failed to fetch products:", err)
-    setTimeout(() => loadData(), 2000)
   }
 })

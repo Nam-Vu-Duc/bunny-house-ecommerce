@@ -313,12 +313,31 @@ async function getSuppliers() {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  await getBrands()
-  await getCustomers()
-  await getEmployees()
-  await getOrders()
-  await getProducts()
-  await getPurchases() 
-  await getStores()
-  await getSuppliers()
+  try {
+    await getCustomers()
+    await new Promise(r => setTimeout(r, 200))
+
+    await getOrders()
+    await new Promise(r => setTimeout(r, 200))
+
+    await getSuppliers()
+    await new Promise(r => setTimeout(r, 200))
+    
+    await getPurchases() 
+    await new Promise(r => setTimeout(r, 200))
+
+    await getProducts()
+    await new Promise(r => setTimeout(r, 200))
+
+    await getBrands()
+    await new Promise(r => setTimeout(r, 200))
+
+    await getStores()
+    await new Promise(r => setTimeout(r, 200))
+
+    await getEmployees()    
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error)
+    pushNotification('Có lỗi xảy ra')
+  }
 })

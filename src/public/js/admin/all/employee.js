@@ -73,8 +73,18 @@ async function getEmployees(sortOptions, filterOptions, currentPage) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getFilter()
-  getEmployees(sortOptions, filterOptions, currentPage.page)
-  sortAndFilter(getEmployees, sortOptions, filterOptions, currentPage.page)
-  exportJs()
+  try {
+    await getFilter()
+    await new Promise(r => setTimeout(r, 500))
+
+    await getEmployees(sortOptions, filterOptions, currentPage.page)
+    await new Promise(r => setTimeout(r, 500))
+
+    await sortAndFilter(getEmployees, sortOptions, filterOptions, currentPage.page)
+    await new Promise(r => setTimeout(r, 500))
+
+    await exportJs()
+  } catch (error){
+    console.error('Error loading data:', error)
+  }
 })

@@ -70,10 +70,22 @@ class allCustomersController {
             }
           },
           {
+            $lookup: {
+              from: 'paymentMethods',
+              localField: 'paymentMethod',
+              foreignField: 'code',
+              as: 'paymentMethod'
+            }
+          },
+          {
             $unwind: '$orderStatus'
+          },
+          {
+            $unwind: '$paymentMethod'
           }
         ])
       ])
+      console.log(orderInfo)
       
       return res.json({customerInfo: customerInfo, memberInfo: memberInfo, orderInfo: orderInfo})
 

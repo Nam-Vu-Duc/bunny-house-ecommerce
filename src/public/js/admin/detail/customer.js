@@ -30,7 +30,7 @@ async function getCustomer() {
     tr.innerHTML = `
       <td></td>
       <td>${formatNumber(order.totalOrderPrice)}</td>
-      <td>${order.paymentMethod}</td>
+      <td>${order.paymentMethod.name}</td>
       <td>${order.orderStatus.name}</td>
       <td><a href="/admin/all-orders/order/${order._id}">Xem</a></td>
     `
@@ -74,9 +74,14 @@ async function updateCustomer(customerInfo) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  const customerInfo = await getCustomer()
+  try {
+    const customerInfo = await getCustomer()
 
-  document.querySelector('button[type="submit"]').onclick = function() {
-    updateCustomer(customerInfo)
+    document.querySelector('button[type="submit"]').onclick = function() {
+      updateCustomer(customerInfo)
+    }
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error)
+    pushNotification('Có lỗi xảy ra')
   }
 })

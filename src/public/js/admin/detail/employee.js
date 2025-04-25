@@ -90,9 +90,14 @@ async function updateEmployee(employeeInfo) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  const employeeInfo = await getEmployee()
+  try {
+    const employeeInfo = await getEmployee()
 
-  document.querySelector('button[type="submit"]').onclick = function() {
-    updateEmployee(employeeInfo)
+    document.querySelector('button[type="submit"]').onclick = function() {
+      updateEmployee(employeeInfo)
+    }
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error)
+    pushNotification('Có lỗi xảy ra')
   }
 })

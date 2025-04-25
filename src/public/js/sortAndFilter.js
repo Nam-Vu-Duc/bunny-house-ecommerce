@@ -1,4 +1,4 @@
-function sortAndFilter(getDataFunction, sortOptions, filterOptions, currentPage) {
+async function sortAndFilter(getDataFunction, sortOptions, filterOptions, currentPage) {
   const sortButton = document.querySelector('div.sort').querySelectorAll('select')
   sortButton.forEach((button) => {
     button.onchange = function () {

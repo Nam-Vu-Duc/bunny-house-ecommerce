@@ -102,5 +102,9 @@ restoreButton.onclick = async function () {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getDeletedProducts(sortOptions, filterOptions, currentPage.page)
+  try {
+    await getDeletedProducts(sortOptions, filterOptions, currentPage.page)
+  } catch (error) {
+    console.error('Error loading data:', error)
+  }
 })

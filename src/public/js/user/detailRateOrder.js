@@ -157,6 +157,5 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     await submitRate(data)
   } catch (err){
     console.error("Failed to fetch products:", err)
-    setTimeout(() => loadData(), 2000)
   }
 })

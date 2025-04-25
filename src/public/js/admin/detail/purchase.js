@@ -45,5 +45,10 @@ async function getPurchase() {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getPurchase()
+  try {
+    getPurchase()
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error)
+    pushNotification('Có lỗi xảy ra')
+  }
 })

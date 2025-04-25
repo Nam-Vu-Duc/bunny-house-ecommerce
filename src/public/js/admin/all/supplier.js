@@ -68,8 +68,16 @@ async function getSuppliers(sortOptions, filterOptions, currentPage) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  // getFilter()
-  getSuppliers(sortOptions, filterOptions, currentPage.page)
-  sortAndFilter(getSuppliers, sortOptions, filterOptions, currentPage.page)
-  exportJs()
+  try {
+    await getSuppliers(sortOptions, filterOptions, currentPage.page)
+    await new Promise(r => setTimeout(r, 500))
+
+    await sortAndFilter(getSuppliers, sortOptions, filterOptions, currentPage.page)
+    await new Promise(r => setTimeout(r, 500))
+
+    await exportJs()
+  } catch (error) {
+    console.error('Error loading data:', error)
+    
+  }
 })

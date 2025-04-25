@@ -66,9 +66,14 @@ async function updateSupplier(supplierInfo) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  const supplierInfo = await getSupplier()
+  try {
+    const supplierInfo = await getSupplier()
 
-  document.querySelector('button[type="submit"]').onclick = function() {
-    updateSupplier(supplierInfo)
+    document.querySelector('button[type="submit"]').onclick = function() {
+      updateSupplier(supplierInfo)
+    }
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error)
+    pushNotification('Có lỗi xảy ra')
   }
 })

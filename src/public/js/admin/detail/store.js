@@ -64,9 +64,14 @@ async function updateStore(storeInfo) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  const storeInfo = await getStore()
+  try {
+    const storeInfo = await getStore()
 
-  document.querySelector('button[type="submit"]').onclick = function() {
-    updateStore(storeInfo)
-  }
+    document.querySelector('button[type="submit"]').onclick = function() {
+      updateStore(storeInfo)
+    }
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error)
+    pushNotification('Có lỗi xảy ra')
+  }  
 })

@@ -1,4 +1,4 @@
-function pagination(getDataFunction, sortOptions, filterOptions, currentPage, data_size) {
+async function pagination(getDataFunction, sortOptions, filterOptions, currentPage, data_size) {
   document.querySelector('span.pagination').querySelectorAll('p').forEach(p => p.remove())
   var totalPage = 1
   for (var i = 0; i < data_size; i += 10) {

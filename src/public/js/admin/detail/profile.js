@@ -76,9 +76,14 @@ async function updateProfile(userInfo) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  const userInfo = await getProfile()
+  try {
+    const userInfo = await getProfile()
 
-  document.querySelector('button[type="submit"]').onclick = function() {
-    updateProfile(userInfo)
+    document.querySelector('button[type="submit"]').onclick = function() {
+      updateProfile(userInfo)
+    }
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error)
+    pushNotification('Có lỗi xảy ra')
   }
 })

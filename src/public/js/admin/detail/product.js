@@ -138,35 +138,38 @@ async function updateProduct(productInfo) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  const productInfo = await getProduct()
+  try {
+    const productInfo = await getProduct()
   
-  document.querySelector('select#categories').addEventListener('change', (event) => {
-    const skincare = document.querySelector('select#skincare')
-    const makeup   = document.querySelector('select#makeup')
-    
-    const selectedValue = event.target.value
-    if (selectedValue === 'skincare') {
-      skincare.style.display = 'block'
+    document.querySelector('select#categories').addEventListener('change', (event) => {
+      const skincare = document.querySelector('select#skincare')
+      const makeup   = document.querySelector('select#makeup')
       
-      makeup.style.display = 'none'
-      makeup.value = ''
-    }
-  
-    if (selectedValue === 'makeup') {
-      skincare.style.display = 'none'
-      skincare.value = ''
+      const selectedValue = event.target.value
+      if (selectedValue === 'skincare') {
+        skincare.style.display = 'block'
+        
+        makeup.style.display = 'none'
+        makeup.value = ''
+      }
+    
+      if (selectedValue === 'makeup') {
+        skincare.style.display = 'none'
+        skincare.value = ''
 
-      makeup.style.display = 'block'
-    }
-  })
-  
-  formatInputNumber(document.querySelector('input#purchasePrice'))
-  
-  formatInputNumber(document.querySelector('input#oldPrice'))
-  
-  formatInputNumber(document.querySelector('input#price'))
+        makeup.style.display = 'block'
+      }
+    })
+    
+    formatInputNumber(document.querySelector('input#purchasePrice'))
+    formatInputNumber(document.querySelector('input#oldPrice'))
+    formatInputNumber(document.querySelector('input#price'))
 
-  document.querySelector('button[type="submit"]').onclick = function() {
-    updateProduct(productInfo)
+    document.querySelector('button[type="submit"]').onclick = function() {
+      updateProduct(productInfo)
+    }
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error)
+    pushNotification('Có lỗi xảy ra')
   }
 })

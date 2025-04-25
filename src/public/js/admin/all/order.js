@@ -73,8 +73,18 @@ async function getOrders(sortOptions, filterOptions, currentPage) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  getFilter()
-  getOrders(sortOptions, filterOptions, currentPage.page)
-  sortAndFilter(getOrders, sortOptions, filterOptions, currentPage.page)
-  exportJs()
+  try {
+    await getFilter()
+    await new Promise(r => setTimeout(r, 500))
+
+    await getOrders(sortOptions, filterOptions, currentPage.page)
+    await new Promise(r => setTimeout(r, 500))
+
+    await sortAndFilter(getOrders, sortOptions, filterOptions, currentPage.page)
+    await new Promise(r => setTimeout(r, 500))
+    
+    await exportJs()
+  } catch (error) {
+    console.error('Error loading data:', error)
+  }
 })

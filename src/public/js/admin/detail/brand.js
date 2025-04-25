@@ -67,9 +67,14 @@ async function updateBrand(brandInfo) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  const brandInfo = await getBrand()
-
-  document.querySelector('button[type="submit"]').onclick = function() {
-    updateBrand(brandInfo)
+  try {
+    const brandInfo = await getBrand()
+  
+    document.querySelector('button[type="submit"]').onclick = function() {
+      updateBrand(brandInfo)
+    }
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error)
+    pushNotification('Có lỗi xảy ra')
   }
 })

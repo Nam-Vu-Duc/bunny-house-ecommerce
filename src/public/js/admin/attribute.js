@@ -295,9 +295,22 @@ async function getProductStatus() {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  await getMembership()
-  await getOrderStatus()
-  await getPaymentMethod()
-  await getPosition()
-  await getProductStatus()
+  try {
+    await getMembership()
+    await new Promise(r => setTimeout(r, 200))
+    
+    await getOrderStatus()
+    await new Promise(r => setTimeout(r, 200))
+    
+    await getPaymentMethod()
+    await new Promise(r => setTimeout(r, 200))
+    
+    await getPosition()
+    await new Promise(r => setTimeout(r, 200))
+    
+    await getProductStatus()
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error)
+    pushNotification('Có lỗi xảy ra')
+  }
 })

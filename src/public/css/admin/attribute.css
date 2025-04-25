@@ -5,6 +5,7 @@
   gap: 10px;
   div.table {
     margin-top: 0 !important;
+    min-height: 400px;
     tbody {
       tr {
         height: 50px;

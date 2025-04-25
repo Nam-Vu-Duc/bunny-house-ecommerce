@@ -101,9 +101,14 @@ async function updateOrder(orderInfo) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  const orderInfo = await getOrder()
+  try {
+    const orderInfo = await getOrder()
 
-  document.querySelector('button[type="submit"]').onclick = function() {
-    updateOrder(orderInfo)
+    document.querySelector('button[type="submit"]').onclick = function() {
+      updateOrder(orderInfo)
+    }
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error)
+    pushNotification('Có lỗi xảy ra')
   }
 })

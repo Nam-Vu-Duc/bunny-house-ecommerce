@@ -70,6 +70,5 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     getRelatedProducts(brandInfo)
   } catch (err){
     console.error("Failed to fetch products:", err)
-    setTimeout(() => loadData(), 2000)
   }
 })

@@ -70,8 +70,15 @@ async function getBrands(sortOptions, filterOptions, currentPage) {
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  // getFilter()
-  getBrands(sortOptions, filterOptions, currentPage.page)
-  sortAndFilter(getBrands, sortOptions, filterOptions, currentPage.page)
-  exportJs()
+  try {
+    await getBrands(sortOptions, filterOptions, currentPage.page)
+    await new Promise(r => setTimeout(r, 500))
+
+    await sortAndFilter(getBrands, sortOptions, filterOptions, currentPage.page)
+    await new Promise(r => setTimeout(r, 500))
+
+    await exportJs()
+  } catch (error) {
+    console.error('Error loading data:', error)
+  }
 })

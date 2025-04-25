@@ -59,6 +59,5 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     getOrder()
   } catch (err){
     console.error("Failed to fetch products:", err)
-    setTimeout(() => loadData(), 2000)
   }
 })
