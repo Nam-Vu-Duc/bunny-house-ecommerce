@@ -76,7 +76,7 @@ async function getComment() {
   commentElement.querySelectorAll('div.comment').forEach((comment, index) => {
     if (index < data.length) {
       comment.querySelector('p#sender').textContent = data[index].senderId
-      comment.querySelector('p#rate').textContent = data[index].rate 
+      comment.querySelector('span#rate').textContent = data[index].rate 
       comment.querySelector('p#comment').textContent = data[index].comment 
     } else {
       comment.remove()
@@ -119,6 +119,24 @@ async function getRelatedProducts(productInfo) {
       }
     })
   }, 2000)
+}
+
+async function pushDataToRecommendationSystem(data) {
+  const UserResponse = await fetch('/data/user')
+  if (!UserResponse.ok) throw new Error(`Response status: ${UserResponse.status}`)
+
+  const {message, uid} = await UserResponse.json()
+  if (!message) return
+
+  const response = await fetch('http://localhost:8000/get_data', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({data: data, uid: uid})
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const body = await response.json()
+  const result = body.message
+  console.log(result)
 }
 
 function increaseQuantity(productInfo) {
@@ -248,7 +266,7 @@ function rateProduct() {
   const ratingNums = Array.from(document.querySelector('div.rating-detail-score').querySelectorAll('span#rating-num'))
   const rateList = Array(5).fill(0)
   scoreList.forEach((score, index) => {
-    const value = parseFloat(score.querySelector('p#rate').innerText)
+    const value = parseFloat(score.querySelector('span#rate').innerText)
     scoreList[index] = value
     rateList.forEach((rate, index) => {
       if (index+1 === value) rateList[index] = rate + 1
@@ -279,6 +297,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     decreaseQuantity(productInfo)
     getComment()
     getRelatedProducts(productInfo)
+    pushDataToRecommendationSystem(data)
   } catch (err){
     console.error("Failed to fetch products:", err)
   }
