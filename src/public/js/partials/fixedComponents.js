@@ -24,26 +24,23 @@ const AIinput       = AIchatBox.querySelector('textarea.input')
 const AIsendBtn     = AIchatBox.querySelector('div.send-btn')
 const AInotLoggedIn = AIchatBox.querySelector('div.not-logged-in')
 const AIform        = AIchatBox.querySelector('form.input-form')
-const isUser        = {message: false}
+
+checkUser()
 
 async function checkUser() {
-  const response = await fetch(`/data/user`)
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  // Wait until window.isLoggedIn is assigned
+  while (typeof window.isLoggedIn === 'undefined') {
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
 
-  const json = await response.json()
-  isUser.message = json.message
-  isUser.uid = json.uid
-
-  if (isUser.message) {
+  if (window.isLoggedIn) {
     chatBody.style.display     = ''
     AIchatBody.style.display   = ''
     chatHeader.style.opacity   = '1'
     AIchatHeader.style.opacity = '1'
-    socket.emit('joinRoom', {id: isUser.uid, room: isUser.uid})
+    socket.emit('joinRoom', {id: window.uid, room: window.uid})
   }
 }
-
-checkUser()
 
 window.addEventListener('scroll', function() {
   document.documentElement.scrollTop >= 1000 ? scrollTop.style.display = "" : scrollTop.style.display = "none"
@@ -57,7 +54,7 @@ contact.onclick = function() {
 
 async function getChatData() {
   try {
-    const response = await fetch(`/api/chat/${isUser.uid}`)
+    const response = await fetch(`/api/chat/${window.uid}`)
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
 
     const json = await response.json();
@@ -67,7 +64,7 @@ async function getChatData() {
     messages.forEach((message) => {
       const chat = document.createElement('li')
       chat.textContent = message.content 
-      message.senderId === isUser.uid ? chat.setAttribute('class', 'right-content') : chat.setAttribute('class', 'left-content')
+      message.senderId === window.uid ? chat.setAttribute('class', 'right-content') : chat.setAttribute('class', 'left-content')
       chatContent.appendChild(chat)
     })
     chatContent.scrollTo(0, chatContent.scrollHeight)
@@ -77,7 +74,7 @@ async function getChatData() {
 }
 async function getAIChatData() {
   try {
-    const response = await fetch(`/api/chat/ai/${isUser.uid}`)
+    const response = await fetch(`/api/chat/ai/${window.uid}`)
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
 
     const json = await response.json();
@@ -87,7 +84,7 @@ async function getAIChatData() {
     messages.forEach((message) => {
       const chat = document.createElement('li')
       chat.textContent = message.content 
-      message.senderId === isUser.uid ? chat.setAttribute('class', 'right-content') : chat.setAttribute('class', 'left-content')
+      message.senderId === window.uid ? chat.setAttribute('class', 'right-content') : chat.setAttribute('class', 'left-content')
         
       AIchatContent.appendChild(chat)
     })
@@ -108,7 +105,7 @@ chat.onclick = function() {
       chatBox.style.right = '60px'
       isUsed = true
     }
-    if (isUser.message) getChatData()
+    if (window.isLoggedIn) getChatData()
   } else {
     chatBox.style.display = 'none'
     chatBox.style.right === '60px' ? isUsed = false : ''
@@ -123,7 +120,7 @@ AIchat.onclick = function() {
       AIchatBox.style.right = '60px'
       isUsed = true
     }
-    if (isUser.message) getAIChatData()
+    if (window.isLoggedIn) getAIChatData()
   } else {
     AIchatBox.style.display = 'none'
     AIchatBox.style.right === '60px' ? isUsed = false : ''
@@ -143,7 +140,7 @@ AIminimize.onclick = function () {
 // send message
 sendBtn.onclick = async function() {
   if (input.value.trim() !== '') {
-    socket.emit('privateMessage', { room: isUser.uid, message: `${isUser.uid}:${input.value}` })
+    socket.emit('privateMessage', { room: window.uid, message: `${window.uid}:${input.value}` })
     const response = await fetch('/api/chat/create', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -210,7 +207,7 @@ AIinput.addEventListener("keypress", function(event) {
 socket.on('chat-message', (id, msg, room) => {
   const chat = document.createElement('li')
   chat.textContent = msg
-  id.trim() === isUser.uid ? chat.classList.add('right-content') : chat.classList.add('left-content')
+  id.trim() === window.uid ? chat.classList.add('right-content') : chat.classList.add('left-content')
   chatContent.appendChild(chat)
   chatContent.scrollTo(0, chatContent.scrollHeight)
 })

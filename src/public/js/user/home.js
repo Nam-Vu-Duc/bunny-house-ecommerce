@@ -12,74 +12,97 @@ const allProductsDiv        = document.querySelector('div[class="products-board"
 const allBrandsDiv          = document.querySelector('div[class="famous-brand-board"][id="brand"]').querySelectorAll('img')
 
 async function getFavProducts(products) {
-  const response = await fetch('http://localhost:8000/return_data', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-  })
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  // Wait until window.isLoggedIn is assigned
+  while (typeof window.isLoggedIn === 'undefined') {
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
 
-  window.setTimeout(function() {
-    products.forEach((product, index) => {
-      product.querySelector('img').setAttribute('src', data[index].img.path)
-      product.querySelector('img').setAttribute('alt', data[index].img.name)
-      product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
-      product.querySelector('p#price').textContent = formatNumber(data[index].price) 
-      product.querySelector('p#name').textContent = data[index].name
-      product.querySelector('span#rate-score').textContent = formatRate(data[index].rate) 
-      product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
-      product.querySelector('div.loading').style.display = 'none'
-      product.querySelectorAll('i').forEach((star, i) => {
-        if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
-      })
-      product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
+  if (!window.isLoggedIn) return
+
+  document.querySelector('div[class="products-board"][id="favorite"]').style.display = 'block'
+
+  try {
+    const response = await fetch('https://bunny-recommendation.onrender.com/return_data', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({uid: window.uid})
     })
-  }, 1000)
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const data = await response.json()
+    console.log(data)
+
+    window.setTimeout(function() {
+      products.forEach((product, index) => {
+        product.querySelector('img').setAttribute('src', data[index].img.path)
+        product.querySelector('img').setAttribute('alt', data[index].img.name)
+        product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
+        product.querySelector('p#price').textContent = formatNumber(data[index].price) 
+        product.querySelector('p#name').textContent = data[index].name
+        product.querySelector('span#rate-score').textContent = formatRate(data[index].rate) 
+        product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
+        product.querySelector('div.loading').style.display = 'none'
+        product.querySelectorAll('i').forEach((star, i) => {
+          if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
+        })
+        product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
+      })
+    }, 1000)
+  } catch (error) {
+    pushNotification(`Error loading favorite products: ${error}`)
+  }
 }
 
 async function getProducts(products, filter) {
-  const response = await fetch('/data/products', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(filter)
-  })
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
-
-  window.setTimeout(function() {
-    products.forEach((product, index) => {
-      product.querySelector('img').setAttribute('src', data[index].img.path)
-      product.querySelector('img').setAttribute('alt', data[index].img.name)
-      product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
-      product.querySelector('p#price').textContent = formatNumber(data[index].price) 
-      product.querySelector('p#name').textContent = data[index].name
-      product.querySelector('span#rate-score').textContent = formatRate(data[index].rate) 
-      product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
-      product.querySelector('div.loading').style.display = 'none'
-      product.querySelectorAll('i').forEach((star, i) => {
-        if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
-      })
-      product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
+  try {
+    const response = await fetch('/data/products', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(filter)
     })
-  }, 1000)
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const {data} = await response.json()
+  
+    window.setTimeout(function() {
+      products.forEach((product, index) => {
+        product.querySelector('img').setAttribute('src', data[index].img.path)
+        product.querySelector('img').setAttribute('alt', data[index].img.name)
+        product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
+        product.querySelector('p#price').textContent = formatNumber(data[index].price) 
+        product.querySelector('p#name').textContent = data[index].name
+        product.querySelector('span#rate-score').textContent = formatRate(data[index].rate) 
+        product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
+        product.querySelector('div.loading').style.display = 'none'
+        product.querySelectorAll('i').forEach((star, i) => {
+          if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
+        })
+        product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
+      })
+    }, 1000)
+  } catch (error) {
+    pushNotification(`Error loading products: ${error}`) 
+  }
 }
 
 async function getBrands(imgs) {
-  const response = await fetch('/data/brands', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-  })
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
-
-  imgs.forEach((img, index) => {
-    img.parentElement.setAttribute('href', '/all-brands/brand/' + data[index]._id)
-    img.setAttribute('src', data[index].img.path)
-    img.setAttribute('alt', data[index].name)
-  })
+  try {
+    const response = await fetch('/data/brands', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+    })
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const {data} = await response.json()
+  
+    imgs.forEach((img, index) => {
+      img.parentElement.setAttribute('href', '/all-brands/brand/' + data[index]._id)
+      img.setAttribute('src', data[index].img.path)
+      img.setAttribute('alt', data[index].name)
+    }) 
+  } catch (error) {
+    pushNotification(`Error loading brands: ${error}`)
+  }
 }
 
-window.addEventListener('DOMContentLoaded', async function loadData() {
+window.addEventListener('DOMContentLoaded', async function() {
   try {
     await getFavProducts(favProductsDiv)
     await new Promise(r => setTimeout(r, 500))

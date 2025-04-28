@@ -4,7 +4,7 @@ importLinkCss('/css/user/detailRateOrder.css')
 const submitBtn = document.querySelector("button[type='submit']")
 const urlSlug = location.href.match(/([^\/]*)\/*$/)[1]
 
-function rateStar() {
+async function rateStar() {
   const rateDiv = document.querySelectorAll('div.rate-star')
   rateDiv.forEach((div) => {
     const stars = div.querySelectorAll('i')

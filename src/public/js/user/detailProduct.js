@@ -122,16 +122,17 @@ async function getRelatedProducts(productInfo) {
 }
 
 async function pushDataToRecommendationSystem(data) {
-  const UserResponse = await fetch('/data/user')
-  if (!UserResponse.ok) throw new Error(`Response status: ${UserResponse.status}`)
+  // Wait until window.isLoggedIn is assigned
+  while (typeof window.isLoggedIn === 'undefined') {
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
 
-  const {message, uid} = await UserResponse.json()
-  if (!message) return
+  if (!window.isLoggedIn) return
 
-  const response = await fetch('http://localhost:8000/get_data', {
+  const response = await fetch('https://bunny-recommendation.onrender.com/get_data', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({data: data, uid: uid})
+    body: JSON.stringify({data: data, uid: window.uid})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const body = await response.json()

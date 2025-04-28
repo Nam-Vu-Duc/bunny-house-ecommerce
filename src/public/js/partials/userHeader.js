@@ -8,7 +8,6 @@ const avatar          = document.querySelector('img.dropdown-avatar')
 const avatarMenu      = document.querySelector('div.avatar-menu')
 const menu            = document.querySelector('div.menu')
 const responsiveMenu  = document.querySelector('div.responsive-menu')
-const isUserHeader    = {message: false}
 var width = window.innerWidth
 
 window.addEventListener('scroll', function() {
@@ -27,17 +26,15 @@ document.addEventListener('click', function(event) {
 })
 
 async function checkUser() {
-  const response = await fetch(`/data/user`)
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  // Wait until window.isLoggedIn is assigned
+  while (typeof window.isLoggedIn === 'undefined') {
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
 
-  const json = await response.json()
-  isUserHeader.message = json.message
-  isUserHeader.uid = json.uid
-
-  if (isUserHeader.message) {
+  if (window.isLoggedIn) {
     const updateProfileButton = document.createElement('a')
     updateProfileButton.innerText = 'Thông tin cá nhân'
-    updateProfileButton.setAttribute('href', `/profile/info/${isUserHeader.uid}`)
+    updateProfileButton.setAttribute('href', `/profile/info/${window.uid}`)
     avatarMenu.appendChild(updateProfileButton)
   
     const logOutButton = document.createElement('a')
@@ -63,10 +60,6 @@ function setDisplay(width, menu) {
   if (width < 700) menu.style.display = 'none'
   else menu.style.display = 'flex'
 }
-
-checkUser()
-updateCartCount()
-setDisplay(width, menu)
 
 // create input element
 searchIcon.onclick = function() {
@@ -126,3 +119,7 @@ responsiveMenu.onclick = function() {
   if (menu.style.display === 'none') menu.style.display = 'flex' 
   else menu.style.display = 'none'
 }
+
+checkUser()
+updateCartCount()
+setDisplay(width, menu)

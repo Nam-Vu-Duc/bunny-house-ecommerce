@@ -298,6 +298,6 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     getUser()
     resetFormat(infoBtn)
   } catch (err){
-    console.error("Failed to fetch products:", err)
+    console.error("Failed to fetch data:", err)
   }
 })
