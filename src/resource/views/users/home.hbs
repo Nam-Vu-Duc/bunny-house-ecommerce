@@ -2,6 +2,19 @@
   {{> userAdvertise}}
 </div>
 
+<div class="products-board" id="favorite" style="display: none;">
+  <div class="title" data-tippy-content="Xem toàn bộ sản phẩm">
+    <i class="fi fi-sr-flame"></i>
+    <div><a href="/all-products" class="main-title"><b>TOP SẢN PHẨM DÀNH RIÊNG CHO BẠN</b></a></div>
+  </div>
+
+  <div class="products">
+    {{#each (holderData 10)}}
+      {{> product}}
+    {{/each}}
+  </div>
+</div>
+
 <div class="flash-deal-board" id="flash-deal">
   <div class="title" data-tippy-content="Xem toàn bộ sản phẩm đang sale">
     <i class="fi fi-sr-bolt"></i>

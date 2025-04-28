@@ -12,44 +12,56 @@ function formatMessage(message, color) {
 }
 
 async function verifyingEmail(email) {
-  const response = await fetch("/authentication/reset-password/verifying-email", {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      email: email,
+  try {
+    const response = await fetch("/authentication/reset-password/verifying-email", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        email: email,
+      })
     })
-  })
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  return json.message
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const json = await response.json()
+    return json.message
+  } catch (error) {
+    pushNotification(`Error verifying email: ${error}`) 
+  }  
 }
 
 async function verifyingCode(email, code) {
-  const response = await fetch('/authentication/reset-password/verifying-code', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      email: email,
-      code : code
+  try {
+    const response = await fetch('/authentication/reset-password/verifying-code', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        email: email,
+        code : code
+      })
     })
-  })
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {message} = await response.json()
-  return message
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const {message} = await response.json()
+    return message
+  } catch (error) {
+    pushNotification(`Error verifying code: ${error}`)  
+  }
 }
 
 async function resettingPassword(email, password) {
-  const response = await fetch('/authentication/resetting-password', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      email    : email,
-      password : password
+  try {
+    const response = await fetch('/authentication/resetting-password', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        email    : email,
+        password : password
+      })
     })
-  })
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {message} = await response.json()
-  return message
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const {message} = await response.json()
+    return message
+  } catch (error) {
+    pushNotification(`Error resetting password: ${error}`)
+  }
 }
 
 submitButton.onclick = async function() {

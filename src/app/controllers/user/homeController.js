@@ -46,7 +46,7 @@ class homeController {
       return res.json({message: true, uid: userId, data: userInfo})
       
     } catch (error) {
-      return res.json({error: error})
+      return res.json({message: error})
     }
   }
 

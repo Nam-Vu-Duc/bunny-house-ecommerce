@@ -251,9 +251,7 @@ checkUser()
 window.addEventListener('DOMContentLoaded', async function loadData() {
   try {
     updateTableBody()
-
     displayProcess()
-
     submitOrder()
   } catch (err){
     console.error("Failed to fetch products:", err)
