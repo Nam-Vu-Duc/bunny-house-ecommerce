@@ -1,4 +1,6 @@
 checkUser()
+// window.recommend_url = 'http://localhost:8000'
+window.recommend_url = 'https://bunny-recommendation.onrender.com'
 // const socket = io("http://localhost:3100/", {path: "/socket.io"})
 const socket = io("https://bunny-chat.onrender.com/", {path: "/socket.io"})
 
@@ -11,8 +13,12 @@ async function checkUser() {
   window.uid = uid
 }
 
-setInterval(() => {
+setInterval(async function () {
   socket.emit('heartbeat', { message: 'user ping' })
+  await fetch(window.recommend_url, {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json'},
+  })
 }, 30000) // Send a ping every 30 seconds
 
 window.addEventListener('DOMContentLoaded', async function() {
