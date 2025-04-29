@@ -122,22 +122,24 @@ async function getRelatedProducts(productInfo) {
 }
 
 async function pushDataToRecommendationSystem(data) {
-  // Wait until window.isLoggedIn is assigned
-  while (typeof window.isLoggedIn === 'undefined') {
-    await new Promise(resolve => setTimeout(resolve, 50));
+  try {
+    // Wait until window.isLoggedIn is assigned
+    while (typeof window.isLoggedIn === 'undefined' | typeof window.recommend_url === 'undefined') {
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+  
+    if (!window.isLoggedIn) return
+  
+    const response = await fetch(`${window.recommend_url}/get_data`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({data: data, uid: window.uid})
+    })
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  } catch (error) {
+    pushNotification(error)
+    console.log(error)
   }
-
-  if (!window.isLoggedIn) return
-
-  const response = await fetch('https://bunny-recommendation.onrender.com/get_data', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({data: data, uid: window.uid})
-  })
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const body = await response.json()
-  const result = body.message
-  console.log(result)
 }
 
 function increaseQuantity(productInfo) {

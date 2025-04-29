@@ -13,7 +13,7 @@ const allBrandsDiv          = document.querySelector('div[class="famous-brand-bo
 
 async function getFavProducts(products) {
   // Wait until window.isLoggedIn is assigned
-  while (typeof window.isLoggedIn === 'undefined') {
+  while (typeof window.isLoggedIn === 'undefined' | typeof window.recommend_url === 'undefined') {
     await new Promise(resolve => setTimeout(resolve, 50));
   }
 
@@ -22,7 +22,8 @@ async function getFavProducts(products) {
   document.querySelector('div[class="products-board"][id="favorite"]').style.display = 'block'
 
   try {
-    const response = await fetch('https://bunny-recommendation.onrender.com/return_data', {
+    console.log(window.recommend_url)
+    const response = await fetch(`${window.recommend_url}/return_data`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({uid: window.uid})
@@ -44,7 +45,7 @@ async function getFavProducts(products) {
         product.querySelectorAll('i').forEach((star, i) => {
           if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
         })
-        product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
+        product.parentElement.setAttribute('href', '/all-products/product/' + data[index].id)
       })
     }, 1000)
   } catch (error) {
