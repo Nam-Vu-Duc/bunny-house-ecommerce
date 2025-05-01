@@ -2,12 +2,12 @@ const checkDay = {message: ''}
 const index    = new URL(window.location).pathname.split('/').find(el => el.includes('all')) || []
 
 async function getProfile() {
-  const response = await fetch('/admin/profile/data/profile', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-  })
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {userInfo} = await response.json()
+  // Wait until window.isAdminLoggedIn is assigned
+  while (typeof window.isAdminLoggedIn === 'undefined') {
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
+
+  if (!window.isAdminLoggedIn) return
 
   const currentTime = new Date().getHours()
 
@@ -16,12 +16,12 @@ async function getProfile() {
   else if (currentTime <= 18) checkDay.message = 'buổi chiều'
   else    checkDay.message = 'buổi tối'
 
-  const helloText = `Xin chào ${userInfo.name}, Chúc bạn một ${checkDay.message} vui vẻ !!!`
+  const helloText = `Xin chào ${window.admin_data.name}, Chúc bạn một ${checkDay.message} vui vẻ !!!`
   document.getElementById('welcome-text').innerHTML = helloText
 }
 
 document.querySelector('div.admin-button').querySelectorAll('a').forEach((a) => {
-  if (index.includes(a.id)) return a.style.backgroundColor = '#FFDFDF'
+  if (index === a.id) return a.style.backgroundColor = '#FFDFDF'
 })
 
 document.querySelector('button.resize-button').onclick = function() {

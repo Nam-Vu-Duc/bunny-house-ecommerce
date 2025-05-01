@@ -1,7 +1,46 @@
 importLinkCss('/css/admin/home.css')
 
+async function getFinance() {
+  const response = await fetch('/admin/all/data/brands')
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {data} = await response.json()
+
+  const table = document.createElement('table')
+  table.innerHTML = `
+    <thead>
+      <tr><td colspan="3">QUẢN LÝ TÀI CHÍNH</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Số lượng thương hiệu</td>
+        <td>${data.length}</td>
+        <td><a href="/admin/all-brands">Chi tiết</a></td>
+      </tr>
+    </tbody>
+  `
+
+  document.querySelector('div.finance').appendChild(table)
+
+  new Chart(brand, {
+    type: 'bar',
+    data: {
+      labels: ['Bạc', 'Vàng', 'Kim cương'],
+      datasets: [{
+        label: 'HẠNG',
+        data: [
+          data.filter(user => user.memberCode === 'silver').length, 
+          data.filter(user => user.memberCode === 'gold').length,
+          data.filter(user => user.memberCode === 'diamond').length
+        ],
+        borderWidth: 1,
+        backgroundColor: '#FFDFDF'
+      }]
+    }
+  })
+}
+
 async function getBrands() {
-  const response = await fetch('/admin/home/data/brands')
+  const response = await fetch('/admin/all/data/brands')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {data} = await response.json()
 
@@ -40,7 +79,7 @@ async function getBrands() {
 }
 
 async function getCustomers() {
-  const response = await fetch('/admin/home/data/customers')
+  const response = await fetch('/admin/all/data/customers')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {data} = await response.json()
 
@@ -79,7 +118,7 @@ async function getCustomers() {
 }
 
 async function getEmployees() {
-  const response = await fetch('/admin/home/data/employees')
+  const response = await fetch('/admin/all/data/employees')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {data} = await response.json()
 
@@ -118,7 +157,7 @@ async function getEmployees() {
 }
 
 async function getOrders() {
-  const response = await fetch('/admin/home/data/orders')
+  const response = await fetch('/admin/all/data/orders')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {data} = await response.json()
 
@@ -158,7 +197,7 @@ async function getOrders() {
 }
 
 async function getProducts() {
-  const response = await fetch('/admin/home/data/products')
+  const response = await fetch('/admin/all/data/products')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {data} = await response.json()
 
@@ -196,7 +235,7 @@ async function getProducts() {
 }
 
 async function getPurchases() {
-  const response = await fetch('/admin/home/data/purchases')
+  const response = await fetch('/admin/all/data/purchases')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {data} = await response.json()
 
@@ -235,7 +274,7 @@ async function getPurchases() {
 }
 
 async function getStores() {
-  const response = await fetch('/admin/home/data/stores')
+  const response = await fetch('/admin/all/data/stores')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {data} = await response.json()
 
@@ -274,7 +313,7 @@ async function getStores() {
 }
 
 async function getSuppliers() {
-  const response = await fetch('/admin/home/data/suppliers')
+  const response = await fetch('/admin/all/data/suppliers')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {data} = await response.json()
 

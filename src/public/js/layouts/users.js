@@ -1,7 +1,8 @@
 checkUser()
 // window.recommend_url = 'http://localhost:8000'
-window.recommend_url = 'https://bunny-recommendation.onrender.com'
 // const socket = io("http://localhost:3100/", {path: "/socket.io"})
+
+window.recommend_url = 'https://bunny-recommendation.onrender.com'
 const socket = io("https://bunny-chat.onrender.com/", {path: "/socket.io"})
 
 async function checkUser() {

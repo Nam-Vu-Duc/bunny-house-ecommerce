@@ -52,5 +52,20 @@ class homeController {
     const suppliers = await supplier.find().lean()
     return res.json({data: suppliers})
   }
+  
+  async getUser(req, res, next) {
+    try {
+      const userId = req.cookies.uid || ''
+      if (!userId) return res.json({message: false})
+      
+      const userInfo = await employee.findOne({ _id: userId }).lean()
+      if (!userInfo) return res.json({message: false})
+      
+      return res.json({message: true, data: userInfo})
+      
+    } catch (error) {
+      return res.json({message: error})
+    }
+  }
 }
 module.exports = new homeController

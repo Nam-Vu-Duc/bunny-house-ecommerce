@@ -1,7 +1,7 @@
 importLinkCss('/css/admin/profile.css')
 
 async function getProfile() {
-  const response = await fetch('/admin/profile/data/profile', {
+  const response = await fetch('/admin/all-personal-info/data/profile', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
   })

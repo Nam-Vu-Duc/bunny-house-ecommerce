@@ -22,7 +22,6 @@ async function getFavProducts(products) {
   document.querySelector('div[class="products-board"][id="favorite"]').style.display = 'block'
 
   try {
-    console.log(window.recommend_url)
     const response = await fetch(`${window.recommend_url}/return_data`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
