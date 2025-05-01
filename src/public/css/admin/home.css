@@ -1,7 +1,7 @@
 .admin-home-container {
   padding: 0 5px;
-  display: grid;
-  grid-template-columns: 50% 50%;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   div.table {
     margin-top: 0 !important;
@@ -27,7 +27,13 @@
       }
     }
   }
-  
+
+  div.tables {
+    padding: 0 5px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 10px;
+  }
 }
 @media screen and (max-width: 700px) {
   .admin-home-container {

@@ -1,5 +1,16 @@
+checkUser()
+
 // const socket = io("http://localhost:3100/", {path: "/socket.io"})
 const socket = io("https://bunny-chat.onrender.com/", {path: "/socket.io"})
+
+async function checkUser() {
+  const response = await fetch('/admin/all/data/user')
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {message, data} = await response.json()
+
+  window.isAdminLoggedIn = message
+  window.admin_data = data
+}
 
 setInterval(() => {
   socket.emit('heartbeat', { message: 'admin ping' });

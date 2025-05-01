@@ -43,7 +43,7 @@ class homeController {
       const userInfo = await user.findOne({ _id: userId }).lean()
       if (!userInfo) return res.json({message: false})
       
-      return res.json({message: true, uid: userId, data: userInfo})
+      return res.json({message: true, uid: userId})
       
     } catch (error) {
       return res.json({message: error})

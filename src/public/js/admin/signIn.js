@@ -31,7 +31,7 @@ async function checkingAccount() {
 
   setTimeout(() => {
     const path = window.location.origin
-    window.location.replace(path + '/admin')
+    window.location.replace(path + '/admin/all')
   }, 1000)
   
   return
