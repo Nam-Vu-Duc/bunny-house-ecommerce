@@ -4,6 +4,7 @@ const homeController = require('../../app/controllers/admin/homeController')
 
 router.get('/', homeController.show)
 
+router.get('/data/finance'   , homeController.getFinance)
 router.get('/data/brands'    , homeController.getBrands)
 router.get('/data/customers' , homeController.getCustomers)
 router.get('/data/employees' , homeController.getEmployees)

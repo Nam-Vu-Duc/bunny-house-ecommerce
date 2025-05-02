@@ -5,6 +5,8 @@ const store = require('../../models/storeModel')
 const orderStatus = require('../../models/orderStatusModel')
 const paymentMethod = require('../../models/paymentMethodModel')
 const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
+const emp = require('../../models/employeeModel')
+const objectId = require('mongoose').Types.ObjectId
 
 class allOrdersController {
   // all
@@ -13,8 +15,16 @@ class allOrdersController {
       const currentPage  = req.body.page
       const sort         = req.body.sort
       const filter       = req.body.filter
+      const uid          = req.body.uid 
       const itemsPerPage = 10
       const skip         = (currentPage - 1) * itemsPerPage
+
+      const userInfo = await emp.findOne({ _id: uid }).lean()
+      if (!userInfo) throw new Error('User not found')
+
+      if (userInfo.role !== 'admin') {
+        filter.storeCode = userInfo.storeCode
+      }
   
       const [data, dataSize] = await Promise.all([
         order
@@ -25,7 +35,7 @@ class allOrdersController {
           .lean(),
         order.find(filter).countDocuments(),
       ]) 
-      if (!data) res.status(404).json({data: [], data_size: 0})
+      if (!data) throw new Error('Data not found')
       
       return res.json({data: data, data_size: dataSize})
       
@@ -36,12 +46,13 @@ class allOrdersController {
 
   async getFilter(req, res, next) {
     try {
-      const [orderStatuses, paymentMethods] = await Promise.all([
+      const [orderStatuses, paymentMethods, stores] = await Promise.all([
         orderStatus.find().lean(),
         paymentMethod.find().lean(),
+        store.find().lean()
       ]) 
   
-      return res.json({ orderStatus: orderStatuses, paymentMethod: paymentMethods })
+      return res.json({ orderStatus: orderStatuses, paymentMethod: paymentMethods, store: stores })
       
     } catch (error) {
       return res.json({error: error})
@@ -56,15 +67,31 @@ class allOrdersController {
   async getOrder(req, res, next) {
     try {
       const [orderInfo, orderStatuses, paymentMethods] = await Promise.all([
-        order.findOne({ _id: req.body.id }).lean(),
+        order.aggregate([
+          {
+            $match: { _id: new objectId(req.body.id) }
+          },
+          {
+            $lookup: {
+              from: 'stores',
+              localField: 'storeCode',
+              foreignField: 'code',
+              as: 'store'
+            }
+          },
+          {
+            $unwind: '$store'
+          },
+        ]),
         orderStatus.find({}).lean(),
         paymentMethod.find({}).lean()
       ])
       if (!orderInfo) return res.json({orderInfo: null})
   
-      return res.json({orderInfo: orderInfo, orderStatuses: orderStatuses, paymentMethods: paymentMethods})
+      return res.json({orderInfo: orderInfo[0], orderStatuses: orderStatuses, paymentMethods: paymentMethods})
       
     } catch (error) {
+      console.log(error)
       return res.json({error: error})
     }
   }
@@ -91,7 +118,7 @@ class allOrdersController {
       if (req.body.status === 'cancel') {
         const orderInfo = await order.findOne({ _id: req.body.id }).lean()
         const userId = orderInfo.customerInfo.userId
-        const storeId = orderInfo.storeId
+        const storeCode = orderInfo.storeCode
   
         // update product quantity
         const productInfo = orderInfo.products.map(product => ({id: product.id, quantity: product.quantity}))
@@ -104,7 +131,7 @@ class allOrdersController {
         }))
         await product.bulkWrite(bulkOps)
   
-        await store.updateOne({ _id: storeId }, {
+        await store.updateOne({ code: storeCode }, {
           $inc: { revenue: -orderInfo.totalOrderPrice }
         })
   

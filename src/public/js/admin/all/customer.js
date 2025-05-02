@@ -2,7 +2,7 @@ importLinkCss('/css/admin/allCustomers.css')
 
 const tbody         = document.querySelector('table').querySelector('tbody')
 const sortOptions   = {}
-const filterOptions = {}
+const filterOptions = {} 
 const currentPage   = { page: 1 }
 const dataSize      = { size: 0 }
 
@@ -31,7 +31,11 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
   const response = await fetch('/admin/all-customers/data/customers', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({sort: sortOptions, filter: filterOptions, page: currentPage})
+    body: JSON.stringify({
+      sort  : sortOptions, 
+      filter: filterOptions, 
+      page  : currentPage,
+    })  
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()

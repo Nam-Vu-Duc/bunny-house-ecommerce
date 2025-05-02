@@ -90,9 +90,9 @@ async function getStores() {
 
   data.forEach((element) => {
     const option = document.createElement('option')
-    option.value = element._id
+    option.value = element.code
     option.textContent = element.name
-    document.querySelector('select[name="storeId"]').appendChild(option) 
+    document.querySelector('select[name="storeCode"]').appendChild(option) 
   })
 
   return
@@ -188,14 +188,14 @@ async function getProducts(query) {
 async function createOrder() {
   const orderDate     = document.querySelector('input#orderDate').value
   const userId        = document.querySelector('select#userId').value
-  const storeId       = document.querySelector('select#storeId').value
+  const storeCode     = document.querySelector('select#storeCode').value
   const paymentMethod = document.querySelector('select#paymentMethod').value
   const note          = document.querySelector('input#note').value
 
   if (
     !orderDate        || 
     !userId           || 
-    !storeId          || 
+    !storeCode        || 
     !paymentMethod    || 
     !productId        || 
     !productQuantity  || 
@@ -211,7 +211,7 @@ async function createOrder() {
     body: JSON.stringify({
       orderDate         : orderDate,
       userId            : userId,
-      storeId           : storeId,
+      storeCode         : storeCode,
       paymentMethod     : paymentMethod,
       note              : note,
       productId         : productId,

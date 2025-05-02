@@ -12,7 +12,7 @@ async function getFilter() {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {orderStatus, paymentMethod} = await response.json()
+  const {orderStatus, paymentMethod, store} = await response.json()
 
   orderStatus.forEach((element, index) => {
     const option = document.createElement('option')
@@ -27,6 +27,13 @@ async function getFilter() {
     option.textContent = element.name
     document.querySelector('select#paymentMethod').appendChild(option)
   })
+  
+  store.forEach((element, index) => {
+    const option = document.createElement('option')
+    option.value = element.code
+    option.textContent = element.name
+    document.querySelector('select#storeCode').appendChild(option)
+  })
 }
 
 async function getOrders(sortOptions, filterOptions, currentPage) {
@@ -38,7 +45,12 @@ async function getOrders(sortOptions, filterOptions, currentPage) {
   const response = await fetch('/admin/all-orders/data/orders', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({sort: sortOptions, filter: filterOptions, page: currentPage})
+    body: JSON.stringify({
+      sort  : sortOptions, 
+      filter: filterOptions, 
+      page  : currentPage,
+      uid   : window.admin_data._id
+    })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()

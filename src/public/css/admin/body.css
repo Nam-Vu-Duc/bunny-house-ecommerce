@@ -6,7 +6,7 @@ main {
   margin-left: 200px;
   box-sizing: border-box;
 }
-input[type="text"], input[type="password"], input[type="date"], input[type="number"] {
+input[type="text"], input[type="password"], input[type="date"], input[type="month"], input[type="number"] {
   font-family: 'Roboto', sans-serif;
   width: 100%;
   text-indent: 10px;

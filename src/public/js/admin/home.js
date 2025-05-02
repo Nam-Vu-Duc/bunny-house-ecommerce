@@ -1,9 +1,24 @@
 importLinkCss('/css/admin/home.css')
 
+function dateFilter() {
+  const pickerType = document.querySelector('div.date-picker').querySelectorAll('input')
+
+  document.querySelector('select[name="filter"]').addEventListener('change', function() {
+    const value = this.value
+    pickerType.forEach(picker => {
+      if (picker.type === value) {
+        picker.style.display = 'block'
+      } else {
+        picker.style.display = 'none'
+      }
+    })
+  })
+}
+
 async function getFinance() {
-  const response = await fetch('/admin/all/data/brands')
+  const response = await fetch('/admin/all/data/finance')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  const {revenue, cost, wage} = await response.json()
 
   const table = document.createElement('table')
   table.innerHTML = `
@@ -12,31 +27,29 @@ async function getFinance() {
     </thead>
     <tbody>
       <tr>
-        <td>Số lượng thương hiệu</td>
-        <td>${data.length}</td>
+        <td>Doanh thu</td>
+        <td>${formatNumber(revenue)}</td>
+        <td><a href="/admin/all-brands">Chi tiết</a></td>
+      </tr>
+      <tr>
+        <td>Chi phí hàng hoá</td>
+        <td>${formatNumber(cost)}</td>
+        <td><a href="/admin/all-brands">Chi tiết</a></td>
+      </tr>
+      <tr>
+        <td>Chi phí lương</td>
+        <td>${formatNumber(wage)}</td>
+        <td><a href="/admin/all-brands">Chi tiết</a></td>
+      </tr>
+      <tr>
+        <td>Lợi nhuận</td>
+        <td>${formatNumber(revenue-cost-wage)}</td>
         <td><a href="/admin/all-brands">Chi tiết</a></td>
       </tr>
     </tbody>
   `
 
   document.querySelector('div.finance').appendChild(table)
-
-  new Chart(brand, {
-    type: 'bar',
-    data: {
-      labels: ['Bạc', 'Vàng', 'Kim cương'],
-      datasets: [{
-        label: 'HẠNG',
-        data: [
-          data.filter(user => user.memberCode === 'silver').length, 
-          data.filter(user => user.memberCode === 'gold').length,
-          data.filter(user => user.memberCode === 'diamond').length
-        ],
-        borderWidth: 1,
-        backgroundColor: '#FFDFDF'
-      }]
-    }
-  })
 }
 
 async function getBrands() {
@@ -351,32 +364,40 @@ async function getSuppliers() {
   })
 }
 
-window.addEventListener('DOMContentLoaded', async function loadData() {
+async function getAll() {
   try {
-    await getCustomers()
+    await getFinance()
     await new Promise(r => setTimeout(r, 200))
 
-    await getOrders()
-    await new Promise(r => setTimeout(r, 200))
+    // await getCustomers()
+    // await new Promise(r => setTimeout(r, 200))
 
-    await getSuppliers()
-    await new Promise(r => setTimeout(r, 200))
+    // await getOrders()
+    // await new Promise(r => setTimeout(r, 200))
+
+    // await getSuppliers()
+    // await new Promise(r => setTimeout(r, 200))
     
-    await getPurchases() 
-    await new Promise(r => setTimeout(r, 200))
+    // await getPurchases() 
+    // await new Promise(r => setTimeout(r, 200))
 
-    await getProducts()
-    await new Promise(r => setTimeout(r, 200))
+    // await getProducts()
+    // await new Promise(r => setTimeout(r, 200))
 
-    await getBrands()
-    await new Promise(r => setTimeout(r, 200))
+    // await getBrands()
+    // await new Promise(r => setTimeout(r, 200))
 
-    await getStores()
-    await new Promise(r => setTimeout(r, 200))
+    // await getStores()
+    // await new Promise(r => setTimeout(r, 200))
 
-    await getEmployees()    
+    // await getEmployees()    
   } catch (error) {
     console.error('Có lỗi xảy ra:', error)
     pushNotification('Có lỗi xảy ra')
   }
+}
+
+window.addEventListener('DOMContentLoaded', async function loadData() {
+  dateFilter()
+  getAll()
 })
