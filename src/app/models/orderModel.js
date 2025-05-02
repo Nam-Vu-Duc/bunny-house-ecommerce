@@ -24,7 +24,7 @@ const order = new Schema({
   paymentMethod   : { type: String, default: '' },
   status          : { type: String, default: 'preparing' },
   isRated         : { type: Boolean, default: false},
-  storeId         : { type: String, default: '671600cc147dd8bae142bbb5' },
+  storeCode       : { type: String, default: 'bunny-house-thanh-xuan' },
   deletedAt       : { type: Date, default: null }
 }, { timestamps: true })
 module.exports = mongoose.model('order', order)

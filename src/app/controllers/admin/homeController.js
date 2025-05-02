@@ -13,6 +13,81 @@ class homeController {
     return res.render('admin/home', { title: 'Trang chủ', layout: 'admin' })
   }
 
+  async getFinance(req, res, next) {
+    const { startDate, endDate } = req.query
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+    const revenue = await order.aggregate([
+      // {
+      //   $match: {
+      //     createdAt: {
+      //       $gte: start,
+      //       $lt: end,
+      //     },
+      //   },
+      // },
+      {
+        $group: {
+          _id: null,
+          revenue: { $sum: '$totalOrderPrice' },
+        },
+      },
+    ])
+    console.log(revenue)
+
+    const cost = await purchase.aggregate([
+      // {
+      //   $match: {
+      //     createdAt: {
+      //       $gte: start,
+      //       $lt: end,
+      //     },
+      //   },
+      // },
+      {
+        $group: {
+          _id: null,
+          cost: { $sum: '$totalPurchasePrice' },
+        },
+      },
+    ])
+    console.log(cost)
+
+    const wage = await employee.aggregate([
+      // {
+      //   $match: {
+      //     createdAt: {
+      //       $gte: start,
+      //       $lt: end,
+      //     },
+      //   },
+      // },
+      {
+        $lookup: {
+          from: 'positions',
+          localField: 'role',
+          foreignField: 'code',
+          as: 'position',
+        },
+      },
+      {
+        $unwind: '$position'
+      },
+      {
+        $group: {
+          _id: null,
+          wage: { $sum: '$position.wage' },
+        },
+      },
+    ])
+    console.log(wage)
+    return res.json({ 
+      revenue: revenue[0].revenue, 
+      cost: cost[0].cost, 
+      wage: wage[0].wage,
+    })
+  }
+
   async getBrands(req, res, next) {
     const brands = await brand.find().lean()
     return res.json({data: brands})

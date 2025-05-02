@@ -1,13 +1,21 @@
 <div class="admin-home-container">
-  <div class="date-picker">
-    Thời gian
-    <input type="month" id="date">
-    <button id="btn-date" class="btn btn-primary">Xem</button>
+  <div class="date-filter">
+    <select name="filter" id="filter">
+      <option value="">Lọc theo:</option>
+      <option value="date">Ngày</option>
+      <option value="month">Tháng</option>
+    </select>
   </div>
+
+  <div class="date-picker">
+    <input type="date" id="date" style="display:none">
+    <input type="month" id="month" style="display:none">
+  </div>
+  
+  <button id="btn-date" class="btn btn-primary">Xem</button>
   
   <div class="table">
     <div class="finance"></div>
-    <div><canvas id="finance"></canvas></div>
   </div>
 
   <div class="tables">

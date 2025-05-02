@@ -29,7 +29,6 @@ async function getFavProducts(products) {
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
     const data = await response.json()
-    console.log(data)
 
     window.setTimeout(function() {
       products.forEach((product, index) => {
