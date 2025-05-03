@@ -1,6 +1,8 @@
 const product = require('../../models/productModel')
 const purchase = require('../../models/purchaseModel')
 const supplier = require('../../models/supplierModel')
+const store = require('../../models/storeModel')
+const employee = require('../../models/employeeModel')
 const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 
 class adminController {
@@ -10,8 +12,15 @@ class adminController {
       const currentPage  = req.body.page
       const sort         = req.body.sort
       const filter       = req.body.filter
+      const uid          = req.body.uid 
       const itemsPerPage = 10
       const skip         = (currentPage - 1) * itemsPerPage
+
+      const userInfo = await employee.findOne({ _id: uid }).lean()
+      if (!userInfo) throw new Error('User not found')
+      if (userInfo.role !== 'admin') filter.storeCode = userInfo.storeCode
+
+      console.log(userInfo)
   
       const [data, dataSize] = await Promise.all([
         purchase
@@ -32,7 +41,13 @@ class adminController {
   }
 
   async getFilter(req, res, next) {
+    try {
+      const stores = await store.find().lean()
   
+      return res.json({ store: stores })
+    } catch (error) {
+      return res.json({error: error})
+    }
   }
 
   async allPurchases(req, res, next) {
@@ -76,6 +91,11 @@ class adminController {
     return res.json({data: suppliers})
   }
   
+  async getStores(req, res, next) {
+    const stores = await store.find().lean()
+    return res.json({data: stores})
+  }
+  
   async getProducts(req, res, next) {
     const query = req.body.query
     const products = await product.find({
@@ -94,6 +114,7 @@ class adminController {
       let { 
         purchaseDate, 
         supplierId,
+        storeCode,
         note,
         productId, 
         productName,
@@ -122,6 +143,7 @@ class adminController {
           totalPrice: productPrice[index] * productQuantity[index]
         })),
         supplierId: supplierId,
+        storeCode: storeCode,
         note: note,
         purchaseDate: purchaseDate,
         totalProducts: productQuantity.reduce((acc, curr) => acc + parseInt(curr), 0),

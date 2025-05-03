@@ -21,10 +21,7 @@ class allOrdersController {
 
       const userInfo = await emp.findOne({ _id: uid }).lean()
       if (!userInfo) throw new Error('User not found')
-
-      if (userInfo.role !== 'admin') {
-        filter.storeCode = userInfo.storeCode
-      }
+      if (userInfo.role !== 'admin') filter.storeCode = userInfo.storeCode
   
       const [data, dataSize] = await Promise.all([
         order

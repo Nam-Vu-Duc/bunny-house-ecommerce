@@ -14,10 +14,9 @@ async function getFilter() {
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
   const data = json.data
-
 }
 
-async function getCustomers(sortOptions, filterOptions, currentPage) {
+async function getStores(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
     tr.querySelector('td:nth-child(1)').textContent = ''
     tr.querySelector('td:nth-child(1)').classList.add('loading')
@@ -26,7 +25,12 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
   const response = await fetch('/admin/all-stores/data/stores', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({sort: sortOptions, filter: filterOptions, page: currentPage})
+    body: JSON.stringify({
+      sort  : sortOptions, 
+      filter: filterOptions, 
+      page  : currentPage,
+      uid   : window.admin_data._id
+    })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
@@ -57,7 +61,7 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
     })
   }, 1000)
   
-  pagination(getCustomers, sortOptions, filterOptions, currentPage, dataSize.size)
+  pagination(getStores, sortOptions, filterOptions, currentPage, dataSize.size)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
@@ -65,10 +69,10 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     await getFilter()
     await new Promise(r => setTimeout(r, 500))
     
-    await getCustomers(sortOptions, filterOptions, currentPage.page)
+    await getStores(sortOptions, filterOptions, currentPage.page)
     await new Promise(r => setTimeout(r, 500))
     
-    await sortAndFilter(getCustomers, sortOptions, filterOptions, currentPage.page)
+    await sortAndFilter(getStores, sortOptions, filterOptions, currentPage.page)
     await new Promise(r => setTimeout(r, 500))
     
     await exportJs()

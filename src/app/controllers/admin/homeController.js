@@ -14,18 +14,24 @@ class homeController {
   }
 
   async getFinance(req, res, next) {
-    const { startDate, endDate } = req.query
-    const start = new Date(startDate)
-    const end = new Date(endDate)
+    const startDate = new Date(req.query.startDate) 
+    const endDate = new Date(req.query.endDate) 
+    const uid = req.body.uid  
+    const matchStage = {
+      // createdAt: {
+      //   $gte: start,
+      //   $lt: end,
+      // }
+    }
+
+    const userInfo = await employee.findOne({ _id: uid }).lean()
+    if (!userInfo) throw new Error('User not found')
+    if (user.role !== 'admin') matchStage.storeCode = userInfo.storeCode
+
     const revenue = await order.aggregate([
-      // {
-      //   $match: {
-      //     createdAt: {
-      //       $gte: start,
-      //       $lt: end,
-      //     },
-      //   },
-      // },
+      {
+        $match: matchStage
+      },
       {
         $group: {
           _id: null,
@@ -33,17 +39,11 @@ class homeController {
         },
       },
     ])
-    console.log(revenue)
 
     const cost = await purchase.aggregate([
-      // {
-      //   $match: {
-      //     createdAt: {
-      //       $gte: start,
-      //       $lt: end,
-      //     },
-      //   },
-      // },
+      {
+        $match: matchStage
+      },
       {
         $group: {
           _id: null,
@@ -51,17 +51,11 @@ class homeController {
         },
       },
     ])
-    console.log(cost)
 
     const wage = await employee.aggregate([
-      // {
-      //   $match: {
-      //     createdAt: {
-      //       $gte: start,
-      //       $lt: end,
-      //     },
-      //   },
-      // },
+      {
+        $match: matchStage
+      },
       {
         $lookup: {
           from: 'positions',
@@ -80,7 +74,7 @@ class homeController {
         },
       },
     ])
-    console.log(wage)
+
     return res.json({ 
       revenue: revenue[0].revenue, 
       cost: cost[0].cost, 

@@ -12,14 +12,13 @@ async function getFilter() {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  const data = json.data
+  const {store} = await response.json()
 
-  data.forEach((element, index) => {
+  store.forEach((element, index) => {
     const option = document.createElement('option')
     option.value = element.code
     option.textContent = element.name
-    document.querySelector('select#memberCode').appendChild(option)
+    document.querySelector('select#storeCode').appendChild(option)
   })
 }
 
@@ -32,7 +31,12 @@ async function getPurchases(sortOptions, filterOptions, currentPage) {
   const response = await fetch('/admin/all-purchases/data/purchases', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({sort: sortOptions, filter: filterOptions, page: currentPage})
+    body: JSON.stringify({
+      sort  : sortOptions, 
+      filter: filterOptions, 
+      page  : currentPage,
+      uid   : window.admin_data._id
+    })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
@@ -68,6 +72,9 @@ async function getPurchases(sortOptions, filterOptions, currentPage) {
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
   try {
+    await getFilter()
+    await new Promise(r => setTimeout(r, 500))
+
     await getPurchases(sortOptions, filterOptions, currentPage.page)
     await new Promise(r => setTimeout(r, 500))
 

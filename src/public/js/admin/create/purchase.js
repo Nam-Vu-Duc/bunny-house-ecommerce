@@ -81,6 +81,24 @@ async function getSuppliers() {
   return
 }
 
+async function getStores() {
+  const response = await fetch('/admin/all-purchases/data/stores', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {data} = await response.json()
+
+  data.forEach((element) => {
+    const option = document.createElement('option')
+    option.value = element.code
+    option.textContent = element.name
+    document.querySelector('select[name="storeCode"]').appendChild(option) 
+  })
+
+  return
+}
+
 async function getProducts(query) {
   document.querySelector('div.products-match').querySelectorAll('div').forEach(element => element.remove())
 
@@ -202,4 +220,5 @@ submitButton.onclick = function() {
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
   getSuppliers()
+  getStores() 
 })
