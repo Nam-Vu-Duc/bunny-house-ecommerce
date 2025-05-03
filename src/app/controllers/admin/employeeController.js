@@ -11,8 +11,13 @@ class allEmployeesController {
       const currentPage  = req.body.page
       const sort         = req.body.sort
       const filter       = req.body.filter
+      const uid          = req.body.uid 
       const itemsPerPage = 10
       const skip         = (currentPage - 1) * itemsPerPage
+
+      const userInfo = await employee.findOne({ _id: uid }).lean()
+      if (!userInfo) throw new Error('User not found')
+      if (userInfo.role !== 'admin') filter.storeCode = userInfo.storeCode
 
       const [data, dataSize] = await Promise.all([
         employee

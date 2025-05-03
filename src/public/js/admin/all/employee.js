@@ -38,7 +38,12 @@ async function getEmployees(sortOptions, filterOptions, currentPage) {
   const response = await fetch('/admin/all-employees/data/employees', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({sort: sortOptions, filter: filterOptions, page: currentPage})
+    body: JSON.stringify({
+      sort  : sortOptions, 
+      filter: filterOptions, 
+      page  : currentPage,
+      uid   : window.admin_data._id
+    })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()

@@ -3,9 +3,27 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  div.date-filter {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    select {
+      width: 10%
+    };
+    div.date-picker {
+      width: 80%;
+    }
+    button {
+      width: 10%;
+    }
+  }
+
   div.table {
     margin-top: 0 !important;
     min-height: 300px;
+    box-sizing: border-box;
     tbody {
       tr {
         height: 50px;
@@ -29,10 +47,10 @@
   }
 
   div.tables {
-    padding: 0 5px;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
+    box-sizing: border-box;
   }
 }
 @media screen and (max-width: 700px) {

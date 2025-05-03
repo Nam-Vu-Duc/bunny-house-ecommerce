@@ -1,22 +1,18 @@
 importLinkCss('/css/admin/home.css')
 
-function dateFilter() {
+async function dateFilter() {
   const pickerType = document.querySelector('div.date-picker').querySelectorAll('input')
 
   document.querySelector('select[name="filter"]').addEventListener('change', function() {
     const value = this.value
     pickerType.forEach(picker => {
-      if (picker.type === value) {
-        picker.style.display = 'block'
-      } else {
-        picker.style.display = 'none'
-      }
+      picker.id === value ? picker.style.display = 'block' : picker.style.display = 'none'
     })
   })
 }
 
-async function getFinance() {
-  const response = await fetch('/admin/all/data/finance')
+async function getFinance(fetchBody) {
+  const response = await fetch('/admin/all/data/finance', fetchBody)
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {revenue, cost, wage} = await response.json()
 
@@ -365,8 +361,20 @@ async function getSuppliers() {
 }
 
 async function getAll() {
+  while (typeof window.admin_data._id === 'undefined') {
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
+
+  const fetchBody = {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      uid: window.admin_data._id
+    })
+  }
+
   try {
-    await getFinance()
+    await getFinance(fetchBody)
     await new Promise(r => setTimeout(r, 200))
 
     // await getCustomers()
@@ -397,7 +405,23 @@ async function getAll() {
   }
 }
 
+document.querySelector('button#submit-btn').addEventListener('click', async function() {
+  const date = document.querySelector('input#date').value
+  const month = document.querySelector('input#month').value
+
+  console.log(date, month)
+
+  if (date === '' || month === '') {
+    pushNotification('Vui lòng chọn ngày/tháng')
+    return
+  }
+
+  // await getAll()
+})
+
 window.addEventListener('DOMContentLoaded', async function loadData() {
-  dateFilter()
-  getAll()
+  await dateFilter()
+  await new Promise(r => setTimeout(r, 500))
+  
+  await getAll()
 })
