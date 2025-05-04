@@ -9,7 +9,8 @@ async function getStore() {
     body: JSON.stringify({id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {storeInfo, employeesInfo} = await response.json()
+  const {error, storeInfo, employeesInfo} = await response.json()
+  if (error) return pushNotification('Có lỗi xảy ra')
 
   document.title = storeInfo.name
 
@@ -55,11 +56,10 @@ async function updateStore(storeInfo) {
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {isValid, message} = await response.json()
-
+  const {error, message} = await response.json()
+  if (error) return pushNotification(error)
   pushNotification(message)
 
-  if (!isValid) return
   setTimeout(() => window.location.reload(), 3000)
 }
 

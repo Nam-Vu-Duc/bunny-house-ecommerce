@@ -30,12 +30,11 @@ class allProductsController {
           .lean(),
         product.find(filter).countDocuments(),
       ]) 
-      if (!data) res.status(404).json({data: [], data_size: 0})
+      if (!data) throw new Error('Data not found')
       
       return res.json({data: data, data_size: dataSize})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -53,26 +52,37 @@ class allProductsController {
           .lean(),
         product.find({ deletedAt: { $ne: null }}).countDocuments(),
       ]) 
-      if (!data) res.status(404).json({data: [], data_size: 0})
+      if (!data) throw new Error('Data not found')
       
       return res.json({data: data, data_size: dataSize})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
   async getFilter(req, res, next) {
-    const brands = await brand.find().lean()
-    return res.json({brand: brands})
+    try {
+      const brands = await brand.find().lean()
+      return res.json({brand: brands})
+    } catch (error) {
+      return res.json({error: error.message})
+    }
   }
 
   async allProducts(req, res, next) {
-    return res.render('admin/all/product', { title: 'Danh sách sản phẩm', layout: 'admin' })
+    try {
+      return res.render('admin/all/product', { title: 'Danh sách sản phẩm', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    }
   }
 
   async trash(req, res, next) {
-    return res.render('admin/all/trash', { title: 'Kho', layout: 'admin' })
+    try {
+      return res.render('admin/all/trash', { title: 'Kho', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    }
   }
 
   // update
@@ -83,12 +93,11 @@ class allProductsController {
         brand.find().lean(),
         productStatus.find().lean()
       ]) 
-      if (!productInfo) return res.json({productInfo: null})
+      if (!productInfo) throw new Error('Product not found')
   
       return res.json({productInfo: productInfo, brands: brands, productStatuses: productStatuses})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -98,7 +107,6 @@ class allProductsController {
       if (!(await product.findOne({ _id: req.params.id }).lean())) throw new Error('error')
 
       return res.render('admin/detail/product', { layout: 'admin' })
-
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
     }
@@ -126,21 +134,18 @@ class allProductsController {
         status        : req.body.status,
       })
   
-      return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
-      
+      return res.json({message: 'Cập nhật thông tin thành công'})
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }  
   }
 
   async softDelete(req, res, next) {
     try {
       await product.updateOne({ _id: req.body.id}, { deletedAt: Date.now() })
-  
       return res.json({isValid: true, message: 'Xoá sản phẩm thành công'})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -153,27 +158,28 @@ class allProductsController {
       await product.deleteOne({ _id: req.body.id })
   
       return res.json({isValid: true, message: 'Xoá sản phẩm thành công'})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
   async restore(req, res, next) {
     try {
       await product.updateOne({ _id: req.body.id}, { deletedAt: null })
-  
-      return res.json({isValid: true, message: 'Khôi phục sản phẩm thành công'})
-      
+      return res.json({message: 'Khôi phục sản phẩm thành công'})
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
   // create
   async createProduct(req, res, next) {
-    const brands = await brand.find().lean()
-    return res.render('admin/create/product', { title: 'Thêm sản phẩm mới', layout: 'admin', brands })
+    try {
+      const brands = await brand.find().lean()
+      return res.render('admin/create/product', { title: 'Thêm sản phẩm mới', layout: 'admin', brands })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    }
   }
 
   async productCreated(req, res, next) {
@@ -202,9 +208,8 @@ class allProductsController {
       await newProduct.save()
   
       return res.json({isValid: true, message: 'Tạo sản phẩn mới thành công'})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 }

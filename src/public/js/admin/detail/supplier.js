@@ -9,7 +9,8 @@ async function getSupplier() {
     body: JSON.stringify({id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {supplierInfo, purchaseInfo} = await response.json()
+  const {error, supplierInfo, purchaseInfo} = await response.json()
+  if (error) return pushNotification('Có lỗi xảy ra')
 
   document.title = supplierInfo.name
 
@@ -57,11 +58,10 @@ async function updateSupplier(supplierInfo) {
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {isValid, message} = await response.json()
-
+  const {error, message} = await response.json()
+  if (error) return pushNotification(error)
   pushNotification(message)
 
-  if (!isValid) return
   setTimeout(() => window.location.reload(), 3000)
 }
 

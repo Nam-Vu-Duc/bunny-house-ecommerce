@@ -3,87 +3,114 @@ const orderStatus = require('../../models/orderStatusModel')
 const paymentMethod = require('../../models/paymentMethodModel')
 const position = require('../../models/positionModel')
 const productStatus = require('../../models/productStatusModel')
+const employee = require('../../models/employeeModel')
 
 class attributeController {
   async show(req, res, next) {
-    return res.render('admin/attribute', { title: 'Chỉnh sửa thuộc tính', layout: 'admin' })
+    try {
+      const userInfo = await employee.findOne({ _id: req.cookies.uid }).lean()
+      if (!userInfo) throw new Error()
+      if (!['admin', 'manager'].includes(userInfo.role)) throw new Error()
+      return res.render('admin/attribute', { title: 'Chỉnh sửa thuộc tính', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    } 
   }
 
   // read
   async getMembership(req, res, next) {
-    const membership = await member.find().lean()
-    return res.json({data: membership})
+    try {
+      const membership = await member.find().lean()
+      return res.json({data: membership})
+    } catch (error) {
+      console.log(error)
+      return res.json({error: error.message})
+    }
   }
 
   async getOrderStatus(req, res, next) {
-    const orderStatuses = await orderStatus.find().lean()
-    return res.json({data: orderStatuses})
+    try {
+      const orderStatuses = await orderStatus.find().lean()
+      return res.json({data: orderStatuses})
+    } catch (error) {
+      console.log(error)
+      return res.json({error: error.message})
+    }
   }
 
   async getPaymentMethod(req, res, next) {
-    const paymentMethods = await paymentMethod.find().lean()
-    return res.json({data: paymentMethods})
+    try {
+      const paymentMethods = await paymentMethod.find().lean()
+      return res.json({data: paymentMethods})
+    } catch (error) {
+      console.log(error)
+      return res.json({error: error.message})
+    }
   }
 
   async getPosition(req, res, next) {
-    const positions = await position.find().lean()
-    return res.json({data: positions})
+    try {
+      const positions = await position.find().lean()
+      return res.json({data: positions})
+    } catch (error) {
+      console.log(error)
+      return res.json({error: error.message})
+    }
   }
 
   async getProductStatus(req, res, next) {
-    const productStatuses = await productStatus.find().lean()
-    return res.json({data: productStatuses})
+    try {
+      const productStatuses = await productStatus.find().lean()
+      return res.json({data: productStatuses})
+    } catch (error) {
+      console.log(error)
+      return res.json({error: error.message})
+    }
   }
 
   // create
   async createMembership(req, res, next) {
     try {
       await member.create(req.body)
-      return res.json({isValid: true, message: 'Thêm thành công'})
-      
+      return res.json({message: 'Thêm thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
   async createOrderStatus(req, res, next) {
     try {
       await orderStatus.create(req.body)
-      return res.json({isValid: true, message: 'Thêm thành công'})
-      
+      return res.json({message: 'Thêm thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
   async createPaymentMethod(req, res, next) {
     try {
       await paymentMethod.create(req.body)
-      return res.json({isValid: true, message: 'Thêm thành công'})
-      
+      return res.json({message: 'Thêm thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
   async createPosition(req, res, next) {
     try {
       await position.create(req.body)
-      return res.json({isValid: true, message: 'Thêm thành công'})
-      
+      return res.json({message: 'Thêm thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
   async createProductStatus(req, res, next) {
-
     try {
       await productStatus.create(req.body)
-      return res.json({isValid: true, message: 'Thêm thành công'})
-      
+      return res.json({message: 'Thêm thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
@@ -93,10 +120,9 @@ class attributeController {
       await member.updateOne({ code: req.body.code}, {
         name: req.body.name
       })
-      return res.json({isValid: true, message: 'Cập nhật thành công'})
-      
+      return res.json({message: 'Cập nhật thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
@@ -105,10 +131,9 @@ class attributeController {
       await orderStatus.updateOne({ code: req.body.code}, {
         name: req.body.name
       })
-      return res.json({isValid: true, message: 'Cập nhật thành công'})
-      
+      return res.json({message: 'Cập nhật thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
@@ -117,10 +142,9 @@ class attributeController {
       await paymentMethod.updateOne({ code: req.body.code}, {
         name: req.body.name
       })
-      return res.json({isValid: true, message: 'Cập nhật thành công'})
-      
+      return res.json({message: 'Cập nhật thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
@@ -129,23 +153,20 @@ class attributeController {
       await position.updateOne({ code: req.body.code}, {
         name: req.body.name
       })
-      return res.json({isValid: true, message: 'Cập nhật thành công'})
-      
+      return res.json({message: 'Cập nhật thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
   async updateProductStatus(req, res, next) {
-
     try {
       await productStatus.updateOne({ code: req.body.code}, {
         name: req.body.name
       })
-      return res.json({isValid: true, message: 'Cập nhật thành công'})
-      
+      return res.json({message: 'Cập nhật thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
@@ -153,50 +174,45 @@ class attributeController {
   async deleteMembership(req, res, next) {
     try {
       await member.deleteOne({ code: req.body.code})
-      return res.json({isValid: true, message: 'Xoá thành công'})
-      
+      return res.json({message: 'Xoá thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
   async deleteOrderStatus(req, res, next) {
     try {
       await orderStatus.deleteOne({ code: req.body.code})
-      return res.json({isValid: true, message: 'Xoá thành công'})
-      
+      return res.json({message: 'Xoá thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
   async deletePaymentMethod(req, res, next) {
     try {
       await paymentMethod.deleteOne({ code: req.body.code})
-      return res.json({isValid: true, message: 'Xoá thành công'})
-      
+      return res.json({message: 'Xoá thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
   async deletePosition(req, res, next) {
     try {
       await position.deleteOne({ code: req.body.code})
-      return res.json({isValid: true, message: 'Xoá thành công'})
-      
+      return res.json({message: 'Xoá thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 
   async deleteProductStatus(req, res, next) {
     try {
       await productStatus.deleteOne({ code: req.body.code})
-      return res.json({isValid: true, message: 'Xoá thành công'})
-      
+      return res.json({message: 'Xoá thành công'})
     } catch (error) {
-      return res.json({isValid: false, message: error.message})
+      return res.json({error: error.message})
     } 
   }
 }

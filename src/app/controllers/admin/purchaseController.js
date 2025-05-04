@@ -12,15 +12,12 @@ class adminController {
       const currentPage  = req.body.page
       const sort         = req.body.sort
       const filter       = req.body.filter
-      const uid          = req.body.uid 
       const itemsPerPage = 10
       const skip         = (currentPage - 1) * itemsPerPage
 
-      const userInfo = await employee.findOne({ _id: uid }).lean()
+      const userInfo = await employee.findOne({ _id: req.cookies.uid }).lean()
       if (!userInfo) throw new Error('User not found')
       if (userInfo.role !== 'admin') filter.storeCode = userInfo.storeCode
-
-      console.log(userInfo)
   
       const [data, dataSize] = await Promise.all([
         purchase
@@ -31,41 +28,44 @@ class adminController {
           .lean(),
         purchase.find(filter).countDocuments(),
       ]) 
-      if (!data) res.status(404).json({data: [], data_size: 0})
+      if (!data) throw new Error('Data not found')
       
       return res.json({data: data, data_size: dataSize})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
   async getFilter(req, res, next) {
     try {
       const stores = await store.find().lean()
-  
       return res.json({ store: stores })
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
   async allPurchases(req, res, next) {
-    return res.render('admin/all/purchase', { title: 'Danh sách phiếu nhập', layout: 'admin' })
+    try {
+      return res.render('admin/all/purchase', { title: 'Danh sách phiếu nhập', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
+    }
   }
 
   // update
   async getPurchase(req, res, next) {
     try {
       const purchaseInfo = await purchase.findOne({ _id: req.body.id }).lean()
-      if (!purchaseInfo) return res.json({purchaseInfo: null})
+      if (!purchaseInfo) throw new Error('error')
   
       const supplierInfo = await supplier.findOne({ _id: purchaseInfo.supplierId}).lean()
+      if (!supplierInfo) throw new Error('error')
       
       return res.json({purchaseInfo: purchaseInfo, supplierInfo: supplierInfo})
-      
     } catch (error) {
-      return res.json({error: error})
+      console.log(error)
+      return res.json({error: error.message})
     }
   }
 
@@ -75,7 +75,6 @@ class adminController {
       if (!(await purchase.findOne({ _id: req.params.id }).lean())) throw new Error('error')
 
       return res.render('admin/detail/purchase', { layout: 'admin' })
-
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
     }
@@ -87,26 +86,43 @@ class adminController {
 
   // create
   async getSuppliers(req, res, next) {
-    const suppliers = await supplier.find().lean()
-    return res.json({data: suppliers})
+    try {
+      const suppliers = await supplier.find().lean()
+      return res.json({data: suppliers})
+    } catch (error) {
+      return res.json({error: error.message})
+    }
   }
   
   async getStores(req, res, next) {
-    const stores = await store.find().lean()
-    return res.json({data: stores})
+    try {
+      const stores = await store.find().lean()
+      return res.json({data: stores})
+    } catch (error) {
+      return res.json({error: error.message})
+    }
   }
   
   async getProducts(req, res, next) {
-    const query = req.body.query
-    const products = await product.find({
-      deletedAt: null,
-      name: { $regex: query, $options: 'i'}
-    }).lean()
-    return res.json({data: products})
+    try {
+      const query = req.body.query
+      const products = await product.find({
+        deletedAt: null,
+        name: { $regex: query, $options: 'i'}
+      }).lean()
+      return res.json({data: products})
+    } catch (error) {
+      console.log(error)
+      return res.json({error: error.message})
+    }
   }
   
   async purchaseCreate(req, res, next) {
-    return res.render('admin/create/purchase', { title: 'Thêm đơn nhập mới', layout: 'admin' })
+    try {
+      return res.render('admin/create/purchase', { title: 'Thêm đơn nhập mới', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
+    }
   }
 
   async purchaseCreated(req, res, next) {
@@ -149,13 +165,13 @@ class adminController {
         totalProducts: productQuantity.reduce((acc, curr) => acc + parseInt(curr), 0),
         totalPurchasePrice: totalPurchasePrice
       });
+      await newPurchase.save()
   
       const productUpdates = []
       productId.forEach((id, index) => {
         productUpdates.push({ productId: id, quantity: productQuantity[index] })
       })
       
-      await newPurchase.save()
       await supplier.updateOne({ _id: supplierId }, {
         $inc: { 
           totalCost: totalPurchasePrice,
@@ -171,10 +187,11 @@ class adminController {
         },
       }))
       await product.bulkWrite(bulkOps)
-      return res.json({isValid: true, message: 'Tạo đơn nhập mới thành công'})
-      
+
+      return res.json({message: 'Tạo đơn nhập mới thành công'})
     } catch (error) {
-      return res.json({error: error})
+      console.log(error)
+      return res.json({error: error.message})
     }
   }
 }

@@ -26,27 +26,32 @@ class allCustomersController {
           .lean(),
           user.find(filter).countDocuments(),
       ]) 
-      if (!data) res.status(404).json({data: [], data_size: 0})
+      if (!data) throw new Error('Data not found')
       
       return res.json({data: data, data_size: dataSize})
-      
     } catch (error) {
-      return res.json({error: error})
+      console.log(error)
+      return res.json({error: error.message})
     }
   }
 
   async getFilter(req, res, next) {
     try {
       const memberShip = await member.find().lean()
+      if (!memberShip) throw new Error('error')
       return res.json({memberShip: memberShip})
-      
     } catch (error) {
-      return res.json({error: error})
+      console.log(error)
+      return res.json({error: error.message})
     }
   }
 
   async allCustomers(req, res, next) {
-    return res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin' })
+    try {
+      return res.render('admin/all/customer', { title: 'Danh sách khách hàng', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    }
   }
 
   // update
@@ -85,12 +90,10 @@ class allCustomersController {
           }
         ])
       ])
-      console.log(orderInfo)
       
       return res.json({customerInfo: customerInfo, memberInfo: memberInfo, orderInfo: orderInfo})
-
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -100,7 +103,6 @@ class allCustomersController {
       if (!(await user.findOne({ _id: req.params.id }).lean())) throw new Error('error')
 
       return res.render('admin/detail/customer', { layout: 'admin' })
-
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
     }
@@ -115,22 +117,26 @@ class allCustomersController {
         gender : req.body.gender  ,
       })
   
-      return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
-      
+      return res.json({message: 'Cập nhật thông tin thành công'})
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
   // create
   async createCustomer(req, res, next) {
-    return res.render('admin/create/customer', { title: 'Thêm khách hàng mới', layout: 'admin' })
+    try {
+      return res.render('admin/create/customer', { title: 'Thêm khách hàng mới', layout: 'admin' })
+    } catch (error) {
+      console.log(error)
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    }
   }
 
   async customerCreated(req, res, next) {
     try {
       const userExist = await user.findOne({ email: req.body.email })
-      if (userExist) return res.json({isValid: false, message: 'Email đã tồn tại'})
+      if (userExist) throw new Error('Email đã tồn tại')
 
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(req.body.password, salt)
@@ -150,15 +156,16 @@ class allCustomersController {
         adminId: adminId,
         userId: savedUser._id
       })
+      await newChat.save()
+
       const newAIChat = new aiChat({
         userId: savedUser._id
       })
-      await newChat.save()
       await newAIChat.save()
+      
       return res.json({isValid: true, message: 'Tạo tài khoản thành công'})
-
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 }

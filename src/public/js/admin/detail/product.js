@@ -20,7 +20,8 @@ async function getProduct() {
     body: JSON.stringify({id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {productInfo, brands, productStatuses} = await response.json()
+  const {error, productInfo, brands, productStatuses} = await response.json()
+  if (error) return pushNotification('Có lỗi xảy ra')
 
   document.title = productInfo.name
 
@@ -129,11 +130,10 @@ async function updateProduct(productInfo) {
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {isValid, message} = await response.json()
-
+  const {error, message} = await response.json()
+  if (error) return pushNotification(error)
   pushNotification(message)
 
-  if (!isValid) return
   setTimeout(() => window.location.reload(), 3000)
 }
 

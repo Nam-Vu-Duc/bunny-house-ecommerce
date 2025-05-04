@@ -24,6 +24,8 @@ async function getDeletedProducts(sortOptions, filterOptions, currentPage) {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
+  if (json.error) return pushNotification(error)
+    
   const data = json.data
   dataSize.size = json.data_size
 

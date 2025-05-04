@@ -1,17 +1,8 @@
 <div class="admin-home-container">
   <div class="date-filter">
-    <select name="filter" id="filter">
-      <option value="">Lọc theo:</option>
-      <option value="date" selected>Ngày</option>
-      <option value="month">Tháng</option>
-    </select>
-
-    <div class="date-picker">
-      <input type="date" id="date">
-      <input type="month" id="month" style="display: none;">
-    </div>
-
-    <button id="submit-btn" class="btn btn-primary">Xem</button>
+    <input type="date" id="start-date">
+    <input type="date" id="end-date">
+    <button title="submit" type="submit">Xem</button>
   </div>
   
   <div class="table">
@@ -20,18 +11,8 @@
 
   <div class="tables">
     <div class="table">
-      <div class="customer"></div>
-      <div><canvas id="customer"></canvas></div>
-    </div> 
-
-    <div class="table">
       <div class="order"></div>
       <div><canvas id="order"></canvas></div>
-    </div>
-
-    <div class="table">
-      <div class="supplier"></div>
-      <div><canvas id="supplier"></canvas></div>
     </div>
 
     <div class="table">
@@ -40,23 +21,29 @@
     </div> 
 
     <div class="table">
+      <div class="customer"></div>
+      <div><canvas id="customer"></canvas></div>
+    </div> 
+
+    <div class="table">
+      <div class="supplier"></div>
+      <div><canvas id="supplier"></canvas></div>
+    </div>
+
+    <div class="table">
       <div class="product"></div>
-      <div><canvas id="product"></canvas></div>
     </div>
 
     <div class="table">
       <div class="brand"></div>
-      <div><canvas id="brand"></canvas></div>
     </div> 
 
     <div class="table">
       <div class="store"></div>
-      <div><canvas id="store"></canvas></div>
     </div>
 
     <div class="table">
       <div class="employee"></div>
-      <div><canvas id="employee"></canvas></div>
     </div>
   </div>
 </div>

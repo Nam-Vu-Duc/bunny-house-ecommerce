@@ -9,7 +9,8 @@ async function getPurchase() {
     body: JSON.stringify({id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {purchaseInfo, supplierInfo} = await response.json()
+  const {error, purchaseInfo, supplierInfo} = await response.json()
+  if (error) return pushNotification('Có lỗi xảy ra')
 
   document.title = 'Đơn nhập: ' + supplierInfo.name
 

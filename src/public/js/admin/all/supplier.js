@@ -13,9 +13,9 @@ async function getFilter() {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
-  const data = json.data
+  if (json.error) return pushNotification(error)
 
-  data.forEach((element, index) => {
+  json.data.forEach((element, index) => {
     const option = document.createElement('option')
     option.value = element.code
     option.textContent = element.name
@@ -36,6 +36,8 @@ async function getSuppliers(sortOptions, filterOptions, currentPage) {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
+  if (json.error) return pushNotification(error)
+    
   const data = json.data
   dataSize.size = json.data_size
 
@@ -78,6 +80,5 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     await exportJs()
   } catch (error) {
     console.error('Error loading data:', error)
-    
   }
 })

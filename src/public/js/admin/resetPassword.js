@@ -22,8 +22,8 @@ async function verifyingEmail(email) {
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  return json.message
+  const {message} = await response.json()
+  return message
 }
 
 async function verifyingCode(email, code) {
@@ -36,8 +36,8 @@ async function verifyingCode(email, code) {
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  return json.message
+  const {message} = await response.json()
+  return message
 }
 
 async function resettingPassword(email, password) {
@@ -50,8 +50,8 @@ async function resettingPassword(email, password) {
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const json = await response.json()
-  return json.message
+  const {message} = await response.json()
+  return message
 }
 
 // when submit, the form will push the input value from user to the URL for backend

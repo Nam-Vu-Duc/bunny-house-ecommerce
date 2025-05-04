@@ -9,7 +9,8 @@ async function getOrder() {
     body: JSON.stringify({id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {orderInfo, orderStatuses, paymentMethods} = await response.json()
+  const {error, orderInfo, orderStatuses, paymentMethods} = await response.json()
+  if (error) return pushNotification('Có lỗi xảy ra')
 
   document.title = 'Đơn hàng ' + orderInfo.customerInfo.name
 
@@ -93,11 +94,10 @@ async function updateOrder(orderInfo) {
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {isValid, message} = await response.json()
-
+  const {error, message} = await response.json()
+  if (error) return pushNotification(error)
   pushNotification(message)
 
-  if (!isValid) return
   setTimeout(() => window.location.reload(), 3000)
 }
 

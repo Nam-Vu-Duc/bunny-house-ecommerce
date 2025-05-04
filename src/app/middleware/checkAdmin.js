@@ -7,8 +7,8 @@ module.exports = async function checkAdmin(req, res, next) {
     const uid = req.cookies.uid
 
     if (rt && uid) {
-      const decoded = jwt.verify(rt, 'SECRET_KEY')
-      if (!decoded) throw new Error('error')
+      const decodedRefreshToken = jwt.verify(rt, 'SECRET_KEY')
+      if (!decodedRefreshToken) throw new Error('error decoded refresh token')
       
       const empInfo = await emp.findOne({ _id: uid })
       if (!empInfo) throw new Error('error')

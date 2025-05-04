@@ -21,10 +21,12 @@ class loginController {
   
       bcrypt.compare(password, getEmp.password, async function(err, result) {
         if (result) {
+          const salt = await bcrypt.genSalt(10)
           const payload = { email: getEmp.email }; // Payload with only essential data
           const rt = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '1d' })
           const at = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '7d' })
           const userId = getEmp._id.toString()
+
           await emp.updateOne({ _id: userId}, {
             isActive: true
           })
@@ -47,7 +49,6 @@ class loginController {
           return res.json({isValid: false, message: 'Mật khẩu không đúng'})
         }
       })
-      
     } catch (error) {
       return res.json({error: error})
     }

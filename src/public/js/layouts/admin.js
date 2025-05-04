@@ -1,18 +1,8 @@
-checkUser()
 // window.recommend_url = 'http://localhost:8000'
 // const socket = io("http://localhost:3100/", {path: "/socket.io"})
 
 window.recommend_url = 'https://bunny-recommendation.onrender.com'
 const socket = io("https://bunny-chat.onrender.com/", {path: "/socket.io"})
-
-async function checkUser() {
-  const response = await fetch('/admin/all/data/user')
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {message, data} = await response.json()
-
-  window.isAdminLoggedIn = message
-  window.admin_data = data
-}
 
 setInterval(async function () {
   socket.emit('heartbeat', { message: 'admin ping' })

@@ -1,4 +1,3 @@
-// ok
 const scrollTop   = document.querySelector('div.scroll-to-top-icon')
 const contact     = document.querySelector('div.contact-icon')
 const dropup      = document.querySelector('div.dropup')
@@ -29,7 +28,7 @@ checkUser()
 
 async function checkUser() {
   // Wait until window.isLoggedIn is assigned
-  while (typeof window.isLoggedIn === 'undefined') {
+  while (typeof window?.isLoggedIn === 'undefined') {
     await new Promise(resolve => setTimeout(resolve, 50));
   }
 

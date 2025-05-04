@@ -5,18 +5,18 @@
   gap: 10px;
 
   div.date-filter {
-    width: 100%;
+    width: 50%;
     display: flex;
     align-items: center;
+    justify-content: space-around;
     gap: 5px;
-    select {
-      width: 10%
-    };
-    div.date-picker {
-      width: 80%;
+    padding: 5px;
+    box-sizing: border-box;
+    input {
+      width: 45%;
     }
     button {
-      width: 10%;
+      width: 15%;
     }
   }
 

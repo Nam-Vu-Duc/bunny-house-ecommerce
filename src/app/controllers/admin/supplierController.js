@@ -21,12 +21,12 @@ class allSuppliersController {
           .lean(),
         supplier.find(filter).countDocuments(),
       ]) 
-      if (!data) res.status(404).json({data: [], data_size: 0})
+      if (!data) throw new Error('error')
       
       return res.json({data: data, data_size: dataSize})
-      
     } catch (error) {
-      return res.json({error: error})
+      console.log(error)
+      return res.json({error: error.message})
     }
   }
 
@@ -35,7 +35,11 @@ class allSuppliersController {
   }
 
   async allSuppliers(req, res, next) {
-    return res.render('admin/all/supplier', { title: 'Danh sách đối tác', layout: 'admin' })
+    try {
+      return res.render('admin/all/supplier', { title: 'Danh sách đối tác', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
+    }
   }
 
   // update
@@ -45,12 +49,12 @@ class allSuppliersController {
         supplier.findOne({ _id: req.body.id }).lean(),
         purchase.find({ supplierId: req.body.id }).lean()
       ]) 
-      if (!supplierInfo) return res.json({supplierInfo: null})
+      if (!supplierInfo) throw new Error('error')
   
       return res.json({supplierInfo: supplierInfo, purchaseInfo: purchaseInfo})
-      
     } catch (error) {
-      return res.json({error: error})
+      console.log(error)
+      return res.json({error: error.message})
     }
   }
 
@@ -58,9 +62,7 @@ class allSuppliersController {
     try {
       if (!checkForHexRegExp(req.params.id)) throw new Error('error')
       if (!(await supplier.findOne({ _id: req.params.id }).lean())) throw new Error('error')
-
       return res.render('admin/detail/supplier', { layout: 'admin' })
-
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
     }
@@ -74,29 +76,34 @@ class allSuppliersController {
         address : req.body.address ,
       })
   
-      return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
-      
+      return res.json({message: 'Cập nhật thông tin thành công'})
     } catch (error) {
-      return res.json({error: error})
+      console.log(error)
+      return res.json({error: error.message})
     }
   }
 
   // create
   async supplierCreate(req, res, next) {
-    return res.render('admin/create/supplier', { title: 'Thêm đối tác mới', layout: 'admin' })
+    try {
+      return res.render('admin/create/supplier', { title: 'Thêm đối tác mới', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
+    }
   }
 
   async supplierCreated(req, res, next) {
     try {
       const userExist = await supplier.findOne({ phone: req.body.phone })
-      if (userExist) return res.json({isValid: false, message: 'Sđt đã tồn tại'})
+      if (userExist) throw new Error('Nhà cung cấp đã tồn tại')
   
       const newSupplier = new supplier(req.body)
       await newSupplier.save()
       return res.json({isValid: true, message: 'Tạo tài khoản thành công'})
       
     } catch (error) {
-      return res.json({error: error})
+      console.log(error)
+      return res.json({error: error.message})
     }
   }
 }
