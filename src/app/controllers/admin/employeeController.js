@@ -11,11 +11,9 @@ class allEmployeesController {
       const currentPage  = req.body.page
       const sort         = req.body.sort
       const filter       = req.body.filter
-      const uid          = req.body.uid 
       const itemsPerPage = 10
       const skip         = (currentPage - 1) * itemsPerPage
-
-      const userInfo = await employee.findOne({ _id: uid }).lean()
+      const userInfo     = await employee.findOne({ _id: req.cookies.uid }).lean()
       if (!userInfo) throw new Error('User not found')
       if (userInfo.role !== 'admin') filter.storeCode = userInfo.storeCode
 
@@ -28,12 +26,12 @@ class allEmployeesController {
           .lean(),
         employee.find(filter).countDocuments(),
       ]) 
-      if (!data) res.status(404).json({data: [], data_size: 0})
+      if (!data) throw new Error('Data not found')
       
       return res.json({data: data, data_size: dataSize})
-
     } catch (error) {
-      return res.json({error: error})
+      console.log(error)
+      return res.json({error: error.message})
     }
   }
 
@@ -45,14 +43,20 @@ class allEmployeesController {
       ])
   
       return res.json({position: positions, store: stores})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
   async allEmployees(req, res, next) {
-    return res.render('admin/all/employee', { title: 'Danh sách nhân sự', layout: 'admin' })
+    try {
+      const userInfo = await employee.findOne({ _id: req.cookies.uid }).lean()
+      if (!userInfo) throw new Error()
+      if (!['admin', 'manager'].includes(userInfo.role)) throw new Error()
+      return res.render('admin/all/employee', { title: 'Danh sách nhân sự', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    }
   }
 
   // update
@@ -63,12 +67,11 @@ class allEmployeesController {
         store.find().lean(),
         position.find().lean()
       ])
-      if (!employeeInfo) return res.json({employeeInfo: null})
+      if (!employeeInfo) throw new Error('error')
   
       return res.json({employeeInfo: employeeInfo, storesInfo: storesInfo, positionsInfo: positionsInfo})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -78,7 +81,6 @@ class allEmployeesController {
       if (!(await employee.findOne({ _id: req.params.id }).lean())) throw new Error('error')
 
       return res.render('admin/detail/employee', { layout: 'admin' })
-
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
     }
@@ -95,23 +97,26 @@ class allEmployeesController {
         storeCode: req.body.store   ,
       })
   
-      return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
-      
+      return res.json({message: 'Cập nhật thông tin thành công'})
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
   // create
   async employeeCreate(req, res, next) {
-    const stores = await store.find().lean()
-    return res.render('admin/create/employee', { title: 'Thêm nhân viên mới', layout: 'admin', stores })
+    try {
+      const stores = await store.find().lean()
+      return res.render('admin/create/employee', { title: 'Thêm nhân viên mới', layout: 'admin', stores })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    }
   }
 
   async employeeCreated(req, res, next) {
     try {
       const empExist = await employee.findOne({ email: req.body.email })
-      if (empExist) return res.json({isValid: false, message: 'Email đã tồn tại'})
+      if (empExist) throw new Error('Tài khoản đã tồn tại')
   
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(req.body.password, salt)
@@ -126,10 +131,10 @@ class allEmployeesController {
         storeCode : req.body.storeCode
       })
       await newEmp.save()
-      return res.json({isValid: true, message: 'Tạo tài khoản thành công'})
       
+      return res.json({message: 'Tạo tài khoản thành công'})
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 }

@@ -12,16 +12,17 @@ async function getFilter() {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {position, store} = await response.json()
-
-  position.forEach((element, index) => {
+  const json = await response.json()
+  if (json.error) return pushNotification(error)
+  
+  json.position.forEach((element, index) => {
     const option = document.createElement('option')
     option.value = element.code
     option.textContent = element.name
     document.querySelector('select#role').appendChild(option)
   })
   
-  store.forEach((element, index) => {
+  json.store.forEach((element, index) => {
     const option = document.createElement('option')
     option.value = element.code
     option.textContent = element.name
@@ -42,11 +43,12 @@ async function getEmployees(sortOptions, filterOptions, currentPage) {
       sort  : sortOptions, 
       filter: filterOptions, 
       page  : currentPage,
-      uid   : window.admin_data._id
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
+  if (json.error) return pushNotification(error)
+    
   const data = json.data
   dataSize.size = json.data_size
 

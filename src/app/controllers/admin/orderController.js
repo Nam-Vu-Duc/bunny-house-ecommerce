@@ -5,7 +5,7 @@ const store = require('../../models/storeModel')
 const orderStatus = require('../../models/orderStatusModel')
 const paymentMethod = require('../../models/paymentMethodModel')
 const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
-const emp = require('../../models/employeeModel')
+const employee = require('../../models/employeeModel')
 const objectId = require('mongoose').Types.ObjectId
 
 class allOrdersController {
@@ -15,11 +15,9 @@ class allOrdersController {
       const currentPage  = req.body.page
       const sort         = req.body.sort
       const filter       = req.body.filter
-      const uid          = req.body.uid 
       const itemsPerPage = 10
       const skip         = (currentPage - 1) * itemsPerPage
-
-      const userInfo = await emp.findOne({ _id: uid }).lean()
+      const userInfo     = await employee.findOne({ _id: req.cookies.uid }).lean()
       if (!userInfo) throw new Error('User not found')
       if (userInfo.role !== 'admin') filter.storeCode = userInfo.storeCode
   
@@ -35,9 +33,9 @@ class allOrdersController {
       if (!data) throw new Error('Data not found')
       
       return res.json({data: data, data_size: dataSize})
-      
     } catch (error) {
-      return res.json({error: error})
+      console.log(error)
+      return res.json({error: error.message})
     }
   }
 
@@ -50,14 +48,17 @@ class allOrdersController {
       ]) 
   
       return res.json({ orderStatus: orderStatuses, paymentMethod: paymentMethods, store: stores })
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
   async allOrders(req, res, next) {
-    return res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin' })
+    try {
+      return res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
+    }
   }
 
   // update
@@ -83,13 +84,12 @@ class allOrdersController {
         orderStatus.find({}).lean(),
         paymentMethod.find({}).lean()
       ])
-      if (!orderInfo) return res.json({orderInfo: null})
+      if (!orderInfo) throw new Error('Order not found')
   
       return res.json({orderInfo: orderInfo[0], orderStatuses: orderStatuses, paymentMethods: paymentMethods})
-      
     } catch (error) {
       console.log(error)
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -143,9 +143,8 @@ class allOrdersController {
       }
   
       return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -154,9 +153,8 @@ class allOrdersController {
     try {
       const customers = await user.find().lean()
       return res.json({data: customers})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -164,9 +162,8 @@ class allOrdersController {
     try {
       const stores = await store.find().lean()
       return res.json({data: stores})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -174,9 +171,8 @@ class allOrdersController {
     try {
       const paymentMethods = await paymentMethod.find().lean()
       return res.json({data: paymentMethods})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
   
@@ -189,14 +185,17 @@ class allOrdersController {
         name: { $regex: query, $options: 'i'}
       }).lean()
       return res.json({data: products})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
   async orderCreate(req, res, next) {  
-    return res.render('admin/create/order', { title: 'Thêm đơn hàng mới', layout: 'admin' })
+    try {
+      return res.render('admin/create/order', { title: 'Thêm đơn hàng mới', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
+    }
   }
 
   async orderCreated(req, res, next) {
@@ -272,10 +271,9 @@ class allOrdersController {
         })
       }
   
-      return res.json({isValid: true, message: 'Tạo đơn hàng mới thành công'})
-      
+      return res.json({message: 'Tạo đơn hàng mới thành công'})
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 }

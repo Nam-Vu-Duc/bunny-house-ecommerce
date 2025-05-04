@@ -6,7 +6,8 @@ async function getProfile() {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    const {userInfo, storesInfo, positionsInfo} = await response.json()
+  const {error, userInfo, storesInfo, positionsInfo} = await response.json()
+  if (error) return pushNotification('Có lỗi xảy ra')
 
   document.title = userInfo.name
 
@@ -67,11 +68,10 @@ async function updateProfile(userInfo) {
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {isValid, message} = await response.json()
-
+  const {error, message} = await response.json()
+  if (error) return pushNotification(error)
   pushNotification(message)
 
-  if (!isValid) return
   setTimeout(() => window.location.reload(), 3000)
 }
 

@@ -12,9 +12,10 @@ async function getFilter() {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {memberShip} = await response.json()
-
-  memberShip.forEach((element, index) => {
+  const json = await response.json()
+  if (json.error) return pushNotification(error)
+  
+  json.memberShip.forEach((element, index) => {
     const option = document.createElement('option')
     option.value = element.code
     option.textContent = element.name
@@ -39,6 +40,8 @@ async function getCustomers(sortOptions, filterOptions, currentPage) {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
+  if (json.error) return pushNotification(error)
+
   const data = json.data
   dataSize.size = json.data_size
 

@@ -5,24 +5,32 @@ const message = require('../../models/messageModel')
 
 class allChatsController {
   async getChats(req, res, next) {
-    
+    try {
+      
+    } catch (error) {
+      
+    }
   }
 
   async getUser(req, res, next) {
     try {
       const empInfo = await emp.findOne({ _id: req.cookies.uid }).lean()
-      if (!empInfo) return res.json({isValid: false, message: 'not found'})
+      if (!empInfo) throw new Error('User not found')
   
-      return res.json({isValid: true, message: empInfo._id})
-      
+      return res.json({message: empInfo._id})
     } catch (error) {
-      return res.json({error: error})
+      console.log(error)
+      return res.json({error: error.message})
     }
   }
 
   async allChats(req, res, next) {
     try {
       const uid = req.cookies.uid
+      const empInfo = await emp.findOne({ _id: uid }).lean()
+      if (!empInfo) throw new Error()
+      if (empInfo.role !== 'admin') throw new Error()
+    
       const [chats, totalChat] = await Promise.all([
         chat.aggregate([
           {
@@ -62,12 +70,18 @@ class allChatsController {
     try {
       const userId = req.params.id
       const userStatus = await user.findOne({ _id: userId }).lean()
+      if (!userStatus) throw new Error('User not found')
+
       const chatRoom = await chat.findOne({ userId: userId }).lean()
+      if (!chatRoom) throw new Error('Chat room not found')
+
       const chatMessages = await message.find({ chatId: chatRoom._id }).sort({createdAt: 1}).lean()
+      if (!chatMessages) throw new Error('Chat messages not found')
+
       return res.json({data: chatMessages, chatId: chatRoom._id, userStatus: userStatus.isActive})
-      
     } catch (error) {
-      return res.json({error: error})
+      console.log(error)
+      return res.json({error: error.message})
     }
   }
 
@@ -93,11 +107,12 @@ class allChatsController {
   async chatLastMessage(req, res) {
     try {
       const chatInfo = await chat.findOne({ userId: req.body.userId}).lean()
-      if (!chatInfo) return res.json({lastMessage: ''})
+      if (!chatInfo) throw new Error('Chat not found')
+
       return res.json({lastMessage: chatInfo.lastMessage})
-      
     } catch (error) {
-      return res.json({error: error})
+      console.log(error)
+      return res.json({error: error.message})
     }
   }
 }

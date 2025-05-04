@@ -11,30 +11,29 @@ const chatList    = document.querySelector('div.chat-list').querySelectorAll('di
 const chatId      = {id: ''}
 const adminId     = {id: ''}
 
+getUser()
+
 async function getUser() {
   try {
     const response = await fetch('/admin/all-chats/data/user')
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const json = await response.json()
+    if (json.error) return pushNotification(error)
 
-    const {isValid, message} = await response.json()
-
-    if (isValid) {
-      adminId.id = message
-      socket.emit('joinRoom', {id: adminId.id, room: 'admin-room'})
-    }
+    adminId.id = json.message
+    socket.emit('joinRoom', {id: adminId.id, room: 'admin-room'})
   } catch (error) {
     console.error("Error fetching chat data:", error)
   }
 }
 
-getUser()
-
 async function getChatData(adminId, userId, userName, chatContent) {
   try {
     const response = await fetch(`/admin/all-chats/${userId}`)
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
-
     const json = await response.json()
+    if (json.error) return pushNotification(error)
+
     const messages = json.data
     const userStatus = json.userStatus
     chatId.id = json.chatId
@@ -73,8 +72,9 @@ async function updateLastMessage(id) {
     body: JSON.stringify({userId: id})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-
   const json = await response.json()
+  if (json.error) return pushNotification(error)
+
   const lastMessage = json.lastMessage
   return lastMessage
 }

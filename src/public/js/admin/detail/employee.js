@@ -9,7 +9,8 @@ async function getEmployee() {
     body: JSON.stringify({id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {employeeInfo, storesInfo, positionsInfo} = await response.json()
+  const {error, employeeInfo, storesInfo, positionsInfo} = await response.json()
+  if (error) return pushNotification('Có lỗi xảy ra')
 
   document.title = employeeInfo.name
 
@@ -81,11 +82,10 @@ async function updateEmployee(employeeInfo) {
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {isValid, message} = await response.json()
-
+  const {error, message} = await response.json()
+  if (error) return pushNotification(error)
   pushNotification(message)
 
-  if (!isValid) return
   setTimeout(() => window.location.reload(), 3000)
 }
 

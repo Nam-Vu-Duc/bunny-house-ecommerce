@@ -68,9 +68,10 @@ async function getCustomers() {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  const json = await response.json()
+  if (json.error) return pushNotification(error)
 
-  data.forEach((element) => {
+  json.data.forEach((element) => {
     const option = document.createElement('option')
     option.value = element._id
     option.textContent = element.name + ': ' + element.phone
@@ -86,9 +87,10 @@ async function getStores() {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  const json = await response.json()
+  if (json.error) return pushNotification(error)
 
-  data.forEach((element) => {
+  json.data.forEach((element) => {
     const option = document.createElement('option')
     option.value = element.code
     option.textContent = element.name
@@ -104,9 +106,10 @@ async function getPaymentMethod() {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  const json = await response.json()
+  if (json.error) return pushNotification(error)
 
-  data.forEach((element) => {
+  json.data.forEach((element) => {
     const option = document.createElement('option')
     option.value = element.code
     option.textContent = element.name
@@ -127,9 +130,10 @@ async function getProducts(query) {
     body: JSON.stringify({ query: query })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  const json = await response.json()
+  if (json.error) return pushNotification(error)
 
-  data.forEach((element) => {
+  json.data.forEach((element) => {
     const isAddedProduct = checkIsAddedProduct(element._id)
     if (isAddedProduct) return
 
@@ -186,49 +190,53 @@ async function getProducts(query) {
 }
 
 async function createOrder() {
-  const orderDate     = document.querySelector('input#orderDate').value
-  const userId        = document.querySelector('select#userId').value
-  const storeCode     = document.querySelector('select#storeCode').value
-  const paymentMethod = document.querySelector('select#paymentMethod').value
-  const note          = document.querySelector('input#note').value
-
-  if (
-    !orderDate        || 
-    !userId           || 
-    !storeCode        || 
-    !paymentMethod    || 
-    !productId        || 
-    !productQuantity  || 
-    !totalOrderPrice
-  ) {
-    pushNotification("Hãy điền đầy đủ các thông tin!")
-    return
-  }
-
-  const response = await fetch('/admin/all-orders/order/created', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      orderDate         : orderDate,
-      userId            : userId,
-      storeCode         : storeCode,
-      paymentMethod     : paymentMethod,
-      note              : note,
-      productId         : productId,
-      productName       : productName,
-      productImg        : productImg,
-      productQuantity   : productQuantity,
-      productPrice      : productPrice,
-      totalOrderPrice   : totalOrderPrice.value
-    })
-  })
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const { isValid, message } = await response.json()
-
-  pushNotification(message)
+  try {
+    const orderDate     = document.querySelector('input#orderDate').value
+    const userId        = document.querySelector('select#userId').value
+    const storeCode     = document.querySelector('select#storeCode').value
+    const paymentMethod = document.querySelector('select#paymentMethod').value
+    const note          = document.querySelector('input#note').value
   
-  if (!isValid) return 
-  setTimeout(() => window.location.reload(), 2000)
+    if (
+      !orderDate        || 
+      !userId           || 
+      !storeCode        || 
+      !paymentMethod    || 
+      !productId        || 
+      !productQuantity  || 
+      !totalOrderPrice
+    ) {
+      pushNotification("Hãy điền đầy đủ các thông tin!")
+      return
+    }
+  
+    const response = await fetch('/admin/all-orders/order/created', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        orderDate         : orderDate,
+        userId            : userId,
+        storeCode         : storeCode,
+        paymentMethod     : paymentMethod,
+        note              : note,
+        productId         : productId,
+        productName       : productName,
+        productImg        : productImg,
+        productQuantity   : productQuantity,
+        productPrice      : productPrice,
+        totalOrderPrice   : totalOrderPrice.value
+      })
+    })
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const json = await response.json()
+    if (json.error) return pushNotification(error)
+    pushNotification(message)
+  
+    setTimeout(() => window.location.reload(), 2000)
+  } catch (error) {
+    console.error('Error creating customer:', error)
+    pushNotification("Đã có lỗi xảy ra.")
+  }
 }
 
 input.addEventListener('input', function() {

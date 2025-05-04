@@ -34,56 +34,60 @@ img.addEventListener('change', function () {
 })
 
 async function createProduct() {
-  const categories  = document.querySelector('select[name="categories"]').value
-  const skincare    = document.querySelector('select[name="skincare"]').value
-  const makeup      = document.querySelector('select[name="makeup"]').value
-  const brand       = document.querySelector('select[name="brand"]').value
-  const name        = document.querySelector('input#name').value
-  const oldPrice    = deFormatNumber(document.querySelector('input#oldPrice').value) 
-  const price       = deFormatNumber(document.querySelector('input#price').value)
-  const description = document.querySelector('input#description').value
-  const details     = document.querySelector('input#details').value
-  const guide       = document.querySelector('input#guide ').value
-  const status      = document.querySelector('select[name="status"]').value
-
-  if (
-    !categories   || 
-    !brand        || 
-    !name         || 
-    !oldPrice     || 
-    !price        || 
-    !description  || 
-    !details      || 
-    !guide        || 
-    !status       || 
-    !img 
-  ) return pushNotification("Hãy điền đầy đủ các thông tin!")
-
-  const response = await fetch('/admin/all-products/product/created', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      categories  : categories,
-      skincare    : skincare,
-      makeup      : makeup,
-      brand       : brand,
-      name        : name,
-      oldPrice    : oldPrice,
-      price       : price,
-      description : description,
-      details     : details,
-      guide       : guide,
-      status      : status,
-      img         : imgPath.path,
-    })
-  })
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const { isValid, message } = await response.json()
-
-  pushNotification(message)
+  try {
+    const categories  = document.querySelector('select[name="categories"]').value
+    const skincare    = document.querySelector('select[name="skincare"]').value
+    const makeup      = document.querySelector('select[name="makeup"]').value
+    const brand       = document.querySelector('select[name="brand"]').value
+    const name        = document.querySelector('input#name').value
+    const oldPrice    = deFormatNumber(document.querySelector('input#oldPrice').value) 
+    const price       = deFormatNumber(document.querySelector('input#price').value)
+    const description = document.querySelector('input#description').value
+    const details     = document.querySelector('input#details').value
+    const guide       = document.querySelector('input#guide ').value
+    const status      = document.querySelector('select[name="status"]').value
   
-  if (!isValid) return 
-  setTimeout(() => window.location.reload(), 2000)
+    if (
+      !categories   || 
+      !brand        || 
+      !name         || 
+      !oldPrice     || 
+      !price        || 
+      !description  || 
+      !details      || 
+      !guide        || 
+      !status       || 
+      !img 
+    ) return pushNotification("Hãy điền đầy đủ các thông tin!")
+  
+    const response = await fetch('/admin/all-products/product/created', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        categories  : categories,
+        skincare    : skincare,
+        makeup      : makeup,
+        brand       : brand,
+        name        : name,
+        oldPrice    : oldPrice,
+        price       : price,
+        description : description,
+        details     : details,
+        guide       : guide,
+        status      : status,
+        img         : imgPath.path,
+      })
+    })
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const json = await response.json()
+    if (json.error) return pushNotification(error)
+    pushNotification(message)
+  
+    setTimeout(() => window.location.reload(), 2000)
+  } catch (error) {
+    console.error('Error creating customer:', error)
+    pushNotification("Đã có lỗi xảy ra.")
+  }
 }
 
 submitButton.onclick = function() {

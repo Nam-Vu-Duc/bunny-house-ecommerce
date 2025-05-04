@@ -11,10 +11,10 @@ async function createAttribute(id, rowIndex) {
     body: JSON.stringify({code: code, name: name})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {isValid, message} = await response.json()
+  const {error, message} = await response.json()
   
+  if (error) return pushNotification(error)
   pushNotification(message)
-  if (!isValid) return
 
   row.querySelector('input#code').disabled = true
   row.querySelector('input#name').disabled = true
@@ -36,10 +36,10 @@ async function deleteAttribute(id, rowIndex) {
       body: JSON.stringify({code: code, name: name})
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    const {isValid, message} = await response.json()
-
+    const {error, message} = await response.json()
+  
+    if (error) return pushNotification(error)
     pushNotification(message)
-    if (!isValid) return
 
     deleteRow(id, rowIndex)
   } 
@@ -62,10 +62,10 @@ async function updateAttribute(id, rowIndex) {
       })
 
       if (!response.ok) throw new Error(`Response status: ${response.status}`)
-      const {isValid, message} = await response.json()
+      const {error, message} = await response.json()
   
+      if (error) return pushNotification(error)
       pushNotification(message)
-      if (!isValid) return
 
       row.querySelector('input#name').disabled = true
       row.querySelector('input#name').parentElement.querySelector('button').remove()
@@ -107,7 +107,9 @@ function addRow(id) {
 async function getMembership() {
   const response = await fetch('/admin/all-attributes/data/membership')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+
+  const {error, data} = await response.json()
+  if (error) return pushNotification(error)
 
   const table = document.createElement('div')
   table.innerHTML = `
@@ -145,7 +147,9 @@ async function getMembership() {
 async function getOrderStatus() {
   const response = await fetch('/admin/all-attributes/data/order-status')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  
+  const {error, data} = await response.json()
+  if (error) return pushNotification(error)
 
   const table = document.createElement('div')
   table.innerHTML = `
@@ -183,7 +187,9 @@ async function getOrderStatus() {
 async function getPaymentMethod() {
   const response = await fetch('/admin/all-attributes/data/payment-method')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  
+  const {error, data} = await response.json()
+  if (error) return pushNotification(error)
 
   const table = document.createElement('div')
   table.innerHTML = `
@@ -221,7 +227,9 @@ async function getPaymentMethod() {
 async function getPosition() {
   const response = await fetch('/admin/all-attributes/data/position')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  
+  const {error, data} = await response.json()
+  if (error) return pushNotification(error)
 
   const table = document.createElement('div')
   table.innerHTML = `
@@ -259,7 +267,9 @@ async function getPosition() {
 async function getProductStatus() {
   const response = await fetch('/admin/all-attributes/data/product-status')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  
+  const {error, data} = await response.json()
+  if (error) return pushNotification(error)
 
   const table = document.createElement('div')
   table.innerHTML = `

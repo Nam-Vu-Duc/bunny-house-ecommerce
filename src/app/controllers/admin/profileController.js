@@ -11,18 +11,21 @@ class profileController {
         store.find().lean(),
         position.find().lean()
       ])
-      if (!userInfo) return res.json({userInfo: null})
+      if (!userInfo) throw new Error('User not found')
   
       return res.json({userInfo: userInfo, storesInfo: storesInfo, positionsInfo: positionsInfo})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
   async updateProfile(req, res, next) {
-    if (!checkForHexRegExp(req.cookies.uid)) return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
-    return res.render('admin/detail/profile', { title: 'Thông tin cá nhân', layout: 'admin' } )
+    try {
+      if (!checkForHexRegExp(req.cookies.uid)) return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+      return res.render('admin/detail/profile', { title: 'Thông tin cá nhân', layout: 'admin' } )
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    }
   }
 
   async profileUpdated(req, res, next) {
@@ -34,10 +37,9 @@ class profileController {
         gender : req.body.gender ,
       })
   
-      return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
-      
+      return res.json({message: 'Cập nhật thông tin thành công'})
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 }

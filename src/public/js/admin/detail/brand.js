@@ -9,7 +9,8 @@ async function getBrand() {
     body: JSON.stringify({id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {brandInfo, productsInfo} = await response.json()
+  const {error, brandInfo, productsInfo} = await response.json()
+  if (error) return pushNotification('Có lỗi xảy ra')
 
   document.title = brandInfo.name
 

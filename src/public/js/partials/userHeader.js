@@ -27,7 +27,7 @@ document.addEventListener('click', function(event) {
 
 async function checkUser() {
   // Wait until window.isLoggedIn is assigned
-  while (typeof window.isLoggedIn === 'undefined') {
+  while (typeof window?.isLoggedIn === 'undefined') {
     await new Promise(resolve => setTimeout(resolve, 50));
   }
 

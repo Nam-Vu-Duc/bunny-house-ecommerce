@@ -13,7 +13,7 @@ async function getFilter() {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
-  const data = json.data
+  if (json.error) return pushNotification(error)
 }
 
 async function getStores(sortOptions, filterOptions, currentPage) {
@@ -29,11 +29,12 @@ async function getStores(sortOptions, filterOptions, currentPage) {
       sort  : sortOptions, 
       filter: filterOptions, 
       page  : currentPage,
-      uid   : window.admin_data._id
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
+  if (json.error) return pushNotification(error)
+    
   const data = json.data
   dataSize.size = json.data_size
 

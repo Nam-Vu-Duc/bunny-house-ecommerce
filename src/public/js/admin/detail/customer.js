@@ -9,7 +9,8 @@ async function getCustomer() {
     body: JSON.stringify({id: urlSlug})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {customerInfo, memberInfo, orderInfo} = await response.json()
+  const {error, customerInfo, memberInfo, orderInfo} = await response.json()
+  if (error) return pushNotification('Có lỗi xảy ra')
 
   document.title = customerInfo.name
 
@@ -65,11 +66,10 @@ async function updateCustomer(customerInfo) {
     })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {isValid, message} = await response.json()
-
+  const {error, message} = await response.json()
+  if (error) return pushNotification(error)
   pushNotification(message)
 
-  if (!isValid) return
   setTimeout(() => window.location.reload(), 3000)
 }
 

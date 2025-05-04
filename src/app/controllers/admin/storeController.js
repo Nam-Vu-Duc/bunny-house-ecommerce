@@ -9,11 +9,10 @@ class allStoresController {
       const currentPage  = req.body.page
       const sort         = req.body.sort
       const filter       = req.body.filter
-      const uid          = req.body.uid 
       const itemsPerPage = 10
       const skip         = (currentPage - 1) * itemsPerPage
 
-      const userInfo = await employee.findOne({ _id: uid }).lean()
+      const userInfo = await employee.findOne({ _id: req.cookies.uid }).lean()
       if (!userInfo) throw new Error('User not found')
       if (userInfo.role !== 'admin') filter.code = userInfo.storeCode
   
@@ -26,13 +25,11 @@ class allStoresController {
           .lean(),
         store.find(filter).countDocuments(),
       ]) 
-      if (!data) res.status(404).json({data: [], data_size: 0})
+      if (!data) throw new Error('Data not found')
       
       return res.json({data: data, data_size: dataSize})
-      
     } catch (error) {
-      console.log(error)
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -41,14 +38,21 @@ class allStoresController {
   }
 
   async allStores(req, res, next) {
-    return res.render('admin/all/store', { title: 'Danh sách cửa hàng', layout: 'admin' })
+    try {
+      const userInfo = await employee.findOne({ _id: req.cookies.uid }).lean()
+      if (!userInfo) throw new Error()
+      if (!['admin', 'manager'].includes(userInfo.role)) throw new Error()
+      return res.render('admin/all/store', { title: 'Danh sách cửa hàng', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    }
   }
 
   // update
   async getStore(req, res, next) {
     try {
       const storeInfo = await store.findOne({ _id: req.body.id }).lean()
-      if (!storeInfo) return res.json({storeInfo: null})
+      if (!storeInfo) throw new Error('Store not found')
   
       const employeesInfo = await employee.aggregate([
         {
@@ -68,9 +72,8 @@ class allStoresController {
       ])
       
       return res.json({storeInfo: storeInfo, employeesInfo: employeesInfo})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -78,38 +81,43 @@ class allStoresController {
     try {
       if (!checkForHexRegExp(req.params.id)) throw new Error('error')
       if (!(await store.findOne({ _id: req.params.id }).lean())) throw new Error('error')
-
       return res.render('admin/detail/store', { layout: 'admin' })
-
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
     }
   }
 
   async storeUpdate(req, res, next) {
-    await store.updateOne({ _id: req.body.id }, {
-      name   : req.body.name,
-      address: req.body.address,
-      details: req.body.details
-    })
-
-    return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
+    try {
+      await store.updateOne({ _id: req.body.id }, {
+        name   : req.body.name,
+        address: req.body.address,
+        details: req.body.details
+      })
+  
+      return res.json({message: 'Cập nhật thông tin thành công'})
+    } catch (error) {
+      return res.json({error: error.message})
+    }
   }
 
   // create
   async storeCreate(req, res, next) {
-    return res.render('admin/create/store', { title: 'Thêm cửa hàng mới', layout: 'admin' })
+    try {
+      return res.render('admin/create/store', { title: 'Thêm cửa hàng mới', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
+    }
   }
 
   async storeCreated(req, res, next) {
     try {
       const newStore = new store(req.body)
-  
       await newStore.save()
-      return res.json({isValid: true, message: 'Tạo cửa hàng thành công'})
-      
+
+      return res.json({message: 'Tạo cửa hàng thành công'})
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 }

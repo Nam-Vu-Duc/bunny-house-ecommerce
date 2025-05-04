@@ -16,9 +16,11 @@ async function getFilter() {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {brand} = await response.json()
+  const json = await response.json()
+  if (json.error) return pushNotification(error)
 
-  brand.forEach((element, index) => {
+
+  json.brand.forEach((element, index) => {
     const option = document.createElement('option')
     option.value = element.name
     option.textContent = element.name
@@ -39,6 +41,8 @@ async function getProducts(sortOptions, filterOptions, currentPage) {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const json = await response.json()
+  if (json.error) return pushNotification(error)
+    
   const data = json.data
   dataSize.size = json.data_size
 

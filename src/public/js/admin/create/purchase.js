@@ -69,9 +69,10 @@ async function getSuppliers() {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  const json = await response.json()
+  if (json.error) return pushNotification(error)
 
-  data.forEach((element) => {
+  json.data.forEach((element) => {
     const option = document.createElement('option')
     option.value = element._id
     option.textContent = element.name + ': ' + element.phone
@@ -87,9 +88,10 @@ async function getStores() {
     headers: {'Content-Type': 'application/json'},
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  const json = await response.json()
+  if (json.error) return pushNotification(error)
 
-  data.forEach((element) => {
+  json.data.forEach((element) => {
     const option = document.createElement('option')
     option.value = element.code
     option.textContent = element.name
@@ -110,9 +112,10 @@ async function getProducts(query) {
     body: JSON.stringify({ query: query })
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  const json = await response.json()
+  if (json.error) return pushNotification(error)
 
-  data.forEach((element) => {
+  json.data.forEach((element) => {
     const isAddedProduct = checkIsAddedProduct(element._id)
     if (isAddedProduct) return
 
@@ -169,44 +172,48 @@ async function getProducts(query) {
 }
 
 async function createPurchase() {
-  const purchaseDate        = document.querySelector('input#purchaseDate').value
-  const supplierId          = document.querySelector('select#supplierId').value
-  const note                = document.querySelector('input#note').value
-
-  if (
-    !purchaseDate       || 
-    !supplierId         || 
-    !note               || 
-    !productId          || 
-    !productQuantity    || 
-    !totalPurchasePrice
-  ) {
-    pushNotification("Hãy điền đầy đủ các thông tin!")
-    return
-  }
-
-  const response = await fetch('/admin/all-purchases/purchase/created', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      purchaseDate      : purchaseDate,
-      supplierId        : supplierId,
-      note              : note,
-      productId         : productId,
-      productName       : productName,
-      productImg        : productImg,
-      productQuantity   : productQuantity,
-      productPrice      : productPrice,
-      totalPurchasePrice: totalPurchasePrice.value
-    })
-  })
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const { isValid, message } = await response.json()
-
-  pushNotification(message)
+  try {
+    const purchaseDate        = document.querySelector('input#purchaseDate').value
+    const supplierId          = document.querySelector('select#supplierId').value
+    const note                = document.querySelector('input#note').value
   
-  if (!isValid) return 
-  setTimeout(() => window.location.reload(), 2000)
+    if (
+      !purchaseDate       || 
+      !supplierId         || 
+      !note               || 
+      !productId          || 
+      !productQuantity    || 
+      !totalPurchasePrice
+    ) {
+      pushNotification("Hãy điền đầy đủ các thông tin!")
+      return
+    }
+  
+    const response = await fetch('/admin/all-purchases/purchase/created', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        purchaseDate      : purchaseDate,
+        supplierId        : supplierId,
+        note              : note,
+        productId         : productId,
+        productName       : productName,
+        productImg        : productImg,
+        productQuantity   : productQuantity,
+        productPrice      : productPrice,
+        totalPurchasePrice: totalPurchasePrice.value
+      })
+    })
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const json = await response.json()
+    if (json.error) return pushNotification(error)
+    pushNotification(message)
+  
+    setTimeout(() => window.location.reload(), 2000)
+  } catch (error) {
+    console.error('Error creating customer:', error)
+    pushNotification("Đã có lỗi xảy ra.")
+  }
 }
 
 input.addEventListener('input', function() {
