@@ -6,21 +6,15 @@
 
     <div class="form-group">
       <label></label>
-      <select name="role">
-        <option value="">-- Chọn vị trí --</option>
-        <option value="employee">Nhân viên</option>
-        <option value="manager">Quản lý</option>
-        <option value="admin">Quản trị viên</option>
+      <select name="role" id="role">
+        <option value="" selected disabled>-- Chọn vị trí --</option>
       </select>
     </div>
 
     <div class="form-group">
       <label></label>
-      <select name="storeCode">
-        <option value="">-- Chọn cửa hàng làm việc --</option>
-        {{#each stores}}
-          <option value="{{this.code}}">{{this.name}}</option>
-        {{/each}}
+      <select name="storeCode" id="storeCode">
+        <option value="" selected disabled>-- Chọn cửa hàng làm việc --</option>
       </select>
     </div>
 

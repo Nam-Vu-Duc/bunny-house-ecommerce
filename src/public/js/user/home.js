@@ -1,7 +1,7 @@
-// ok
 importLinkCss('/css/user/home.css')
 importLinkCss('/css/user/advertise.css')
 
+const vouchersDiv           = document.querySelector('div[class="vouchers-board"][id="voucher"]').querySelectorAll('div.voucher')
 const favProductsDiv        = document.querySelector('div[class="products-board"][id="favorite"]').querySelectorAll('div.product')
 const flashSaleProductsDiv  = document.querySelector('div[class="flash-deal-board"][id="flash-deal"]').querySelectorAll('div.product')
 const topSaleProductsDiv    = document.querySelector('div[class="products-board"][id="top-sale"]').querySelectorAll('div.product')
@@ -10,6 +10,47 @@ const skincareProductsDiv   = document.querySelector('div[class="products-board"
 const makeupProductsDiv     = document.querySelector('div[class="products-board"][id="makeup"]').querySelectorAll('div.product')
 const allProductsDiv        = document.querySelector('div[class="products-board"][id="all"]').querySelectorAll('div.product')
 const allBrandsDiv          = document.querySelector('div[class="famous-brand-board"][id="brand"]').querySelectorAll('img')
+
+async function getVouchers(vouchersDiv) {
+  // Wait until window.isLoggedIn is assigned
+  while (typeof window.isLoggedIn === 'undefined' | typeof window.recommend_url === 'undefined') {
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
+
+  if (!window.isLoggedIn) return
+
+  document.querySelector('div[class="vouchers-board"][id="voucher"]').style.display = 'block'
+
+  try {
+    const response = await fetch('/data/vouchers', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+    })
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const {data} = await response.json()
+
+    window.setTimeout(function() {
+      vouchersDiv.forEach((voucher, index) => {
+        if (index < data.length) {
+          voucher.querySelector('p#name').textContent         = data[index].name
+          voucher.querySelector('p#description').textContent  = data[index].description
+          voucher.querySelector('p#end-date').textContent     = formatDate(data[index].endDate)
+          voucher.querySelector('p#code').textContent         = 'Mã: ' + data[index].code
+          voucher.querySelector('button').addEventListener('click', function() {
+            const codeText = data[index].code;
+            navigator.clipboard.writeText(codeText)
+            alert("Sao chép mã thành công: " + codeText)
+          })
+        } else {
+          voucher.style.display = 'none'
+        }
+      })
+    }, 1000)
+  } catch (error) {
+    console.log(error)
+    pushNotification(`Error loading favorite products: ${error}`)
+  }
+}
 
 async function getFavProducts(products) {
   // Wait until window.isLoggedIn is assigned
@@ -103,6 +144,9 @@ async function getBrands(imgs) {
 
 window.addEventListener('DOMContentLoaded', async function() {
   try {
+    await getVouchers(vouchersDiv)
+    await new Promise(r => setTimeout(r, 500))
+
     await getFavProducts(favProductsDiv)
     await new Promise(r => setTimeout(r, 500))
 

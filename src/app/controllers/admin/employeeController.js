@@ -104,10 +104,27 @@ class allEmployeesController {
   }
 
   // create
-  async employeeCreate(req, res, next) {
+  async getPositions(req, res, next) {
+    try {
+      const positions = await position.find().lean()
+      return res.json({data: positions})
+    } catch (error) {
+      return res.json({error: error.message})
+    }
+  }
+
+  async getStores(req, res, next) {
     try {
       const stores = await store.find().lean()
-      return res.render('admin/create/employee', { title: 'Thêm nhân viên mới', layout: 'admin', stores })
+      return res.json({data: stores})
+    } catch (error) {
+      return res.json({error: error.message})
+    }
+  }
+
+  async employeeCreate(req, res, next) {
+    try {
+      return res.render('admin/create/employee', { title: 'Thêm nhân viên mới', layout: 'admin' })
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     }

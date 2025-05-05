@@ -25,6 +25,7 @@ const order = new Schema({
   status          : { type: String, default: 'preparing' },
   isRated         : { type: Boolean, default: false},
   storeCode       : { type: String, default: 'bunny-house-thanh-xuan' },
+  voucherCode     : { type: String, default: '' },
   deletedAt       : { type: Date, default: null }
 }, { timestamps: true })
 module.exports = mongoose.model('order', order)

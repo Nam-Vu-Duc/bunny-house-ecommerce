@@ -111,7 +111,7 @@ class allOrdersController {
         status        : req.body.status,
         paymentMethod : req.body.paymentMethod
       })
-  
+
       if (req.body.status === 'cancel') {
         const orderInfo = await order.findOne({ _id: req.body.id }).lean()
         const userId = orderInfo.customerInfo.userId
@@ -141,8 +141,34 @@ class allOrdersController {
           })
         }
       }
+
+      if (req.body.status === 'done') {
+        const silver  = 1000000
+        const gold    = 2000000
+        const diamond = 4000000
+        const userId = orderInfo.customerInfo.userId
+
+        if(userId !== 'guest') {
+          const userInfo = await user.findOne({ _id: userId }).lean()
+          if (userInfo.revenue >= diamond) {
+            await user.updateOne({ _id: userId }, {
+              $set: { memberCode: 'diamond' }
+            })
+          }
+          else if (userInfo.revenue >= gold) {
+            await user.updateOne({ _id: userId }, {
+              $set: { memberCode: 'gold' }
+            })
+          }
+          else if (userInfo.revenue >= silver) {
+            await user.updateOne({ _id: userId }, {
+              $set: { memberCode: 'silver' }
+            })
+          }
+        }
+      }
   
-      return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
+      return res.json({message: 'Cập nhật thông tin thành công'})
     } catch (error) {
       return res.json({error: error.message})
     }

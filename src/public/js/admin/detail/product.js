@@ -1,4 +1,4 @@
-importLinkCss('/css/admin/detailProduct.css')
+importLinkCss('/css/admin/detail/product.css')
 
 const urlSlug = location.href.match(/([^\/]*)\/*$/)[1]
 const img          = document.querySelector('input#img')

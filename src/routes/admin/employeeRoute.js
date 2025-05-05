@@ -10,8 +10,10 @@ router.post('/employee/created' , employeeController.employeeCreated)
 router.get('/employee/:id'      , employeeController.employeeInfo)
 router.put('/employee/updated'  , employeeController.employeeUpdate)
 
+router.post('/data/filter'      , employeeController.getFilter)
+router.post('/data/positions'   , employeeController.getPositions) 
+router.post('/data/stores'      , employeeController.getStores)
 router.post('/data/employees'   , employeeController.getEmployees)
 router.post('/data/employee'    , employeeController.getEmployee)
-router.post('/data/filter'      , employeeController.getFilter)
 
 module.exports = router

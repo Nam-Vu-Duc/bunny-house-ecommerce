@@ -1,5 +1,4 @@
-// ok
-importLinkCss('/css/admin/createPurchase.css')
+importLinkCss('/css/admin/create/purchase.css')
 
 const input              = document.querySelector('input[type="text"][id="product-search"]')
 const tbody              = document.querySelector('tbody')
@@ -205,8 +204,8 @@ async function createPurchase() {
       })
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    const json = await response.json()
-    if (json.error) return pushNotification(error)
+    const {error, message} = await response.json()
+    if (error) return pushNotification(error)
     pushNotification(message)
   
     setTimeout(() => window.location.reload(), 2000)

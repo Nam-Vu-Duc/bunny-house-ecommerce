@@ -1,5 +1,4 @@
-// ok
-importLinkCss('/css/admin/createCustomer.css')
+importLinkCss('/css/admin/create/customer.css')
 
 const submitButton = document.querySelector('button[type="submit"]')
 
@@ -34,8 +33,8 @@ async function createCustomer() {
       })
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    const json = await response.json()
-    if (json.error) return pushNotification(error)
+    const {error, message} = await response.json()
+    if (error) return pushNotification(error)
     pushNotification(message)
     
     setTimeout(() => window.location.reload(), 2000)

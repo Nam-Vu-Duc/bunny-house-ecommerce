@@ -1,5 +1,4 @@
-// ok
-importLinkCss('/css/admin/allChats.css')
+importLinkCss('/css/admin/all/chats.css')
 
 const chatBody    = document.querySelector('div.chat-body')
 const chatHeader  = chatBody.querySelector('div.chat-header')
