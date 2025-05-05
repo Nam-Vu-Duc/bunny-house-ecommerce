@@ -1,4 +1,4 @@
-importLinkCss('/css/admin/detailPurchase.css')
+importLinkCss('/css/admin/detail/purchase.css')
 
 const urlSlug = location.href.match(/([^\/]*)\/*$/)[1]
 

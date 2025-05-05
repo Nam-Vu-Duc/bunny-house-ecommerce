@@ -1,1 +1,1 @@
-importLinkCss('/css/admin/createBrand.css')
+importLinkCss('/css/admin/create/brand.css')

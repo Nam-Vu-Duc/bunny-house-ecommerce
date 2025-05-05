@@ -1,16 +1,25 @@
 const product = require('../../models/productModel')
+const voucher = require('../../models/voucherModel')
 const brand = require('../../models/brandModel')
 const user = require('../../models/userModel')
 
 class homeController {
+  async getVouchers(req, res, next) {
+    try {
+      const data = await voucher.find({ status: 'active' }).lean()
+      return res.json({data: data})
+    } catch (error) {
+      return res.json({error: error.message})
+    }
+  }
+  
   async getProducts(req, res, next) {
     try {
       const filter = req.body
       const data = await product.find(filter).sort({ saleNumber: -1 }).limit(5).lean()
       return res.json({data: data})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
   
@@ -18,9 +27,8 @@ class homeController {
     try {
       const data = await product.find({ status: 'out-of-order' }).lean()
       return res.json({data: data})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -29,9 +37,8 @@ class homeController {
       const productIds = req.body.productIds
       const data = await product.find({ _id: { $in: productIds } }).lean()
       return res.json({data: data})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -44,9 +51,8 @@ class homeController {
       if (!userInfo) return res.json({message: false})
       
       return res.json({message: true, uid: userId})
-      
     } catch (error) {
-      return res.json({message: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -54,9 +60,8 @@ class homeController {
     try {
       const data = await brand.find().lean()
       return res.json({data: data})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 
@@ -74,9 +79,8 @@ class homeController {
         ]
       }).lean()
       return res.json({data: data})
-      
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 }

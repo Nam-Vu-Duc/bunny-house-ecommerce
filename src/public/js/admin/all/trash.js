@@ -1,4 +1,4 @@
-importLinkCss('/css/admin/trash.css') 
+importLinkCss('/css/admin/all/trash.css') 
 
 const tbody         = document.querySelector('table').querySelector('tbody')
 const sortOptions   = {}

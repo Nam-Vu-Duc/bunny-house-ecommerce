@@ -1,4 +1,3 @@
-// ok
 const header          = document.querySelector('header')
 const ordersQuantity  = document.querySelector('span.orders-quantity')
 const searchIcon      = document.querySelector('i.fi-br-search')

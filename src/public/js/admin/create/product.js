@@ -1,5 +1,4 @@
-// ok
-importLinkCss('/css/admin/createProduct.css')
+importLinkCss('/css/admin/create/product.css')
 
 const selectBox    = document.querySelector('select[name="categories"]')
 const skincareBox  = document.querySelector('select[name="skincare"]').parentElement
@@ -79,8 +78,8 @@ async function createProduct() {
       })
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    const json = await response.json()
-    if (json.error) return pushNotification(error)
+    const {error, message} = await response.json()
+    if (error) return pushNotification(error)
     pushNotification(message)
   
     setTimeout(() => window.location.reload(), 2000)

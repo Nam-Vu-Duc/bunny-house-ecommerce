@@ -98,7 +98,6 @@ div.products {
     max-width: 220px;
     padding: 10px 12px;
     border-radius: 10px;
-    box-sizing: border-box;
     .loading {
       position: absolute;
       top: 0;

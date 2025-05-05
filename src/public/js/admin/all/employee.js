@@ -1,4 +1,4 @@
-importLinkCss('/css/admin/allEmployees.css')
+importLinkCss('/css/admin/all/employees.css')
 
 const tbody         = document.querySelector('table').querySelector('tbody')
 const sortOptions   = {}
@@ -93,5 +93,6 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     await exportJs()
   } catch (error){
     console.error('Error loading data:', error)
+    pushNotification(error)
   }
 })

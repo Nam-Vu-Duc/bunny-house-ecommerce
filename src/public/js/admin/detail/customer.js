@@ -1,4 +1,4 @@
-importLinkCss('/css/admin/detailCustomer.css')
+importLinkCss('/css/admin/detail/customer.css')
 
 const urlSlug = location.href.match(/([^\/]*)\/*$/)[1]
 
@@ -26,15 +26,17 @@ async function getCustomer() {
   document.querySelector('input#revenue').value  = formatNumber(customerInfo.revenue)
   document.querySelector('input#member').value   = memberInfo.name
 
+  let productIndex = 1
   orderInfo.forEach((order) => {
     const tr = document.createElement('tr')
     tr.innerHTML = `
-      <td></td>
+      <td>${productIndex}</td>
       <td>${formatNumber(order.totalOrderPrice)}</td>
       <td>${order.paymentMethod.name}</td>
       <td>${order.orderStatus.name}</td>
       <td><a href="/admin/all-orders/order/${order._id}">Xem</a></td>
     `
+    productIndex++
     document.querySelector('table#table-2').querySelector('tbody').appendChild(tr)
   })
 

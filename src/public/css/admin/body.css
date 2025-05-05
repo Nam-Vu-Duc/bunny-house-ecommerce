@@ -216,7 +216,8 @@ span.pagination {
 .admin-create-product-container,
 .admin-create-purchase-container,
 .admin-create-store-container,
-.admin-create-supplier-container {
+.admin-create-supplier-container,
+.admin-create-voucher-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -272,7 +273,8 @@ span.pagination {
 .profile-details-container,
 .purchase-details-container,
 .store-details-container,
-.supplier-details-container {
+.supplier-details-container,
+.voucher-details-container {
   width: 100%;
   display: flex;
   align-items: center;

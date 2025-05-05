@@ -1,4 +1,4 @@
-importLinkCss('/css/admin/profile.css')
+importLinkCss('/css/admin/detail/profile.css')
 
 async function getProfile() {
   const response = await fetch('/admin/all-personal-info/data/profile', {
