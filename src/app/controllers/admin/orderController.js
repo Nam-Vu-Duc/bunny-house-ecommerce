@@ -267,10 +267,11 @@ class allOrdersController {
           address : userInfo.address,
           note    : note
         },
-        paymentMethod   : paymentMethod,
-        storeId         : storeId,
-        createdAt       : orderDate,
-        totalOrderPrice : totalOrderPrice
+        paymentMethod     : paymentMethod,
+        storeId           : storeId,
+        createdAt         : orderDate,
+        totalOrderPrice   : totalOrderPrice,
+        totalNewOrderPrice: totalOrderPrice
       });
       await newOrder.save()
 

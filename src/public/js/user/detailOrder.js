@@ -18,6 +18,7 @@ async function getOrder() {
   document.querySelector('td#address').textContent = data.customerInfo.address || ''
   document.querySelector('td#note').textContent = data.customerInfo.note || ''
   document.querySelector('td#total-price').textContent = formatNumber(data.totalOrderPrice) || ''
+  document.querySelector('td#total-new-price').textContent = formatNumber(data.totalNewOrderPrice) || ''
   document.querySelector('td#status').textContent = status.name || ''
 
   data.products.forEach((product) => {

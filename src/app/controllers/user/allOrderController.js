@@ -5,6 +5,7 @@ const store = require('../../models/storeModel')
 const product = require('../../models/productModel')
 const comment = require('../../models/commentModel')
 const orderStatus = require('../../models/orderStatusModel')
+const voucher = require('../../models/voucherModel')
 const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const cloudinary = require('cloudinary').v2
 
@@ -25,6 +26,22 @@ class allOrderController {
 
     } catch (error) {
       return res.json({error: error})
+    }
+  }
+  
+  async getVoucher(req, res, next) {
+    try {
+      const voucherInfo = await voucher.findOne({ code: req.body.voucherCode }).lean()
+      if (!voucherInfo) throw new Error('Voucher not found')
+      if (voucherInfo.status === 'end') throw new Error('Voucher expired')
+      
+      const userInfo = await user.findOne({ _id: req.cookies.uid }).lean()
+      if (!userInfo) throw new Error('User not found') 
+      if (userInfo.memberCode !== voucherInfo.memberCode) throw new Error('User not eligible for this voucher')
+      
+      return res.json({voucherInfo: voucherInfo})
+    } catch (error) {
+      return res.json({error: error.message})
     }
   }
   
@@ -67,10 +84,12 @@ class allOrderController {
       const { 
         productInfo,
         paymentMethod,
+        code,
         ...customerInfo 
       } = req.body
   
       let totalOrderPrice = 0
+      let totalNewOrderPrice = 0
   
       const productIds = productInfo.map(item => item.id)
       const products = await product.find({ _id: { $in: productIds }, status: { $ne: 'out-of-order' } }).lean()
@@ -89,6 +108,21 @@ class allOrderController {
           totalPrice: product.price * cartItem.quantity
         }
       }).filter(Boolean)
+
+      const voucherInfo = await voucher.findOne({ code: code }).lean()
+      if (!voucherInfo) throw new Error('Voucher not found')
+      if (voucherInfo.status === 'end') throw new Error('Voucher expired')
+      
+      const userInfo = await user.findOne({ _id: req.cookies.uid }).lean()
+      if (code) {
+        if (!userInfo) throw new Error('User not found') 
+        if (userInfo.memberCode !== voucherInfo.memberCode) throw new Error('User not eligible for this voucher')
+
+        var discountValue = (totalOrderPrice * voucherInfo.discount) / 100
+        if (discountValue > voucherInfo.maxDiscount) discountValue = voucherInfo.maxDiscount
+        
+        totalNewOrderPrice = totalOrderPrice - discountValue
+      }
   
       const newOrder = new order({
         products: finalProductInfo.map((product, index) => ({
@@ -106,7 +140,9 @@ class allOrderController {
           address : customerInfo.address,
           note    : `note: ${customerInfo.note}, link bill: ${result.secure_url}`
         },
+        voucherCode: code,
         totalOrderPrice: totalOrderPrice,
+        totalNewOrderPrice: totalNewOrderPrice,
         paymentMethod: paymentMethod
       })
       await newOrder.save()
@@ -133,10 +169,9 @@ class allOrderController {
         })
       }
   
-      return res.json({message: true, id: newOrder._id})
-
+      return res.json({id: newOrder._id})
     } catch (error) {
-      return res.json({error: error})
+      return res.json({error: error.message})
     }
   }
 

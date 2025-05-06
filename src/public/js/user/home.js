@@ -35,7 +35,8 @@ async function getVouchers(vouchersDiv) {
           voucher.querySelector('p#name').textContent         = data[index].name
           voucher.querySelector('p#description').textContent  = data[index].description
           voucher.querySelector('p#end-date').textContent     = formatDate(data[index].endDate)
-          voucher.querySelector('p#code').textContent         = 'Mã: ' + data[index].code
+          voucher.querySelector('p#code').textContent         = 'Code: ' + data[index].code
+          voucher.querySelector('div.loading').style.display  = 'none'
           voucher.querySelector('button').addEventListener('click', function() {
             const codeText = data[index].code;
             navigator.clipboard.writeText(codeText)

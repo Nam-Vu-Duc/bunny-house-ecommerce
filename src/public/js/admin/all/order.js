@@ -74,7 +74,7 @@ async function getOrders(sortOptions, filterOptions, currentPage) {
         <td>${productIndex}</td>
         <td>${item._id}</td>
         <td>${item.customerInfo.name}</td>
-        <td>${formatNumber(item.totalOrderPrice)}</td>
+        <td>${formatNumber(item.totalNewOrderPrice)}</td>
         <td>${formatDate(item.createdAt)}</td>
         <td><a href="/admin/all-orders/order/${item._id}">Xem</a></td>
       `
