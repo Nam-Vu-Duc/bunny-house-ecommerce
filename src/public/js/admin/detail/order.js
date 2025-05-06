@@ -40,7 +40,8 @@ async function getOrder() {
     document.querySelector('select#paymentMethod').appendChild(option)
   })
 
-  document.querySelector('input#total').value   = formatNumber(orderInfo.totalOrderPrice)
+  document.querySelector('input#total').value = formatNumber(orderInfo.totalOrderPrice)
+  document.querySelector('input#new-total').value = formatNumber(orderInfo.totalNewOrderPrice)
   
   const submitButton = document.querySelector('button[type="submit"]')
   if (orderInfo.status === 'done' || orderInfo.status === 'cancel') {

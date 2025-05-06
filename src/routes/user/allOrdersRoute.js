@@ -13,5 +13,6 @@ router.get('/checking'            , allOrderController.ordersChecking)
 router.post('/create-orders'      , allOrderController.createOrders)
 
 router.post('/data/order'         , allOrderController.getOrder)
+router.post('/data/voucher'       , allOrderController.getVoucher)
 
 module.exports = router

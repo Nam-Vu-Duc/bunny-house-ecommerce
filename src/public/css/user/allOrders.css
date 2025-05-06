@@ -1,9 +1,10 @@
 .all-orders-container {
-  .cart, .contact-info, .payment-method {
+  .cart, .voucher, .contact-info, .payment-method {
     background-color: white;
     margin-top: 10px;
     border-radius: 5px;
     padding: 10px;
+    box-sizing: border-box;
     p {
       background-color: #F0F0F0;
       height: fit-content;
@@ -15,6 +16,10 @@
       font-size: x-large;
       text-align: center;
       border-radius: 5px;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
     }
   }
   .cart {
@@ -59,6 +64,32 @@
         font-size: 32px;
         z-index: 10;
         border-radius: 10px;
+      }
+    }
+  }
+  .voucher {
+    input#voucher-code {
+      margin-top: 10px;
+      text-align: center;
+    }
+    .price {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      gap: 5px;
+      padding: 5px;
+      box-sizing: border-box;
+      .old-price, .new-price {
+        height: 30px;
+        padding: 5px;
+        box-sizing: border-box;
+        .old-price-value, .new-price-value {
+          width: fit-content;
+          border-radius: 5px;
+          border: 1px solid #D1A6A6;
+          padding: 5px;
+        }
       }
     }
   }

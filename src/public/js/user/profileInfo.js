@@ -164,7 +164,7 @@ async function getOrders() {
     const tr = document.createElement('tr')
     tr.innerHTML = `
       <td>${order.customerInfo.name}</td>
-      <td>${formatNumber(order.totalOrderPrice)}</td>
+      <td>${formatNumber(order.totalNewOrderPrice)}</td>
       <td>${formatDate(order.createdAt)}</td>
       <td>${order.orderStatus.name}</td>
       <td><a href="/all-orders/order/${order._id}">Chi Tiết</a></td>

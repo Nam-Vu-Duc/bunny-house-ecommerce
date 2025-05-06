@@ -6,24 +6,24 @@ const nextButton      = document.querySelector('button.next-button')
 const submitButton    = document.querySelector('button.submit-button')
 const tableBody       = document.querySelector('tbody')
 const tableFooter     = document.querySelector('tfoot')
-const isUserOrder     = {message: false}
+const userId          = {id: null}
 const totalOrderPrice = {total: 0}
-const img             = document.querySelector('input#img')
 const imgPath         = {path: ''}
 
 async function checkUser() {
   const response = await fetch('/data/user')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
 
-  const {message, uid, data} = await response.json()
-  isUserOrder.message = message
-  isUserOrder.uid = uid
+  const {error, uid, data} = await response.json()
+  if (error) return pushNotification(error)
 
-  if (isUserOrder.message) {
-    document.querySelector('input#name').value = data.name
-    document.querySelector('input#phone').value = data.phone
-    document.querySelector('input#address').value = data.address
-  }
+  userId.id = uid
+
+  document.querySelector('input#name').value = data.name
+  document.querySelector('input#phone').value = data.phone
+  document.querySelector('input#address').value = data.address
+
+  return
 }
 
 async function updateTableBody() {
@@ -145,7 +145,12 @@ function displayProcess() {
 
 function updateTableFooter() {
   const totalOrderPriceElement = document.querySelector('tfoot').querySelector('td.total')
+  const voucherOldPrice = document.querySelector('span.old-price-value')
+  const voucherNewPrice = document.querySelector('span.new-price-value')
+
   totalOrderPriceElement.textContent = formatNumber(totalOrderPrice.total)
+  voucherOldPrice.textContent = formatNumber(totalOrderPrice.total)
+  voucherNewPrice.textContent = formatNumber(totalOrderPrice.total)
 }
 
 function deleteCartItem(tableElement) {
@@ -179,6 +184,7 @@ function submitOrder() {
       if (!getProductInfo.productInfo) throw Error('Giỏ hàng của bạn đang trống')  
   
       const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value
+      const code          = document.querySelector('input[name="voucher-code"]').value
       const name          = document.querySelector('input[name="name"]').value
       const phone         = document.querySelector('input[name="phone"]').value
       const address       = document.querySelector('input[name="address"]').value
@@ -198,7 +204,8 @@ function submitOrder() {
         body: JSON.stringify({
           productInfo   : getProductInfo.productInfo,
           paymentMethod : paymentMethod,
-          userId        : isUserOrder.uid || 'guest',
+          userId        : userId.id || 'guest',
+          code          : code,
           name          : name,
           phone         : phone,
           address       : address,
@@ -207,8 +214,8 @@ function submitOrder() {
         })
       })
       if (!response.ok) throw new Error(`Response status: ${response.status}`)
-      const {message, id} = await response.json()
-      if (!message) throw Error('Có lỗi xảy ra, hãy thử lại sau')
+      const {error, id} = await response.json()
+      if (error) throw Error(error)
   
       socket.emit('order')
       const orderSuccessfullyMessage = document.createElement('div')
@@ -233,13 +240,35 @@ function submitOrder() {
   }
 }
 
-img.addEventListener('change', function () {
+document.querySelector('input#img').addEventListener('change', function () {
   const file = img.files[0]; // Get the selected file
   const reader = new FileReader()
   reader.onload = function () {
     imgPath.path = reader.result; // Base64-encoded string
   }
   reader.readAsDataURL(file)
+})
+
+document.querySelector('button.voucher-button').addEventListener('click', async function() {
+  const voucherCode = document.querySelector('input#voucher-code').value
+  if (!voucherCode) return pushNotification('Hãy nhập mã giảm giá nha')
+
+  const response = await fetch('/all-orders/data/voucher', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({voucherCode: voucherCode})
+  })
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {error, voucherInfo} = await response.json()
+  if (error) return pushNotification(error)
+  if (totalOrderPrice.total < voucherInfo.minOrder) return pushNotification(`Đơn hàng của bạn chưa đủ giá trị để áp dụng mã giảm giá này đâu nha`)
+
+  var discountValue = (totalOrderPrice.total * voucherInfo.discount) / 100
+  if (discountValue > voucherInfo.maxDiscount) discountValue = voucherInfo.maxDiscount
+  
+  const newPrice = totalOrderPrice.total - discountValue
+
+  document.querySelector('span.new-price-value').textContent = formatNumber(newPrice)
 })
 
 preCheckAllProducts()

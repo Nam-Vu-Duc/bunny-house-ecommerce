@@ -25,7 +25,8 @@ input:not(input[type='radio']) {
   height: 40px;
   text-indent: 10px;
   border-radius: 5px;
-  border: 1px solid #D1A6A6
+  border: 1px solid #D1A6A6;
+  box-sizing: border-box;
 }
 input:focus {
   outline: 1.5px solid #D1A6A6
@@ -137,6 +138,7 @@ div.button {
   justify-content: center;
   margin: 10px;
   width: 100%;
+  box-sizing: border-box;
   button {
     width: 150px; 
     height: 30px;
@@ -206,6 +208,7 @@ div.submit-button {
   align-items: center;
   justify-content: center;
   padding: 10px 0 10px 0;
+  box-sizing: border-box;
 }
 button {
   width: fit-content; 
