@@ -1,4 +1,4 @@
-importLinkCss('/css/empty/signIn.css')
+importLinkCss('/css/layouts/signIn.css')
 
 const submitButton = document.querySelector('button')
 
