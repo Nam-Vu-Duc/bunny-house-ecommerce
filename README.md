@@ -5,7 +5,7 @@ A cosmetics website that facilitates sales management and customer relationship 
 
 **Data Diagram**
 ===============================
-![image](https://github.com/user-attachments/assets/42f4615c-f91a-40a9-b1a1-f8bafbf0ee80)
+![image](https://github.com/user-attachments/assets/935763a8-8138-4511-b164-341e1b316b4d)
 
 **User Demo**
 ===============================
@@ -27,7 +27,7 @@ https://github.com/user-attachments/assets/ef4181a3-ad1f-44ee-abaa-58c89bb02fee
 
 **Tech Stack**
 ===============================
-- Front-end: HTML, CSS, JS
+- Front-end: HTML, CSS, JS, Handlebars
 
 - Back-end: NodeJS, Express, MongoDB, Cloudinary
 
