@@ -2,11 +2,10 @@ body {
   background-color: #FFDFDF;
   font-family: 'Roboto', sans-serif;
 }
-body::-webkit-scrollbar {display: none}
-::-webkit-scrollbar {width: 10px;}
-::-webkit-scrollbar-track {background: #FFDFDF; }
-::-webkit-scrollbar-thumb {background: #D1A6A6;border-radius: 5px;}
-::-webkit-scrollbar-thumb:hover {background: #D1A6A6;}
+body::-webkit-scrollbar {width: 10px;}
+body::-webkit-scrollbar-track {background: #FFDFDF; }
+body::-webkit-scrollbar-thumb {background: #D1A6A6; border-radius: 5px;}
+body::-webkit-scrollbar-thumb:hover {background: #D1A6A6;}
 .preloader {
   position: fixed;
   width: 100%;
