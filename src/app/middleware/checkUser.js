@@ -1,5 +1,6 @@
 const user = require('../models/userModel')
 const jwt = require('jsonwebtoken')
+const dbConnect = require('../middleware/mongoose')
 
 module.exports = async function checkUser(req, res, next) {
   try {
@@ -15,6 +16,7 @@ module.exports = async function checkUser(req, res, next) {
       if (userInfo.role !== 'user') throw new Error('error')
       req.isUser = true
     }
+    await dbConnect()
     next()
   } catch (error) {
     return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
