@@ -89,7 +89,6 @@ class allOrderController {
       } = req.body
   
       let totalOrderPrice = 0
-      let totalNewOrderPrice = 0
   
       const productIds = productInfo.map(item => item.id)
       const products = await product.find({ _id: { $in: productIds }, status: { $ne: 'out-of-order' } }).lean()
@@ -109,12 +108,14 @@ class allOrderController {
         }
       }).filter(Boolean)
 
+      let totalNewOrderPrice = totalOrderPrice
+
       const voucherInfo = await voucher.findOne({ code: code }).lean()
-      if (!voucherInfo) throw new Error('Voucher not found')
-      if (voucherInfo.status === 'end') throw new Error('Voucher expired')
+      if (voucherInfo && voucherInfo.status === 'end') throw new Error('Voucher expired')
       
       const userInfo = await user.findOne({ _id: req.cookies.uid }).lean()
-      if (code) {
+
+      if (voucherInfo) {
         if (!userInfo) throw new Error('User not found') 
         if (userInfo.memberCode !== voucherInfo.memberCode) throw new Error('User not eligible for this voucher')
 
@@ -123,7 +124,7 @@ class allOrderController {
         
         totalNewOrderPrice = totalOrderPrice - discountValue
       }
-  
+      
       const newOrder = new order({
         products: finalProductInfo.map((product, index) => ({
           id        : product.id,   

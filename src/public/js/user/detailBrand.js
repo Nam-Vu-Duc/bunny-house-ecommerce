@@ -61,14 +61,27 @@ async function getRelatedProducts(brandInfo) {
   }, 2000)
 }
 
-window.addEventListener('DOMContentLoaded', async function loadData() {
+async function loadData(retriesLeft) {
   try {
     const data = await getBrand()
     for (let key in data) {
       brandInfo[key] = data[key]
     }
     getRelatedProducts(brandInfo)
-  } catch (err){
-    console.error("Failed to fetch products:", err)
+  } catch (err) {
+    if (retriesLeft > 1) {
+      console.error(`Retrying... Attempts left: ${retriesLeft - 1}`)
+      pushNotification('Error loading data. Retrying...')
+      window.setTimeout(async function() {
+        loadData(retriesLeft - 1)
+      }, 2000)
+    } else {
+      console.error("Failed to fetch products after multiple attempts:", err)
+      pushNotification(`Error loading data: ${err}. Please try again later`)
+    }
   }
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  loadData(5)
 })
