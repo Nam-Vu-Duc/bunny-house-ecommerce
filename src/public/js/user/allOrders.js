@@ -18,6 +18,7 @@ async function checkUser() {
   if (error) return pushNotification(error)
 
   userId.id = uid
+  if (!userId.id) return
 
   document.querySelector('input#name').value = data.name
   document.querySelector('input#phone').value = data.phone
@@ -277,12 +278,25 @@ checkOutOfOrderProduct()
 
 checkUser()
 
-window.addEventListener('DOMContentLoaded', async function loadData() {
+async function loadData(retriesLeft) {
   try {
     updateTableBody()
     displayProcess()
     submitOrder()
-  } catch (err){
-    console.error("Failed to fetch products:", err)
+  } catch (err) {
+    if (retriesLeft > 1) {
+      console.error(`Retrying... Attempts left: ${retriesLeft - 1}`)
+      pushNotification('Error loading data. Retrying...')
+      window.setTimeout(async function() {
+        loadData(retriesLeft - 1)
+      }, 2000)
+    } else {
+      console.error("Failed to fetch products after multiple attempts:", err)
+      pushNotification(`Error loading data: ${err}. Please try again later`)
+    }
   }
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  loadData(5)
 })
