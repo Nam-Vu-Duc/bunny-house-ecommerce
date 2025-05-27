@@ -1,5 +1,4 @@
-// ok
-importLinkCss('/css/empty/signIn.css')
+importLinkCss('/css/layouts/signIn.css')
 
 async function checkingAccount() {
   document.querySelector('button').classList.add('loading')

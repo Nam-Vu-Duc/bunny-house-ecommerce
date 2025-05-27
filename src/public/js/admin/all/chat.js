@@ -1,9 +1,8 @@
 importLinkCss('/css/admin/all/chats.css')
 
-const chatBody    = document.querySelector('div.chat-body')
-const chatHeader  = chatBody.querySelector('div.chat-header')
 const chatContent = document.querySelector('div.chat-content')
 const input       = document.querySelector('textarea.input')
+const chatSearch  = document.querySelector('input.chat-search')
 const sendBtn     = document.querySelector('div.send-btn')
 const form        = document.querySelector('form.input-form')
 const chatList    = document.querySelector('div.chat-list').querySelectorAll('div.item')
@@ -37,6 +36,7 @@ async function getChatData(adminId, userId, userName, chatContent) {
     const userStatus = json.userStatus
     chatId.id = json.chatId
     
+    const chatHeader = document.querySelector('div.chat-body').querySelector('div.chat-header')
     chatHeader.querySelector('div.name').textContent = userName
     chatHeader.querySelector('div.last-active').textContent = userStatus ? 'Active now' : 'Offline'
     chatHeader.style.opacity = 1
@@ -46,12 +46,8 @@ async function getChatData(adminId, userId, userName, chatContent) {
     chatContent.appendChild(ul)
 
     messages.forEach((message) => {
-      const chat = document.createElement('li')
-      chat.textContent = message.content 
-      if (message.senderId === adminId) chat.setAttribute('class', 'right-content')
-      ul.appendChild(chat)
+      appendMessage(ul, message.content, message.senderId, adminId)
     })
-    ul.scrollTo(0, ul.scrollHeight)
   } catch (error) {
     console.error("Error fetching chat data:", error)
   }
@@ -62,6 +58,18 @@ function checkCurrentIndex(index) {
     if (i === index) item.classList.add('active')
     else item.classList.remove('active')
   })
+}
+
+async function appendMessage(ul, msg, senderId, adminId) {
+  const chat = document.createElement('li')
+  chat.textContent = msg
+
+  if (senderId === adminId) {
+    chat.setAttribute('class', 'right-content')
+  } 
+
+  ul.appendChild(chat)
+  chatContent.scrollTo(0, chatContent.scrollHeight)
 }
 
 async function updateLastMessage(id) {
@@ -93,6 +101,19 @@ async function reOrderChatSidebar(id, room) {
     }
   }
 }
+
+chatSearch.addEventListener('input', function() {
+  chatList.forEach(item => {
+    const name = item.querySelector('div.name')?.textContent.trim().toLowerCase()
+    const searchValue = chatSearch.value.trim().toLowerCase()
+
+    if (!name.includes(searchValue)) {
+      item.style.display = 'none'
+    } else {
+      item.style.display = ''
+    }
+  })
+})
 
 chatList.forEach((chat, index) => {
   chat.onclick = function() {
@@ -135,16 +156,8 @@ input.addEventListener("keypress", function(event) {
 })
 
 socket.on('chat-message', (id, msg, room) => {
-  const chat = document.createElement('li')
-  chat.textContent = msg
-  if (id.trim() === adminId.id) {
-    chat.setAttribute('class', 'right-content') 
-  }
-  reOrderChatSidebar(id, room)
-
+  console.log('new message')
   const ul = chatContent.querySelector('ul')
-  if (ul) {
-    ul.appendChild(chat)
-    ul.scrollTo(0, ul.scrollHeight)
-  }
+  appendMessage(ul, msg, id, adminId.id)
+  reOrderChatSidebar(id, room)
 })
