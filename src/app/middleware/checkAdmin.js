@@ -4,6 +4,7 @@ const dbConnect = require('../middleware/mongoose')
 
 module.exports = async function checkAdmin(req, res, next) {
   try {
+    await dbConnect()
     const rt = req.cookies.rt
     const uid = req.cookies.uid
 
@@ -14,7 +15,6 @@ module.exports = async function checkAdmin(req, res, next) {
       const empInfo = await emp.findOne({ _id: uid })
       if (!empInfo) throw new Error('error')
       if (!['admin', 'manager', 'employee'].includes(empInfo.role)) throw new Error('error')
-      await dbConnect()
       next()
     } else {
       throw new Error('error')

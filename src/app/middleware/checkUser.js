@@ -4,6 +4,7 @@ const dbConnect = require('../middleware/mongoose')
 
 module.exports = async function checkUser(req, res, next) {
   try {
+    await dbConnect()
     const rt = req.cookies.rt
     const uid = req.cookies.uid
     
@@ -16,7 +17,6 @@ module.exports = async function checkUser(req, res, next) {
       if (userInfo.role !== 'user') throw new Error('error')
       req.isUser = true
     }
-    await dbConnect()
     next()
   } catch (error) {
     return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
