@@ -72,6 +72,13 @@ function route(app) {
   app.use('/authentication'     , authenticationRoute)
   app.use('/emp/authentication' , empAuthenticationRoute)
 
+  
+  // keep-alive
+  app.use('/keep', function handler(req, res) {
+    res.status(200).json({ message: 'vercel ping' })
+  })
+  
+  // all
   app.use('/*', function(req, res) {
     return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
   })
