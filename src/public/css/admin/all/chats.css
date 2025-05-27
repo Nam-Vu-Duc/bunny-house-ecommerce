@@ -1,5 +1,5 @@
 .admin-all-chats-container {
-  height: 100vh;
+  height: 98vh;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -115,21 +115,6 @@
       }
       .right-content {
         float: right;
-      }
-      .left-content {
-        display: flex;
-        align-items: start;
-        justify-content: start;
-        gap: 5px;
-        img {
-          margin-top: 5px;
-          border-radius: 50%;
-          width: 30px;
-          aspect-ratio: 1/1;
-        }
-        li {
-          background-color: #f0f0f0;
-        }
       }
     }
     .chat-content::-webkit-scrollbar-track {
